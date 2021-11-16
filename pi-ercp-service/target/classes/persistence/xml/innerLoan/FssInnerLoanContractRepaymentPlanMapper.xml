@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.innerLoan.FssInnerLoanContractRepaymentPlanMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.innerLoan.FssInnerLoanContractRepaymentPlan" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="repayment_id" property="repaymentId" jdbcType="VARCHAR" />
+    <result column="plan_date" property="planDate" jdbcType="DATE" />
+    <result column="planned_repayment_amount" property="plannedRepaymentAmount" jdbcType="NUMERIC" />
+    <result column="actual_planned_repayment_amount" property="actualPlannedRepaymentAmount" jdbcType="NUMERIC" />
+    <result column="repayment_amount" property="repaymentAmount" jdbcType="NUMERIC" />
+    <result column="manage_id" property="manageId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="DATE" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="contract_name" property="contractName" jdbcType="VARCHAR" />
+    <result column="contract_num" property="contractName" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="queryByManageId" resultMap="BaseResultMap">
+    select sum(coalesce(item.this_repayment_amount,0)) as repayment_amount,frp.*
+    from fss_inner_loan_contract_repayment_plan frp
+           left join fss_inner_loan_contract_repayment fr on frp.manage_id = fr.manage_id
+           left join fss_inner_loan_contract_repayment_item item on item.main_id=fr.repayment_id and item.plan_id=frp.repayment_id
+    where frp.manage_id=#{manageId}
+    group by frp.repayment_id
+    order by frp.plan_date
+  </select>
+
+  <select id="queryByPlanDate" resultMap="BaseResultMap">
+    select * from fss_inner_loan_contract_repayment_plan frp
+    where frp.manage_id=#{manageId} and to_char(frp.plan_date, 'yyyy-MM-dd')=#{planDate} limit 1
+  </select>
+  <delete id="deleteByManageId" >
+    delete from fss_inner_loan_contract_repayment_plan where manage_id=#{manageId}
+  </delete>
+
+  <select id="queryPlannedAmountSum" resultType="java.math.BigDecimal">
+    select coalesce(sum(frp.planned_repayment_amount), 0) from fss_inner_loan_contract_repayment_plan frp
+    where frp.manage_id=#{manageId}
+  </select>
+</mapper>

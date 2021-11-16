@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.loan.FssLoanContractCommitmentFeeMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.loan.FssLoanContractCommitmentFee">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="fee_id" jdbcType="VARCHAR" property="feeId" />
+    <result column="payment_time" jdbcType="DATE" property="paymentTime" />
+    <result column="commitment_amount" jdbcType="NUMERIC" property="commitmentAmount" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="manage_id" jdbcType="VARCHAR" property="manageId" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+</mapper>

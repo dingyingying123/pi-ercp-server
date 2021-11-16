@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.base.FssBaseProjectInfoMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.base.FssBaseProjectInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="project_id" jdbcType="VARCHAR" property="projectId" />
+    <result column="project_abbreviation" jdbcType="VARCHAR" property="projectAbbreviation" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="commercian_unit" jdbcType="VARCHAR" property="commercianUnit" />
+    <result column="project_category" jdbcType="VARCHAR" property="projectCategory" />
+    <result column="project_stage" jdbcType="VARCHAR" property="projectStage" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="organ_id" jdbcType="VARCHAR" property="organId" />
+    <result column="organ_name" jdbcType="VARCHAR" property="organName" />
+    <result column="is_subsidy" jdbcType="VARCHAR" property="isSubsidy" />
+    <result column="equity_ratio" jdbcType="NUMERIC" property="equityRatio" />
+    <result column="is_consolidated" jdbcType="VARCHAR" property="isConsolidated" />
+    <result column="project_nature" jdbcType="VARCHAR" property="projectNature" />
+    <result column="waers_code" jdbcType="VARCHAR" property="waersCode" />
+    <result column="waers" jdbcType="VARCHAR" property="waers" />
+    <result column="proportionate_funds" jdbcType="NUMERIC" property="proportionateFunds" />
+    <result column="total_project_budget" jdbcType="NUMERIC" property="totalProjectBudget" />
+    <result column="actual_total_investment" jdbcType="NUMERIC" property="actualTotalInvestment" />
+    <result column="capital_in_place" jdbcType="NUMERIC" property="capitalInPlace" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="area_code" jdbcType="VARCHAR" property="areaCode" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="approval_time" jdbcType="VARCHAR" property="approvalTime" />
+    <result column="complete_time_240" jdbcType="VARCHAR" property="completeTime240" />
+    <result column="installed" jdbcType="VARCHAR" property="installed" />
+    <result column="equity_installed" jdbcType="VARCHAR" property="equityInstalled" />
+    <result column="electricity_price" jdbcType="VARCHAR" property="electricityPrice" />
+    <result column="is_subsidy_directory" jdbcType="VARCHAR" property="isSubsidyDirectory" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="trial_operation_time" jdbcType="VARCHAR" property="trialOperationTime" />
+    <result column="contracting_body" jdbcType="VARCHAR" property="contractingBody" />
+    <result column="franchise_years" jdbcType="VARCHAR" property="franchiseYears" />
+    <result column="is_include_financial_calculations" jdbcType="VARCHAR" property="isIncludeFinancialCalculations" />
+    <result column="design_scale" jdbcType="VARCHAR" property="designScale" />
+    <result column="guaranteed_water_price" jdbcType="VARCHAR" property="guaranteedWaterPrice" />
+    <result column="bottom_water" jdbcType="VARCHAR" property="bottomWater" />
+    <result column="water_calculation_formula" jdbcType="VARCHAR" property="waterCalculationFormula" />
+    <result column="reserve" jdbcType="VARCHAR" property="reserve" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="deleted" jdbcType="VARCHAR" property="deleted" />
+    <result column="pspid" jdbcType="VARCHAR" property="pspid" />
+    <result column="post1" jdbcType="VARCHAR" property="post1" />
+    <result column="prctr" jdbcType="VARCHAR" property="prctr" />
+    <result column="objnr" jdbcType="VARCHAR" property="objnr" />
+  </resultMap>
+
+  <select id="queryProjectInfoList" resultMap="BaseResultMap">
+    select * from fss_base_project_info
+    <where> deleted='0'
+      <if test="projectAbbreviation != null and projectAbbreviation != ''">
+        and project_abbreviation like concat('%', #{projectAbbreviation}, '%')
+      </if>
+      <if test="projectName != null and projectName != ''">
+        and project_name like concat('%',  #{projectName}, '%')
+      </if>
+      <if test="commercianUnit != null and commercianUnit != ''">
+        and commercian_unit = #{commercianUnit}
+      </if>
+      <if test="projectCategory != null and projectCategory != ''">
+        and project_category = #{projectCategory}
+      </if>
+      <if test="projectStage != null and projectStage != ''">
+        and project_stage = #{projectStage}
+      </if>
+      <if test="organName != null and organName != ''">
+        and organ_name like concat('%', #{organName}, '%')
+      </if>
+      <if test="organId != null and organId != ''">
+        and organ_id = #{organId}
+      </if>
+      <if test="province != null and province != ''">
+        and province = #{province}
+      </if>
+      <if test="ids != null and ids.size &gt; 0">
+        and project_id in
+        <foreach close=")" collection="ids" item="id" open="(" separator=","> #{id} </foreach>
+      </if>
+    </where>
+    order by create_time desc
+  </select>
+
+  <update id="deleteProjectInfo">
+    <if test="ids != null and ids.size &gt; 0">
+      update fss_base_project_info set deleted='1'
+      <where> project_id in
+        <foreach close=")" collection="ids" item="id" open="(" separator=","> #{id} </foreach>
+      </where>
+    </if>
+  </update>
+
+
+  <select id="getProjectStage" resultType="java.lang.String">
+    select stonr from fss_base_project_info info join v_stonr stonr on info.objnr=stonr.objnr
+    <where> info.deleted='0'
+      <if test="objnr != null and objnr != ''">
+        and info.info= #{objnr}
+      </if>
+      <if test="projectId != null and projectId != ''">
+        and info.project_id= #{projectId}
+      </if>
+      <if test="projectName != null and projectName != ''">
+        and info.project_name= #{projectName}
+      </if>
+    </where>
+    order by create_time desc
+  </select>
+</mapper>

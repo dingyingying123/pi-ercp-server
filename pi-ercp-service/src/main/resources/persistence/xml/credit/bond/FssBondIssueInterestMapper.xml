@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.credit.bond.FssBondIssueInterestMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.credit.bond.FssBondIssueInterest">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="interest_id" jdbcType="VARCHAR" property="interestId" />
+    <result column="dw_id" jdbcType="VARCHAR" property="dwId" />
+    <result column="bond_id" jdbcType="VARCHAR" property="bondId" />
+    <result column="payment_date" jdbcType="VARCHAR" property="paymentDate" />
+    <result column="bond_maturity_month" jdbcType="NUMERIC" property="bondMaturityMonth" />
+    <result column="issue_rate" jdbcType="NUMERIC" property="issueRate" />
+    <result column="face_amount" jdbcType="NUMERIC" property="faceAmount" />
+    <result column="cash_flow" jdbcType="NUMERIC" property="cashFlow" />
+    <result column="interest" jdbcType="NUMERIC" property="interest" />
+    <result column="actual_interest" jdbcType="NUMERIC" property="actualInterest" />
+    <result column="amortized_amount" jdbcType="NUMERIC" property="amortizedAmount" />
+    <result column="apportioned_amount" jdbcType="NUMERIC" property="apportionedAmount" />
+    <result column="principal_repayment" jdbcType="NUMERIC" property="principalRepayment" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <resultMap id="BaseResultMapVO" type="cn.com.personnel.ercp.pi.persistence.entity.credit.bond.FssBondAccrualInterest" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="accrual_id" property="accrualId" jdbcType="VARCHAR" />
+    <result column="bond_id" property="bondId" jdbcType="VARCHAR" />
+    <result column="payment_date" property="paymentDate" jdbcType="VARCHAR" />
+    <result column="bond_maturity_month" property="bondMaturityMonth" jdbcType="NUMERIC" />
+    <result column="face_amount" property="faceAmount" jdbcType="NUMERIC" />
+    <result column="issue_rate" property="issueRate" jdbcType="NUMERIC" />
+    <result column="underwriting_expenses" property="underwritingExpenses" jdbcType="NUMERIC" />
+    <result column="present_value" property="presentValue" jdbcType="NUMERIC" />
+    <result column="face_interest" property="faceInterest" jdbcType="NUMERIC" />
+    <result column="payable_due" property="payableDue" jdbcType="NUMERIC" />
+    <result column="issuance_period" property="issuancePeriod" jdbcType="VARCHAR" />
+    <result column="value_date" property="valueDate" jdbcType="VARCHAR" />
+    <result column="monthly_effective_rate" property="monthlyEffectiveRate" jdbcType="NUMERIC" />
+    <result column="cash_flow" property="cashFlow" jdbcType="NUMERIC" />
+    <result column="interest" property="interest" jdbcType="NUMERIC" />
+    <result column="actual_interest" property="actualInterest" jdbcType="NUMERIC" />
+    <result column="amortized_amount" property="amortizedAmount" jdbcType="NUMERIC" />
+    <result column="apportioned_amount" property="apportionedAmount" jdbcType="NUMERIC" />
+    <result column="principal_repayment" property="principalRepayment" jdbcType="NUMERIC" />
+    <result column="entry_status" property="entryStatus" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="queryIssueInterest" resultMap="BaseResultMapVO">
+    select i.payment_date,i.status,sum(COALESCE(i.cash_flow,0))-sum(COALESCE(i.principal_repayment,0)) as cash_flow ,
+    sum(coalesce (i.interest,0)) as interest,-sum(coalesce (i.principal_repayment,0)) as principal_repayment from fss_bond_issue_interest i
+    where i.bond_id=#{bondId}
+    group by i.payment_date,i.status
+    order by i.payment_date
+  </select>
+
+  <select id="queryInterestByDate" resultMap="BaseResultMap">
+    select * from fss_bond_issue_interest where dw_id=#{dwId} and payment_date=#{date} order by payment_date desc limit 1
+  </select>
+
+  <select id="queryIssueInterestAmount" resultType="java.math.BigDecimal">
+    select sum(coalesce (i.interest,0)) from fss_bond_issue_interest i
+    <where>
+        <if test="dwId != null and dwId != ''">
+            i.dw_id=#{dwId}
+        </if>
+      <if test="bondId != null and bondId != ''">
+            and i.bond_id=#{bondId}
+        </if>
+    </where>
+  </select>
+
+  <select id="queryIssueCashFlowAmount" resultType="java.math.BigDecimal">
+    select sum(coalesce (i.cash_flow,0))-sum(coalesce (i.principal_repayment,0)) from fss_bond_issue_interest i
+    <where>
+      <if test="dwId != null and dwId != ''">
+        i.dw_id=#{dwId}
+      </if>
+      <if test="bondId != null and bondId != ''">
+        and i.bond_id=#{bondId}
+      </if>
+    </where>
+  </select>
+</mapper>

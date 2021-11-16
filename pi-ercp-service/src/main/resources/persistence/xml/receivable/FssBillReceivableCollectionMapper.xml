@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.receivable.FssBillReceivableCollectionMapper">
+    <resultMap id="BaseResultMap"
+               type="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBillReceivableCollectionEntity">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="rece_id" property="receId" jdbcType="VARCHAR"/>
+        <result column="rece_id" property="receId" jdbcType="VARCHAR"/>
+        <result column="col_date" property="colDate" jdbcType="VARCHAR"/>
+        <result column="col_bank_id" property="colBankId" jdbcType="VARCHAR"/>
+        <result column="col_bank_name" property="colBankName" jdbcType="VARCHAR"/>
+        <result column="col_bank_number" property="colBankNumber" jdbcType="VARCHAR"/>
+        <result column="col_money" property="colMoney" jdbcType="VARCHAR"/>
+        <result column="col_remark" property="colRemark" jdbcType="VARCHAR"/>
+        <result column="group_no" property="groupNo" jdbcType="VARCHAR"/>
+        <result column="entry_number" property="entryNumber" jdbcType="VARCHAR"/>
+        <result column="document_no" property="documentNo" jdbcType="VARCHAR"/>
+        <result column="entry_status" property="entryStatus" jdbcType="VARCHAR"/>
+        <result column="error_message" property="errorMessage" jdbcType="VARCHAR"/>
+        <result column="updater" property="updater" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+
+
+    </resultMap>
+    <!--新增数据-->
+    <insert id="addFssBillReceivableCollection"
+            parameterType="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBillReceivableCollectionEntity">
+      insert  into fss_bill_receivable_collection(rece_id,col_date,col_bank_id,col_bank_name,col_bank_number,col_money,col_remark) values
+      (#{receId},#{colDate},#{colBankId},#{colBankName},#{colBankNumber},#{colMoney},#{colRemark})
+  </insert>
+    <delete id="delFssBillReceivableCollection" parameterType="String">
+    delete from fss_bill_receivable_collection where rece_id = #{receId}
+  </delete>
+    <select id="selCollectionInfo" resultMap="BaseResultMap" parameterType="String">
+    select * from fss_bill_receivable_collection where rece_id = #{receId}
+  </select>
+    <update id="updFssBillReceivableCollection"
+            parameterType="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBillReceivableCollectionEntity">
+        update fss_bill_receivable_collection set rece_id = #{receId}
+        <if test="groupNo!=null">
+            ,group_no = #{groupNo}
+        </if>
+        <if test="entryNumber!=null">
+            ,entry_number = #{entryNumber}
+        </if>
+        <if test="documentNo!=null">
+            ,document_no = #{documentNo}
+        </if>
+        <if test="entryStatus!=null">
+            ,entry_status = #{entryStatus}
+        </if>
+        <if test="errorMessage!=null">
+            ,error_message = #{errorMessage}
+        </if>
+        <if test="updater!=null">
+            ,updater = #{updater}
+        </if>
+        <if test="updateTime!=null">
+            ,update_time = #{updateTime}
+        </if>
+        where rece_id = #{receId}
+        <!--<if test="colDate!=null">-->
+            <!--,col_date = #{colDate}-->
+        <!--</if>-->
+        <!--<if test="colBankId!=null">-->
+            <!--,col_bank_id = #{colBankId}-->
+        <!--</if>-->
+        <!--<if test="colBankName!=null">-->
+            <!--,col_bank_name = #{colBankName}-->
+        <!--</if>-->
+        <!--<if test="colBankNumber!=null">-->
+            <!--,col_bank_number = #{colBankNumber}-->
+        <!--</if>-->
+        <!--<if test="colMoney!=null">-->
+            <!--,col_money = #{colMoney}-->
+        <!--</if>-->
+        <!--<if test="colRemark!=null">-->
+            <!--,col_remark = #{colRemark}-->
+        <!--</if>-->
+    </update>
+</mapper>

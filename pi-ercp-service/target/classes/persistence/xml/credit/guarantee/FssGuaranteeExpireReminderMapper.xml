@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.credit.guarantee.FssGuaranteeExpireReminderMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.credit.guarantee.FssGuaranteeExpireReminder">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="reminder_id" jdbcType="VARCHAR" property="reminderId" />
+    <result column="commercian_unit_id" jdbcType="VARCHAR" property="commercianUnitId" />
+    <result column="commercian_unit" jdbcType="VARCHAR" property="commercianUnit" />
+    <result column="guarantee_num" jdbcType="VARCHAR" property="guaranteeNum" />
+    <result column="open_bank" jdbcType="VARCHAR" property="openBank" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="beneficiary" jdbcType="VARCHAR" property="beneficiary" />
+    <result column="subject_of_contract" jdbcType="VARCHAR" property="subjectOfContract" />
+    <result column="days" jdbcType="BIGINT" property="days" />
+    <result column="not_revoke_cause" jdbcType="VARCHAR" property="notRevokeCause" />
+    <result column="amount_of_guarantee" jdbcType="VARCHAR" property="amountOfGuarantee" />
+    <result column="currency_type" jdbcType="VARCHAR" property="currencyType" />
+    <result column="effective_date" jdbcType="DATE" property="effectiveDate" />
+    <result column="estimated_end_date" jdbcType="DATE" property="estimatedEndDate" />
+    <result column="organ_name" jdbcType="VARCHAR" property="organName" />
+    <result column="responsible_person_name" jdbcType="VARCHAR" property="responsiblePersonName" />
+    <result column="responsible_person_dept" jdbcType="VARCHAR" property="responsiblePersonDept" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="responsible_person_id" jdbcType="VARCHAR" property="responsiblePersonId" />
+    <result column="responsible_person_dept_id" jdbcType="VARCHAR" property="responsiblePersonDeptId" />
+    <result column="process_id" jdbcType="VARCHAR" property="processId" />
+    <result column="expire_date" jdbcType="VARCHAR" property="expireDate" />
+    <result column="approval_status" jdbcType="VARCHAR" property="approvalStatus" />
+    <result column="approval_time" jdbcType="TIMESTAMP" property="approvalTime" />
+    <result column="manager_id" jdbcType="VARCHAR" property="managerId" />
+    <result column="subject_of_contract_id" jdbcType="VARCHAR" property="subjectOfContractId" />
+    <result column="organ_id" jdbcType="VARCHAR" property="organId" />
+  </resultMap>
+
+  <select id="selectGuaranteeExpireReminderList" resultMap="BaseResultMap">
+    SELECT * from
+    fss_guarantee_expire_reminder manager
+    <where>
+      <if test="fssGuaranteeExpireReminder.isView != null and fssGuaranteeExpireReminder.isView and userId != null and userId != &quot;&quot;">
+        and manager.organ_id in (select bu.bukrs from  fss_base_role_organ_busi bu join sec_user_role ur on bu.role_id=ur.role_id
+        and ur.user_id=#{userId} group by bu.bukrs)
+      </if>
+      <if test="fssGuaranteeExpireReminder.expireDate != null and fssGuaranteeExpireReminder.expireDate != ''">
+        and manager.estimated_end_date <![CDATA[ <= ]]> to_date(#{fssGuaranteeExpireReminder.expireDate},'yyyy-MM-dd')
+      </if>
+      <if test="fssGuaranteeExpireReminder.organName != null and fssGuaranteeExpireReminder.organName != ''">
+        and manager.organ_name like concat('%', #{fssGuaranteeExpireReminder.organName}, '%')
+      </if>
+      <if test="fssGuaranteeExpireReminder.openBank != null and fssGuaranteeExpireReminder.openBank != ''">
+        and manager.open_bank like concat('%', #{fssGuaranteeExpireReminder.openBank}, '%')
+      </if>
+      <if test="fssGuaranteeExpireReminder.guaranteeNum != null and fssGuaranteeExpireReminder.guaranteeNum != ''">
+        and manager.guarantee_num like concat('%', #{fssGuaranteeExpireReminder.guaranteeNum}, '%')
+      </if>
+      <if test="fssGuaranteeExpireReminder.commercianUnitId != null and fssGuaranteeExpireReminder.commercianUnitId != ''">
+        and manager.commercian_unit_id = #{fssGuaranteeExpireReminder.commercianUnitId}
+      </if>
+      <if test="fssGuaranteeExpireReminder.responsiblePersonId != null and fssGuaranteeExpireReminder.responsiblePersonId != ''">
+        and manager.responsible_person_id = #{fssGuaranteeExpireReminder.responsiblePersonId}
+      </if>
+      <if test="fssGuaranteeExpireReminder.approvalStatus != null and fssGuaranteeExpireReminder.approvalStatus != ''">
+        and (manager.approval_status !='审批通过' or manager.approval_status is null)
+      </if>
+      <if test="fssGuaranteeExpireReminder.processId != null and fssGuaranteeExpireReminder.processId != ''">
+        and manager.process_id =#{fssGuaranteeExpireReminder.processId}
+      </if>
+      <if test="parmStr!=null and parmStr!=''">
+        and ${parmStr}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectExpireReminderByInstId" resultMap="BaseResultMap">
+    select * from fss_guarantee_expire_reminder where process_id = #{processInstID}
+  </select>
+</mapper>

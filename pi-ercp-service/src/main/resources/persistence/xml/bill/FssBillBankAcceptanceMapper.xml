@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.bill.FssBillBankAcceptanceMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.bill.FssBillBankAcceptance" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="BaseResultMap" property="accepId" jdbcType="VARCHAR" />
+    <result column="accep_id" property="accepId" jdbcType="VARCHAR" />
+    <result column="apply_number" property="applyNumber" jdbcType="VARCHAR" />
+    <result column="apply_date" property="applyDate" jdbcType="TIMESTAMP" />
+    <result column="proposer_id" property="proposerId" jdbcType="VARCHAR" />
+    <result column="proposer" property="proposer" jdbcType="VARCHAR" />
+    <result column="apply_part_id" property="applyPartId" jdbcType="VARCHAR" />
+    <result column="apply_part" property="applyPart" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="bank_id" property="bankId" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="bank_account" property="bankAccount" jdbcType="VARCHAR" />
+    <result column="bill_money" property="billMoney" jdbcType="NUMERIC" />
+    <result column="bill_form" property="billForm" jdbcType="VARCHAR" />
+    <result column="bill_rate" property="billRate" jdbcType="NUMERIC" />
+    <result column="estimate_money" property="estimateMoney" jdbcType="NUMERIC" />
+    <result column="bill_term" property="billTerm" jdbcType="INTEGER" />
+    <result column="bill_start_date" property="billStartDate" jdbcType="VARCHAR" />
+    <result column="bill_end_date" property="billEndDate" jdbcType="VARCHAR" />
+    <result column="is_transfer" property="isTransfer" jdbcType="VARCHAR" />
+    <result column="is_bill_pool" property="isBillPool" jdbcType="VARCHAR" />
+    <result column="remarks_text" property="remarksText" jdbcType="VARCHAR" />
+    <result column="apply_staue" property="applyStaue" jdbcType="VARCHAR" />
+    <result column="approval_staus" property="approvalStaus" jdbcType="VARCHAR" />
+    <result column="approval_date" property="approvalDate" jdbcType="TIMESTAMP" />
+    <result column="approval_id" property="approvalId" jdbcType="VARCHAR" />
+    <result column="creator_id" property="creatorId" jdbcType="VARCHAR" />
+    <result column="creator_name" property="creatorName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updater_id" property="updaterId" jdbcType="VARCHAR" />
+    <result column="updater_name" property="updaterName" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+<select id="selFssBillBankAcceptanceList" resultMap="BaseResultMap" parameterType="cn.com.personnel.ercp.pi.module.bill.SelFssBillBankAcceptanceVO">
+  select * from fss_bill_bank_acceptance
+  <where>
+    deleted = 0
+    <if test="applyNumber!=null">
+      and apply_number = #{applyNumber}
+    </if>
+    <if test="endApplyDate!=null">
+      and apply_date &lt;= #{endApplyDate}
+    </if>
+    <if test="startApplyDate!=null">
+      and apply_date &gt;= #{startApplyDate}
+    </if>
+    <if test="companyName!=null">
+      and company_name like concat('%',#{companyName},'%')
+    </if>
+    <if test="bankName!=null">
+      and bank_name = #{bankName}
+    </if>
+    <if test="billTerm!=null">
+      and bill_term = #{billTerm}
+    </if>
+    <if test="endBillMoney!=null">
+      and bill_money &lt;= #{endBillMoney}
+    </if>
+    <if test="satrtBillMoney!=null">
+      and bill_money &gt;= #{satrtBillMoney}
+    </if>
+    <if test="!isSelView">
+      and creator_id = #{userId}
+    </if>
+  </where>
+  order by create_time desc
+</select>
+
+<update id="updateDelted">
+  update fss_bill_bank_acceptance set deleted = 1,updater_id = #{userId},updater_name = #{userName},update_time = #{updTime} where accep_id = #{id}
+</update>
+
+<select id="selectDataByInstId" resultMap="BaseResultMap">
+  select * from fss_bill_bank_acceptance where deleted = 0 and approval_id = #{approvalId}
+</select>
+</mapper>

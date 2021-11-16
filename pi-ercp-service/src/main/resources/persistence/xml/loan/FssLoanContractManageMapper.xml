@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.loan.FssLoanContractManageMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.loan.FssLoanContractManage">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="manage_id" jdbcType="VARCHAR" property="manageId" />
+    <result column="apply_no" jdbcType="VARCHAR" property="applyNo" />
+    <result column="loan_type" jdbcType="VARCHAR" property="loanType" />
+    <result column="loan_type_id" jdbcType="VARCHAR" property="loanTypeId" />
+    <result column="is_loop" jdbcType="VARCHAR" property="isLoop" />
+    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+    <result column="company_id" jdbcType="VARCHAR" property="companyId" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="project_id" jdbcType="VARCHAR" property="projectId" />
+    <result column="is_syndicated_loan" jdbcType="VARCHAR" property="isSyndicatedLoan" />
+    <result column="loan_organization" jdbcType="VARCHAR" property="loanOrganization" />
+    <result column="loan_organization_id" jdbcType="VARCHAR" property="loanOrganizationId" />
+    <result column="bank_account" jdbcType="VARCHAR" property="bankAccount" />
+    <result column="bank_account_id" jdbcType="VARCHAR" property="bankAccountId" />
+    <result column="business_unit" jdbcType="VARCHAR" property="businessUnit" />
+    <result column="business_unit_id" jdbcType="VARCHAR" property="businessUnitId" />
+    <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
+    <result column="contract_num" jdbcType="VARCHAR" property="contractNum" />
+    <result column="loan_term_month" jdbcType="VARCHAR" property="loanTermMonth" />
+    <result column="loan_term_year" jdbcType="VARCHAR" property="loanTermYear" />
+    <result column="contract_sign_date" jdbcType="VARCHAR" property="contractSignDate" />
+    <result column="contract_end_date" jdbcType="VARCHAR" property="contractEndDate" />
+    <result column="last_withdrawal_date" jdbcType="VARCHAR" property="lastWithdrawalDate" />
+    <result column="currency_type" jdbcType="VARCHAR" property="currencyType" />
+    <result column="exchange_rate" jdbcType="VARCHAR" property="exchangeRate" />
+    <result column="contract_amount" jdbcType="NUMERIC" property="contractAmount" />
+    <result column="amount_after_discount" jdbcType="NUMERIC" property="amountAfterDiscount" />
+    <result column="interest_rate_type" jdbcType="VARCHAR" property="interestRateType" />
+    <result column="interest_rate_type_id" jdbcType="VARCHAR" property="interestRateTypeId" />
+    <result column="interest_rate_float_way" jdbcType="VARCHAR" property="interestRateFloatWay" />
+    <result column="float_rate" jdbcType="NUMERIC" property="floatRate" />
+    <result column="contract_rate" jdbcType="NUMERIC" property="contractRate" />
+    <result column="change_status" jdbcType="VARCHAR" property="changeStatus"/>
+    <result column="adjust_interest_way" jdbcType="VARCHAR" property="adjustInterestWay" />
+    <result column="adjust_interest_date" jdbcType="VARCHAR" property="adjustInterestDate" />
+    <result column="adjust_interest_specific_time" jdbcType="VARCHAR" property="adjustInterestSpecificTime" />
+    <result column="adjust_interest_interval" jdbcType="VARCHAR" property="adjustInterestInterval" />
+    <result column="interest_days" jdbcType="INTEGER" property="interestDays" />
+    <result column="float_interest_way_desc" jdbcType="VARCHAR" property="floatInterestWayDesc" />
+    <result column="grace_time" jdbcType="VARCHAR" property="graceTime" />
+    <result column="commitment_fee_amount" jdbcType="NUMERIC" property="commitmentFeeAmount" />
+    <result column="commitment_fee_paid" jdbcType="NUMERIC" property="commitmentFeePaid" />
+    <result column="commitment_fee_rate" jdbcType="NUMERIC" property="commitmentFeeRate" />
+    <result column="guarantee_type" jdbcType="VARCHAR" property="guaranteeType" />
+    <result column="guarantee_person" jdbcType="VARCHAR" property="guaranteePerson" />
+    <result column="loan_purpose" jdbcType="VARCHAR" property="loanPurpose" />
+    <result column="service_charge_amount" jdbcType="VARCHAR" property="serviceChargeAmount" />
+    <result column="service_charge_rate" jdbcType="NUMERIC" property="serviceChargeRate" />
+    <result column="comprehensive_cost" jdbcType="NUMERIC" property="comprehensiveCost" />
+    <result column="qinghu_status" jdbcType="VARCHAR" property="qinghuStatus" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="loan_id" jdbcType="VARCHAR" property="loanId" />
+    <result column="deleted" jdbcType="VARCHAR" property="deleted" />
+    <result column="approval_time" jdbcType="TIMESTAMP" property="approvalTime" />
+    <result column="approval_status" jdbcType="VARCHAR" property="approvalStatus" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="contract_balance" jdbcType="NUMERIC" property="contractBalance" />
+    <result column="original_manage_id" jdbcType="VARCHAR" property="originalManageId" />
+    <result column="apply_user" jdbcType="VARCHAR" property="applyUser" />
+    <result column="apply_date" jdbcType="TIMESTAMP" property="applyDate" />
+    <result column="depart" jdbcType="VARCHAR" property="depart" />
+    <result column="depart_id" jdbcType="VARCHAR" property="departId" />
+    <result column="currency_type_id" jdbcType="VARCHAR" property="currencyTypeId"/>
+    <result column="apply_user_id" jdbcType="VARCHAR" property="applyUserId"/>
+    <result column="calculation_status" jdbcType="VARCHAR" property="calculationStatus"/>
+    <result column="change_date" jdbcType="VARCHAR" property="changeDate"/>
+    <result column="assigned_number" jdbcType="VARCHAR" property="assignedNumber"/>
+    <result column="still_bank_account" jdbcType="VARCHAR" property="stillBankAccount"/>
+    <result column="still_bank_account_id" jdbcType="VARCHAR" property="stillBankAccountId"/>
+  </resultMap>
+
+  <resultMap id="BaseResultMapVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.loan.FssLoanContractManageVo">
+    <result column="withdrawalBalance" jdbcType="NUMERIC" property="withdrawalBalance" />
+    <result column="applyDrawAmount" jdbcType="NUMERIC" property="applyDrawAmount" />
+    <result column="repaymentAmount" jdbcType="NUMERIC" property="repaymentAmount" />
+  </resultMap>
+  <update id="updateLogicDelete">
+    update fss_loan_contract_manage set deleted = #{deleted} where manage_id = #{beforeManageId}
+  </update>
+  <select id="queryList" resultMap="BaseResultMap">
+      SELECT m.manage_id,apply_no,loan_type,loan_type_id,is_loop,company_name,company_id,project_name,project_id,is_syndicated_loan,
+    loan_organization,loan_organization_id,bank_account,bank_account_id,business_unit,business_unit_id,
+    contract_name,contract_num,loan_term_month,loan_term_year,contract_sign_date,contract_end_date,last_withdrawal_date,
+    currency_type,exchange_rate,contract_amount,amount_after_discount,interest_rate_type,interest_rate_type_id,interest_rate_float_way,
+    float_rate,contract_rate,change_status,adjust_interest_way,adjust_interest_date,adjust_interest_specific_time,
+    adjust_interest_interval,interest_days,float_interest_way_desc,grace_time,commitment_fee_amount,commitment_fee_paid,
+    commitment_fee_rate,guarantee_type,guarantee_person,loan_purpose,service_charge_amount,service_charge_rate,
+    comprehensive_cost,qinghu_status,remarks,create_time,creator,update_time,updater,version,loan_id,deleted,
+    approval_time,approval_status,status,coalesce(iou.withdraw_amount,0) - coalesce(rep.repayment_amount,0) as contract_balance,
+    original_manage_id,apply_user,apply_date,depart,
+    depart_id,currency_type_id,apply_user_id,calculation_status,change_date,assigned_number
+    FROM  fss_loan_contract_manage m
+    left join (select manage_id,coalesce(sum(withdraw_amount),0) as withdraw_amount from fss_loan_contract_iou group by manage_id) as iou on iou.manage_id= m.manage_id
+    left join (select manage_id,coalesce(sum(repayment_amount),0) as repayment_amount from fss_loan_contract_repayment group by manage_id) as rep on rep.manage_id=m.manage_id
+    where m.deleted='1'
+        <if test="loanContractManageVo.loanType != null and loanContractManageVo.loanType != ''">
+          AND  loan_type = #{loanContractManageVo.loanType}
+        </if>
+        <if test="loanContractManageVo.projectName != null and loanContractManageVo.projectName != ''">
+          AND  project_name like concat('%', #{loanContractManageVo.projectName}, '%')
+        </if>
+        <if test="loanContractManageVo.loanOrganization != null and loanContractManageVo.loanOrganization != ''">
+          AND  loan_organization like concat('%',#{loanContractManageVo.loanOrganization},'%')
+        </if>
+        <if test="loanContractManageVo.loanOrganizationId != null and loanContractManageVo.loanOrganizationId != ''">
+          AND  loan_organization_id = #{loanContractManageVo.loanOrganizationId}
+        </if>
+        <if test="loanContractManageVo.companyName != null and loanContractManageVo.companyName != ''">
+          AND  company_name = #{loanContractManageVo.companyName}
+        </if>
+        <if test="loanContractManageVo.companyId != null and loanContractManageVo.companyId != ''">
+          AND  company_id = #{loanContractManageVo.companyId}
+        </if>
+        <if test="loanContractManageVo.contractName != null and loanContractManageVo.contractName != ''">
+          AND contract_name like concat('%', #{loanContractManageVo.contractName}, '%')
+        </if>
+        <if test="userId != null and userId != ''">
+          and company_id in (select bu.bukrs from  fss_base_role_organ_busi bu join sec_user_role ur on bu.role_id=ur.role_id
+          and ur.user_id=#{userId} group by bu.bukrs)
+        </if>
+
+      order by create_time desc nulls last
+    </select>
+
+  <select id="contractChangeList" resultMap="BaseResultMap">
+    SELECT * FROM  fss_loan_contract_manage
+    <where>
+        AND version !=1
+      <if test="loanContractManageVo.loanType != null and loanContractManageVo.loanType != ''">
+        AND  loan_type = #{loanContractManageVo.loanType}
+      </if>
+      <if test="loanContractManageVo.projectName != null and loanContractManageVo.projectName != ''">
+        AND  project_name like concat('%',#{loanContractManageVo.projectName},'%')
+      </if>
+      <if test="loanContractManageVo.loanOrganization != null and loanContractManageVo.loanOrganization != ''">
+        AND  loan_organization like concat('%',#{loanContractManageVo.loanOrganization},'%')
+      </if>
+      <if test="loanContractManageVo.loanOrganizationId != null and loanContractManageVo.loanOrganizationId != ''">
+        AND  loan_organization_id = #{loanContractManageVo.loanOrganizationId}
+      </if>
+      <if test="loanContractManageVo.companyName != null and loanContractManageVo.companyName != ''">
+        AND  company_name like concat('%', #{loanContractManageVo.companyName},'%')
+      </if>
+      <if test="loanContractManageVo.contractName != null and loanContractManageVo.contractName != ''">
+       AND contract_name like concat('%',#{loanContractManageVo.contractName},'%')
+      </if>
+      <if test="loanContractManageVo.approvalStatus != null and loanContractManageVo.approvalStatus != ''">
+        AND approval_status =#{loanContractManageVo.approvalStatus}
+      </if>
+      <if test="userId != null and userId != ''">
+        and company_id in (select bu.bukrs from  fss_base_role_organ_busi bu join sec_user_role ur on bu.role_id=ur.role_id
+        and ur.user_id=#{userId} group by bu.bukrs)
+      </if>
+    </where>
+    order by create_time desc
+  </select>
+
+    <select id="selectContractList" resultMap="BaseResultMap">
+      select m.* from fss_loan_contract_manage m
+      <where>
+        AND m.deleted ='1' and not exists(select m1.manage_id from fss_loan_contract_manage m1
+        where m1.original_manage_id =m.manage_id  and m1.deleted ='2')
+          <if test="loanContractManageVo.companyName != null and loanContractManageVo.companyName != ''">
+              AND  m.company_name  like concat ('%', #{loanContractManageVo.companyName}, '%')
+          </if>
+          <if test="loanContractManageVo.contractName != null and loanContractManageVo.contractName != ''">
+              AND m.contract_name  like concat ('%', #{loanContractManageVo.contractName}, '%')
+          </if>
+          <if test="loanContractManageVo.creator != null and loanContractManageVo.creator != ''">
+              AND m.company_id in (select bu.bukrs from  fss_base_role_organ_busi bu join sec_user_role ur on bu.role_id=ur.role_id
+            and ur.user_id=#{loanContractManageVo.creator} group by bu.bukrs)
+          </if>
+      </where>
+    </select>
+    <select id="getDrawApplyContractList" resultMap="BaseResultMapVO">
+      --SELECT * FROM fss_loan_contract_manage WHERE manage_id IN (SELECT main_id FROM fss_loan_contract_repayment_plan GROUP BY main_id)
+      SELECT ((select coalesce(sum(iou.withdraw_amount),0) from fss_loan_contract_iou iou where iou.manage_id= mm.manage_id)-
+      (select coalesce(sum(rep.repayment_amount),0) from fss_loan_contract_repayment rep where rep.manage_id=mm.manage_id)) withdrawalBalance,
+      mm.*
+       from fss_loan_contract_manage mm ,(select 1 as txt1)as test1 where deleted='1'
+      <if test="manage!=null and manage.applyNo!=null and manage.applyNo!=''">
+        and mm.apply_no like concat ('%', #{manage.applyNo}, '%')
+      </if>
+      <if test="manage!=null and manage.contractName!=null and manage.contractName!=''">
+        and mm.contract_name like concat('%', #{manage.contractName}, '%')
+      </if>
+    </select>
+
+  <select id="getDrawApplyContractListNew" resultMap="BaseResultMapVO">
+    --SELECT * FROM fss_loan_contract_manage WHERE manage_id IN (SELECT main_id FROM fss_loan_contract_repayment_plan GROUP BY main_id)
+    SELECT ((select coalesce(sum(iou.withdraw_amount),0) from fss_loan_contract_iou iou where iou.manage_id= mm.manage_id)-
+    (select coalesce(sum(rep.repayment_amount),0) from fss_loan_contract_repayment rep where rep.manage_id=mm.manage_id)) withdrawalBalance,
+    mm.*
+    from fss_loan_contract_manage mm left join (select count(1) as sum1,main_id from fss_loan_contract_repayment_plan  group by main_id) test1
+    on mm.manage_id=test1.main_id where deleted='1'  and test1.sum1>0
+    <if test="manage!=null and manage.applyNo!=null and manage.applyNo!=''">
+      and mm.apply_no like concat ('%', #{manage.applyNo}, '%')
+    </if>
+    <if test="manage!=null and manage.contractName!=null and manage.contractName!=''">
+      and mm.contract_name like concat('%', #{manage.contractName}, '%')
+    </if>
+    <if test="manage!=null and manage.companyName!=null and manage.companyName!=''">
+      and mm.company_name like concat('%', #{manage.companyName}, '%')
+    </if>
+  </select>
+
+  <select id="queryManageByKey" resultMap="BaseResultMapVO">
+    SELECT coalesce(sum(coalesce(u.withdraw_amount, 0)),0) as withdrawnAmount,coalesce(sum(coalesce(flcr.repayment_amount, 0)),0) as repaymentAmount, 0 as applyDrawAmount,
+           case when m.is_loop='是' then m.contract_amount-coalesce(sum(coalesce(u.withdraw_amount, 0)),0)+coalesce(sum(coalesce(flcr.repayment_amount, 0)),0)
+                else m.contract_amount-coalesce(sum(coalesce(u.withdraw_amount, 0)),0) end as remainingWithdrawalAmount,m.*
+    FROM fss_loan_contract_manage m left join fss_loan_contract_iou u on m.manage_id=u.manage_id
+        left join fss_loan_contract_repayment flcr on flcr.manage_id =m.manage_id
+    where m.manage_id=#{manageId}
+    group by m.manage_id
+  </select>
+
+  <select id="getRepaymentApplyContractList" resultMap="BaseResultMapVO">
+    SELECT ((select coalesce(sum(iou.withdraw_amount),0) from fss_loan_contract_iou iou where iou.manage_id= mm.manage_id)-
+    (select coalesce(sum(rep.repayment_amount),0) from fss_loan_contract_repayment rep where rep.manage_id=mm.manage_id)) withdrawalBalance,
+    mm.*
+    from fss_loan_contract_manage mm ,(select 1 as txt1)as test1
+    where deleted='1'
+      <if test="manage.applyNo!=null and manage.applyNo!=''">
+        and apply_no like concat('%',#{manage.applyNo},'%')
+      </if>
+      <if test="manage.contractName!=null and manage.contractName!=''">
+        and contract_name like concat('%',#{manage.contractName},'%')
+      </if>
+  </select>
+  <select id="pledgeList" resultMap="BaseResultMap">
+    select  * from fss_loan_contract_manage
+    <where>
+       and deleted='1'
+      <if test="manage.companyId!=null and manage.companyId!=''">
+        and company_id =#{ manage.companyId}
+      </if>
+      <if test="manage.contractName!=null and manage.contractName !=''">
+        and contract_name like concat('%',#{manage.contractName},'%')
+      </if>
+      <if test="manage.guaranteeType!= null and manage.guaranteeType !=''">
+        and guarantee_type like concat('%',#{manage.guaranteeType},'%')
+      </if>
+    </where>
+  </select>
+
+  <select id="getAssignedNumber" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT
+      #{ prefix } || CASE WHEN res.str ISNULL THEN '00000001' ELSE res.str END
+    FROM (
+           SELECT
+             to_char(MAX(regexp_replace(assigned_number,'('|| #{ prefix } ||')(\d{8})','\2','g')::int + 1), 'FM00000000') as str
+           FROM
+             fss_loan_contract_manage
+           WHERE assigned_number ~ ('^'|| #{ prefix } ||'\d{8}$')
+         ) res
+  </select>
+  <update id="updateContractMx" parameterType="java.lang.String" statementType="CALLABLE">
+     {call change_contract (#{manageId,mode=IN,jdbcType=VARCHAR})}
+  </update>
+</mapper>

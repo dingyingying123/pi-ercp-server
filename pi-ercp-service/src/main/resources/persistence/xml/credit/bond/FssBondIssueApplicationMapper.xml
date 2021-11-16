@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.credit.bond.FssBondIssueApplicationMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.credit.bond.FssBondIssueApplication" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="fbia_id" property="fbiaId" jdbcType="VARCHAR" />
+    <result column="application_number" property="applicationNumber" jdbcType="VARCHAR" />
+    <result column="applicant_id" property="applicantId" jdbcType="VARCHAR" />
+    <result column="applicant" property="applicant" jdbcType="VARCHAR" />
+    <result column="time_application" property="timeApplication" jdbcType="VARCHAR" />
+    <result column="value_date" property="valueDate" jdbcType="TIMESTAMP" />
+    <result column="is_dynamic_mechanism" property="isDynamicMechanism" jdbcType="VARCHAR" />
+    <result column="amount_to_be_issued" property="amountToBeIssued" jdbcType="NUMERIC" />
+    <result column="maximum_amount_issue" property="maximumAmountIssue" jdbcType="NUMERIC" />
+    <result column="minimum_amount_issue" property="minimumAmountIssue" jdbcType="NUMERIC" />
+    <result column="underwriting_fees" property="underwritingFees" jdbcType="VARCHAR" />
+    <result column="composite_cost" property="compositeCost" jdbcType="NUMERIC" />
+    <result column="bond_remark" property="bondRemark" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="bond_id" property="bondId" jdbcType="VARCHAR" />
+    <result column="proposed_interest_rate_ceiling" property="proposedInterestRateCeiling" jdbcType="VARCHAR" />
+    <result column="lower_limit_interest_rate_issued" property="lowerLimitInterestRateIssued" jdbcType="VARCHAR" />
+    <result column="deadline_method" property="deadlineMethod" jdbcType="VARCHAR" />
+    <result column="bond_maturity_id" property="bondMaturityId" jdbcType="VARCHAR" />
+    <result column="bond_maturity" property="bondMaturity" jdbcType="VARCHAR" />
+    <result column="approval_status" property="approvalStatus" jdbcType="VARCHAR" />
+    <result column="issuing_results" property="issuingResults" jdbcType="VARCHAR" />
+    <result column="process_inst_id" property="processInstId" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="BaseResultMap1" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.credit.FssBondApplicationIssueVO" >
+    <result column="commercian_unit_id" property="commercianUnitId" jdbcType="VARCHAR" />
+    <result column="commercian_unit" property="commercianUnit" jdbcType="VARCHAR" />
+    <result column="organ_id" property="organId" jdbcType="VARCHAR" />
+    <result column="organ_name" property="organName" jdbcType="VARCHAR" />
+    <result column="contract_code" property="contractCode" jdbcType="VARCHAR" />
+    <result column="contract_name" property="contractName" jdbcType="VARCHAR" />
+    <result column="project_id" property="projectId" jdbcType="VARCHAR" />
+    <result column="project_abbreviation" property="projectAbbreviation" jdbcType="VARCHAR" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="is_use_credit" property="isUseCredit" jdbcType="VARCHAR" />
+    <result column="head_id" property="headId" jdbcType="VARCHAR" />
+    <result column="head_code" property="headCode" jdbcType="VARCHAR" />
+    <result column="head_name" property="headName" jdbcType="VARCHAR" />
+    <result column="is_jointly_underwrite" property="isJointlyUnderwrite" jdbcType="VARCHAR" />
+    <result column="registration_quota" property="registrationQuota" jdbcType="NUMERIC" />
+    <result column="registration_agency" property="registrationAgency" jdbcType="VARCHAR" />
+    <result column="trusteeship_lifnr" property="trusteeshipLifnr" jdbcType="VARCHAR" />
+    <result column="trusteeship_name" property="trusteeshipName" jdbcType="VARCHAR" />
+    <result column="registration_number" property="registrationNumber" jdbcType="VARCHAR" />
+    <result column="deadline_method" property="deadlineMethod" jdbcType="VARCHAR" />
+    <result column="bond_maturity_id" property="bondMaturityId" jdbcType="VARCHAR" />
+    <result column="bond_maturity" property="bondMaturity" jdbcType="VARCHAR" />
+    <result column="approval_start_date" property="approvalStartDate" jdbcType="VARCHAR" />
+    <result column="approval_end_date" property="approvalEndDate" jdbcType="VARCHAR" />
+    <result column="currency_id" property="currencyId" jdbcType="VARCHAR" />
+    <result column="currency_code" property="currencyCode" jdbcType="VARCHAR" />
+    <result column="currency_name" property="currencyName" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="data_validation" property="dataValidation" jdbcType="VARCHAR" />
+    <result column="liquidation" property="liquidation" jdbcType="VARCHAR" />
+    <result column="reserve" property="reserve" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="deleted" property="deleted" jdbcType="VARCHAR" />
+    <result column="face_amount" property="faceAmount" jdbcType="NUMERIC" />
+  </resultMap>
+    <select id="queryApplicationList" resultMap="BaseResultMap1">
+      select coalesce(sum(fbdwi.face_amount),0) as face_amount,f.bond_maturity,e."name" as commercian_unit,p.project_abbreviation,p.project_name,h.head_code,h.head_name,
+      c.code as currency_code,c."name" as currency_name ,b.*,f.*
+      from fss_bond_issue_application f left join fss_bond_info b on b.bond_id =f.bond_id
+      left join fss_bond_deal_with_issue fbdwi  on fbdwi.fbia_id =f.fbia_id
+      left join sec_enum e on b.commercian_unit_id=e.id
+      left join fss_base_project_info p on b.project_id=p.project_id
+      left join fss_base_bank_head_office h on h.head_id=b.head_id
+      left join fss_base_currency c on c."id"=b.currency_id
+      <where>
+        <if test="commercianUnitId != null and commercianUnitId != ''">
+          b.commercian_unit_id like concat('%', #{commercianUnitId}, '%')
+        </if>
+        <if test="commercianUnit != null and commercianUnit != ''">
+          and b.commercian_unit like concat('%', #{commercianUnit}, '%')
+        </if>
+        <if test="organId != null and organId != ''">
+          and b.organ_id like concat('%', #{organId}, '%')
+        </if>
+        <if test="approvalStatus != null and approvalStatus != ''">
+          and f.approval_status like concat('%', #{approvalStatus}, '%')
+        </if>
+        <if test="issuingResults != null and issuingResults != ''">
+          and f.issuing_results like concat('%', #{issuingResults}, '%')
+        </if>
+        <if test="approvalStartDate != null and approvalStartDate != ''">
+          and f.time_application &gt;= #{approvalStartDate}
+        </if>
+        <if test="approvalEndDate != null and approvalEndDate != ''">
+          and f.time_application &lt;= #{approvalEndDate}
+        </if>
+        <if test="organName != null and organName != ''">
+          and b.organ_name like concat('%', #{organName}, '%')
+        </if>
+        <if test="contractCode != null and contractCode != ''">
+          and b.contract_code like concat('%', #{contractCode}, '%')
+        </if>
+        <if test="contractName != null and contractName != ''">
+          and b.contract_name like concat('%', #{contractName}, '%')
+        </if>
+        <if test="registrationAgency != null and registrationAgency != ''">
+          and b.registration_agency like concat('%', #{registrationAgency}, '%')
+        </if>
+        <if test="applicantId != null and applicantId != ''">
+          and b.organ_id in (select bu.bukrs from  fss_base_role_organ_busi bu join sec_user_role ur on bu.role_id=ur.role_id
+          and ur.user_id=#{applicantId} group by bu.bukrs)
+        </if>
+      </where>
+      group by b.bond_id ,f.fbia_id,e."name",p.project_abbreviation,p.project_name,h.head_code,h.head_name, c.code,c."name"
+      order by f.create_time desc
+    </select>
+  <select id="getApplicationNumber" resultType="java.lang.String">
+    SELECT
+        #{prefix} || CASE WHEN res.str ISNULL THEN '0001' ELSE res.str END
+      FROM (
+        SELECT
+          to_char(MAX(regexp_replace(application_number,'('|| #{prefix} ||')(\d{4})','\2','g')::int +1), 'FM0000') as str
+        FROM
+          fss_bond_issue_application
+        WHERE application_number ~ ('^'|| #{prefix} ||'\d{4}$')
+      ) res
+  </select>
+
+  <select id="queryBondNoRelateIssue" resultMap="BaseResultMap1">
+    select  *  from  fss_bond_issue_application as temp join fss_bond_info i on temp.bond_id=i.bond_id
+    <where>
+      and temp.approval_status='审批通过' and temp.issuing_results='1'
+      <if test="applicationNumber != null and fapplicationNumber != ''">
+        and   temp.application_number like concat('%', #{applicationNumber}, '%')
+      </if>
+      and  not exists(SELECT  1 from  fss_bond_deal_with_issue as temp1 where temp.application_number =temp1.application_number)
+      <if test="organName != null and organName != ''">
+        and   i.organ_name like concat('%', #{organName}, '%')
+      </if>
+      <if test="contractName != null and contractName != ''">
+        and   i.contract_name like concat('%', #{contractName}, '%')
+      </if>
+      <if test="timeApplication != null and timeApplication != ''">
+        and   temp.time_application like concat('%', #{timeApplication}, '%')
+      </if>
+      <if test="applicantId != null and applicantId != ''">
+        and  i.organ_id in (select bu.bukrs from fss_base_role_organ_busi bu join sec_user_role ur on bu.role_id=ur.role_id
+        and ur.user_id=#{applicantId} group by bu.bukrs)
+      </if>
+    </where>
+    order by temp.create_time desc
+  </select>
+  <select id="getDetailsForIssueApplibation" resultMap="BaseResultMap1">
+    select f.bond_maturity,e."name" as commercian_unit,p.project_abbreviation,p.project_name,h.head_code,h.head_name,
+      c.code as currency_code,c."name" as currency_name ,b.*,f.*
+      from fss_bond_issue_application f left join fss_bond_info b on b.bond_id =f.bond_id
+      left join sec_enum e on b.commercian_unit_id=e.id
+      left join fss_base_project_info p on b.project_id=p.project_id
+      left join fss_base_bank_head_office h on h.head_id=b.head_id
+      left join fss_base_currency c on c."id"=b.currency_id
+      where f.fbia_id=#{fbiaId}
+
+  </select>
+</mapper>

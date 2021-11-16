@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="cn.com.personnel.ercp.task.persistence.mapper.QrtzExecuteLogMapper">
+	<resultMap id="BaseResultMap"
+		type="cn.com.personnel.ercp.task.persistence.entiy.QrtzExecuteLog">
+		<!-- WARNING - @mbg.generated -->
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="job_name" jdbcType="VARCHAR" property="jobName" />
+		<result column="job_description" jdbcType="VARCHAR" property="jobDescription" />
+		<result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+		<result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="exec_result" jdbcType="VARCHAR" property="execResult" />
+
+	</resultMap>
+
+
+
+	<select id="queryQrtzLog" resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM
+		qrtz_execute_log
+		<where>
+			<if test="logParam.jobName != null">
+				AND qrtz_execute_log.job_name = #{logParam.jobName}
+			</if>
+			<!-- startTime、endTime 仅作为参数使用 -->
+			<if test="logParam.startTime != null">
+				AND
+				qrtz_execute_log.create_time&gt;=#{logParam.startTime}
+			</if>
+			<if test="logParam.endTime != null">
+				AND qrtz_execute_log.create_time&lt;=#{logParam.endTime}
+			</if>
+		</where>
+		ORDER BY job_name DESC
+	</select>
+</mapper>

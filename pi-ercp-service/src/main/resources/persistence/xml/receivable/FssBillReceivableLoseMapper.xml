@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.receivable.FssBillReceivableLoseMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBillReceivableLoseEntity" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="BaseResultMap" property="losId" jdbcType="VARCHAR" />
+    <result column="los_id" property="losId" jdbcType="VARCHAR" />
+    <result column="rece_id" property="receId" jdbcType="VARCHAR" />
+    <result column="los_date" property="losDate" jdbcType="VARCHAR" />
+    <result column="los_user_id" property="losUserId" jdbcType="VARCHAR" />
+    <result column="los_user_name" property="losUserName" jdbcType="VARCHAR" />
+    <result column="look_date" property="lookDate" jdbcType="VARCHAR" />
+    <result column="los_remark" property="losRemark" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="selFssBillReceivableLoses" resultType="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBillReceivableLoseEntity" parameterType="String">
+    select
+     los_id as losId,
+     rece_id as receId,
+     los_date as losDate,
+     los_user_id as losUserId,
+     los_user_name as losUserName,
+     look_date as lookDate,
+     los_remark  as losRemark
+     from fss_bill_receivable_lose where rece_id = #{receId} order by los_date desc
+  </select>
+  <insert id="addFssBillReceivableLoses" parameterType="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBillReceivableLoseEntity">
+    insert into fss_bill_receivable_lose(los_id,rece_id,los_date,los_user_id,los_user_name,look_date,los_remark)
+    values (#{losId},#{receId},#{losDate},#{losUserId},#{losUserName},#{lookDate},#{losRemark})
+  </insert>
+  <update id="updFssBillReceivableLoses" parameterType="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBillReceivableLoseEntity">
+    update fss_bill_receivable_lose set rece_id = #{receId}
+    <if test="losDate!=null">
+    ,los_date = #{losDate}
+    </if>
+    <if test="losUserId!=null">
+      ,los_user_id = #{losUserId}
+    </if>
+    <if test="losUserName!=null">
+      ,los_user_name = #{losUserName}
+    </if>
+    <if test="lookDate!=null">
+      ,look_date = #{lookDate}
+    </if>
+    <if test="losRemark!=null">
+      ,los_remark = #{losRemark}
+    </if>
+    where los_id = #{losId} and rece_id = #{receId}
+  </update>
+  <select id="selLookDate" parameterType="String" resultType="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBillReceivableLoseEntity">
+    select
+     los_id as losId,
+     rece_id as receId,
+     los_date as losDate,
+     los_user_id as losUserId,
+     los_user_name as losUserName,
+     look_date as lookDate,
+     los_remark  as losRemark
+     from fss_bill_receivable_lose where rece_id = #{receId} and los_id = #{losId} and look_date is null
+  </select>
+    <select id="selLoseInfo" resultMap="BaseResultMap" parameterType="String">
+        SELECT
+	*
+FROM
+	fss_bill_receivable_lose
+WHERE
+	rece_id = #{receId}
+	AND los_date = ( SELECT MAX ( los_date ) FROM fss_bill_receivable_lose WHERE rece_id = #{receId}  )
+    </select>
+</mapper>

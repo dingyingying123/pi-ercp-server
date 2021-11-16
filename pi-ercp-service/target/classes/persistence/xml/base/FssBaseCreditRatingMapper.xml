@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.base.FssBaseCreditRatingMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.base.FssBaseCreditRating" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="credit_id" property="creditId" jdbcType="VARCHAR" />
+    <result column="organ_id" property="organId" jdbcType="VARCHAR" />
+    <result column="organ_name" property="organName" jdbcType="VARCHAR" />
+    <result column="rating_type" property="ratingType" jdbcType="VARCHAR" />
+    <result column="head_id" property="headId" jdbcType="VARCHAR" />
+    <result column="head_name" property="headName" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="reserve" property="reserve" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="queryCreditList" resultMap="BaseResultMap">
+    select * from fss_base_credit_rating
+    <where>
+      <if test="organName != null and organName != ''">
+        organ_name like concat('%', #{organName}, '%')
+      </if>
+      <if test="ratingType != null and ratingType != ''">
+         and rating_type = #{ratingType}
+      </if>
+      <if test="headName != null and headName != ''">
+         and head_name like concat('%', #{headName}, '%')
+      </if>
+      <if test="ids != null and ids.size &gt; 0">
+        and credit_id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")"> #{id} </foreach>
+      </if>
+    </where>
+    order by create_time desc
+  </select>
+
+  <delete id="deleteCreditRating" >
+    <if test="ids != null and ids.size &gt; 0">
+      delete from fss_base_credit_rating
+      <where> credit_id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")"> #{id} </foreach>
+      </where>
+    </if>
+  </delete>
+</mapper>

@@ -1,0 +1,127 @@
+@charset "utf-8";
+/* 你自己的样式 */
+/* 背景色 */
+body{background-color: #FCFCFC;}
+/* 登录页样式修改 */
+.header{height:44px;line-height:44px;padding-left: 166px;box-sizing: border-box;background-position: 15px;color: #fff;font-size: 12px}
+.loginWraper{width:100%;height:100%;background: url(../images/login-bg.jpg) no-repeat center;background-size: 100% 100%;overflow:auto;}
+.suggestionBox{position: absolute;left:50%;top:50%;width:610px;height:520px;margin-left:-305px;margin-top: -260px;border-radius:5px;padding-top:25px;background: rgba(255,255,255,0.6);box-sizing: border-box}
+.suggestionBox .row{width:60%;height:50px;margin-left:15%;}
+.suggestionBox .row_textarea{width:60%;height:150px;margin-left:15%;}
+.suggestionBox .row .row1{text-align:right;float:left;width:30%;height:50px;line-height: 50px;font-weight:900;font-size: 14px;}
+.suggestionBox .row_textarea .row1{text-align:right;float:left;width:30%;height:50px;line-height: 50px;font-weight:900;font-size: 14px;}
+.suggestionBox .row .row2{float:right;width:68%;height:50px;}
+.suggestionBox .row_textarea .row2{float:right;width:68%;height:50px;}
+.loginBox{width:310px;height:290px;margin-left:155px;margin-top: -145px;border-radius:5px;padding-top:25px;background: rgba(255,255,255,0.6);box-sizing: border-box}
+.loginBox .row{width: 270px;height: 40px;margin-top: 20px;margin-left: auto;margin-right: auto}
+.loginBox .Hui-iconfont {position: absolute;top: 4px;left: 12px;font-size: 22px;color: #ccc}
+.loginBox .input-text{width: 100%;padding-left: 42px;border-radius: 3px;border: none;outline: none;box-sizing: border-box}
+.input-text.size-L{height: 40px;font-size: 14px}
+.loginBox .row .form-label .Hui-iconfont{font-size: 20px}
+.formControls .btn-success{width: 270px}
+.forgetPawd{position: absolute;top: 0px;right: 0px}
+.loginBox .regist-btn, .loginBox .suggest-btn {cursor:pointer;color:green;font-size:13px;text-align:center;border-radius:0px 10px 10px 0px;background:#FFFFFF;width:30px;height:100px;position: absolute;right:-30px;}
+.loginBox .regist-btn {top:10px;}
+.loginBox .suggest-btn {top:120px;}
+/* header 修改 */
+.navbar .logo span{display:inline-block;margin-left:17px;line-height: 44px;color: #fff;font-size: 12px}
+.nav .dropDown.open>a,.nav .dropDown.open>a:hover{background: rgba(255,255,255,0.2);}
+.navbar-wrapper{height: 44px}
+.navbar{height:44px;min-height:44px ! important;/*background: #426374;*/background:#007acc;} /* #6699CC */
+.navbar-nav>ul>.dropDown{line-height: 44px}
+.navbar-nav>ul>.dropDown>a{line-height: 44px}
+.navbar-nav>ul>.dropDown.user-info>a{margin-top:0px;font-size: 14px}
+.navbar-nav>ul>.user-roles{margin-right: 10px}
+.navbar-nav > ul > li, .navbar-nav > ul > li > a{color: #f0f0f0;}
+.user-info img{vertical-align: sub}
+/* aside 修改 */
+
+/* 供应商注册页样式修改 --start*/
+.supplierRegistrationBox{width:1280px;margin:0 auto;margin-top: 8%;margin-bottom:50px;border-radius:5px;padding-top:10px;background: rgba(255,255,255,0.6);box-sizing: border-box}
+/* .supplierRegistrationBox .row{width:85%;margin-left:5%;} */
+.supplierRegistrationBox .rowuser{width:80%;height:150px;margin-left:5%;}
+.supplierRegistrationBox .row_user{width:50%;height:50px;margin-left:25%;}
+
+.supplierRegistrationBox .form-group {display: block;}
+.supplierRegistrationBox .users-info .info-form {width:500px;margin:0 auto;}
+.common-box .info-boxs{position:relative;border:1px solid #426374;border-radius:5px;}
+.common-box .info-title {font-size: 20px;padding:2px 5px;position:absolute;top:-15px;left:15px;background-color:#426374;color:#fff;}
+.supplierRegistrationBox .enterprise-info .unit{padding-left:0px;line-height:25px;color:#FF0033;font-weight:600;}
+.supplierRegistrationBox .info-btns>input{padding:5px 10px}
+.supplierRegistrationBox .info-btns>.next-btn{padding: 5px 20px;}
+.supplierRegistrationBox label.error{top:auto;display: none!important;}
+.supplierRegistrationBox .equal-to label.error{display: inline-block!important;}
+.supplierRegistrationBox #reg-btn[disabled]{opacity: 0.5;}
+
+.supplierRegistrationBox .loc-select .col-sm-3{padding-left:5px;padding-right:5px;}
+.supplierRegistrationBox .loc-select .first{padding-left:0px;}
+.supplierRegistrationBox .loc-select .last{padding-right:0px;}
+.supplierRegistrationBox .sel-cert{padding-left:30px;}
+.supplierRegistrationBox .sel-cert input[type="radio"]{position:absolute;top:2px;left:15px;}
+
+.supplierRegistrationBox .com-reg-no{display: none;}
+.common-box .ques-sign{position: absolute;top:3px;right:-5px;color:#FF9966;cursor:pointer;font-size:18px;}
+
+/* 供应商注册页样式修改 --end*/
+/*忘记密码 start*/
+.forget-pwd-box{width:800px;margin:0 auto;margin-top: 8%;margin-bottom:50px;border-radius:5px;padding:15px;background: rgba(255,255,255,0.6);box-sizing: border-box}
+.forget-pwd-box .wizard{width:600px;margin-left:auto;margin-right:auto;}
+.forget-pwd-box .wizard .wizard-steps{padding-left:0px;padding-right:0px;border-top:4px solid #777777;position:relative;}
+.forget-pwd-box .wizard .step-num{color:#fff;position:absolute;top:-12px;left:50%;background-color:#777777;width:20px;height:20px;line-height:20px;border-radius: 50%;margin-left:-10px;}
+.forget-pwd-box .wizard .step-text{color:#777;line-height:40px;}
+.forget-pwd-box .wizard .wizard-steps.active{border-top:4px solid #3399FF;}
+.forget-pwd-box .wizard .wizard-steps.pass{border-top:4px solid #acacac;}
+.forget-pwd-box .wizard .wizard-steps.active .step-num{background-color:#3399FF;}
+.forget-pwd-box .wizard .wizard-steps.pass .step-num{background-color:#acacac;}
+.forget-pwd-box .wizard .wizard-steps.active .step-text{color:#3399FF;}
+.forget-pwd-box .wizard .wizard-steps.pass .step-text{color:#acacac;}
+.forget-pwd-box .btn-box button{padding:2px 15px;}
+.forget-pwd-box .verify-code{float:left;}
+.forget-pwd-box .verify-input-area{display: none;}
+.forget-pwd-box .verify-code-area{margin-left:5px;}
+.forget-pwd-box #verify_con{padding-left:0px;}
+.forget-pwd-box label.error{display: none!important;}
+.forget-pwd-box .step-text-only .step-text{color: #000;font-size:16px;font-weight: 700;border-bottom:1px solid #666;}
+.forget-pwd-box .identity-email p .step-text{border-bottom:0 none;}
+.forget-pwd-box .step-hide{display:none;}
+/*忘记密码 end*/
+
+.Hui-aside{/*background-color:#285679;*/background-color: #fafafa;} /*#A8E8F1 #C0E4FC*/
+.Hui-aside .menu_dropdown dt{padding-left:17px;border-bottom:1px solid #efefef}
+.Hui-aside .menu_dropdown dt .Hui-iconfont{margin-left:2px;/*color: #f0f0f0;*/color:#555;}
+.Hui-aside .menu_dropdown dd li a{padding-left:34px;/*color: #f0f0f0;*/color:#555;}
+.Hui-aside .menu_dropdown li a:hover,.Hui-aside .menu_dropdown li a.active{background-color:#ededed;color:#148cf1;border-radius: 5px;}
+.Hui-aside .menu_dropdown dt{border-bottom: none;/*color: #f0f0f0*/color:#555;}
+.Hui-aside .menu_dropdown dt.selected,.Hui-aside .menu_dropdown dt.selected i {/*color: #f0f0f0*/color:#148cf1;font-weight:600;font-size:14px;}
+/* .Hui-aside .menu_dropdown dt{color: #f0f0f0;} */
+.dislpayArrow{left:199px;}
+.Hui-aside .menu_dropdown li a:focus{text-decoration: none;}
+/* 选项卡导航 方案1 */
+.Hui-article{top:32px;}
+.Hui-tabNav{height:32px;border-bottom:1px solid #ddd;overflow:initial;}
+.Hui-tabNav-wp{height:32px;}
+.Hui-tabNav,.Hui-tabNav .acrossTab li,.Hui-tabNav .acrossTab li em{background-image:none;}
+.Hui-tabNav .acrossTab{top:0px;height:32px;line-height:32px;}
+.Hui-tabNav .acrossTab li{height:32px;line-height:32px;background-color:#f0f0f0;border-right:1px solid #ddd;border-bottom:1px solid #ddd;}
+.acrossTab, .acrossTab li, .acrossTab li em{background-image:none;}
+.Hui-tabNav .acrossTab li.active{background-position:0 0;background-color:#fcfcfc;color:#148cf1;border-bottom:none;}
+/* 选项卡导航 方案2 */
+/* .Hui-article{top:35px;}
+.Hui-tabNav{height:35px;overflow:initial;border-bottom:1px solid #ccc;}
+.Hui-tabNav-wp{height:35px;}
+.Hui-tabNav,.Hui-tabNav .acrossTab li,.Hui-tabNav .acrossTab li em{background-image:none;}
+.Hui-tabNav .acrossTab{top:0px;height:35px;line-height:35px;}
+.Hui-tabNav .acrossTab li{height:35px;line-height:32px;}
+.acrossTab, .acrossTab li, .acrossTab li em{background-image:none;}
+.Hui-tabNav .acrossTab li.active{background-position:0 0;color:#148cf1;position:relative;}
+.Hui-tabNav .acrossTab li.active:after{content: "";position:absolute;width:60%;height:4px;background-color:#148cf1;left:20%;bottom:0px;} */
+/*菜单收缩切换*/
+.dislpayArrow a:hover{text-decoration:none;background-position:0 -61px}
+.dislpayArrow a.open:hover{background-position:0 -61px}
+/* section 修改 */
+.Hui-tabNav{background-color: #fff;}
+/* footer 修改 */
+.footer{padding:0;}
+/* 兼容IE9 start */
+#loginBtn{font-size:16px;height:41px;padding:8px 16px;}
+/* 兼容IE9 end */

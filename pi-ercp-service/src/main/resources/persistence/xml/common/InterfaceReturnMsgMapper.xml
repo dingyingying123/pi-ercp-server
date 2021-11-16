@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.common.persistence.mapper.InterfaceReturnMsgMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.common.persistence.entity.InterfaceReturnMsg" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="i_guid" property="iGuid" jdbcType="VARCHAR" />
+    <result column="msg_type" property="msgType" jdbcType="VARCHAR" />
+    <result column="msg" property="msg" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="reserve_f1" property="reserveF1" jdbcType="VARCHAR" />
+    <result column="reserve_f2" property="reserveF2" jdbcType="VARCHAR" />
+    <result column="reserve_f3" property="reserveF3" jdbcType="VARCHAR" />
+  </resultMap>
+</mapper>

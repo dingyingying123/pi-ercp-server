@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.credit.bond.FssBondUnderwriterMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.credit.bond.FssBondUnderwriter" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="underwriter_id" property="underwriterId" jdbcType="VARCHAR" />
+    <result column="bond_id" property="bondId" jdbcType="VARCHAR" />
+    <result column="head_id" property="headId" jdbcType="VARCHAR" />
+    <result column="head_code" property="headCode" jdbcType="VARCHAR" />
+    <result column="head_name" property="headName" jdbcType="VARCHAR" />
+    <result column="underwriters_ratio" property="underwritersRatio" jdbcType="NUMERIC" />
+    <result column="reserve" property="reserve" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+  </resultMap>
+</mapper>

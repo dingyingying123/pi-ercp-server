@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.base.FssBaseExchangeRateMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.base.FssBaseExchangeRate">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="gdatu" jdbcType="VARCHAR" property="gdatu" />
+    <result column="fcurr" jdbcType="VARCHAR" property="fcurr" />
+    <result column="tcurr" jdbcType="VARCHAR" property="tcurr" />
+    <result column="ukurs" jdbcType="NUMERIC" property="ukurs" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
+  </resultMap>
+  <select id="querylist" resultMap="BaseResultMap">
+    select id,gdatu, fcurr,tcurr,ukurs,source from fss_base_exchange_rate
+    <where>
+      1=1
+      <if test="gdatu != null and gdatu != ''">
+        and gdatu like concat('%', #{gdatu}, '%')
+      </if>
+      <if test="fcurr != null and fcurr != ''">
+        and fcurr like concat('%', #{fcurr}, '%')
+      </if>
+      <if test="tcurr != null and tcurr != ''">
+        and tcurr like concat('%', #{tcurr}, '%')
+      </if>
+      <if test="ids != null and ids.size &gt; 0">
+        and id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=","> #{id}</foreach>
+      </if>
+    </where>
+    UNION
+    select concat(mandt,kurst,fcurr,tcurr,gdatu) id,
+    cast(to_date((CAST((99999999-CAST(gdatu as NUMERIC))as VARCHAR)),'yyyymmdd') as VARCHAR) gdatu,
+    fcurr,tcurr,ukurs,'0' source from tcurr
+    <where>
+      mandt=#{mandt} and kurst='M'
+      <if test="gdatu != null and gdatu != ''">
+        and cast(to_date((CAST((99999999-CAST(gdatu as NUMERIC))as VARCHAR)),'yyyymmdd') as VARCHAR) like concat('%', #{gdatu}, '%')
+      </if>
+      <if test="fcurr != null and fcurr != ''">
+        and fcurr like concat('%', #{fcurr}, '%')
+      </if>
+      <if test="tcurr != null and tcurr != ''">
+        and tcurr like concat('%', #{tcurr}, '%')
+      </if>
+      <if test="ids != null and ids.size &gt; 0">
+        and concat(mandt,kurst,fcurr,tcurr,gdatu) in
+        <foreach collection="ids" item="id" open="(" close=")" separator=","> #{id}</foreach>
+      </if>
+  </where>
+  order by gdatu desc
+  </select>
+
+  <delete id="deleteByIds">
+    <if test="ids != null and ids.size &gt; 0">
+      delete from fss_base_exchange_rate
+      <where> id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=","> #{id}</foreach>
+      </where>
+    </if>
+  </delete>
+
+  <select id="queryExchangeRateByTcurrBygdatu" resultMap="BaseResultMap">
+    select id,gdatu, fcurr,tcurr,ukurs,source from fss_base_exchange_rate
+    <where>
+      <if test="gdatu != null and gdatu != ''">
+        and gdatu &lt;= #{gdatu}
+      </if>
+      <if test="fcurr != null and fcurr != ''">
+        and fcurr = #{fcurr}
+      </if>
+      <if test="tcurr != null and tcurr != ''">
+        and tcurr = #{tcurr}
+      </if>
+    </where>
+    UNION
+    select concat(mandt,kurst,fcurr,tcurr,gdatu) id,
+    cast(to_date((CAST((99999999-CAST(gdatu as NUMERIC))as VARCHAR)),'yyyymmdd') as VARCHAR) gdatu,
+    fcurr,tcurr,ukurs,'0' source from tcurr
+    <where>
+      mandt=#{mandt}
+      <if test="gdatu != null and gdatu != ''">
+        and cast(to_date((CAST((99999999-CAST(gdatu as NUMERIC))as VARCHAR)),'yyyymmdd') as VARCHAR) &lt;= #{gdatu}
+      </if>
+      <if test="fcurr != null and fcurr != ''">
+        and fcurr = #{fcurr}
+      </if>
+      <if test="tcurr != null and tcurr != ''">
+        and tcurr = #{tcurr}
+      </if>
+    </where>
+    order by gdatu desc limit 1
+  </select>
+</mapper>

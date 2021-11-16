@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="pi-ercp-common" />
+        <module name="pi-ercp-ui" />
+        <module name="pi-ercp-service" />
+        <module name="pi-ercp-task" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="pi-ercp-common" options="-verbose -bootclasspath D:/study/jdk1.8/jdk/jre/lib/rt.jar;D:/study/jdk1.8/jdk/jre/lib/jce.jar" />
+      <module name="pi-ercp-service" options="-verbose -bootclasspath D:/study/jdk1.8/jdk/jre/lib/rt.jar;D:/study/jdk1.8/jdk/jre/lib/jce.jar" />
+      <module name="pi-ercp-task" options="-verbose -bootclasspath D:/study/jdk1.8/jdk/jre/lib/rt.jar;D:/study/jdk1.8/jdk/jre/lib/jce.jar" />
+      <module name="pi-ercp-ui" options="-verbose -bootclasspath D:/study/jdk1.8/jdk/jre/lib/rt.jar;D:/study/jdk1.8/jdk/jre/lib/jce.jar" />
+    </option>
+  </component>
+</project>

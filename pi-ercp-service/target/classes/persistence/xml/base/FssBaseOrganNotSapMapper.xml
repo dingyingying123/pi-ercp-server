@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.base.FssBaseOrganNotSapMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.base.FssBaseOrganNotSap" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="organ_id" property="organId" jdbcType="VARCHAR" />
+    <result column="bukrs" property="bukrs" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="full_name" property="fullName" jdbcType="VARCHAR" />
+    <result column="waers" property="waers" jdbcType="VARCHAR" />
+    <result column="busi" property="busi" jdbcType="VARCHAR" />
+    <result column="busitext" property="busitext" jdbcType="VARCHAR" />
+    <result column="com_domain_tr" property="comDomainTr" jdbcType="VARCHAR" />
+    <result column="domaintext" property="domaintext" jdbcType="VARCHAR" />
+    <result column="zz_invalid" property="zzInvalid" jdbcType="VARCHAR" />
+    <result column="zz_inclusion" property="zzInclusion" jdbcType="VARCHAR" />
+    <result column="reserve" property="reserve" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="queryOrganNotSapList" resultMap="BaseResultMap">
+    select * from fss_base_organ_not_sap vo
+    <where>
+      <if test="bukrs != null and bukrs != ''">
+        and vo.bukrs like concat('%', #{bukrs}, '%')
+      </if>
+      <if test="name != null and name != ''">
+        and upper(vo.name) like concat('%', #{name}, '%')
+      </if>
+      <if test="fullName != null and fullName != ''">
+        and vo.full_name like concat('%', #{fullName}, '%')
+      </if>
+      <if test="waers != null and waers != ''">
+        and vo.waers = #{waers}
+      </if>
+      <if test="busi != null and busi != ''">
+        and vo.busi like concat('%', #{busi}, '%')
+      </if>
+      <if test="busitext != null and busitext != ''">
+        and vo.busitext like concat('%', #{busitext}, '%')
+      </if>
+      <if test="comDomainTr != null and comDomainTr != ''">
+        and vo.com_domain_tr like concat('%', #{comDomainTr}, '%')
+      </if>
+      <if test="domaintext != null and domaintext != ''">
+        and vo.domaintext like concat('%', #{domaintext}, '%')
+      </if>
+      <if test="zzInvalid != null and zzInvalid != ''">
+        and vo.zz_invalid = #{zzInvalid}
+      </if>
+      <if test="zzInclusion != null and zzInclusion != ''">
+        and vo.zz_inclusion = #{zzInclusion}
+      </if>
+    </where>
+    order by vo.create_time desc
+  </select>
+</mapper>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.base.FssBaseGuaranteeReminderMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.base.FssBaseGuaranteeReminder" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="reminder_id" property="reminderId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="condition" property="condition" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="commercian_unit_id" property="commercianUnitId" jdbcType="VARCHAR" />
+    <result column="commercian_unit" property="commercianUnit" jdbcType="VARCHAR" />
+    <result column="dept" property="dept" jdbcType="VARCHAR" />
+    <result column="dept_id" property="deptId" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="queryGuaranteeReminderList" resultMap="BaseResultMap">
+    select * from fss_base_guarantee_reminder
+    <where>
+      <if test="userId != null and userId != ''">
+        user_id like concat('%', #{userId}, '%')
+      </if>
+      <if test="userName != null and userName != ''">
+        and user_name like concat('%', #{userName}, '%')
+      </if>
+      <include refid="query_user"></include>
+    </where>
+    order by create_time desc
+  </select>
+
+  <sql id="query_user">
+    <if test="commercianUnitId != null and commercianUnitId != ''">
+      1=1 and commercian_unit_id =#{commercianUnitId}
+    </if>
+    <if test="deptId != null and deptId != ''">
+       and dept_id =#{deptId}
+    </if>
+  </sql>
+
+
+</mapper>

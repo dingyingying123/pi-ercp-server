@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.auth.persistence.mapper.CesRouterMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.auth.persistence.entity.CesRouter">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="zh_Name" jdbcType="VARCHAR" property="zhName" />
+    <result column="en_Name" jdbcType="VARCHAR" property="enName" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="component" jdbcType="VARCHAR" property="component" />
+    <result column="no_cache" jdbcType="VARCHAR" property="noCache" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="not_add" jdbcType="VARCHAR" property="notAdd" />
+    <result column="valid" jdbcType="VARCHAR" property="valid" />
+    <result column="place" jdbcType="VARCHAR" property="place" />
+    <result column="auth" jdbcType="SMALLINT" property="auth" />
+    <result column="custom_auth" jdbcType="VARCHAR" property="customAuth" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updator" jdbcType="VARCHAR" property="updator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="appcod" jdbcType="VARCHAR" property="appcod" />
+  </resultMap>
+
+   <select id="selectRouting" resultMap="BaseResultMap">
+    select * from ces_router where appcod = #{appcod}
+    and valid = #{valid}
+   </select>
+
+  <select id="getOne" resultMap="BaseResultMap">
+    select * from ces_router where id = #{id}
+  </select>
+
+  <update id="updateRouting">
+    update  ces_router
+    <trim prefix="set" suffixOverrides=",">
+    <if test="cesRouter.zhName != null and cesRouter.zhName != ''">
+      zh_Name = #{cesRouter.zhName},
+    </if>
+    <if test="cesRouter.enName != null and cesRouter.enName != ''">
+      en_Name  = #{cesRouter.enName},
+    </if>
+      <if test="cesRouter.title != null and cesRouter.title != ''">
+        title  = #{cesRouter.title},
+      </if>
+      <if test="cesRouter.path != null and cesRouter.path != ''">
+        path  = #{cesRouter.path},
+      </if>
+      <if test="cesRouter.component != null and cesRouter.component != ''">
+        component  = #{cesRouter.component},
+      </if>
+      <if test="cesRouter.noCache != null and cesRouter.noCache != ''">
+        no_cache  = #{cesRouter.noCache},
+      </if>
+      <if test="cesRouter.name != null and cesRouter.name != ''">
+        name  = #{cesRouter.name},
+      </if>
+      <if test="cesRouter.notAdd != null and cesRouter.notAdd != ''">
+        not_add  = #{cesRouter.notAdd},
+      </if>
+      <if test="cesRouter.valid != null and cesRouter.valid != ''">
+        valid  = #{cesRouter.valid},
+      </if>
+      <if test="cesRouter.place != null and cesRouter.place != ''">
+        place  = #{cesRouter.place},
+      </if>
+      <if test="cesRouter.auth != null and cesRouter.auth != ''">
+        auth  = #{cesRouter.auth},
+      </if>
+      <if test="cesRouter.customAuth != null and cesRouter.customAuth != ''">
+        customAuth  = #{cesRouter.customAuth},
+      </if><if test="cesRouter.remark != null and cesRouter.remark != ''">
+      remark  = #{cesRouter.remark},
+    </if>
+    updator = #{cesRouter.updator},update_time = #{cesRouter.updateTime}
+  </trim>
+    where id = #{cesRouter.id}
+  </update>
+
+  <update id="deleteRouting">
+    update ces_router set valid = '0' where id = #{id}
+  </update>
+
+  <select id="selectCondition" resultMap="BaseResultMap">
+    select * from ces_router
+    <where>
+        appcod = #{cesRouter.appcod}
+      <if test="title != null and title != '' ">
+        and title  like CONCAT('%',#{cesRouter.title},'%' )
+      </if>
+      <if test="zhName != null and zhName != '' ">
+        AND zh_name  like CONCAT('%',#{cesRouter.zhName},'%' )
+      </if>
+      <if test="enName != null and enName != '' ">
+        AND en_name like CONCAT('%',#{cesRouter.enName},'%' )
+      </if>
+    </where>
+  </select>
+</mapper>

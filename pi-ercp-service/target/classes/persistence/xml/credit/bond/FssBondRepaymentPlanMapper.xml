@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.credit.bond.FssBondRepaymentPlanMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.credit.bond.FssBondRepaymentPlan" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="plan_id" property="planId" jdbcType="VARCHAR" />
+    <result column="total_plan" property="totalPlan" jdbcType="NUMERIC" />
+    <result column="plan_date" property="planDate" jdbcType="VARCHAR" />
+    <result column="plan_repayment_amount" property="planRepaymentAmount" jdbcType="NUMERIC" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="dw_id" property="dwId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="BaseResultMapVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.credit.FssBondRepaymentPlanVO">
+    <result column="amountRepaid" property="amountRepaid" jdbcType="NUMERIC" />
+    <result column="this_repayment" property="thisRepayment" jdbcType="NUMERIC" />
+  </resultMap>
+
+  <select id="queryRepaymentPlanList" resultMap="BaseResultMapVO">
+    select p.*,sum(r.this_repayment) as amountRepaid from fss_bond_repayment_plan p left join fss_bond_redeem r on p.plan_id=r.plan_id
+    <where>
+      <if test="dwId != null and dwId != ''">
+        p.dw_id = #{dwId}
+      </if>
+      <if test="planDate != null and planDate != ''">
+        and p.plan_date &gt;= #{planDate}
+      </if>
+    </where>
+    group by p.plan_id
+    order by p.plan_date
+  </select>
+
+  <select id="queryRepaymentBalanceList" resultMap="BaseResultMapVO">
+    select p.dw_id, sum(coalesce(p.plan_repayment_amount,0)) as plan_repayment_amount,sum(coalesce(r.this_repayment,0)) as amountRepaid
+    from fss_bond_repayment_plan p left join fss_bond_redeem r on p.plan_id=r.plan_id
+    <where>
+      <if test="dwId != null and dwId != ''">
+        p.dw_id = #{dwId}
+      </if>
+      <if test="planDate != null and planDate != ''">
+        and p.plan_date &gt;= #{planDate}
+      </if>
+    </where>
+    group by p.dw_id
+  </select>
+
+  <select id="queryLastDatePlan" resultType="java.lang.String">
+    select max(plan_date) from fss_bond_repayment_plan where dw_id=#{dwId}
+  </select>
+
+  <select id="queryRepaymentLastBalance" resultMap="BaseResultMap">
+    select p.plan_repayment_amount-COALESCE(dr.this_repayment,0) as plan_repayment_amount,p.* from fss_bond_repayment_plan p left join
+    (select r.plan_id,sum(r.this_repayment) as this_repayment from fss_bond_redeem r where r.dw_id=#{dwId} group by r.plan_id) as dr
+    on p.plan_id=dr.plan_id
+    where p.dw_id=#{dwId} and p.plan_repayment_amount-COALESCE(dr.this_repayment,0) &gt; 0
+  </select>
+  <select id="getRepaymentPlan" resultMap="BaseResultMapVO">
+      select p.*,sum(r.this_repayment) as amountRepaid from fss_bond_repayment_plan p left join fss_bond_redeem r on p.plan_id=r.plan_id
+    <where>
+       #{fssBondDealWithIssueVO.queryDeadDate} <![CDATA[ <= ]]> to_date(p.plan_date,'yyyy-MM-dd')
+      AND p.plan_date <![CDATA[ <= ]]> #{afeteOneYear}
+      <if test="dwId != null and dwId != ''">
+        p.dw_id = #{dwId}
+      </if>
+    </where>
+    group by p.plan_id
+    order by p.create_time
+  </select>
+
+  <select id="queryBondOneYearBalance" resultMap="BaseResultMapVO">
+    SELECT SUM ( coalesce(redeem.this_repayment,0) ) - SUM( coalesce(repayment.plan_repayment_amount,0) ) as amountRepaid,SUM ( coalesce(redeem.this_repayment,0) ) as this_repayment,
+     SUM( coalesce(repayment.plan_repayment_amount,0) ) as plan_repayment_amount
+    FROM fss_bond_redeem redeem right join fss_bond_repayment_plan repayment on redeem.dw_id = repayment.dw_id and  redeem.plan_id=repayment.plan_id
+    WHERE to_date(repayment.plan_date,'yyyy-MM-dd')  &gt;=   #{queryDeadDate} and repayment.plan_date &lt;= #{planDate}
+    AND repayment.dw_id = #{dwId}
+  </select>
+
+  <select id="queryOneYearRepaymentPlanList" resultMap="BaseResultMapVO">
+    select p.*,sum(r.this_repayment) as amountRepaid from fss_bond_repayment_plan p left join fss_bond_redeem r on p.plan_id=r.plan_id
+    <where>
+      <if test="dwId != null and dwId != ''">
+        p.dw_id = #{dwId}
+      </if>
+      <if test="queryDeadDate != null">
+        and to_date(p.plan_date,'yyyy-MM-dd') &gt;= #{queryDeadDate}
+      </if>
+      <if test="planDate != null and planDate != ''">
+        and p.plan_date &lt;= #{planDate}
+      </if>
+    </where>
+    group by p.plan_id
+    order by p.create_time
+  </select>
+</mapper>

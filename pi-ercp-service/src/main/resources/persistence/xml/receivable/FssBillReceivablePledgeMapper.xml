@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.receivable.FssBillReceivablePledgeMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBillReceivablePledgeEntity" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="BaseResultMap" property="receId" jdbcType="VARCHAR" />
+    <result column="rece_id" property="receId" jdbcType="VARCHAR" />
+    <result column="ple_date" property="pleDate" jdbcType="VARCHAR" />
+    <result column="ple_stop_date" property="pleStopDate" jdbcType="VARCHAR" />
+    <result column="ple_organ" property="pleOrgan" jdbcType="VARCHAR" />
+    <result column="ple_purpose" property="plePurpose" jdbcType="VARCHAR" />
+    <result column="dec_date" property="decDate" jdbcType="VARCHAR" />
+
+
+  </resultMap>
+  <select id="selReceivablePledge" parameterType="String" resultType="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBillReceivablePledgeEntity">
+    select rece_id as receId, ple_date as pleDate,ple_stop_date as pleStopDate,ple_organ as pleOrgan,
+    ple_purpose as plePurpose, dec_date as decDate from fss_bill_receivable_pledge where rece_id = #{receId}
+  </select>
+  <!--新增数据-->
+  <insert id="addFssBillReceivablePledge" parameterType="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBillReceivablePledgeEntity">
+      insert  into fss_bill_receivable_pledge(rece_id,ple_date,ple_stop_date,ple_organ,ple_purpose,dec_date) values
+      (#{receId},#{pleDate},#{pleStopDate},#{pleOrgan},#{plePurpose},#{decDate})
+  </insert>
+  <update id="updFssBillReceivablePledge" parameterType="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBillReceivablePledgeEntity">
+    update fss_bill_receivable_pledge set rece_id = #{receId}
+    <if test="pleDate!=null">
+      ,ple_date = #{pleDate}
+    </if>
+    <if test="pleStopDate!=null">
+      ,ple_stop_date = #{pleStopDate}
+    </if>
+    <if test="pleOrgan!=null">
+      ,ple_organ = #{pleOrgan}
+    </if>
+    <if test="plePurpose!=null">
+      ,ple_purpose = #{plePurpose}
+    </if>
+    <if test="decDate!=null">
+      ,dec_date = #{decDate}
+    </if>
+    where rece_id = #{receId}
+  </update>
+</mapper>

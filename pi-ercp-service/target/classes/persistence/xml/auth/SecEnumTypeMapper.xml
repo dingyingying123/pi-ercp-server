@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.auth.persistence.mapper.SecEnumTypeMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.auth.persistence.entity.SecEnumType">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="type_id" jdbcType="VARCHAR" property="typeId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="creater" jdbcType="VARCHAR" property="creater" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updator" jdbcType="VARCHAR" property="updator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="VARCHAR" property="deleted" />
+    <result column="english_name" jdbcType="VARCHAR" property="englishName" />
+    <result column="key" jdbcType="VARCHAR" property="key" />
+    <result column="system" jdbcType="VARCHAR" property="system" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+
+  <select id="selectByCondition" resultMap="BaseResultMap">
+    select  * from sec_enum_type  where deleted='0'
+    <if test="system != null and system != ''">
+      and system=#{system}
+    </if>
+    <if test="key !='' and  key!=null">
+      AND key like CONCAT('%',#{key},'%' )
+    </if>
+    <if test="name !='' and  name!=null">
+      AND name like CONCAT(CONCAT('%',#{name},'%' ))
+    </if>
+    <if test="englishName!='' and englishName != null">
+      AND english_name like CONCAT(CONCAT('%',#{englishName},'%' ))
+    </if>
+    order by create_time desc
+  </select>
+  <select id="selectId" resultMap="BaseResultMap">
+    select  * from sec_enum_type
+    <where>
+      deleted ='0'
+      <if test="secEnumType.system != null and secEnumType.system != ''">
+        and system=#{secEnumType.system}
+      </if>
+    </where>
+  </select>
+
+  <update id="deletedEnumType">
+    update sec_enum_type SET deleted = '1'
+    where type_id IN
+    <foreach close=")" collection="typeIds" item="id" open="(" separator=","> #{id} </foreach>
+  </update>
+</mapper>

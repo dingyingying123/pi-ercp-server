@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.credit.factoring.FssFactoringWithdrawApplicationMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.credit.factoring.FssFactoringWithdrawApplication" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="fwa_id" property="fwaId" jdbcType="VARCHAR" />
+    <result column="letter_number" property="letterNumber" jdbcType="VARCHAR" />
+    <result column="organ_name" property="organName" jdbcType="VARCHAR" />
+    <result column="organ_id" property="organId" jdbcType="VARCHAR" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="project_id" property="projectId" jdbcType="VARCHAR" />
+    <result column="factoring_type" property="factoringType" jdbcType="VARCHAR" />
+    <result column="factoring_bank" property="factoringBank" jdbcType="VARCHAR" />
+    <result column="factoring_bank_id" property="factoringBankId" jdbcType="VARCHAR" />
+    <result column="currency_name" property="currencyName" jdbcType="VARCHAR" />
+    <result column="financing_amount" property="financingAmount" jdbcType="NUMERIC" />
+    <result column="actual_payment_amount" property="actualPaymentAmount" jdbcType="NUMERIC" />
+    <result column="contract_interest_rate" property="contractInterestRate" jdbcType="NUMERIC" />
+    <result column="factoring_period" property="factoringPeriod" jdbcType="INTEGER" />
+    <result column="contract_name" property="contractName" jdbcType="VARCHAR" />
+    <result column="contract_code" property="contractCode" jdbcType="VARCHAR" />
+    <result column="with_letter_number" property="withLetterNumber" jdbcType="VARCHAR" />
+    <result column="with_applicant_id" property="withApplicantId" jdbcType="VARCHAR" />
+    <result column="with_applicant_name" property="withApplicantName" jdbcType="VARCHAR" />
+    <result column="with_applicant_dept_id" property="withApplicantDeptId" jdbcType="VARCHAR" />
+    <result column="with_applicant_dept" property="withApplicantDept" jdbcType="VARCHAR" />
+    <result column="with_applicant_date" property="withApplicantDate" jdbcType="DATE" />
+    <result column="withdrawn_amount" property="withdrawnAmount" jdbcType="NUMERIC" />
+    <result column="appliaction_payment_amount" property="appliactionPaymentAmount" jdbcType="NUMERIC" />
+    <result column="interest_rate_type" property="interestRateType" jdbcType="VARCHAR" />
+    <result column="interest_rate_floating" property="interestRateFloating" jdbcType="VARCHAR" />
+    <result column="floating_ratio" property="floatingRatio" jdbcType="NUMERIC" />
+    <result column="payment_method" property="paymentMethod" jdbcType="VARCHAR" />
+    <result column="interest_payment_date" property="interestPaymentDate" jdbcType="DATE" />
+    <result column="handling_method" property="handlingMethod" jdbcType="VARCHAR" />
+    <result column="total_handling_fee" property="totalHandlingFee" jdbcType="NUMERIC" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="document_status" property="documentStatus" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="active" property="active" jdbcType="VARCHAR" />
+    <result column="fc_id" property="fcId" jdbcType="VARCHAR" />
+    <result column="close_date" property="closeDate" jdbcType="DATE" />
+    <result column="currency_code" property="currencyCode" jdbcType="VARCHAR" />
+    <result column="currency_id" property="currencyId" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="BaseResultMapVO" type="cn.com.personnel.ercp.pi.module.credit.FactoringWithdrawApplicationVO">
+    <result column="amountall" property="amountall" jdbcType="NUMERIC" />
+  </resultMap>
+  <select id="listClose" resultMap="BaseResultMap">
+    select * from fss_factoring_withdraw_application
+    <where>
+        active = '1'
+      and (CURRENT_DATE-close_date)>90
+    </where>
+  </select>
+  <select id="listApplicationOrWithdraw" resultMap="BaseResultMapVO">
+    select * from (
+    select fwa.*,coalesce(sum(fw.withdraw_amount),0) as amountall
+    from fss_factoring_withdraw_application fwa
+    left join fss_factoring_withdraw fw on fwa.fwa_id = fw.fwa_id
+    where 90>(CURRENT_DATE-fwa.close_date)  and fwa.document_status = '审批通过'
+    group by fwa.fwa_id)table1
+    <where>
+        active = '1'
+      and (appliaction_payment_amount-amountAll) > 0
+      <if test="fwa.fcId!=null and fwa.fcId!=''">
+        and fc_id = #{fwa.fcId}
+      </if>
+    </where>
+    order by letter_number
+  </select>
+  <select id="getSumWithdrawnAmount" resultType="java.math.BigDecimal">
+    select coalesce(sum(appliaction_payment_amount),0) from fss_factoring_withdraw_application
+    <if test="fwa.fcId!=null and fwa.fcId!=''">
+      <where>
+        active = '1'
+        and fc_id = #{fwa.fcId}
+      </where>
+    </if>
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+    select * from fss_factoring_withdraw_application c
+    <where>active='1'
+      <if test="contractName != null and contractName != ''">
+        and c.contract_name like concat('%', #{contractName}, '%')
+      </if>
+      <if test="organName != null and organName != ''">
+        and c.organ_name like concat('%', #{organName}, '%')
+      </if>
+      <if test="projectName != null and projectName != ''">
+        and c.project_name like concat('%', #{projectName}, '%')
+      </if>
+      <if test="factoringBank != null and factoringBank != ''">
+        and c.factoring_bank like concat('%', #{factoringBank}, '%')
+      </if>
+      <if test="factoringType != null and factoringType != ''">
+        and c.factoring_type = #{factoringType}
+      </if>
+      <if test="documentStatus != null and documentStatus != ''">
+        and c.document_status = #{documentStatus}
+      </if>
+      <if test="creator != null and creator != ''">
+        and c.organ_id in (select bu.bukrs from  fss_base_role_organ_busi bu join sec_user_role ur on bu.role_id=ur.role_id
+        and ur.user_id=#{creator} group by bu.bukrs)
+      </if>
+    </where>
+    order by with_letter_number desc
+  </select>
+  <select id="selectMaxNumber" resultType="java.lang.Integer">
+      SELECT
+      coalesce(MAX(regexp_replace(letter_number,'('|| #{prefix} ||')(\d{4})','\2','g')::int +1),1) as str
+      FROM
+        fss_factoring_withdraw_application
+      WHERE letter_number ~ ('^'|| #{prefix} ||'\d{4}$')
+    </select>
+</mapper>

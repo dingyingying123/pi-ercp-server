@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.credit.factoring.FssFactoringSalesContractMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.credit.factoring.FssFactoringSalesContract" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ffsc_id" property="ffscId" jdbcType="VARCHAR" />
+    <result column="business_date" property="businessDate" jdbcType="DATE" />
+    <result column="sales_contract" property="salesContract" jdbcType="VARCHAR" />
+    <result column="customer_company_name" property="customerCompanyName" jdbcType="VARCHAR" />
+    <result column="customer_company_id" property="customerCompanyId" jdbcType="VARCHAR" />
+    <result column="contract_signer" property="contractSigner" jdbcType="VARCHAR" />
+    <result column="contract_signer_id" property="contractSignerId" jdbcType="VARCHAR" />
+    <result column="contract_signing_date" property="contractSigningDate" jdbcType="DATE" />
+    <result column="total_contract_price" property="totalContractPrice" jdbcType="NUMERIC" />
+    <result column="refunded_amount" property="refundedAmount" jdbcType="NUMERIC" />
+    <result column="invoicing_situation" property="invoicingSituation" jdbcType="VARCHAR" />
+    <result column="cargo_delivery_list" property="cargoDeliveryList" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="related_id" property="relatedId" jdbcType="VARCHAR" />
+    <result column="related_type" property="relatedType" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="active" property="active" jdbcType="VARCHAR" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.base.FssBaseDepartmentLeaderMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.base.FssBaseDepartmentLeader">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="department_id" jdbcType="VARCHAR" property="departmentId" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="unit_id" jdbcType="VARCHAR" property="unitId" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <select id="queryDepartmentLeaderList" resultMap="BaseResultMap">
+    select * from fss_base_department_leader
+    <where>
+      <if test="department != null and department != ''">
+         (department like concat('%', #{department}, '%') or department_id like concat('%', #{department}, '%'))
+       </if>
+      <if test="name != null and name != ''">
+          and (name like concat('%', #{name}, '%') or code like concat('%', #{name}, '%'))
+       </if>
+      <if test="unit != null and unit != ''">
+          and (unit like concat('%', #{unit}, '%') or unit_id like concat('%', #{unit}, '%'))
+       </if>
+    </where>
+    order by create_time desc
+  </select>
+</mapper>

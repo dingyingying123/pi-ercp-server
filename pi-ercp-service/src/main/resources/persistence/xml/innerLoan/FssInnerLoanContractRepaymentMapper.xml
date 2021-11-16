@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.innerLoan.FssInnerLoanContractRepaymentMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.innerLoan.FssInnerLoanContractRepayment" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="repayment_id" property="repaymentId" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="contract_name" property="contractName" jdbcType="VARCHAR" />
+    <result column="loan_organization" property="loanOrganization" jdbcType="VARCHAR" />
+    <result column="loan_organization_id" property="loanOrganizationId" jdbcType="VARCHAR" />
+    <result column="repayment_date" property="repaymentDate" jdbcType="DATE" />
+    <result column="currency_type" property="currencyType" jdbcType="VARCHAR" />
+    <result column="exchange_rate" property="exchangeRate" jdbcType="NUMERIC" />
+    <result column="repayment_amount" property="repaymentAmount" jdbcType="NUMERIC" />
+    <result column="discount_amount" property="discountAmount" jdbcType="NUMERIC" />
+    <result column="credit_date" property="creditDate" jdbcType="DATE" />
+    <result column="credit_status" property="creditStatus" jdbcType="VARCHAR" />
+    <result column="calculation_status" property="calculationStatus" jdbcType="VARCHAR" />
+    <result column="error_message" property="errorMessage" jdbcType="VARCHAR" />
+    <result column="sap_document_no" property="sapDocumentNo" jdbcType="VARCHAR" />
+    <result column="reversal_status" property="reversalStatus" jdbcType="VARCHAR" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="repayment_type" property="repaymentType" jdbcType="VARCHAR" />
+    <result column="interest_settle_way" property="interestSettleWay" jdbcType="VARCHAR" />
+    <result column="revision" property="revision" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
+    <result column="manage_id" property="manageId" jdbcType="VARCHAR" />
+    <result column="business_date" property="businessDate" jdbcType="DATE" />
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <result column="lender_company_name" property="lenderCompanyName" jdbcType="VARCHAR" />
+    <result column="lender_company_id" property="lenderCompanyId" jdbcType="VARCHAR" />
+    <result column="plan_id" property="planId" jdbcType="VARCHAR" />
+    <result column="contract_num" jdbcType="VARCHAR" property="contractNum" />
+    <result column="entry_number" property="entryNumber" jdbcType="VARCHAR" />
+    <result column="group_no" property="groupNo" jdbcType="VARCHAR" />
+    <result column="sap_reversal_document_no" jdbcType="VARCHAR" property="sapReversalDocumentNo" />
+    <result column="reversal_error_message" jdbcType="VARCHAR" property="reversalErrorMessage" />
+  </resultMap>
+
+  <resultMap id="BaseResultMapVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.innerLoan.FssInnerLoanContractRepaymentVo">
+    <result column="start_date" property="startDate" jdbcType="DATE"/>
+    <result column="end_date" property="endDate" jdbcType="DATE"/>
+  </resultMap>
+
+  <select id="queryList" resultMap="BaseResultMapVO">
+    select * from fss_inner_loan_contract_repayment
+    <where>
+      <if test="repaymentVo.manageId !=null and repaymentVo.manageId !=''">
+        and manage_id =#{repaymentVo.manageId}
+      </if>
+      <if test="repaymentVo.creditStatus !=null and repaymentVo.creditStatus !=''">
+        and credit_status=#{repaymentVo.creditStatus}
+      </if>
+      <if test="repaymentVo.startDate !=null ">
+        and repayment_date &gt;=#{repaymentVo.startDate}
+      </if>
+      <if test="repaymentVo.endDate !=null ">
+        and repayment_date &lt;=#{repaymentVo.endDate}
+      </if>
+      order by repayment_date
+    </where>
+
+  </select>
+  <select id="selectExpireReminderList" resultType="cn.com.personnel.ercp.pi.module.innerLoan.FssInnerLoanContractRepaymentReminder">
+    select manage.contract_num AS contractNum,
+    manage.contract_name AS contractName,
+    manage.company_name AS companyName,
+    manage.lender_company_name AS lenderCompanyName,
+    plan.plan_date AS planDate,
+    plan.plan_date - CURRENT_DATE AS days,
+    manage.currency_type AS currencyType,
+    plan.planned_repayment_amount AS plannedRepaymentAmount
+    FROM
+    fss_inner_loan_contract_manage manage,
+    fss_inner_loan_contract_repayment_plan plan
+    where manage.manage_id=plan.manage_id
+    and plan.planned_repayment_amount-
+    (select sum(item.this_repayment_amount)
+    from fss_inner_loan_contract_repayment_item item where item.plan_id=plan.repayment_id)>0
+    <if test="repaymentReminder.expireDate != null and repaymentReminder.expireDate != ''">
+     and plan.plan_date <![CDATA[ >= ]]>CURRENT_DATE and plan.plan_date <![CDATA[ <= ]]> to_date(#{repaymentReminder.expireDate},'yyyy-MM-dd')
+    </if>
+    <if test="repaymentReminder.companyName != null and repaymentReminder.companyName != ''">
+      and manage.company_name like concat('%', #{repaymentReminder.companyName}, '%')
+    </if>
+    <if test="repaymentReminder.lenderCompanyName != null and repaymentReminder.lenderCompanyName != ''">
+      and manage.lender_company_name like concat('%', #{repaymentReminder.lenderCompanyName}, '%')
+    </if>
+    <if test="repaymentReminder.contractNum != null and repaymentReminder.contractNum != ''">
+      and manage.contract_num like concat('%', #{repaymentReminder.contractNum}, '%')
+    </if>
+    <if test="repaymentReminder.contractName != null and repaymentReminder.contractName != ''">
+      and manage.contract_name = #{repaymentReminder.contractName}
+    </if>
+    order by days asc
+  </select>
+  <!-- 查询还款总金额 -->
+  <select id="getRepaymentAmountThisYear" resultType="java.math.BigDecimal">
+    select sum(repayment_amount) from fss_inner_loan_contract_repayment i join fss_inner_loan_contract_manage m on i.manage_id=m.manage_id
+      where i.repayment_date &lt;=#{lastDay}
+      AND i.repayment_date>=#{firstDay}
+      AND i.company_id=#{companyId}
+  </select>
+
+  <select id="queryNotEntryAccruals" resultMap="BaseResultMap">
+    select * from fss_inner_loan_contract_repayment i
+    where i.credit_status not in ('入账中', '部分入账', '已入账')
+    and i.repayment_id not in (select sub_id from fss_inner_loan_accounting_documents where entry_type='还款' group by sub_id)
+    <if test="startDate !=null and startDate != ''">
+      and to_char(i.repayment_date, 'yyyy-MM-dd') &gt;=#{startDate}
+    </if>
+    <if test="endDate !=null and endDate != ''">
+      and to_char(i.repayment_date, 'yyyy-MM-dd') &lt;#{endDate}
+    </if>
+    order by i.manage_id,i.repayment_date
+  </select>
+</mapper>

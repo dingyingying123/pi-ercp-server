@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.loan.FssLoanContractActualRepaymentPlanMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.loan.FssLoanContractActualRepaymentPlan" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="actual_repayment_id" property="actualRepaymentId" jdbcType="VARCHAR" />
+    <result column="plan_date" property="planDate" jdbcType="DATE" />
+    <result column="actual_planned_repayment_amount" property="actualPlannedRepaymentAmount" jdbcType="NUMERIC" />
+    <result column="main_id" property="mainId" jdbcType="VARCHAR" />
+    <result column="manage_id" property="manageId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="DATE" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="plan_repayment_amount" property="planRepaymentAmount" jdbcType="NUMERIC" />
+      <result column="branch_id" jdbcType="VARCHAR" property="branchId" />
+      <result column="branch_name" jdbcType="VARCHAR" property="branchName" />
+  </resultMap>
+
+  <resultMap id="ExcelModel" type="cn.com.personnel.ercp.pi.module.loan.ActualRepaymentPlanExcelModel">
+    <result column="actualRepaymentId" property="actualRepaymentId"/>
+    <result column="planDate" property="planDate"/>
+    <result column="plannedRepaymentAmount" property="plannedRepaymentAmount"/>
+    <result column="planAmount" property="planAmount"/>
+    <result column="contractName" property="contractName"/>
+  </resultMap>
+    <delete id="deleteByMainId">
+        delete from fss_loan_contract_actual_repayment_plan where main_id=#{drawApplyId}
+    </delete>
+
+    <select id="queryExcelDataByMainId" resultMap="ExcelModel">
+    SELECT
+        actual_repayment_id AS actualRepaymentId,
+        plan_date AS planDate,
+        plan_repayment_amount as planAmount,
+        actual_planned_repayment_amount AS plannedRepaymentAmount,
+        flcm.contract_name as contractName
+    FROM
+        fss_loan_contract_actual_repayment_plan flcarp
+        left join fss_loan_contract_manage flcm
+        on flcm.manage_id = flcarp.manage_id
+    WHERE
+        flcarp.main_id =#{ drawApplyId }
+  </select>
+    <select id="getDifferenceDataByDrawApplyId" resultType="java.math.BigDecimal">
+        select (#{applyAmount} - sum(actual_planned_repayment_amount)) as result from  fss_loan_contract_actual_repayment_plan where  main_id=#{drawApplyId}
+    </select>
+    <select id="getLastRepaymentPlanByDrawApplyId" resultMap="BaseResultMap">
+        select * from fss_loan_contract_actual_repayment_plan where main_id=#{drawApplyId} order by plan_date desc limit 1
+    </select>
+
+    <select id="queryAmountByMainId" resultType="java.math.BigDecimal">
+        select coalesce(sum(actual_planned_repayment_amount), 0) from fss_loan_contract_actual_repayment_plan where main_id=#{drawApplyId} and branch_id=#{branchId}
+    </select>
+
+    <select id="queryPlanAmountByMainId" resultType="java.math.BigDecimal">
+        select coalesce(sum(plan_repayment_amount), 0) from fss_loan_contract_actual_repayment_plan where main_id=#{drawApplyId} and branch_id=#{branchId}
+    </select>
+
+    <update id="updateDrawApplyPlanAmount">
+        <if test="plan.planRepaymentAmount != null and plan.planRepaymentAmount != ''">
+            update fss_loan_contract_actual_repayment_plan set plan_repayment_amount=#{plan.planRepaymentAmount}
+            <where>
+                <if test="manageId != null and manageId != ''">
+                    manage_id=#{manageId}
+                </if>
+                <if test="plan.planDate != null">
+                    and plan_date=#{plan.planDate}
+                </if>
+                <if test="plan.branchId != null and plan.branchId != ''">
+                    and branch_id=#{plan.branchId}
+                </if>
+            </where>
+        </if>
+    </update>
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.base.FssBaseRoleOrganBusiMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.base.FssBaseRoleOrganBusi" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="rob_id" property="robId" jdbcType="VARCHAR" />
+    <result column="mandt" property="mandt" jdbcType="VARCHAR" />
+    <result column="ro_id" property="roId" jdbcType="VARCHAR" />
+    <result column="busi" property="busi" jdbcType="VARCHAR" />
+    <result column="busi_text" property="busiText" jdbcType="VARCHAR" />
+    <result column="role_id" property="roleId" jdbcType="VARCHAR" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="bukrs" property="bukrs" jdbcType="VARCHAR" />
+    <result column="butxt" property="butxt" jdbcType="VARCHAR" />
+    <result column="full_name" property="fullName" jdbcType="VARCHAR" />
+    <result column="com_domain_tr" property="comDomainTr" jdbcType="VARCHAR" />
+    <result column="domain_text" property="domainText" jdbcType="VARCHAR" />
+    <result column="zz_invalid" property="zzInvalid" jdbcType="VARCHAR" />
+    <result column="zz_inclusion" property="zzInclusion" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="deleted" property="deleted" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="queryOrganByRole" resultType="java.lang.String">
+    select bukrs from  fss_base_role_organ_busi where role_id=#{roleId}
+  </select>
+
+  <select id="queryRoleOrganList" resultMap="BaseResultMap">
+    select * from fss_base_role_organ_busi o
+    where o.deleted='0'
+    <if test="busi != null and busi != ''">
+      and (o.busi like concat('%', #{busi}, '%') or o.busi_text like concat('%', #{busi}, '%'))
+    </if>
+    <if test="butxt != null and butxt != ''">
+      and (o.butxt like concat('%', #{butxt}, '%') or o.bukrs like concat('%', #{butxt}, '%'))
+    </if>
+    <if test="bukrs != null and bukrs != ''">
+      and o.bukrs like concat('%', #{bukrs}, '%')
+    </if>
+    <if test="roleName != null and roleName != ''">
+      and o.role_name like concat('%', #{roleName}, '%')
+    </if>
+    order by o.busi,o.bukrs
+  </select>
+  
+  <delete id="deleteOrganList">
+    delete from fss_base_role_organ_busi where rob_id in 
+    <foreach collection="fssBaseRoleOrganNusiList" item="item" separator="," open="(" close=")">#{item.robId}</foreach>
+  </delete>
+</mapper>

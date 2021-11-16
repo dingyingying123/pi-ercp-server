@@ -1,0 +1,328 @@
+/*====================公共样式=========================*/
+.pt-5 {
+	padding-top: 5px
+}
+
+.pt-10 {
+	padding-top: 10px
+}
+
+.pt-15 {
+	padding-top: 15px
+}
+
+.pt-20 {
+	padding-top: 20px
+}
+
+.pb-5 {
+	padding-bottom: 5px
+}
+
+.pb-10 {
+	padding-bottom: 10px
+}
+
+.pb-15 {
+	padding-bottom: 15px
+}
+
+.pb-20 {
+	padding-bottom: 20px
+}
+
+.pl-5 {
+	padding-left: 5px
+}
+
+.pl-10 {
+	padding-left: 10px
+}
+
+.pl-15 {
+	padding-left: 15px
+}
+
+.pl-20 {
+	padding-left: 20px
+}
+
+.pl-25 {
+	padding-left: 25px
+}
+
+.pr-5 {
+	padding-right: 5px
+}
+
+.pr-10 {
+	padding-right: 10px
+}
+
+.pr-15 {
+	padding-right: 15px
+}
+
+.pr-20 {
+	padding-right: 20px
+}
+
+.pd-5 {
+	padding: 5px
+}
+
+.pd-10 {
+	padding: 10px
+}
+
+.pd-15 {
+	padding: 15px
+}
+
+.pd-20 {
+	padding: 20px
+}
+
+.mt-5 {
+	margin-top: 5px
+}
+
+.mt-10 {
+	margin-top: 10px
+}
+
+.mt-15 {
+	margin-top: 15px
+}
+
+.mt-20 {
+	margin-top: 20px
+}
+
+.mt-25 {
+	margin-top: 25px
+}
+
+.mt-30 {
+	margin-top: 30px
+}
+
+.mt-35 {
+	margin-top: 35px
+}
+
+.mt-40 {
+	margin-top: 40px
+}
+
+.mt-50 {
+	margin-top: 50px
+}
+
+.mt-60 {
+	margin-top: 60px
+}
+
+.mb-5 {
+	margin-bottom: 5px
+}
+
+.mb-10 {
+	margin-bottom: 10px
+}
+
+.mb-15 {
+	margin-bottom: 15px
+}
+
+.mb-20 {
+	margin-bottom: 20px
+}
+
+.mb-25 {
+	margin-bottom: 25px
+}
+
+.mb-30 {
+	margin-bottom: 30px
+}
+
+.mb-35 {
+	margin-bottom: 35px
+}
+
+.mb-40 {
+	margin-bottom: 40px
+}
+
+.mb-50 {
+	margin-bottom: 50px
+}
+
+.ml-0 {
+	margin-left: 0px
+}
+
+.ml-5 {
+	margin-left: 5px
+}
+
+.ml-10 {
+	margin-left: 10px
+}
+
+.ml-15 {
+	margin-left: 15px
+}
+
+.ml-20 {
+	margin-left: 20px
+}
+
+.ml-30 {
+	margin-left: 30px
+}
+
+.ml-40 {
+	margin-left: 40px
+}
+
+.ml-50 {
+	margin-left: 50px
+}
+
+.mr-5 {
+	margin-right: 5px
+}
+
+.mr-10 {
+	margin-right: 10px
+}
+
+.mr-15 {
+	margin-right: 15px
+}
+
+.mr-20 {
+	margin-right: 20px
+}
+
+.mr-30 {
+	margin-right: 30px
+}
+
+.mr-40 {
+	margin-right: 40px
+}
+
+.mr-50 {
+	margin-right: 50px
+}
+
+.pos-r {
+	position: relative
+}
+
+.pos-a {
+	position: absolute
+}
+
+.pos-f {
+	position: fixed
+}
+
+.f-12 {
+	font-size: 12px;
+}
+
+.form-group .input-sm {
+	height: 25px;
+	padding: 2px 5px;
+}
+
+.form-group1 .input-sm {
+	height: 25px;
+	padding: 2px 5px;
+}
+
+select.input-MINI {
+	height: 25px;
+	line-height: 25px;
+}
+
+.btn-np {
+	padding: 0px;
+}
+
+.w-133 {
+	width: 133px;
+}
+
+.portlet .portlet-title {
+	padding-left: 10px;
+	padding-right: 10px;
+	color: #fff;
+	min-height: 40px;
+}
+
+.portlet.green {
+	border: 1px solid #5cd1db;
+}
+
+.portlet.green .portlet-title {
+	background-color: #5cd1db;
+}
+
+.portlet.red {
+	border: 1px solid #e7505a;
+}
+
+.portlet.red .portlet-title {
+	background-color: #e7505a;
+}
+
+.portlet.blue {
+	border: 1px solid #3598dc;
+}
+
+.portlet.blue .portlet-title {
+	background-color: #3598dc;
+}
+
+.portlet.yellow {
+	border: 1px solid #d0b36e;
+}
+
+.portlet.yellow .portlet-title {
+	background-color: #d0b36e;
+}
+
+.portlet .portlet-title .caption {
+	float: left;
+	display: inline-block;
+	font-size: 16px;
+	line-height: 16px;
+	padding-top: 10px;
+}
+
+.portlet .portlet-title .tools {
+	float: right;
+	display: inline-block;
+	padding-top: 10px;
+}
+
+.portlet .portlet-title .tools a {
+	color: #fff;
+	font-size: 14px;
+	display: inline-block;
+	padding: 0px 5px;
+}
+
+.portlet .portlet-body {
+	padding: 15px;
+	overflow: auto;
+}
+
+.portlet .portlet-body.off {
+	display: none;
+}

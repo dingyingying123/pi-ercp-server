@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.sap.PrpsMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.sap.Prps" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="mandt" property="mandt" jdbcType="VARCHAR" />
+    <id column="pspnr" property="pspnr" jdbcType="VARCHAR" />
+    <result column="posid" property="posid" jdbcType="VARCHAR" />
+    <result column="post1" property="post1" jdbcType="VARCHAR" />
+    <result column="objnr" property="objnr" jdbcType="VARCHAR" />
+    <result column="psphi" property="psphi" jdbcType="VARCHAR" />
+    <result column="poski" property="poski" jdbcType="VARCHAR" />
+    <result column="ernam" property="ernam" jdbcType="VARCHAR" />
+    <result column="erdat" property="erdat" jdbcType="VARCHAR" />
+    <result column="aenam" property="aenam" jdbcType="VARCHAR" />
+    <result column="aedat" property="aedat" jdbcType="VARCHAR" />
+    <result column="vernr" property="vernr" jdbcType="VARCHAR" />
+    <result column="verna" property="verna" jdbcType="VARCHAR" />
+    <result column="astnr" property="astnr" jdbcType="VARCHAR" />
+    <result column="astna" property="astna" jdbcType="VARCHAR" />
+    <result column="pbukr" property="pbukr" jdbcType="VARCHAR" />
+    <result column="pgsbr" property="pgsbr" jdbcType="VARCHAR" />
+    <result column="pkokr" property="pkokr" jdbcType="VARCHAR" />
+    <result column="prctr" property="prctr" jdbcType="VARCHAR" />
+    <result column="prart" property="prart" jdbcType="VARCHAR" />
+    <result column="stufe" property="stufe" jdbcType="INTEGER" />
+    <result column="plakz" property="plakz" jdbcType="VARCHAR" />
+    <result column="belkz" property="belkz" jdbcType="VARCHAR" />
+    <result column="fakkz" property="fakkz" jdbcType="VARCHAR" />
+    <result column="npfaz" property="npfaz" jdbcType="VARCHAR" />
+    <result column="zuord" property="zuord" jdbcType="VARCHAR" />
+    <result column="trmeq" property="trmeq" jdbcType="VARCHAR" />
+    <result column="kvewe" property="kvewe" jdbcType="VARCHAR" />
+    <result column="kappl" property="kappl" jdbcType="VARCHAR" />
+    <result column="kalsm" property="kalsm" jdbcType="VARCHAR" />
+    <result column="zschl" property="zschl" jdbcType="VARCHAR" />
+    <result column="abgsl" property="abgsl" jdbcType="VARCHAR" />
+    <result column="akokr" property="akokr" jdbcType="VARCHAR" />
+    <result column="akstl" property="akstl" jdbcType="VARCHAR" />
+    <result column="fkokr" property="fkokr" jdbcType="VARCHAR" />
+    <result column="fkstl" property="fkstl" jdbcType="VARCHAR" />
+    <result column="fabkl" property="fabkl" jdbcType="VARCHAR" />
+    <result column="pspri" property="pspri" jdbcType="VARCHAR" />
+    <result column="equnr" property="equnr" jdbcType="VARCHAR" />
+    <result column="tplnr" property="tplnr" jdbcType="VARCHAR" />
+    <result column="pwpos" property="pwpos" jdbcType="VARCHAR" />
+    <result column="werks" property="werks" jdbcType="VARCHAR" />
+    <result column="txtsp" property="txtsp" jdbcType="VARCHAR" />
+    <result column="slwid" property="slwid" jdbcType="VARCHAR" />
+    <result column="usr00" property="usr00" jdbcType="VARCHAR" />
+    <result column="usr01" property="usr01" jdbcType="VARCHAR" />
+    <result column="usr02" property="usr02" jdbcType="VARCHAR" />
+    <result column="usr03" property="usr03" jdbcType="VARCHAR" />
+    <result column="usr04" property="usr04" jdbcType="NUMERIC" />
+    <result column="use04" property="use04" jdbcType="VARCHAR" />
+    <result column="usr05" property="usr05" jdbcType="NUMERIC" />
+    <result column="use05" property="use05" jdbcType="VARCHAR" />
+    <result column="usr06" property="usr06" jdbcType="NUMERIC" />
+    <result column="use06" property="use06" jdbcType="VARCHAR" />
+    <result column="usr07" property="usr07" jdbcType="NUMERIC" />
+    <result column="use07" property="use07" jdbcType="VARCHAR" />
+    <result column="usr08" property="usr08" jdbcType="VARCHAR" />
+    <result column="usr09" property="usr09" jdbcType="VARCHAR" />
+    <result column="usr10" property="usr10" jdbcType="VARCHAR" />
+    <result column="usr11" property="usr11" jdbcType="VARCHAR" />
+    <result column="kostl" property="kostl" jdbcType="VARCHAR" />
+    <result column="ktrg" property="ktrg" jdbcType="VARCHAR" />
+    <result column="berst" property="berst" jdbcType="VARCHAR" />
+    <result column="bertr" property="bertr" jdbcType="VARCHAR" />
+    <result column="berko" property="berko" jdbcType="VARCHAR" />
+    <result column="berbu" property="berbu" jdbcType="VARCHAR" />
+    <result column="clasf" property="clasf" jdbcType="VARCHAR" />
+    <result column="spsnr" property="spsnr" jdbcType="VARCHAR" />
+    <result column="scope" property="scope" jdbcType="VARCHAR" />
+    <result column="xstat" property="xstat" jdbcType="VARCHAR" />
+    <result column="txjcd" property="txjcd" jdbcType="VARCHAR" />
+    <result column="zschm" property="zschm" jdbcType="VARCHAR" />
+    <result column="imprf" property="imprf" jdbcType="VARCHAR" />
+    <result column="evgew" property="evgew" jdbcType="NUMERIC" />
+    <result column="aennr" property="aennr" jdbcType="VARCHAR" />
+    <result column="subpr" property="subpr" jdbcType="VARCHAR" />
+    <result column="postu" property="postu" jdbcType="VARCHAR" />
+    <result column="plint" property="plint" jdbcType="VARCHAR" />
+    <result column="loevm" property="loevm" jdbcType="VARCHAR" />
+    <result column="kzbws" property="kzbws" jdbcType="VARCHAR" />
+    <result column="fplnr" property="fplnr" jdbcType="VARCHAR" />
+    <result column="tadat" property="tadat" jdbcType="VARCHAR" />
+    <result column="izwek" property="izwek" jdbcType="VARCHAR" />
+    <result column="isize" property="isize" jdbcType="VARCHAR" />
+    <result column="iumkz" property="iumkz" jdbcType="VARCHAR" />
+    <result column="abukr" property="abukr" jdbcType="VARCHAR" />
+    <result column="grpkz" property="grpkz" jdbcType="VARCHAR" />
+    <result column="pgprf" property="pgprf" jdbcType="VARCHAR" />
+    <result column="logsystem" property="logsystem" jdbcType="VARCHAR" />
+    <result column="pspnr_logs" property="pspnrLogs" jdbcType="VARCHAR" />
+    <result column="stort" property="stort" jdbcType="VARCHAR" />
+    <result column="func_area" property="funcArea" jdbcType="VARCHAR" />
+    <result column="klvar" property="klvar" jdbcType="VARCHAR" />
+    <result column="kalnr" property="kalnr" jdbcType="VARCHAR" />
+    <result column="posid_edit" property="posidEdit" jdbcType="VARCHAR" />
+    <result column="pspkz" property="pspkz" jdbcType="VARCHAR" />
+    <result column="matnr" property="matnr" jdbcType="VARCHAR" />
+    <result column="vlpsp" property="vlpsp" jdbcType="VARCHAR" />
+    <result column="vlpkz" property="vlpkz" jdbcType="VARCHAR" />
+    <result column="sort1" property="sort1" jdbcType="VARCHAR" />
+    <result column="sort2" property="sort2" jdbcType="VARCHAR" />
+    <result column="sort3" property="sort3" jdbcType="VARCHAR" />
+    <result column="vname" property="vname" jdbcType="VARCHAR" />
+    <result column="recid" property="recid" jdbcType="VARCHAR" />
+    <result column="etype" property="etype" jdbcType="VARCHAR" />
+    <result column="otype" property="otype" jdbcType="VARCHAR" />
+    <result column="jibcl" property="jibcl" jdbcType="VARCHAR" />
+    <result column="jibsa" property="jibsa" jdbcType="VARCHAR" />
+    <result column="cgpl_logsys" property="cgplLogsys" jdbcType="VARCHAR" />
+    <result column="cgpl_objtype" property="cgplObjtype" jdbcType="VARCHAR" />
+    <result column="adpsp" property="adpsp" jdbcType="VARCHAR" />
+    <result column="rfippnt" property="rfippnt" jdbcType="VARCHAR" />
+    <result column="eew_prps_ps_dummy" property="eewPrpsPsDummy" jdbcType="VARCHAR" />
+    <result column="cpd_updat" property="cpdUpdat" jdbcType="NUMERIC" />
+    <result column="ferc_ind" property="fercInd" jdbcType="VARCHAR" />
+    <result column="prps_status" property="prpsStatus" jdbcType="INTEGER" />
+    <result column="cp" property="cp" jdbcType="VARCHAR" />
+    <result column="no_settle" property="noSettle" jdbcType="VARCHAR" />
+    <result column="detail_fams" property="detailFams" jdbcType="VARCHAR" />
+    <result column="cgpl_guid16" property="cgplGuid16" jdbcType="BINARY" />
+  </resultMap>
+
+  <select id="queryPrpsList" resultMap="BaseResultMap">
+    select * from prps left join proj on prps.psphi=proj.pspnr
+    <where>
+      <if test="psphi != null and psphi != ''">
+        proj.pspid = #{psphi}
+      </if>
+      <if test="pspnr != null and pspnr != ''">
+        and prps.pspnr = #{pspnr}
+      </if>
+      <if test="posid != null and posid != ''">
+        and prps.posid like concat('%', #{posid}, '%')
+      </if>
+      <if test="post1 != null and post1 != ''">
+        and prps.post1 like concat('%', #{post1}, '%')
+      </if>
+    </where>
+    order by prps.pspnr
+  </select>
+</mapper>

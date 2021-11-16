@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.reportwork.FssReportWorkTaxProjectProportionMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.reportwork.FssReportWorkTaxProjectProportion" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="pp_id" property="ppId" jdbcType="VARCHAR" />
+    <result column="cp_id" property="cpId" jdbcType="VARCHAR" />
+    <result column="project_no" property="projectNo" jdbcType="VARCHAR" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="proportion" property="proportion" jdbcType="NUMERIC" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="project_budget" property="projectBudget" jdbcType="NUMERIC" />
+  </resultMap>
+
+  <resultMap id="BaseResultMapVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.reportWork.FssReportWorkTaxProjectProportionVO">
+    <result column="company_code" property="companyCode" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="proj_no" property="projNo" jdbcType="VARCHAR" />
+    <result column="finance_no" property="financeNo" jdbcType="VARCHAR" />
+    <result column="project_start_time" property="projectStartTime" jdbcType="VARCHAR" />
+    <result column="project_end_time" property="projectEndTime" jdbcType="VARCHAR" />
+    <result column="project_type" property="projectType" jdbcType="VARCHAR" />
+    <result column="accounting_type" property="accountingType" jdbcType="VARCHAR" />
+    <result column="is_key_project" property="isKeyProject" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+  <resultMap id="BaseResultMap1" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.reportwork.FssReportProjectVO">
+    <result column="project_start_time" property="projectStartTime" jdbcType="VARCHAR" />
+    <result column="project_end_time" property="projectEndTime" jdbcType="VARCHAR" />
+    <result column="month_last_day" property="monthLastDay" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="selectProjrctByMonth" resultMap="BaseResultMapVO">
+    SELECT pp.*,cp.company_code,cp.company_name,e.proj_no,e.finance_no,e.project_start_time,e.project_end_time,
+    e.project_type,e.accounting_type,e.is_key_project
+    FROM fss_report_work_tax_project_proportion pp join fss_report_work_tax_company_proportion cp on pp.cp_id=cp.cp_id
+    join fss_report_work_tax_month m on cp.month_id=m.month_id
+    left join fss_report_work_tax_project_expand e on pp.project_no=e.project_no
+    where m.month_id=#{monthId} and pp.proportion>0
+  </select>
+
+  <select id="queryOthetProjects" resultMap="BaseResultMap1">
+    select propertion.*,expand.project_start_time,expand.project_end_time from
+    fss_report_work_tax_project_expand expand,fss_report_work_tax_project_proportion propertion
+    where  expand.project_no=propertion.project_no
+    <if test="cpId != null and cpId != ''">
+      and  propertion.cp_id =#{cpId}
+    </if>
+      and propertion.project_no not in (select project_no from fss_report_work_additional_projects )
+
+  </select>
+</mapper>

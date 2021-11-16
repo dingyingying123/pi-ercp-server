@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.ca.mydbpersistence.mapper.CaApiConfigMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.ca.mydbpersistence.entity.CaApiConfig" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="api" property="api" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="max_num" property="maxNum" jdbcType="BIGINT" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <resultMap extends="BaseResultMap" id= "CaApiConfigVo" type="cn.com.personnel.ercp.ca.module.CaApiConfigVo">
+    <result column="call_num" property="callNum" jdbcType="BIGINT" />
+    <result column="total_num" property="totalNum" jdbcType="BIGINT" />
+    <result column="mainid" property="mainid" jdbcType="VARCHAR" />
+
+  </resultMap>
+
+  <select id="queryCallNum" resultMap="CaApiConfigVo">
+    SELECT
+    ca_api_config.*,
+    ca_api_main.total_num,
+    ca_api_main.call_num,
+    ca_api_main.uuid as mainid
+    FROM
+    ca_api_config
+    LEFT JOIN
+    ca_api_main
+    ON
+    ca_api_main.api = ca_api_config.api
+    AND
+    ca_api_main.user_id = ca_api_config.user_id
+    <where>
+      <if test="api != null and api != ''">
+        AND ca_api_config.api = #{api}
+      </if>
+      <if test="userid != null and userid != ''">
+        AND ca_api_config.user_id = #{userid}
+      </if>
+    </where>
+  </select>
+</mapper>

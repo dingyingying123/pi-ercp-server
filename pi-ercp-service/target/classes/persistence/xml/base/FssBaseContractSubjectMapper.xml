@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.base.FssBaseContractSubjectMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.base.FssBaseContractSubject" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="subject_id" property="subjectId" jdbcType="VARCHAR" />
+    <result column="contracttype_code" property="contracttypeCode" jdbcType="VARCHAR" />
+    <result column="business_type" property="businessType" jdbcType="VARCHAR" />
+    <result column="loan" property="loan" jdbcType="VARCHAR" />
+    <result column="amount_type" property="amountType" jdbcType="VARCHAR" />
+    <result column="subject_des" property="subjectDes" jdbcType="VARCHAR" />
+    <result column="budget_subject" property="budgetSubject" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="querysublist" resultType="cn.com.personnel.ercp.pi.persistence.entity.base.FssBaseContractSubject">
+    select
+    qpq.subject_id subjectId,qpq.contracttype_code contracttypeCode,qpq.business_type businessType,qpq.amount_type amountType,qpq.loan,
+    qpq.subject_des subjectDes,qpq.budget_subject budgetSubject,e.name contracttypeName,se.name businessTypeName,pe.name amountTypeName,
+    qpq.creator creator,qpq.create_time createTime,qpq.updater updater,qpq.update_time updateTime
+    from
+    fss_base_contract_subject qpq
+    left join sec_enum se on qpq.business_type = se.id
+    left join fss_base_contract_type e on qpq.contracttype_code = e.code
+    left join sec_enum pe on qpq.amount_type = pe.id
+    <where>
+      <if test="contracttypeCode!=null and contracttypeCode!=''">
+         qpq.contracttype_code =#{contracttypeCode}
+      </if>
+      <if test="ids != null and ids.size &gt; 0">
+        and subject_id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")"> #{id} </foreach>
+      </if>
+    </where>
+    order by qpq.create_time desc
+  </select>
+  <delete id="deleteByIds">
+    <if test="ids != null and ids.size &gt; 0">
+      delete from fss_base_contract_subject
+      <where> subject_id in
+        <foreach close=")" collection="ids" item="id" open="(" separator=",">  #{id}</foreach>
+      </where>
+    </if>
+  </delete>
+
+</mapper>

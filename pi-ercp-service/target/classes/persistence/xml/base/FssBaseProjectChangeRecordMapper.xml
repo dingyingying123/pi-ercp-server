@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.base.FssBaseProjectChangeRecordMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.base.FssBaseProjectChangeRecord" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="change_id" property="changeId" jdbcType="VARCHAR" />
+    <result column="project_id" property="projectId" jdbcType="VARCHAR" />
+    <result column="project_abbreviation" property="projectAbbreviation" jdbcType="VARCHAR" />
+    <result column="column_name" property="columnName" jdbcType="VARCHAR" />
+    <result column="old_value" property="oldValue" jdbcType="VARCHAR" />
+    <result column="new_value" property="newValue" jdbcType="VARCHAR" />
+    <result column="reserve" property="reserve" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="queryProjectChangeList" resultMap="BaseResultMap">
+    select u.user_name as creator, c.* from fss_base_project_change_record c join sec_user u on c.creator=u.user_id
+    <where>
+      <if test="projectId != null and projectId != ''">
+        project_id = #{projectId}
+      </if>
+      <if test="columnName != null and columnName != ''">
+        and column_name like concat('%', #{columnName}, '%')
+      </if>
+    </where>
+  </select>
+</mapper>

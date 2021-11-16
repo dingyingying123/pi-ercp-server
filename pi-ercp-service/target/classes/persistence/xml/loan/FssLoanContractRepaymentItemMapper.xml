@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.loan.FssLoanContractRepaymentItemMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.loan.FssLoanContractRepaymentItem">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="item_id" jdbcType="VARCHAR" property="itemId" />
+    <result column="repayment_plan" jdbcType="VARCHAR" property="repaymentPlan" />
+    <result column="plan_balance" jdbcType="VARCHAR" property="planBalance" />
+    <result column="iou_message" jdbcType="VARCHAR" property="iouMessage" />
+    <result column="iou_balance" jdbcType="NUMERIC" property="iouBalance" />
+    <result column="this_repayment_amount" jdbcType="NUMERIC" property="thisRepaymentAmount" />
+    <result column="after_discount_amount" jdbcType="NUMERIC" property="afterDiscountAmount" />
+    <result column="main_id" jdbcType="VARCHAR" property="mainId" />
+    <result column="revision" jdbcType="INTEGER" property="revision" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="apply_no" jdbcType="VARCHAR" property="applyNo" />
+    <result column="apply_repayment_amount" jdbcType="NUMERIC" property="applyRepaymentAmount" />
+    <result column="surplus_apply_repayment_amount" jdbcType="NUMERIC" property="surplusApplyRepaymentAmount" />
+    <result column="repayment_type" jdbcType="VARCHAR" property="repaymentType"/>
+    <result column="interest_settle_way" jdbcType="VARCHAR" property="interestSettleWay"/>
+    <result column="repayment_plan_id" jdbcType="VARCHAR" property="repaymentPlan"/>
+    <result column="iou_id" jdbcType="VARCHAR" property="iouId"/>
+    <result column="branch_id" jdbcType="VARCHAR" property="branchId" />
+    <result column="branch_code" jdbcType="VARCHAR" property="branchCode" />
+    <result column="participate_bank" jdbcType="VARCHAR" property="participateBank" />
+    <result column="bank_account" jdbcType="VARCHAR" property="bankAccount" />
+    <result column="random_id" jdbcType="VARCHAR" property="randomId"/>
+    <result column="manage_id" jdbcType="VARCHAR" property="manageId"/>
+    <result column="repayment_date"  jdbcType="TIMESTAMP"  property="repaymentDate"/>
+    <result column="manage_syndicated_id" jdbcType="VARCHAR"  property="manageSyndicatedId"/>
+    <result column="plan_date" jdbcType="TIMESTAMP"  property="planDate"/>
+    <result column="plan" jdbcType="VARCHAR"  property="plan"/>
+    <result column="still_bank_account" jdbcType="VARCHAR" property="stillBankAccount"/>
+  </resultMap>
+  <resultMap id="BaseResultMapVO" type="cn.com.personnel.ercp.pi.module.loan.FssLoanContractRepaymentItemVo" extends="BaseResultMap">
+    <result column="repayment_date"  property="repaymentDate"/>
+  </resultMap>
+    <select id="getRepaymentDataByDate" resultMap="BaseResultMapVO">
+      select
+          t2.repayment_date ,
+          t1.*
+      from
+          fss_loan_contract_repayment_item t1
+      join fss_loan_contract_repayment t2 on
+          t1.main_id = t2.repayment_id
+      where
+          t1.iou_id = #{iouId}
+          and t2.repayment_date between #{startDate} and #{endDate}
+      order by
+          t2.repayment_date
+    </select>
+  <select id="getTotalRepaymentAmount" resultType="java.math.BigDecimal">
+      select
+          coalesce(sum(t1.this_repayment_amount),0) as totalRepaymentAmount
+      from
+          fss_loan_contract_repayment_item t1
+      <where>
+      <if test="iouId !=null and iouId !=''">
+          and iou_id=#{iouId}
+      </if>
+          <if test="date !=null">
+              and repayment_date &lt;=#{date}
+          </if>
+          <if test="manageSyndicatedId !=null and manageSyndicatedId !=''">
+              and manage_syndicated_id =#{manageSyndicatedId}
+          </if>
+      </where>
+  </select>
+    <select id="queryRepaymentList" resultMap="BaseResultMap">
+        select sum(coalesce (item.this_repayment_amount,0)) as  this_repayment_amount,repayment.repayment_date,item.iou_id,item.main_id,item.participate_bank,item.manage_syndicated_id
+        from fss_loan_contract_repayment  repayment left join fss_loan_contract_repayment_item item
+        on item.main_id=repayment.repayment_id
+        <where>
+            <if test="item.iouId !=null and item.iouId !=''">
+                and iou_id=#{item.iouId}
+            </if>
+            <if test="item.startDate !=null ">
+                and repayment.repayment_date &gt;#{item.startDate}
+            </if>
+            <if test="item.endDate !=null ">
+                and repayment.repayment_date &lt;=#{item.endDate}
+            </if>
+            <if test="item.bankAccount !=null and item.bankAccount !=''">
+                and repayment.bank_account =#{item.bankAccount}
+            </if>
+            <if test="item.manageId !=null and item.manageId !=''">
+                and repayment.manage_id =#{item.manageId}
+            </if>
+            <if test="item.manageSyndicatedId !=null and item.manageSyndicatedId !=''">
+                and manage_syndicated_id =#{item.manageSyndicatedId}
+            </if>
+        </where>
+        group by repayment.repayment_date,item.iou_id,item.main_id,item.participate_bank,item.manage_syndicated_id
+    </select>
+
+    <select id="queryRepaymentItemList" resultMap="BaseResultMap">
+        select item.*
+        from fss_loan_contract_repayment repayment left join fss_loan_contract_repayment_item item on item.main_id=repayment.repayment_id
+        <where>
+            <if test="item.iouId !=null and item.iouId !=''">
+                item.iou_id=#{item.iouId}
+            </if>
+            <if test="item.repaymentPlanId !=null and item.repaymentPlanId !=''">
+                and item.repayment_plan_id=#{item.repaymentPlanId}
+            </if>
+        </where>
+        order by created_time
+    </select>
+</mapper>

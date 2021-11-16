@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.process.FssProcessReturnValueMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.process.FssProcessReturnValue" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="frev_id" property="frevId" jdbcType="VARCHAR" />
+    <result column="primary_key_id" property="primaryKeyId" jdbcType="VARCHAR" />
+    <result column="process_inst_id" property="processInstId" jdbcType="VARCHAR" />
+    <result column="process_inst_name" property="processInstName" jdbcType="VARCHAR" />
+    <result column="process_def_id" property="processDefId" jdbcType="VARCHAR" />
+    <result column="process_def_name" property="processDefName" jdbcType="VARCHAR" />
+    <result column="work_item_id" property="workItemId" jdbcType="VARCHAR" />
+    <result column="work_item_name" property="workItemName" jdbcType="VARCHAR" />
+    <result column="action_url" property="actionUrl" jdbcType="VARCHAR" />
+    <result column="activity_inst_id" property="activityInstId" jdbcType="VARCHAR" />
+    <result column="activity_inst_name" property="activityInstName" jdbcType="VARCHAR" />
+    <result column="activity_def_id" property="activityDefId" jdbcType="VARCHAR" />
+    <result column="biz_state" property="bizState" jdbcType="VARCHAR" />
+    <result column="app" property="app" jdbcType="VARCHAR" />
+    <result column="table_name" property="tableName" jdbcType="VARCHAR" />
+    <result column="process_status" property="processStatus" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="reserved1" property="reserved1" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="selectProcessByPrimaryKey" resultMap="BaseResultMap">
+    select * from fss_process_return_value where primary_key_id=#{key} order by process_inst_id desc limit 1
+  </select>
+
+  <select id="selectByInstID" resultMap="BaseResultMap">
+    select * from fss_process_return_value where process_inst_id=#{processInstID} limit 1
+  </select>
+
+  <select id="selectTodoProcess" resultMap="BaseResultMap">
+    select * from fss_process_return_value v
+    <where>
+      <if test="toDoDetial.processInstID != null and toDoDetial.processInstID != ''">
+        v.process_inst_id=#{toDoDetial.processInstID}
+      </if>
+      <if test="toDoDetial.processDefName != null and toDoDetial.processDefName != ''">
+        and v.process_def_name=#{toDoDetial.processDefName}
+      </if>
+    </where>
+    order by v.create_time desc limit 1
+  </select>
+</mapper>

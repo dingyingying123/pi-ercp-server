@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.ca.mydbpersistence.mapper.CaApiMainMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.ca.mydbpersistence.entity.CaApiMain" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="api" property="api" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="call_num" property="callNum" jdbcType="BIGINT" />
+    <result column="last_time" property="lastTime" jdbcType="TIMESTAMP" />
+    <result column="total_num" property="totalNum" jdbcType="BIGINT" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.auth.persistence.mapper.SecRoleButtonMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.auth.persistence.entity.SecRoleButton">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="isdelete" jdbcType="INTEGER" property="isdelete" />
+    <result column="appcod" jdbcType="VARCHAR" property="appcod" />
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="router_id" jdbcType="VARCHAR" property="routerId" />
+    <result column="button_id" jdbcType="VARCHAR" property="buttonId" />
+  </resultMap>
+
+  <select id="getRoleButtonList" resultMap="BaseResultMap">
+    select * from sec_role_button
+    where isdelete = 0 and appcod = #{appcod}
+    and role_id = #{roleId} and router_id = #{routerId}
+  </select>
+
+  <update id="deleteByRoleIdAndRouterId">
+    update sec_role_button set isdelete = 1
+    where role_id = #{roleId}
+    and router_id = #{routerId}
+  </update>
+</mapper>

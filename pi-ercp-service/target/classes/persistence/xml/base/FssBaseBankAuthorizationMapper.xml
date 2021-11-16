@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.base.FssBaseBankAuthorizationMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.base.FssBaseBankAuthorization">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="auth_id" jdbcType="VARCHAR" property="authId" />
+    <result column="head_id" jdbcType="VARCHAR" property="headId" />
+    <result column="branch_id" jdbcType="VARCHAR" property="branchId" />
+    <result column="head_code" jdbcType="VARCHAR" property="headCode" />
+    <result column="head_name" jdbcType="VARCHAR" property="headName" />
+    <result column="branch_code" jdbcType="VARCHAR" property="branchCode" />
+    <result column="branch_name" jdbcType="VARCHAR" property="branchName" />
+    <result column="organ_id" jdbcType="VARCHAR" property="organId" />
+    <result column="organ_name" jdbcType="VARCHAR" property="organName" />
+    <result column="auth_name" jdbcType="VARCHAR" property="authName" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+  </resultMap>
+
+  <select id="queryBankAuthorization" resultMap="BaseResultMap">
+    select o.head_code,o.head_name,b.branch_code,b.branch_name,a.* from fss_base_bank_authorization a
+    join fss_base_bank_head_office o on a.head_id=o.head_id
+    join fss_base_bank_branch b on a.branch_id=b.branch_id
+    <where>
+      <if test="headCode != null and headCode != ''">
+        o.head_code like concat('%', #{headCode}, '%')
+      </if>
+      <if test="headName != null and headName != ''">
+        and o.head_name like concat('%', #{headName}, '%')
+      </if>
+      <if test="branchCode != null and branchCode != ''">
+        and b.branch_code like concat('%', #{branchCode}, '%')
+      </if>
+      <if test="branchName != null and branchName != ''">
+        and b.branch_name like concat('%', #{branchName}, '%')
+      </if>
+      <if test="organId != null and organId != ''">
+        and a.organ_id like concat('%', #{organId}, '%')
+      </if>
+      <if test="organName != null and organName != ''">
+        and a.organ_name like concat('%', #{organName}, '%')
+      </if>
+      <if test="description != null and description != ''">
+        and a.description like concat('%', #{description}, '%')
+      </if>
+      <if test="status != null and status != ''">
+        and a.status = #{status}
+      </if>
+      <if test="ids != null and ids.size &gt; 0">
+        and auth_id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")"> #{id} </foreach>
+      </if>
+    </where>
+    order by a.create_time desc
+  </select>
+
+  <delete id="deleteByIds">
+    <if test="ids != null and ids.size &gt; 0">
+      delete from fss_base_bank_authorization
+      <where> auth_id in
+        <foreach close=")" collection="ids" item="id" open="(" separator=","> #{id}</foreach>
+      </where>
+    </if>
+  </delete>
+
+  <update id="updateAuthorizationStatus">
+    <if test="bankVO != null and bankVO.ids != null and bankVO.ids.size &gt; 0">
+      update fss_base_bank_authorization set status=#{bankVO.status},updater=#{userId},update_time=CURRENT_TIMESTAMP
+      <where> auth_id in
+        <foreach close=")" collection="bankVO.ids" item="id" open="(" separator=","> #{id}</foreach>
+      </where>
+    </if>
+  </update>
+</mapper>

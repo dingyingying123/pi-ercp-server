@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.ca.mydbpersistence.mapper.VHrDepartmentMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.ca.mydbpersistence.entity.VHrDepartment">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="org_code" jdbcType="VARCHAR" property="orgCode" />
+    <result column="org_name" jdbcType="VARCHAR" property="orgName" />
+    <result column="parent_org_code" jdbcType="VARCHAR" property="parentOrgCode" />
+    <result column="parent_org_name" jdbcType="VARCHAR" property="parentOrgName" />
+    <result column="org_director_leader" jdbcType="VARCHAR" property="orgDirectorLeader" />
+    <result column="org_post_code" jdbcType="VARCHAR" property="orgPostCode" />
+    <result column="jglb" jdbcType="VARCHAR" property="jglb" />
+    <result column="jgbm" jdbcType="VARCHAR" property="jgbm" />
+  </resultMap>
+  
+  
+  <select id="findByOrgeh" resultMap="BaseResultMap">
+        select 
+            * 
+        from 
+            v_zhr_department
+        where
+            org_code = #{orgeh}
+            limit 1
+  </select>
+  
+  <select id="findChildDepartment" resultType="cn.com.personnel.ercp.ca.mydbpersistence.entity.DepartmentJson">
+    select org_name as text,org_code as textNo,#{parentId} as parent,org_e_name as englishText,parent_org_code as parentOrgName from v_zhr_department where parent_org_code = #{deptId}
+  </select>
+  
+  <select id="hasChildDepartment" resultType="int">
+    select count(1) from v_zhr_department where parent_org_code = #{deptId}
+  </select>
+  
+  <select id="findDepartment" resultType="cn.com.personnel.ercp.ca.mydbpersistence.entity.DepartmentJson">
+    select org_name as text,org_code as textNo,'#' as parent,1 as id,org_e_name as englishText from v_zhr_department where org_code = #{deptId}
+  </select>
+
+<resultMap id="getDutySubject"   type="HashMap">
+    <result property="org_code" column="orgCode" jdbcType="VARCHAR" />
+    <result property="org_name" column="orgName" jdbcType="VARCHAR"/>
+    <result property="parent_org_code" column="parentOrgCode" jdbcType="VARCHAR" />
+    <result property="parent_org_name" column="parentOrgName" jdbcType="VARCHAR"/>
+</resultMap>
+<select id="queryDutySubject" resultMap="getDutySubject">
+    SELECT
+    rel.org_code,
+    rel.org_name,
+    rel.parent_org_code,
+    rel.parent_org_name
+    FROM
+    v_zhr_department rel
+    WHERE
+    1 =1
+    <if test = 'orgCode != null and orgCode != ""'>
+        and org_code = #{orgCode}
+    </if>
+    <if test = 'orgName != null and orgName != ""'>
+        and org_name like concat('%',#{orgName},'%')
+    </if>
+</select>
+
+</mapper>

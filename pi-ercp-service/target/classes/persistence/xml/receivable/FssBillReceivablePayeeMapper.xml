@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.receivable.FssBillReceivablePayeeMapper">
+    <resultMap id="BaseResultMap"
+               type="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBillReceivablePayeeEntity">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="BaseResultMap" property="receId" jdbcType="VARCHAR"/>
+        <result column="rece_id" property="receId" jdbcType="VARCHAR"/>
+        <result column="payee_id" property="payeeId" jdbcType="VARCHAR"/>
+        <result column="payee_name" property="payeeName" jdbcType="VARCHAR"/>
+        <result column="payee_number" property="payeeNumber" jdbcType="VARCHAR"/>
+        <result column="payee_bank" property="payeeBank" jdbcType="VARCHAR"/>
+        <result column="payee_bank_id" property="payeeBankId" jdbcType="VARCHAR"/>
+
+
+    </resultMap>
+    <select id="selPayeeInfo" resultMap="BaseResultMap" parameterType="String">
+        select * from fss_bill_receivable_payee where rece_id = #{receId}
+    </select>
+    <!--新增数据-->
+    <insert id="addFssBillReceivablePayee"
+            parameterType="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBillReceivablePayeeEntity">
+      insert into fss_bill_receivable_payee(rece_id,payee_id,payee_name,payee_number,payee_bank,payee_bank_id) values
+      (#{receId},#{payeeId},#{payeeName},#{payeeNumber},#{payeeBank},#{payeeBankId})
+  </insert>
+    <!--修改数据-->
+    <update id="updFssBillReceivablePayee" parameterType="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBillReceivablePayeeEntity">
+        update fss_bill_receivable_payee set rece_id = #{receId}
+        <if test="payeeId!=null">
+            ,payee_id = #{payeeId}
+        </if>
+        <if test="payeeName!=null">
+            ,payee_name = #{payeeName}
+        </if>
+        <if test="payeeNumber!=null">
+            ,payee_number = #{payeeNumber}
+        </if>
+        <if test="payeeBank!=null">
+            ,payee_bank = #{payeeBank}
+        </if>
+        <if test="payeeBankId!=null">
+            ,payee_bank_id = #{payeeBankId}
+        </if>
+        where rece_id = #{receId}
+    </update>
+    <delete id="delFssBillReceivablePayee">
+        delete from fss_bill_receivable_payee where rece_id = #{receId}
+    </delete>
+</mapper>

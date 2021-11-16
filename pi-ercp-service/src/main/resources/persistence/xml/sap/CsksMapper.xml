@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.sap.CsksMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.sap.Csks" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="datbi" property="datbi" jdbcType="VARCHAR" />
+    <id column="kokrs" property="kokrs" jdbcType="VARCHAR" />
+    <id column="kostl" property="kostl" jdbcType="VARCHAR" />
+    <id column="mandt" property="mandt" jdbcType="VARCHAR" />
+    <result column="datab" property="datab" jdbcType="VARCHAR" />
+    <result column="bkzkp" property="bkzkp" jdbcType="VARCHAR" />
+    <result column="pkzkp" property="pkzkp" jdbcType="VARCHAR" />
+    <result column="bukrs" property="bukrs" jdbcType="VARCHAR" />
+    <result column="gsber" property="gsber" jdbcType="VARCHAR" />
+    <result column="kosar" property="kosar" jdbcType="VARCHAR" />
+    <result column="verak" property="verak" jdbcType="VARCHAR" />
+    <result column="verak_user" property="verakUser" jdbcType="VARCHAR" />
+    <result column="waers" property="waers" jdbcType="VARCHAR" />
+    <result column="kalsm" property="kalsm" jdbcType="VARCHAR" />
+    <result column="txjcd" property="txjcd" jdbcType="VARCHAR" />
+    <result column="prctr" property="prctr" jdbcType="VARCHAR" />
+    <result column="werks" property="werks" jdbcType="VARCHAR" />
+    <result column="logsystem" property="logsystem" jdbcType="VARCHAR" />
+    <result column="ersda" property="ersda" jdbcType="VARCHAR" />
+    <result column="usnam" property="usnam" jdbcType="VARCHAR" />
+    <result column="bkzks" property="bkzks" jdbcType="VARCHAR" />
+    <result column="bkzer" property="bkzer" jdbcType="VARCHAR" />
+    <result column="bkzob" property="bkzob" jdbcType="VARCHAR" />
+    <result column="pkzks" property="pkzks" jdbcType="VARCHAR" />
+    <result column="pkzer" property="pkzer" jdbcType="VARCHAR" />
+    <result column="vmeth" property="vmeth" jdbcType="VARCHAR" />
+    <result column="mgefl" property="mgefl" jdbcType="VARCHAR" />
+    <result column="abtei" property="abtei" jdbcType="VARCHAR" />
+    <result column="nkost" property="nkost" jdbcType="VARCHAR" />
+    <result column="kvewe" property="kvewe" jdbcType="VARCHAR" />
+    <result column="kappl" property="kappl" jdbcType="VARCHAR" />
+    <result column="koszschl" property="koszschl" jdbcType="VARCHAR" />
+    <result column="land1" property="land1" jdbcType="VARCHAR" />
+    <result column="anred" property="anred" jdbcType="VARCHAR" />
+    <result column="name1" property="name1" jdbcType="VARCHAR" />
+    <result column="name2" property="name2" jdbcType="VARCHAR" />
+    <result column="name3" property="name3" jdbcType="VARCHAR" />
+    <result column="name4" property="name4" jdbcType="VARCHAR" />
+    <result column="ort01" property="ort01" jdbcType="VARCHAR" />
+    <result column="ort02" property="ort02" jdbcType="VARCHAR" />
+    <result column="stras" property="stras" jdbcType="VARCHAR" />
+    <result column="pfach" property="pfach" jdbcType="VARCHAR" />
+    <result column="pstlz" property="pstlz" jdbcType="VARCHAR" />
+    <result column="pstl2" property="pstl2" jdbcType="VARCHAR" />
+    <result column="regio" property="regio" jdbcType="VARCHAR" />
+    <result column="spras" property="spras" jdbcType="VARCHAR" />
+    <result column="telbx" property="telbx" jdbcType="VARCHAR" />
+    <result column="telf1" property="telf1" jdbcType="VARCHAR" />
+    <result column="telf2" property="telf2" jdbcType="VARCHAR" />
+    <result column="telfx" property="telfx" jdbcType="VARCHAR" />
+    <result column="teltx" property="teltx" jdbcType="VARCHAR" />
+    <result column="telx1" property="telx1" jdbcType="VARCHAR" />
+    <result column="datlt" property="datlt" jdbcType="VARCHAR" />
+    <result column="drnam" property="drnam" jdbcType="VARCHAR" />
+    <result column="khinr" property="khinr" jdbcType="VARCHAR" />
+    <result column="cckey" property="cckey" jdbcType="VARCHAR" />
+    <result column="kompl" property="kompl" jdbcType="VARCHAR" />
+    <result column="stakz" property="stakz" jdbcType="VARCHAR" />
+    <result column="objnr" property="objnr" jdbcType="VARCHAR" />
+    <result column="funkt" property="funkt" jdbcType="VARCHAR" />
+    <result column="afunk" property="afunk" jdbcType="VARCHAR" />
+    <result column="cpi_templ" property="cpiTempl" jdbcType="VARCHAR" />
+    <result column="cpd_templ" property="cpdTempl" jdbcType="VARCHAR" />
+    <result column="func_area" property="funcArea" jdbcType="VARCHAR" />
+    <result column="sci_templ" property="sciTempl" jdbcType="VARCHAR" />
+    <result column="scd_templ" property="scdTempl" jdbcType="VARCHAR" />
+    <result column="ski_templ" property="skiTempl" jdbcType="VARCHAR" />
+    <result column="skd_templ" property="skdTempl" jdbcType="VARCHAR" />
+    <result column="vname" property="vname" jdbcType="VARCHAR" />
+    <result column="recid" property="recid" jdbcType="VARCHAR" />
+    <result column="etype" property="etype" jdbcType="VARCHAR" />
+    <result column="jv_otype" property="jvOtype" jdbcType="VARCHAR" />
+    <result column="jv_jibcl" property="jvJibcl" jdbcType="VARCHAR" />
+    <result column="jv_jibsa" property="jvJibsa" jdbcType="VARCHAR" />
+    <result column="ferc_ind" property="fercInd" jdbcType="VARCHAR" />
+    <result column="eew_csks_ps_dummy" property="eewCsksPsDummy" jdbcType="VARCHAR" />
+    <result column="zz_cctxt" property="zzCctxt" jdbcType="VARCHAR" />
+    <result column="zz_jgbm" property="zzJgbm" jdbcType="VARCHAR" />
+    <result column="zz_jglb" property="zzJglb" jdbcType="VARCHAR" />
+    <result column="zz_bmmc" property="zzBmmc" jdbcType="VARCHAR" />
+    <result column="zz_aedtm" property="zzAedtm" jdbcType="VARCHAR" />
+    <result column="zz_bmmc2" property="zzBmmc2" jdbcType="VARCHAR" />
+    <result column="zz_objid" property="zzObjid" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="BaseResultMapVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.sap.CsksVO">
+    <result column="ltext" property="ltext" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="queryCsksList" resultMap="BaseResultMap">
+    select * from csks
+    <where>
+      to_date(datbi,'yyyyMMdd') &gt;=current_date and (bkzkp is null or bkzkp='')
+      <if test="bukrs != null and bukrs != ''">
+        and bukrs=#{bukrs}
+      </if>
+      <if test="kostl != null and kostl != ''">
+        and kostl like concat('%', #{kostl}, '%')
+      </if>
+    </where>
+  </select>
+
+  <select id="queryCsktList" resultMap="BaseResultMapVO">
+    select * from cskt join csks on cskt.kostl=csks.kostl
+    <where>
+      to_date(csks.datbi,'yyyyMMdd') &gt;=current_date and (csks.bkzkp is null or csks.bkzkp='')
+      <if test="bukrs != null and bukrs != ''">
+        and csks.bukrs=#{bukrs}
+      </if>
+      <if test="kostl != null and kostl != ''">
+        and csks.kostl like concat('%', #{kostl}, '%')
+      </if>
+      <if test="ltext != null and ltext != ''">
+        and cskt.ltext like concat('%', #{ltext}, '%')
+      </if>
+    </where>
+    order by csks.kostl
+  </select>
+</mapper>

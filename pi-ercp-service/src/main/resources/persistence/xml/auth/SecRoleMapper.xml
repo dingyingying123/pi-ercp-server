@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.auth.persistence.mapper.SecRoleMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.auth.persistence.entity.SecRole">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="appcod" jdbcType="VARCHAR" property="appcod" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updator" jdbcType="VARCHAR" property="updator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="systemcode" jdbcType="VARCHAR" property="systemcode" />
+  </resultMap>
+
+  <select id="selectByCondition" resultMap="BaseResultMap">
+    select  * from sec_role
+    <where>
+    <if test="appcod != null and appcod != ''">
+      appcod = #{appcod}
+    </if>
+      <if test="roleName != null and roleName != ''">
+          AND role_name like CONCAT('%',#{roleName},'%' )  
+      </if>
+      <if test="status != null and status != ''">
+          AND status = #{status}
+      </if>
+      <if test="systemcode != null and systemcode != ''">
+        AND systemcode = #{systemcode}
+      </if>
+    </where>
+  </select>
+  
+  <select id="selectUserRole" resultMap="BaseResultMap">
+    select sec_role.* 
+    from sec_role
+    join sec_user_role on sec_role.role_id = sec_user_role.role_id
+    where sec_user_role.user_id = #{userId} and sec_role.appcod = #{appCode}
+    
+  </select>
+
+  <select id="queryUserRoleBySystemCode" resultMap="BaseResultMap">
+    select sec_role.*  from sec_role
+    where status='有效' and appcod='ces_hn' and systemcode=#{systemCode}
+  </select>
+
+  <!-- 获取所有报价角色信息 -->
+  <select id="queryAllRole" resultMap="BaseResultMap">
+    SELECT * FROM sec_role where systemcode like 'bj%'
+  </select>
+
+
+  <!-- 根据user_id获取当前角色 -->
+  <select id="selectRoleByUserId" resultMap="BaseResultMap">
+	  SELECT sec_role.* 
+	  FROM sec_role LEFT JOIN sec_user_role
+	  ON sec_role.role_id = sec_user_role.role_id
+	  <where>
+	  	<if test="userId != null">
+	  		sec_user_role.user_id = #{userId}
+	  	</if>
+	  </where>
+  </select>
+
+  <select id="queryAppcod" resultType="java.lang.String">
+        select appcod from sec_user_role where user_id=#{userId}
+    </select>
+
+  <select id="queryUserRoleByRoleName" resultMap="BaseResultMap">
+   select * from sec_role where status='有效' and appcod='sfs' and role_name=#{roleName}
+  </select>
+
+  <select id="findAllRoles" resultType="map">
+select role_id as id,role_name as name from sec_role where status='有效' and appcod=#{appCode}
+  </select>
+
+</mapper>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.reportwork.FssReportWorkSalaryMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.reportwork.FssReportWorkSalary">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="salary_id" jdbcType="VARCHAR" property="salaryId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="salary_month" jdbcType="VARCHAR" property="salaryMonth" />
+    <result column="hire_date" jdbcType="VARCHAR" property="hireDate" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="busi" jdbcType="VARCHAR" property="busi" />
+    <result column="salary" jdbcType="VARCHAR" property="salary" />
+    <result column="position_salary" jdbcType="VARCHAR" property="positionSalary" />
+    <result column="performance_salary" jdbcType="VARCHAR" property="performanceSalary" />
+    <result column="housing_subsidy" jdbcType="VARCHAR" property="housingSubsidy" />
+    <result column="communication_subsidy" jdbcType="VARCHAR" property="communicationSubsidy" />
+    <result column="travel_allowance" jdbcType="VARCHAR" property="travelAllowance" />
+    <result column="lunch_allowance" jdbcType="VARCHAR" property="lunchAllowance" />
+    <result column="job_subsidy" jdbcType="VARCHAR" property="jobSubsidy" />
+    <result column="other_allowances" jdbcType="VARCHAR" property="otherAllowances" />
+    <result column="high_temp_subsidy" jdbcType="VARCHAR" property="highTempSubsidy" />
+    <result column="monthly_bonus" jdbcType="VARCHAR" property="monthlyBonus" />
+    <result column="quality_culture_bonus" jdbcType="VARCHAR" property="qualityCultureBonus" />
+    <result column="quarterly_bonus" jdbcType="VARCHAR" property="quarterlyBonus" />
+    <result column="other_welfare" jdbcType="VARCHAR" property="otherWelfare" />
+    <result column="retroactive_pre_tax_payment" jdbcType="VARCHAR" property="retroactivePreTaxPayment" />
+    <result column="after_tax_adjustment" jdbcType="VARCHAR" property="afterTaxAdjustment" />
+    <result column="termination_remuneration" jdbcType="VARCHAR" property="terminationRemuneration" />
+    <result column="non_competition_remuneration" jdbcType="VARCHAR" property="nonCompetitionRemuneration" />
+    <result column="part_time_safety_personnel_allowance" jdbcType="VARCHAR" property="partTimeSafetyPersonnelAllowance" />
+    <result column="mandatory_on_duty_allowance" jdbcType="VARCHAR" property="mandatoryOnDutyAllowance" />
+    <result column="part_time_allowance" jdbcType="VARCHAR" property="partTimeAllowance" />
+    <result column="on_site_allowance" jdbcType="VARCHAR" property="onSiteAllowance" />
+    <result column="communication_allowance_extra_payment" jdbcType="VARCHAR" property="communicationAllowanceExtraPayment" />
+    <result column="travel_allowance_extra_payment" jdbcType="VARCHAR" property="travelAllowanceExtraPayment" />
+    <result column="project_manager_allowance" jdbcType="VARCHAR" property="projectManagerAllowance" />
+    <result column="quality_salary" jdbcType="VARCHAR" property="qualitySalary" />
+    <result column="technological_innovation" jdbcType="VARCHAR" property="technologicalInnovation" />
+    <result column="management_standardization" jdbcType="VARCHAR" property="managementStandardization" />
+    <result column="quality_category" jdbcType="VARCHAR" property="qualityCategory" />
+    <result column="innovation_management" jdbcType="VARCHAR" property="innovationManagement" />
+    <result column="transformation_specific" jdbcType="VARCHAR" property="transformationSpecific" />
+    <result column="wind_thermal_on_par" jdbcType="VARCHAR" property="windThermalOnPar" />
+    <result column="quality_management" jdbcType="VARCHAR" property="qualityManagement" />
+    <result column="salary_gap_remuneration" jdbcType="VARCHAR" property="salaryGapRemuneration" />
+    <result column="retroactive_ot_payment" jdbcType="VARCHAR" property="retroactiveOtPayment" />
+    <result column="termination_leave_balance_remuneration" jdbcType="VARCHAR" property="terminationLeaveBalanceRemuneration" />
+    <result column="lecturer_fee" jdbcType="VARCHAR" property="lecturerFee" />
+    <result column="excellence_award_incentive" jdbcType="VARCHAR" property="excellenceAwardIncentive" />
+    <result column="taxable_training_fee" jdbcType="VARCHAR" property="taxableTrainingFee" />
+    <result column="taxable_company_benefit" jdbcType="VARCHAR" property="taxableCompanyBenefit" />
+    <result column="safety_bonus" jdbcType="VARCHAR" property="safetyBonus" />
+    <result column="safety_month_bonus" jdbcType="VARCHAR" property="safetyMonthBonus" />
+    <result column="quality_bonus" jdbcType="VARCHAR" property="qualityBonus" />
+    <result column="quarterly_star_bonus" jdbcType="VARCHAR" property="quarterlyStarBonus" />
+    <result column="system_management_bonus" jdbcType="VARCHAR" property="systemManagementBonus" />
+    <result column="special_equipment_skills_bonus" jdbcType="VARCHAR" property="specialEquipmentSkillsBonus" />
+    <result column="tpm_activity_bonus" jdbcType="VARCHAR" property="tpmActivityBonus" />
+    <result column="internal_lean_bonus" jdbcType="VARCHAR" property="internalLeanBonus" />
+    <result column="pre_acceptance_handover_bonus" jdbcType="VARCHAR" property="preAcceptanceHandoverBonus" />
+    <result column="final_handover_bonus" jdbcType="VARCHAR" property="finalHandoverBonus" />
+    <result column="spare_parts_consumption_reduction_bonus" jdbcType="VARCHAR" property="sparePartsConsumptionReductionBonus" />
+    <result column="energy_generation_guarantee_bonus" jdbcType="VARCHAR" property="energyGenerationGuaranteeBonus" />
+    <result column="trolley_bonus" jdbcType="VARCHAR" property="trolleyBonus" />
+    <result column="outstanding_service_project_benchmark_bonus" jdbcType="VARCHAR" property="outstandingServiceProjectBenchmarkBonus" />
+    <result column="sales_commission" jdbcType="VARCHAR" property="salesCommission" />
+    <result column="qc_activity_bonus" jdbcType="VARCHAR" property="qcActivityBonus" />
+    <result column="dnv_safety_management_standard_manual_bonus" jdbcType="VARCHAR" property="dnvSafetyManagementStandardManualBonus" />
+    <result column="sales_incentive_bonus_first_batch_new_orders_bonus" jdbcType="VARCHAR" property="salesIncentiveBonusFirstBatchNewOrdersBonus" />
+    <result column="sales_incentive_bonus_second_batch_new_orders_bonus" jdbcType="VARCHAR" property="salesIncentiveBonusSecondBatchNewOrdersBonus" />
+    <result column="sales_incentive_bonus_profit_bonus" jdbcType="VARCHAR" property="salesIncentiveBonusProfitBonus" />
+    <result column="spot_incentive" jdbcType="VARCHAR" property="spotIncentive" />
+    <result column="labor_union_dues" jdbcType="VARCHAR" property="laborUnionDues" />
+    <result column="after_tax_deduction" jdbcType="VARCHAR" property="afterTaxDeduction" />
+    <result column="hydro_and_electricity_fees" jdbcType="VARCHAR" property="hydroAndElectricityFees" />
+    <result column="housing_rent" jdbcType="VARCHAR" property="housingRent" />
+    <result column="shuttle_bus" jdbcType="VARCHAR" property="shuttleBus" />
+    <result column="penalty_after_tax" jdbcType="VARCHAR" property="penaltyAfterTax" />
+    <result column="penalty_before_tax" jdbcType="VARCHAR" property="penaltyBeforeTax" />
+    <result column="pre_tax_deductions_pay_adjustment" jdbcType="VARCHAR" property="preTaxDeductionsPayAdjustment" />
+    <result column="weekday_ot_payment" jdbcType="VARCHAR" property="weekdayOtPayment" />
+    <result column="weekend_ot_payment" jdbcType="VARCHAR" property="weekendOtPayment" />
+    <result column="unit_based_salary" jdbcType="VARCHAR" property="unitBasedSalary" />
+    <result column="holiday_ot_payment" jdbcType="VARCHAR" property="holidayOtPayment" />
+    <result column="annual_leave_subsidy" jdbcType="VARCHAR" property="annualLeaveSubsidy" />
+    <result column="personal_leave_deduction" jdbcType="VARCHAR" property="personalLeaveDeduction" />
+    <result column="sick_leave_deduction" jdbcType="VARCHAR" property="sickLeaveDeduction" />
+    <result column="medical_leave_salary" jdbcType="VARCHAR" property="medicalLeaveSalary" />
+    <result column="medical_leave_deduction" jdbcType="VARCHAR" property="medicalLeaveDeduction" />
+    <result column="downtime_salary" jdbcType="VARCHAR" property="downtimeSalary" />
+    <result column="maternity_leave_deduction" jdbcType="VARCHAR" property="maternityLeaveDeduction" />
+    <result column="abortion_leave_deduction" jdbcType="VARCHAR" property="abortionLeaveDeduction" />
+    <result column="late_early_leave_deduction" jdbcType="VARCHAR" property="lateEarlyLeaveDeduction" />
+    <result column="absentee_deduction" jdbcType="VARCHAR" property="absenteeDeduction" />
+    <result column="under_time_deduction" jdbcType="VARCHAR" property="underTimeDeduction" />
+    <result column="miss_clocked_penalty" jdbcType="VARCHAR" property="missClockedPenalty" />
+    <result column="retroactive_pension" jdbcType="VARCHAR" property="retroactivePension" />
+    <result column="retroactive_pensioner" jdbcType="VARCHAR" property="retroactivePensioner" />
+    <result column="retroactive_medical_care" jdbcType="VARCHAR" property="retroactiveMedicalCare" />
+    <result column="retroactive_serious_illness" jdbcType="VARCHAR" property="retroactiveSeriousIllness" />
+    <result column="retroactive_medicaler" jdbcType="VARCHAR" property="retroactiveMedicaler" />
+    <result column="retroactive_serious_illnesser" jdbcType="VARCHAR" property="retroactiveSeriousIllnesser" />
+    <result column="retroactive_unemployment" jdbcType="VARCHAR" property="retroactiveUnemployment" />
+    <result column="retroactive_unemploymenter" jdbcType="VARCHAR" property="retroactiveUnemploymenter" />
+    <result column="retroactive_on_job_injuryer" jdbcType="VARCHAR" property="retroactiveOnJobInjuryer" />
+    <result column="retroactive_maternityer" jdbcType="VARCHAR" property="retroactiveMaternityer" />
+    <result column="retroactive_housing_fund" jdbcType="VARCHAR" property="retroactiveHousingFund" />
+    <result column="housing_fund_er" jdbcType="VARCHAR" property="housingFundEr" />
+    <result column="serious_illness" jdbcType="VARCHAR" property="seriousIllness" />
+    <result column="serious_illnesser" jdbcType="VARCHAR" property="seriousIllnesser" />
+    <result column="medical_supplement" jdbcType="VARCHAR" property="medicalSupplement" />
+    <result column="medical_supplementer" jdbcType="VARCHAR" property="medicalSupplementer" />
+    <result column="corning_insurance" jdbcType="VARCHAR" property="corningInsurance" />
+    <result column="corning_insuranceer" jdbcType="VARCHAR" property="corningInsuranceer" />
+    <result column="accident_insurance" jdbcType="VARCHAR" property="accidentInsurance" />
+    <result column="performance_index" jdbcType="VARCHAR" property="performanceIndex" />
+    <result column="total_si_er" jdbcType="VARCHAR" property="totalSiEr" />
+    <result column="pension" jdbcType="VARCHAR" property="pension" />
+    <result column="pensioner" jdbcType="VARCHAR" property="pensioner" />
+    <result column="unemployment_insurance" jdbcType="VARCHAR" property="unemploymentInsurance" />
+    <result column="unemploymenter" jdbcType="VARCHAR" property="unemploymenter" />
+    <result column="medical_care_insurance" jdbcType="VARCHAR" property="medicalCareInsurance" />
+    <result column="medical_care_er" jdbcType="VARCHAR" property="medicalCareEr" />
+    <result column="on_job_injury_er" jdbcType="VARCHAR" property="onJobInjuryEr" />
+    <result column="maternityer" jdbcType="VARCHAR" property="maternityer" />
+    <result column="housing_fund" jdbcType="VARCHAR" property="housingFund" />
+    <result column="housing_funder" jdbcType="VARCHAR" property="housingFunder" />
+    <result column="taxable_income" jdbcType="VARCHAR" property="taxableIncome" />
+    <result column="termination_remuneration_tax" jdbcType="VARCHAR" property="terminationRemunerationTax" />
+    <result column="service_fee" jdbcType="VARCHAR" property="serviceFee" />
+    <result column="pre_tax_payment" jdbcType="VARCHAR" property="preTaxPayment" />
+    <result column="deduction_after_tax" jdbcType="VARCHAR" property="deductionAfterTax" />
+    <result column="actual_performance_pay" jdbcType="VARCHAR" property="actualPerformancePay" />
+    <result column="pre_tax_income" jdbcType="VARCHAR" property="preTaxIncome" />
+    <result column="income_tax" jdbcType="VARCHAR" property="incomeTax" />
+    <result column="net_income" jdbcType="VARCHAR" property="netIncome" />
+    <result column="sequence" jdbcType="VARCHAR" property="sequence" />
+    <result column="merger_tax" jdbcType="VARCHAR" property="mergerTax" />
+    <result column="social_insurance" jdbcType="VARCHAR" property="socialInsurance" />
+    <result column="nationality" jdbcType="VARCHAR" property="nationality" />
+    <result column="busi_text" jdbcType="VARCHAR" property="busiText" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updator" jdbcType="VARCHAR" property="updator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="labor_union_fund_company_payment" jdbcType="VARCHAR" property="laborUnionFundCompanyPayment" />
+    <result column="education_fund" jdbcType="VARCHAR" property="educationFund" />
+    <result column="accident_insurance_er" jdbcType="VARCHAR" property="accidentInsuranceEr" />
+  </resultMap>
+  <resultMap id="BaseResultMapVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.reportwork.FssReportSalaryVO">
+    <result column="organ_id" property="organId" jdbcType="VARCHAR" />
+    <result column="organ_name" property="organName" jdbcType="VARCHAR" />
+    <result column="department_id" property="departmentId" jdbcType="VARCHAR" />
+    <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="job" property="job" jdbcType="VARCHAR" />
+    <result column="proportion" property="proportion" jdbcType="NUMERIC" />
+  </resultMap>
+  <select id="queryThisMonthSalary" resultMap="BaseResultMapVO">
+    select salary.*,hours.organ_id,hours.organ_name,hours.department_id,hours.department_name,hours.type,hours.job,hours.proportion from fss_report_work_salary salary,fss_report_work_personnel_hours hours
+        where salary.user_id=hours.user_id and hours.organ_id in(select company.company_code from fss_report_work_company company)
+
+  </select>
+
+  <select id="queryCoreMemberSalary" resultMap="BaseResultMapVO">
+    select salary.*,hours.organ_id,hours.organ_name,hours.department_id,hours.department_name,hours.type,hours.job,hours.proportion from fss_report_work_salary salary,fss_report_work_personnel_hours hours
+        where salary.user_id=hours.user_id and hours.organ_id=#{organId} and salary.user_id in
+        <foreach collection="userIds" item="userId" separator="," open="(" close=")"> #{userId} </foreach>
+
+  </select>
+</mapper>

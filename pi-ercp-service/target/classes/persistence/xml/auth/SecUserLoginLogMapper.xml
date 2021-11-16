@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.auth.persistence.mapper.SecUserLoginLogMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.auth.persistence.entity.SecUserLoginLog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
+    <result column="cteate_time" jdbcType="TIMESTAMP" property="cteateTime" />
+    <result column="user_ip" jdbcType="VARCHAR" property="userIp" />
+    <result column="app_code" jdbcType="VARCHAR" property="appCode" />
+  </resultMap>
+</mapper>

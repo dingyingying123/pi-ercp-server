@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.ca.mydbpersistence.mapper.ZVHrEmployeeMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.ca.mydbpersistence.entity.ZVHrEmployee">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="pernr" jdbcType="VARCHAR" property="pernr" />
+    <result column="ename" jdbcType="VARCHAR" property="ename" />
+    <result column="zhrPtext" jdbcType="VARCHAR" property="zhrPtext" />
+    <result column="deptName" jdbcType="VARCHAR" property="deptName" />
+    <result column="zhrEmail" jdbcType="VARCHAR" property="zhrEmail" />
+    <result column="zhrCell" jdbcType="VARCHAR" property="zhrCell" />
+    <result column="zhrTell" jdbcType="VARCHAR" property="zhrTell" />
+    <result column="zhrStext" jdbcType="VARCHAR" property="zhrStext" />
+    <result column="flag" jdbcType="VARCHAR" property="flag" />
+   </resultMap>
+  
+  
+</mapper>

@@ -1,0 +1,102 @@
+server:
+  port: 8079   # HTTP (Tomcat) port
+  maxHttpHeaderSize: 10240000
+management:
+  port: 9001
+
+spring:
+  # AUTO-CONFIGURATION
+  autoconfigure:
+    exclude: # Auto-configuration classes to exclude.
+      - org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
+      - com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration
+  application:
+     name: portal-task
+  messages: 
+     basename: i18n/message   
+  freemarker:
+    allowRequestOverride: false
+    allowSessionOverride: false
+    cache: false
+    checkTemplateLocation: true
+    contentType: text/html
+    exposeRequestAttributes: true
+    exposeSessionAttributes: true
+    exposeSpringMacroHelpers: true
+    requestContextAttribute: request
+    suffix: .ftl
+    templateEncoding: UTF-8
+    templateLoaderPath: classpath:/templates/  #表示所有的模板文件都放在该目录下
+    settings:
+        locale: zh_CN
+        date_format: yyyy-MM-dd
+        time_format: HH:mm:ss
+        datetime_format: yyyy-MM-dd HH:mm:ss
+        auto_import: /spring.ftl as spring
+    resources:
+        cachePeriod: 60 # http 缓存过期时间
+        staticLocations: # 设置静态资源的存放地址
+            - classpath:/static
+
+  dubbo:
+     appname: dubbo-demo-ui
+     registry: zookeeper://127.0.0.1:2181
+     protocol: dubbo
+  session:
+    store-type: none     #redis/none
+  redis:
+    host: 10.12.7.17
+    port: 6379
+    pool:
+      max-idle: 8
+      min-idle: 0
+      max-active: 8
+      max-wait: 1
+    timeout: 0   
+logging:
+  config : classpath:logback-dev.xml
+  path: /home/java/eisdev/logs
+     
+app:
+  app_code: portal
+  app_name: 金风科技iConnect©EIS
+  app_module: devlop                #factory/devlop
+  base_template_path: /home/java/eisdev/resources/print-templates/
+  app_cookie_name: eis_cookie_dev
+  expire_time : 604800000  #过期时间
+
+sap:
+  serverUrl:
+  client:
+  
+po: 
+  serverUrl: http://prd.goldwind.com.cn:8000
+  userName: service
+  password: gw654321
+  environment: 300  
+
+oa:
+  http: http://10.12.7.14:80
+  userName: rest
+  password: 123456
+  token: GoldWind-portal-2018
+  groupId: '01000000'  # 设定通讯录的最高级组织编号
+  relationship:
+    fileName: relationship.txt
+open:
+  userName: EIS_USER
+  password: eis#$^10
+  url: http://10.12.7.200:7111
+  
+file:
+  upload:  /home/java/upload/
+  fileResource: /home/java/upload/
+  resourceUpload: /home/java/upload/**
+den:
+  serverUrl: http://qas.goldwind.com.cn:8000
+  username: 33289
+  password: ABAP1122
+epm:
+  path: http://10.12.10.83:8091
+fams:
+  fileDownUrl: http://fams.goldwind.com.cn/qms/api/file/download?fileKey=

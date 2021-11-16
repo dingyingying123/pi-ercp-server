@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.credit.factoring.FssFactoringContractMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.credit.factoring.FssFactoringContract" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="fc_id" property="fcId" jdbcType="VARCHAR" />
+    <result column="letter_number" property="letterNumber" jdbcType="VARCHAR" />
+    <result column="organ_name" property="organName" jdbcType="VARCHAR" />
+    <result column="organ_id" property="organId" jdbcType="VARCHAR" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="project_id" property="projectId" jdbcType="VARCHAR" />
+    <result column="factoring_type" property="factoringType" jdbcType="VARCHAR" />
+    <result column="factoring_bank" property="factoringBank" jdbcType="VARCHAR" />
+    <result column="factoring_bank_id" property="factoringBankId" jdbcType="VARCHAR" />
+    <result column="withdrawal_account" property="withdrawalAccount" jdbcType="VARCHAR" />
+    <result column="withdrawal_account_id" property="withdrawalAccountId" jdbcType="VARCHAR" />
+    <result column="repayment_account" property="repaymentAccount" jdbcType="VARCHAR" />
+    <result column="repayment_account_id" property="repaymentAccountId" jdbcType="VARCHAR" />
+    <result column="contract_name" property="contractName" jdbcType="VARCHAR" />
+    <result column="contract_code" property="contractCode" jdbcType="VARCHAR" />
+    <result column="currency_id" property="currencyId" jdbcType="VARCHAR" />
+    <result column="financing_amount" property="financingAmount" jdbcType="NUMERIC" />
+    <result column="actual_payment_amount" property="actualPaymentAmount" jdbcType="NUMERIC" />
+    <result column="factoring_period" property="factoringPeriod" jdbcType="INTEGER" />
+    <result column="contract_start_date" property="contractStartDate" jdbcType="DATE" />
+    <result column="contract_end_date" property="contractEndDate" jdbcType="DATE" />
+    <result column="contract_repayment_date" property="contractRepaymentDate" jdbcType="DATE" />
+    <result column="interest_rate_type" property="interestRateType" jdbcType="VARCHAR" />
+    <result column="interest_rate_floating" property="interestRateFloating" jdbcType="VARCHAR" />
+    <result column="floating_ratio" property="floatingRatio" jdbcType="NUMERIC" />
+    <result column="interest_bearing_days" property="interestBearingDays" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="payment_method" property="paymentMethod" jdbcType="VARCHAR" />
+    <result column="payment_method_id" property="paymentMethodId" jdbcType="VARCHAR" />
+    <result column="interest_payment_date" property="interestPaymentDate" jdbcType="DATE" />
+    <result column="interest_bearer" property="interestBearer" jdbcType="VARCHAR" />
+    <result column="interest_bearer_people" property="interestBearerPeople" jdbcType="VARCHAR" />
+    <result column="interest_bearer_people_id" property="interestBearerPeopleId" jdbcType="VARCHAR" />
+    <result column="contract_interest_rate" property="contractInterestRate" jdbcType="NUMERIC" />
+    <result column="total_interest" property="totalInterest" jdbcType="NUMERIC" />
+    <result column="handling_party" property="handlingParty" jdbcType="VARCHAR" />
+    <result column="handling_party_people" property="handlingPartyPeople" jdbcType="VARCHAR" />
+    <result column="handling_party_people_id" property="handlingPartyPeopleId" jdbcType="VARCHAR" />
+    <result column="handling_method" property="handlingMethod" jdbcType="VARCHAR" />
+    <result column="rate" property="rate" jdbcType="NUMERIC" />
+    <result column="total_handling_fee" property="totalHandlingFee" jdbcType="NUMERIC" />
+    <result column="remark1" property="remark1" jdbcType="VARCHAR" />
+    <result column="business_date" property="businessDate" jdbcType="DATE" />
+    <result column="sales_contract" property="salesContract" jdbcType="VARCHAR" />
+    <result column="customer_company_name" property="customerCompanyName" jdbcType="VARCHAR" />
+    <result column="customer_company_id" property="customerCompanyId" jdbcType="VARCHAR" />
+    <result column="contract_signer" property="contractSigner" jdbcType="VARCHAR" />
+    <result column="contract_signer_id" property="contractSignerId" jdbcType="VARCHAR" />
+    <result column="contract_signing_date" property="contractSigningDate" jdbcType="DATE" />
+    <result column="total_contract_price" property="totalContractPrice" jdbcType="NUMERIC" />
+    <result column="refunded_amount" property="refundedAmount" jdbcType="NUMERIC" />
+    <result column="invoicing_situation" property="invoicingSituation" jdbcType="VARCHAR" />
+    <result column="cargo_delivery_list" property="cargoDeliveryList" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="contract_balance" property="contractBalance" jdbcType="NUMERIC" />
+    <result column="calculation_status" property="calculationStatus" jdbcType="VARCHAR" />
+    <result column="liquidation" property="liquidation" jdbcType="VARCHAR" />
+    <result column="fa_id" property="faId" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="active" property="active" jdbcType="VARCHAR" />
+    <result column="assigned_number" property="assignedNumber" jdbcType="VARCHAR" />
+    <result column="currency_code" property="currencyCode" jdbcType="VARCHAR" />
+    <result column="currency_name" property="currencyName" jdbcType="VARCHAR" />
+    <result column="owner_interest_ratio" property="ownerInterestRatio" jdbcType="INTEGER" />
+    <result column="owner_handling_fee_ratio" property="ownerHandlingFeeRatio" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="BaseResultMapVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.credit.FssFactoringContractVO">
+    <result column="lifnr" property="lifnr" jdbcType="VARCHAR" />
+    <result column="lifnr_text" property="lifnrText" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="queryContractBalance" resultMap="BaseResultMap">
+    select table1.fc_id as fc_id,(coalesce(table1.withdraw,0) - coalesce(table2.repayment,0)) as contract_balance from (
+    select fc_id,sum(coalesce(withdraw_amount,0)) as withdraw from fss_factoring_withdraw
+    GROUP BY fc_id)table1
+    left join (
+    select fc_id,case when sum(coalesce(repayment_amount,0))is not null then sum(coalesce(repayment_amount,0)) else 0 end as repayment
+    from fss_factoring_repayment_info
+    GROUP BY fc_id )table2 on table1.fc_id = table2.fc_id
+  </select>
+
+  <select id="getAssignedNumber" parameterType="java.lang.String" resultType="java.lang.String">
+      SELECT
+        #{ prefix } || CASE WHEN res.str ISNULL THEN '00000001' ELSE res.str END
+      FROM (
+        SELECT
+          to_char(MAX(regexp_replace(assigned_number,'('|| #{ prefix } ||')(\d{8})','\2','g')::int + 1), 'FM00000000') as str
+        FROM
+          fss_factoring_contract
+        WHERE assigned_number ~ ('^'|| #{ prefix } ||'\d{8}$')
+      ) res
+  </select>
+
+  <select id="queryLifnrByBank" resultMap="BaseResultMapVO">
+    select b.lifnr,b.lifnr_text from fss_factoring_contract c join fss_base_bank_branch b on c.factoring_bank_id=b.branch_id
+    <where> c.fc_id=#{fcId}
+        <if test="lifnr != null and lifnr != ''">
+          and b.lifnr like concat('%',#{lifnr},'%')
+        </if>
+      <if test="lifnrText != null and lifnrText != ''">
+          and b.lifnr_text like concat('%',#{lifnrText},'%')
+        </if>
+    </where>
+  </select>
+
+  <select id="queryLifnrByInfo" resultMap="BaseResultMapVO">
+    select a.handling_party_people_id as lifnr,a.handling_party_people as lifnr_text from fss_factoring_contract c join fss_factoring_application a on a.fa_id=c.fa_id
+    <where> c.fc_id=#{fcId}
+        <if test="lifnr != null and lifnr != ''">
+          and a.handling_party_people_id like concat('%',#{lifnr},'%')
+        </if>
+      <if test="lifnrText != null and lifnrText != ''">
+          and a.handling_party_people like concat('%',#{lifnrText},'%')
+        </if>
+    </where>
+    group by a.handling_party_people,a.handling_party_people_id
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+    select * from fss_factoring_contract c
+    <where>
+      <if test="contractName != null and contractName != ''">
+        c.contract_name like concat('%', #{contractName}, '%')
+      </if>
+      <if test="organName != null and organName != ''">
+        and c.organ_name like concat('%', #{organName}, '%')
+      </if>
+      <if test="projectName != null and projectName != ''">
+        and c.project_name like concat('%', #{projectName}, '%')
+      </if>
+      <if test="factoringBank != null and factoringBank != ''">
+        and c.factoring_bank like concat('%', #{factoringBank}, '%')
+      </if>
+      <if test="factoringType != null and factoringType != ''">
+        and c.factoring_type = #{factoringType}
+      </if>
+      <if test="creator != null and creator != ''">
+        and c.organ_id in (select bu.bukrs from  fss_base_role_organ_busi bu join sec_user_role ur on bu.role_id=ur.role_id
+        and ur.user_id=#{creator} group by bu.bukrs)
+      </if>
+    </where>
+    order by letter_number desc
+  </select>
+</mapper>

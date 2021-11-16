@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.reportwork.FssReportWorkTaxComputeResultMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.reportwork.FssReportWorkTaxComputeResult">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="month" jdbcType="VARCHAR" property="month" />
+    <result column="corporation" jdbcType="VARCHAR" property="corporation" />
+    <result column="employee" jdbcType="VARCHAR" property="employee" />
+    <result column="employee_code" jdbcType="VARCHAR" property="employeeCode" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="post" jdbcType="VARCHAR" property="post" />
+    <result column="department_no" jdbcType="VARCHAR" property="departmentNo" />
+    <result column="project" jdbcType="VARCHAR" property="project" />
+    <result column="project_no" jdbcType="VARCHAR" property="projectNo" />
+    <result column="available_salary" jdbcType="NUMERIC" property="availableSalary" />
+    <result column="available_hours" jdbcType="VARCHAR" property="availableHours" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updator" jdbcType="VARCHAR" property="updator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="month_id" jdbcType="VARCHAR" property="monthId" />
+  </resultMap>
+
+  <select id="selectPersonByMonthId" resultMap="BaseResultMap">
+    select month,corporation,employee,employee_code,department,post,department_no from fss_report_work_tax_compute_result
+    <where>
+      <if test="monthId != null and monthId != ''">
+        month_id = #{monthId}
+      </if>
+    </where>
+    group by month,corporation,employee,employee_code,department,post,department_no
+  </select>
+  <select id="findDataByMonth"  resultType="java.util.Map">
+        SELECT t1.employee_code as employeeCode,
+        t1.employee as employeeName,
+        t1."month",
+        t1.company_code as companycode,
+        (case when company_code is  null then '' ELSE '' end) as costCenter,
+        t1.project_no as projectNo,
+        (case when company_code is  null then '' ELSE '' end) as WBS,
+        t1.available_hours as availablehours,
+        t2.attendance_days as attendancedays,
+        '03' as feeType,
+        (case when company_code is  null then '' ELSE '' end) as projectStage
+    FROM
+        (SELECT employee_code,employee,"month", project_no,available_hours,company_code
+         FROM fss_report_work_tax_compute_result
+         WHERE
+           month=#{month}
+        ) t1
+        LEFT JOIN
+        (SELECT user_id,attendance_days FROM fss_report_work_attendance WHERE period=#{month}) t2
+         on t1.employee_code=t2.user_id;
+  </select>
+
+
+</mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.sap.CepctMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.sap.Cepct" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="datbi" property="datbi" jdbcType="VARCHAR" />
+    <id column="kokrs" property="kokrs" jdbcType="VARCHAR" />
+    <id column="mandt" property="mandt" jdbcType="VARCHAR" />
+    <id column="prctr" property="prctr" jdbcType="VARCHAR" />
+    <id column="spras" property="spras" jdbcType="VARCHAR" />
+    <result column="ktext" property="ktext" jdbcType="VARCHAR" />
+    <result column="ltext" property="ltext" jdbcType="VARCHAR" />
+    <result column="mctxt" property="mctxt" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="queryCepctList" resultMap="BaseResultMap">
+    select cepct.* from cepct join cepc on cepct.mandt=cepc.mandt and cepct.prctr=cepc.prctr
+    <where>
+      to_date(cepc.datbi,'yyyyMMdd') &gt;=current_date and cepc.lock_ind=''
+      <if test="prctr != null and prctr != ''">
+        and cepc.prctr like concat('%', #{prctr}, '%')
+      </if>
+      <if test="ltext != null and ltext != ''">
+        and cepct.ltext like concat('%', #{ltext}, '%')
+      </if>
+    </where>
+    order by cepc.prctr
+  </select>
+</mapper>

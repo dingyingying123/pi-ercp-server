@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.receivable.FssBillReceivableDrawerMapper">
+    <resultMap id="BaseResultMap"
+               type="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBillReceivableDrawerEntity">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="BaseResultMap" property="receId" jdbcType="VARCHAR"/>
+        <result column="rece_id" property="receId" jdbcType="VARCHAR"/>
+        <result column="drawer_id" property="drawerId" jdbcType="VARCHAR"/>
+        <result column="drawer_name" property="drawerName" jdbcType="VARCHAR"/>
+        <result column="drawer_number" property="drawerNumber" jdbcType="VARCHAR"/>
+        <result column="drawer_bank" property="drawerBank" jdbcType="VARCHAR"/>
+        <result column="drawer_bank_id" property="drawerBankId" jdbcType="VARCHAR"/>
+        <result column="drawer_head_bank_id" property="drawerHeadBankId" jdbcType="VARCHAR"/>
+        <result column="drawer_head_bank" property="drawerHeadBank" jdbcType="VARCHAR"/>
+
+
+    </resultMap>
+    <!--新增数据-->
+    <insert id="addFssBillReceivableDrawer"
+            parameterType="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBillReceivableDrawerEntity">
+        insert into fss_bill_receivable_drawer(rece_id,drawer_id,drawer_name,drawer_number,drawer_bank,drawer_bank_id,drawer_head_bank_id,drawer_head_bank) values
+         (#{receId},#{drawerId},#{drawerName},#{drawerNumber},#{drawerBank},#{drawerBankId},#{drawerHeadBankId},#{drawerHeadBank})
+  </insert>
+    <!--修改数据-->
+    <update id="updFssBillReceivableDrawer" parameterType="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBillReceivableDrawerEntity">
+        update fss_bill_receivable_drawer set rece_id = #{receId}
+        <if test="drawerId!=null">
+            ,drawer_id = #{drawerId}
+        </if>
+        <if test="drawerName!=null">
+            ,drawer_name = #{drawerName}
+        </if>
+        <if test="drawerNumber!=null">
+            ,drawer_number = #{drawerNumber}
+        </if>
+        <if test="drawerBank!=null">
+            ,drawer_bank = #{drawerBank}
+        </if>
+        <if test="drawerBankId!=null">
+            ,drawer_bank_id = #{drawerBankId}
+        </if>
+        <if test="drawerHeadBankId!=null">
+            ,drawer_head_bank_id = #{drawerHeadBankId}
+        </if>
+        <if test="drawerHeadBank!=null">
+            ,drawer_head_bank = #{drawerHeadBank}
+        </if>
+        where rece_id = #{receId}
+    </update>
+    <delete id="delFssBillReceivableDrawer">
+        delete from fss_bill_receivable_drawer where rece_id = #{receId}
+    </delete>
+    <select id="selFssBillReceivableDrawer" resultMap="BaseResultMap" parameterType="String">
+        select * from fss_bill_receivable_drawer where rece_id = #{receId}
+    </select>
+
+</mapper>

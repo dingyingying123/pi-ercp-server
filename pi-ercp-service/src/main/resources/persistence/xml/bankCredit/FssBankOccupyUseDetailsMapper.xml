@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.bankCredit.FssBankOccupyUseDetailsMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.bankCredit.FssBankOccupyUseDetails" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="fboud_id" property="fboudId" jdbcType="VARCHAR" />
+    <result column="business_type" property="businessType" jdbcType="VARCHAR" />
+    <result column="credit_ccupier" property="creditCcupier" jdbcType="VARCHAR" />
+    <result column="business_name" property="businessName" jdbcType="VARCHAR" />
+    <result column="business_code" property="businessCode" jdbcType="VARCHAR" />
+    <result column="business_id" property="businessId" jdbcType="VARCHAR" />
+    <result column="organ_name" property="organName" jdbcType="VARCHAR" />
+    <result column="organ_id" property="organId" jdbcType="VARCHAR" />
+    <result column="contract_name" property="contractName" jdbcType="VARCHAR" />
+    <result column="contract_code" property="contractCode" jdbcType="VARCHAR" />
+    <result column="head_name" property="headName" jdbcType="VARCHAR" />
+    <result column="head_code" property="headCode" jdbcType="VARCHAR" />
+    <result column="head_id" property="headId" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="credit_varieties" property="creditVarieties" jdbcType="VARCHAR" />
+    <result column="credit_varieties_id" property="creditVarietiesId" jdbcType="VARCHAR" />
+    <result column="currency_name" property="currencyName" jdbcType="VARCHAR" />
+    <result column="currency_code" property="currencyCode" jdbcType="VARCHAR" />
+    <result column="currency_id" property="currencyId" jdbcType="VARCHAR" />
+    <result column="occupy_quota" property="occupyQuota" jdbcType="NUMERIC" />
+    <result column="convert_occupy_quota" property="convertOccupyQuota" jdbcType="NUMERIC" />
+    <result column="use_quota" property="useQuota" jdbcType="NUMERIC" />
+    <result column="convert_use_quota" property="convertUseQuota" jdbcType="NUMERIC" />
+    <result column="effective date" property="effectiveDate" jdbcType="DATE" />
+    <result column="deadline_date" property="deadlineDate" jdbcType="DATE" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="active" property="active" jdbcType="VARCHAR" />
+  </resultMap>
+</mapper>

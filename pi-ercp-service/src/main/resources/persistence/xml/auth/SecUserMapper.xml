@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.auth.persistence.mapper.SecUserMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.auth.persistence.entity.SecUser">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="pwd" jdbcType="VARCHAR" property="pwd" />
+    <result column="pwd_lock" jdbcType="VARCHAR" property="pwdLock" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="male" jdbcType="VARCHAR" property="male" />
+    <result column="tel_no" jdbcType="VARCHAR" property="telNo" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="governor" jdbcType="VARCHAR" property="governor" />
+    <result column="lock_flag" jdbcType="VARCHAR" property="lockFlag" />
+    <result column="user_type" jdbcType="VARCHAR" property="userType" />
+    <result column="login_ip" jdbcType="VARCHAR" property="loginIp" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updator" jdbcType="VARCHAR" property="updator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
+    <result column="active_type" jdbcType="VARCHAR" property="activeType" />
+    <result column="departmentId" jdbcType="VARCHAR" property="department_id" />
+  </resultMap>
+
+    <resultMap id="SecUserDepartment" type="cn.com.personnel.ercp.auth.module.SecUserDepartment">
+        <result column="user_id" jdbcType="VARCHAR" property="userId" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="org_name" jdbcType="VARCHAR" property="orgName" />
+  </resultMap>
+
+  <select id="login" resultMap="BaseResultMap">
+    select *
+    from sec_user
+    where user_id =  #{user_id,jdbcType=VARCHAR}
+    or    tel_no  =  #{user_id,jdbcType=VARCHAR}
+    or    email  =  #{user_id,jdbcType=VARCHAR}
+  </select>
+  <select id="searchEngineer" resultMap="BaseResultMap">
+      select sec_user.user_id,sec_user.user_name from sec_role
+    LEFT JOIN sec_user_role on sec_role.role_id = sec_user_role.role_id
+    LEFT JOIN sec_user on sec_user.user_id = sec_user_role.user_id
+       where sec_role.role_name = '资源开发工程师' or sec_role.role_name='资源开发工程师主管';
+  </select>
+
+
+  <!-- 通过邮箱查找用户信息 userId为邮箱-->
+  <select id="selectSecUserByEmail" resultMap="BaseResultMap">
+  	SELECT * FROM sec_user WHERE email = #{userId}
+  </select>
+
+  <!--  检查邮箱唯一 -->
+  <select id="secEmailCount" resultType="java.lang.Integer">
+  	SELECT count(1) FROM sec_user
+	WHERE  sec_user.email = #{comEmail}
+  </select>
+
+  <!-- 根据userid更新邮箱信息 -->
+  <update id="updateEmailByUserId">
+  	UPDATE sec_user SET email = #{user.email} WHERE user_id = #{user.userId}
+  </update>
+
+
+   <!-- 根据role_name获取当前角色下的所有人 的信息-->
+  <select id="findUserByRoleName" resultMap="BaseResultMap">
+	 SELECT
+	*
+FROM
+	sec_user
+WHERE
+	sec_user.user_id IN (
+SELECT
+	sec_user_role.user_id
+FROM
+	sec_user_role
+	LEFT JOIN sec_role ON sec_user_role.role_id = sec_role.role_id
+	<where>
+	  	<if test="roleName != null">
+	  		sec_role.role_name = #{roleName})
+	  	</if>
+	  </where>
+  </select>
+
+    <select id="searchById" resultMap="BaseResultMap">
+      select * from sec_user
+      where user_id = #{userId}
+  </select>
+
+
+
+
+
+
+
+</mapper>

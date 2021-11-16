@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.bankCredit.FssBankCreditChangeMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.bankCredit.FssBankCreditChange" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="fbcc_id" property="fbccId" jdbcType="VARCHAR" />
+    <result column="letter_number" property="letterNumber" jdbcType="VARCHAR" />
+    <result column="applicant_id" property="applicantId" jdbcType="VARCHAR" />
+    <result column="applicant_name" property="applicantName" jdbcType="VARCHAR" />
+    <result column="applicant_dept_id" property="applicantDeptId" jdbcType="VARCHAR" />
+    <result column="applicant_dept" property="applicantDept" jdbcType="VARCHAR" />
+    <result column="applicant_date" property="applicantDate" jdbcType="DATE" />
+    <result column="contract_name" property="contractName" jdbcType="VARCHAR" />
+    <result column="contract_code" property="contractCode" jdbcType="VARCHAR" />
+    <result column="organ_name" property="organName" jdbcType="VARCHAR" />
+    <result column="organ_id" property="organId" jdbcType="VARCHAR" />
+    <result column="credit_institution" property="creditInstitution" jdbcType="VARCHAR" />
+    <result column="credit_institution_code" property="creditInstitutionCode" jdbcType="VARCHAR" />
+    <result column="credit_institution_id" property="creditInstitutionId" jdbcType="VARCHAR" />
+    <result column="currency_name" property="currencyName" jdbcType="VARCHAR" />
+    <result column="currency_code" property="currencyCode" jdbcType="VARCHAR" />
+    <result column="currency_id" property="currencyId" jdbcType="VARCHAR" />
+    <result column="total_planned_credit_amount" property="totalPlannedCreditAmount" jdbcType="NUMERIC" />
+    <result column="amount_equivalent_currency" property="amountEquivalentCurrency" jdbcType="NUMERIC" />
+    <result column="occupy_quota" property="occupyQuota" jdbcType="NUMERIC" />
+    <result column="convert_occupy_quota" property="convertOccupyQuota" jdbcType="NUMERIC" />
+    <result column="use_quota" property="useQuota" jdbcType="NUMERIC" />
+    <result column="convert_use_quota" property="convertUseQuota" jdbcType="NUMERIC" />
+    <result column="remaining_amount" property="remainingAmount" jdbcType="NUMERIC" />
+    <result column="convert_remaining_amount" property="convertRemainingAmount" jdbcType="NUMERIC" />
+    <result column="consolidated_occupancy_quota" property="consolidatedOccupancyQuota" jdbcType="NUMERIC" />
+    <result column="convert_consolidated_occupancy_quota" property="convertConsolidatedOccupancyQuota" jdbcType="NUMERIC" />
+    <result column="no_consolidated_occupancy_quota" property="noConsolidatedOccupancyQuota" jdbcType="NUMERIC" />
+    <result column="no_convert_consolidated_occupancy_quota" property="noConvertConsolidatedOccupancyQuota" jdbcType="NUMERIC" />
+    <result column="consolidated_use_quota" property="consolidatedUseQuota" jdbcType="NUMERIC" />
+    <result column="convert_consolidated_use_quota" property="convertConsolidatedUseQuota" jdbcType="NUMERIC" />
+    <result column="no_consolidated_use_quota" property="noConsolidatedUseQuota" jdbcType="NUMERIC" />
+    <result column="no_convert_consolidated_use_quota" property="noConvertConsolidatedUseQuota" jdbcType="NUMERIC" />
+    <result column="credit_varieties" property="creditVarieties" jdbcType="VARCHAR" />
+    <result column="credit_varieties_id" property="creditVarietiesId" jdbcType="VARCHAR" />
+    <result column="credit_expiry_date" property="creditExpiryDate" jdbcType="DATE" />
+    <result column="bank_rating" property="bankRating" jdbcType="VARCHAR" />
+    <result column="rating_period" property="ratingPeriod" jdbcType="VARCHAR" />
+    <result column="rating_expiry_date" property="ratingExpiryDate" jdbcType="DATE" />
+    <result column="plan_approval_date" property="planApprovalDate" jdbcType="DATE" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="active" property="active" jdbcType="VARCHAR" />
+    <result column="approval_status" property="approvalStatus" jdbcType="VARCHAR" />
+    <result column="approval_time" property="approvalTime" jdbcType="DATE" />
+    <result column="module_type" property="moduleType" jdbcType="VARCHAR" />
+    <result column="level_id" property="levelId" jdbcType="VARCHAR" />
+  </resultMap>
+    <resultMap id="BaseResultMapOccupyUse" type="cn.com.personnel.ercp.pi.persistence.entity.bankCredit.FssBankOccupyUse" >
+        <result column="businesstype" property="businesstype" jdbcType="VARCHAR" />
+        <result column="creditoccupier" property="creditoccupier" jdbcType="VARCHAR" />
+        <result column="commercianunit" property="commercianunit" jdbcType="VARCHAR" />
+        <result column="companyname" property="companyname" jdbcType="VARCHAR" />
+        <result column="companyid" property="companyid" jdbcType="VARCHAR" />
+        <result column="contractname" property="contractname" jdbcType="VARCHAR" />
+        <result column="projectname" property="projectname" jdbcType="VARCHAR" />
+        <result column="bankcode" property="bankcode" jdbcType="VARCHAR" />
+        <result column="bankname" property="bankname" jdbcType="VARCHAR" />
+        <result column="kind" property="kind" jdbcType="VARCHAR" />
+        <result column="creditvarieties" property="creditvarieties" jdbcType="VARCHAR" />
+        <result column="currency" property="currency" jdbcType="VARCHAR" />
+        <result column="currencycode" property="currencycode" jdbcType="VARCHAR" />
+        <result column="occupiedamount" property="cnyoccupiedamount" jdbcType="NUMERIC" />
+        <result column="cnyoccupiedamount" property="occupiedamount" jdbcType="NUMERIC" />
+        <result column="useamount" property="useamount" jdbcType="NUMERIC" />
+        <result column="cnyuseamount" property="cnyuseamount" jdbcType="NUMERIC" />
+        <result column="startdate" property="startdate" jdbcType="VARCHAR" />
+        <result column="enddate" property="enddate" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="listOccupyUse" resultMap="BaseResultMapOccupyUse">
+        select vo.businesstype,vo.creditoccupier,vo.commercianunit,vo.companyname,
+        vo.companyid,vo.contractname,vo.projectname,vo.bankcode,vo.bankname,vo.kind,vo.creditvarieties,
+        vo.currency,vo.currencycode,vo.occupiedamount,vo.useamount,vo.startdate,vo.enddate,
+        case when vo.currencycode = 'CNY' then vo.occupiedamount else vo.occupiedamount* coalesce(table1.ukurs,1) end as cnyoccupiedamount,
+        case when vo.currencycode = 'CNY' then vo.useamount else vo.useamount* coalesce(table1.ukurs,1) end as cnyuseamount
+        from(
+        select vo.businesstype,vo.creditoccupier,vo.commercianunit,vo.companyname,
+        vo.companyid,vo.contractname,vo.projectname,vo.bankcode,vo.bankname,vo.kind,vo.creditvarieties,
+        vo.currency,vo.currencycode,vo.occupiedamount,vo.useamount,vo.startdate,vo.enddate,max(table1.id) as maxid
+        from v_occupuse vo
+        left join (select id,gdatu, fcurr,tcurr,ukurs,source from fss_base_exchange_rate
+        where tcurr = 'CNY'
+        UNION
+        select concat(mandt,kurst,fcurr,tcurr,gdatu) id,
+        cast(to_date((CAST((99999999-CAST(gdatu as NUMERIC))as VARCHAR)),'yyyymmdd') as VARCHAR) gdatu,
+        fcurr,tcurr,ukurs,'0' source from tcurr
+        where tcurr = 'CNY') table1 on table1.gdatu &lt;= vo.enddate and vo.currencycode = table1.fcurr
+        group by vo.businesstype,vo.creditoccupier,vo.commercianunit,vo.companyname,
+        vo.companyid,vo.contractname,vo.projectname,vo.bankcode,vo.bankname,vo.kind,vo.creditvarieties,
+        vo.currency,vo.currencycode,vo.occupiedamount,vo.useamount,vo.startdate,vo.enddate) vo
+        left join (select id,gdatu, fcurr,tcurr,ukurs,source from fss_base_exchange_rate
+        where
+        tcurr = 'CNY'
+        UNION
+        select concat(mandt,kurst,fcurr,tcurr,gdatu) id,
+        cast(to_date((CAST((99999999-CAST(gdatu as NUMERIC))as VARCHAR)),'yyyymmdd') as VARCHAR) gdatu,
+        fcurr,tcurr,ukurs,'0' source from tcurr
+        where
+        tcurr = 'CNY') table1 on vo.maxid = table1.id
+        <where>
+            vo.occupiedamount != 0 and vo.useamount != 0
+            <if test="fbou.bankcode != null and fbou.bankcode != ''">
+                and vo.bankcode = #{fbou.bankcode}
+            </if>
+            <if test="fbou.companyname != null and fbou.companyname != ''">
+                and vo.companyname like concat('%', #{fbou.companyname}, '%')
+            </if>
+            <if test="fbou.contractname != null and fbou.contractname != ''">
+                and vo.contractname like concat('%', #{fbou.contractname}, '%')
+            </if>
+            <if test="types != null and types.size &gt; 0">
+                and vo.businesstype in
+                <foreach collection="types" item="type" separator="," open="(" close=")"> #{type} </foreach>
+            </if>
+            <if test="fbou.creditoccupier != null and fbou.creditoccupier != ''">
+                and vo.creditoccupier = #{fbou.creditoccupier}
+            </if>
+        </where>
+    </select>
+    <select id="amoutOccupyUseTotal" resultMap="BaseResultMapOccupyUse">
+        select
+        sum(coalesce(occupiedamount,0)) as occupiedamount,
+        sum(coalesce(useamount,0)) as useamount
+        from v_occupuse
+    </select>
+
+    <select id="listCreditChange" resultMap="BaseResultMap">
+        select * from fss_bank_credit_change c
+        <where>
+            c.active='1'
+            <if test="fssBankCreditChange.moduleType != null and fssBankCreditChange.moduleType != ''">
+                and c.module_type = #{fssBankCreditChange.moduleType}
+            </if>
+            <if test="fssBankCreditChange.approvalStatus != null and fssBankCreditChange.approvalStatus != ''">
+                and c.approval_status = #{fssBankCreditChange.approvalStatus}
+            </if>
+            <if test="fssBankCreditChange.organName != null and fssBankCreditChange.organName != ''">
+                and c.organ_name like concat('%', #{fssBankCreditChange.organName}, '%')
+            </if>
+            <if test="fssBankCreditChange.contractCode != null and fssBankCreditChange.contractCode != ''">
+                and c.contract_code like concat('%', #{fssBankCreditChange.contractCode}, '%')
+            </if>
+            <if test="fssBankCreditChange.contractName != null and fssBankCreditChange.contractName != ''">
+                and c.contract_name like concat('%', #{fssBankCreditChange.contractName}, '%')
+            </if>
+            <if test="fssBankCreditChange.creditInstitution != null and fssBankCreditChange.creditInstitution != ''">
+                and c.credit_institution like concat('%', #{fssBankCreditChange.creditInstitution}, '%')
+            </if>
+            <if test="fssBankCreditChange.listCreditVarieties != null and fssBankCreditChange.listCreditVarieties.size &gt; 0 ">
+             and
+                <foreach collection="fssBankCreditChange.listCreditVarieties" item="id" separator="or" open="(" close=")">
+                    c.credit_varieties like concat('%', #{id}, '%')
+                </foreach>
+            </if>
+            <if test='fssBankCreditChange.applicantId != null and fssBankCreditChange.applicantId != ""'>
+                and c.organ_id in (select bu.bukrs from  fss_base_role_organ_busi bu join sec_user_role ur on bu.role_id=ur.role_id
+                and ur.user_id=#{fssBankCreditChange.applicantId} group by bu.bukrs)
+            </if>
+        </where>
+        order by c.create_time desc
+    </select>
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.credit.bond.FssBondRedeemMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.credit.bond.FssBondRedeem">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="redeem_id" jdbcType="VARCHAR" property="redeemId" />
+    <result column="summary_id" jdbcType="VARCHAR" property="summaryId" />
+    <result column="dw_id" jdbcType="VARCHAR" property="dwId" />
+    <result column="bond_name" jdbcType="VARCHAR" property="bondName" />
+    <result column="issuing_balance" jdbcType="NUMERIC" property="issuingBalance" />
+    <result column="plan_id" jdbcType="VARCHAR" property="planId" />
+    <result column="plan_name" jdbcType="VARCHAR" property="planName" />
+    <result column="planned_balance" jdbcType="NUMERIC" property="plannedBalance" />
+    <result column="this_repayment" jdbcType="NUMERIC" property="thisRepayment" />
+    <result column="amount_after_discount" jdbcType="NUMERIC" property="amountAfterDiscount" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <resultMap id="BaseResultMapVO" type="cn.com.personnel.ercp.pi.module.credit.FssBondRedeemVO">
+    <result column="bond_id" jdbcType="VARCHAR" property="bondId" />
+    <result column="business_date" jdbcType="VARCHAR" property="businessDate" />
+    <result column="exchange_rate" jdbcType="NUMERIC" property="exchangeRate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+
+  <select id="queryRedeemList" resultMap="BaseResultMap">
+    select * from fss_bond_redeem
+    <where>
+      <if test="summaryId != null and summaryId != ''">
+        summary_id = #{summaryId}
+      </if>
+    </where>
+    order by create_time desc
+  </select>
+</mapper>

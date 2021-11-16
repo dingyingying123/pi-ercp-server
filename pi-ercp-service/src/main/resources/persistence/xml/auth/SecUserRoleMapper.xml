@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.auth.persistence.mapper.SecUserRoleMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.auth.persistence.entity.SecUserRole" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="appcod" property="appcod" jdbcType="VARCHAR" />
+    <result column="role_id" property="roleId" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="DATE" />
+  </resultMap>
+ 
+  <resultMap id="SecUserRoleModuleMap" extends="BaseResultMap" type="cn.com.personnel.ercp.auth.module.SecUserRoleModule">
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+      <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+      <result column="systemcode" jdbcType="VARCHAR" property="systemcode" />
+      <result column="user_type" jdbcType="VARCHAR" property="userType" />
+      <result column="male" jdbcType="VARCHAR" property="male" />
+  </resultMap>
+  
+  <select id="queryRoleUser" resultMap="SecUserRoleModuleMap">
+    select sec_user_role.*,sec_user.user_name
+    from sec_user_role
+    join sec_user on sec_user_role.user_id = sec_user.user_id
+    where sec_user_role.role_id = #{roleId}
+    and   sec_user_role.appcod = #{appcod}
+    <if test="userId != null and userId != ''">
+         AND sec_user.user_id =  #{userId}
+   	</if>
+   	<if test="userName != null and userName != ''">
+         AND sec_user.user_name like CONCAT('%',#{userName},'%' )  
+    </if>
+  </select>
+
+
+    <select id="queryRoleUserByRoleName" resultMap="SecUserRoleModuleMap">
+        select sec_user_role.*,sec_user.user_name,sec_role.role_name,sec_role.systemcode,sec_user.governor,sec_user.user_type,sec_user.male
+        from sec_user_role
+        join sec_user on sec_user_role.user_id = sec_user.user_id
+        join sec_role on sec_role.role_id = sec_user_role.role_id
+        where
+         sec_user_role.appcod = #{appcod}
+        <if test="userId != null">
+            AND sec_user.user_id =  #{userId}
+        </if>
+        <if test="userName != null">
+            AND sec_user.user_name like CONCAT('%',#{userName},'%' )
+        </if>
+        <if test="roleName != null">
+            AND sec_role.role_name like CONCAT('%',#{roleName},'%' )
+        </if>
+        order by sec_user_role.user_id
+    </select>
+    
+    <select id="selectOneByUserId" resultMap="SecUserRoleModuleMap">
+        select sec_user_role.*,sec_user.user_name
+        from sec_user_role
+        join sec_user on sec_user_role.user_id = sec_user.user_id
+        join sec_role on sec_role.role_id = sec_user_role.role_id
+        where 1 = 1 
+        <if test="userId != null">
+            AND sec_user.user_id =  #{userId}
+        </if>
+    </select>
+    
+     <select id="queryUserListByRole" resultType="java.lang.String">
+        SELECT user_id from sec_user_role 
+		where 1=1 
+        <if test="queryList != null and queryList.size()>0">
+        AND role_id IN 
+		<foreach collection="queryList" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+      </if>
+    </select>
+  
+  <select id="getUnSupplierUserRole" resultMap="BaseResultMap">
+  SELECT
+	 sec_user_role.* 
+	FROM sec_user_role  
+	JOIN isp_base_supplier ON isp_base_supplier.user_id = sec_user_role.user_id
+	<where>
+		<if test="secUserRole.userId != null">
+		 	AND sec_user_role.user_id=#{secUserRole.userId}
+		</if>
+		<if test="secUserRole.roleId != null">
+		 	AND sec_user_role.role_id=#{secUserRole.roleId}
+		</if>
+	</where>
+  </select>
+  
+  <!-- 根据条件删除用户角色关系 -->
+  <delete id="deleteByCondition">
+  	DELETE  FROM sec_user_role
+  	<where>
+  		<if test="userRole.userId != null">
+  			AND sec_user_role.user_id = #{userRole.userId}
+  		</if>
+  		<if test="userRole.roleId != null">
+  			AND sec_user_role.role_id = #{userRole.roleId}
+  		</if>
+  	</where>
+  </delete>
+  
+  <!-- 根据userId,用户原来的roleId,creator里放的新的roleId -->
+  <update id="updateRoleBySecUserRole">
+  	UPDATE sec_user_role SET role_id = #{userRole.creator} where user_id = #{userRole.userId} AND role_id = #{userRole.roleId}
+  </update>
+  
+  
+  <!-- 导入时更新，根据userId,用户原来的roleId,creator里放的新的roleId -->
+  <update id="importUpdateBySecUserRole">
+    UPDATE sec_user_role 
+        SET role_id = #{userRole.roleId} ,
+            user_id = #{userRole.userId} ,
+            appcod = #{userRole.appcod},
+            id = #{userRole.id},
+            create_time = #{userRole.createTime}
+    where user_id = #{userRole.userId} 
+    AND   role_id = #{userRole.roleId} 
+    AND   appcod = #{userRole.appcod} 
+  </update>
+  
+  
+  
+  <select id="selectRoleUser" resultMap="BaseResultMap">
+    select *
+    from sec_user_role
+    where role_id = #{userRole.roleId}
+    and   appcod = #{userRole.appcod}
+    and   user_id = #{userRole.userId}
+  </select>
+    <select id="getUserRoleList" resultType="java.lang.String">
+        select sur.role_id from sec_user_role sur
+        join sec_role sr
+        on sur.role_id = sr.role_id
+        where sur.user_id = #{userId}
+        and sur.appcod = #{appCode}
+    </select>
+    <select id="getRoleIdList" resultType="string">
+        select role_id from sec_user_role
+        where user_id = #{userId}
+          and appcod = #{appCode}
+    </select>
+
+    <select id="getUserIdBySystemCode" resultType="java.lang.String">
+        select user_id from sec_user_role
+        where role_id = (select role_id from sec_role
+        where appcod = #{appCode} and systemcode = #{systemCode})
+    </select>
+    <select id="getUserIdsByRoleName" resultType="java.lang.String">
+        select sec_user_role.user_id
+            from sec_user_role
+            join sec_user on sec_user_role.user_id = sec_user.user_id
+            join sec_role on sec_role.role_id = sec_user_role.role_id
+            where sec_role.role_name = #{roleName}
+            and sec_user_role.appcod = #{appCode}
+    </select>
+    <select id="getUserRoles" resultMap="BaseResultMap">
+        select * from sec_user_role sur
+        left  join sec_role sr
+        on sur.role_id = sr.role_id
+        where sur.user_id = #{userId}
+        and sur.appcod = #{appCode}
+    </select>
+
+    <select id="queryUserCKRole" resultMap="SecUserRoleModuleMap">
+        select * from sec_user_role join sec_role sr on sec_user_role.role_id = sr.role_id where sec_user_role.user_id=#{userId} and sr.systemcode like concat('%', #{lastKey})
+    </select>
+</mapper>

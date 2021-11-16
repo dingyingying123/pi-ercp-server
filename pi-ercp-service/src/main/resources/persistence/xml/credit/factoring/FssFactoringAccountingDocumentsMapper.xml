@@ -1,0 +1,689 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.credit.factoring.FssFactoringAccountingDocumentsMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.credit.factoring.FssFactoringAccountingDocuments">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="documents_id" jdbcType="VARCHAR" property="documentsId" />
+    <result column="sub_id" jdbcType="VARCHAR" property="subId" />
+    <result column="main_id" jdbcType="VARCHAR" property="mainId" />
+    <result column="rule_id" jdbcType="VARCHAR" property="ruleId" />
+    <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
+    <result column="contract_num" jdbcType="VARCHAR" property="contractNum" />
+    <result column="organ_id" jdbcType="VARCHAR" property="organId" />
+    <result column="organ_name" jdbcType="VARCHAR" property="organName" />
+    <result column="summary" jdbcType="VARCHAR" property="summary" />
+    <result column="currency_code" jdbcType="VARCHAR" property="currencyCode" />
+    <result column="currency" jdbcType="VARCHAR" property="currency" />
+    <result column="credit_date" jdbcType="VARCHAR" property="creditDate" />
+    <result column="commercian_unit_id" jdbcType="VARCHAR" property="commercianUnitId" />
+    <result column="commercian_unit" jdbcType="VARCHAR" property="commercianUnit" />
+    <result column="business_module_id" jdbcType="VARCHAR" property="businessModuleId" />
+    <result column="business_module" jdbcType="VARCHAR" property="businessModule" />
+    <result column="business_type" jdbcType="VARCHAR" property="businessType" />
+    <result column="borrow_loan" jdbcType="VARCHAR" property="borrowLoan" />
+    <result column="subject" jdbcType="VARCHAR" property="subject" />
+    <result column="subject_text" jdbcType="VARCHAR" property="subjectText" />
+    <result column="lifnr" jdbcType="VARCHAR" property="lifnr" />
+    <result column="lifnr_text" jdbcType="VARCHAR" property="lifnrText" />
+    <result column="loan_term" jdbcType="VARCHAR" property="loanTerm" />
+    <result column="project_stage" jdbcType="VARCHAR" property="projectStage" />
+    <result column="subject_type" jdbcType="VARCHAR" property="subjectType" />
+    <result column="project_code" jdbcType="VARCHAR" property="projectCode" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="profit_center_code" jdbcType="VARCHAR" property="profitCenterCode" />
+    <result column="profit_center" jdbcType="VARCHAR" property="profitCenter" />
+    <result column="cost_center_code" jdbcType="VARCHAR" property="costCenterCode" />
+    <result column="cost_center" jdbcType="VARCHAR" property="costCenter" />
+    <result column="wbs_element_code" jdbcType="VARCHAR" property="wbsElementCode" />
+    <result column="wbs_element" jdbcType="VARCHAR" property="wbsElement" />
+    <result column="reason_code" jdbcType="VARCHAR" property="reasonCode" />
+    <result column="reason_code_text" jdbcType="VARCHAR" property="reasonCodeText" />
+    <result column="assigned_number" jdbcType="VARCHAR" property="assignedNumber" />
+    <result column="expiry_date" jdbcType="VARCHAR" property="expiryDate" />
+    <result column="amount" jdbcType="NUMERIC" property="amount" />
+    <result column="entry_status" jdbcType="VARCHAR" property="entryStatus" />
+    <result column="document_no" jdbcType="VARCHAR" property="documentNo" />
+    <result column="message_number" jdbcType="VARCHAR" property="messageNumber" />
+    <result column="internal_order" jdbcType="VARCHAR" property="internalOrder" />
+    <result column="is_clear" jdbcType="VARCHAR" property="isClear" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="reserve" jdbcType="VARCHAR" property="reserve" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="deleted" jdbcType="VARCHAR" property="deleted" />
+    <result column="business_type_list" jdbcType="VARCHAR" property="businessTypeList" />
+    <result column="subject_type_list" jdbcType="VARCHAR" property="subjectTypeList" />
+    <result column="entry_number" jdbcType="VARCHAR" property="entryNumber" />
+    <result column="group_no" jdbcType="VARCHAR" property="groupNo" />
+    <result column="entry_type" jdbcType="VARCHAR" property="entryType" />
+    <result column="tran_type" jdbcType="VARCHAR" property="tranType" />
+    <result column="reversal_status" jdbcType="VARCHAR" property="reversalStatus" />
+  </resultMap>
+
+  <select id="queryFactoringAccountingRule" resultMap="BaseResultMap">
+      select '未入账' as entry_status,(select cskt.ltext from csks join cskt on csks.kokrs=cskt.kokrs and csks.bukrs=rru.organ_id and to_date(csks.datbi,'yyyyMMdd') >=current_date
+                                    where csks.kostl=rru.cost_center_code and csks.bukrs=rru.organ_id limit 1) as cost_center,
+             (select t053s.txt40 from t053s where t053s.bukrs=rru.organ_id and t053s.rstgr=rru.reason_code) as reason_code_text,
+             rru.subject_type,
+             rru.* from
+          (select case when (select ska1.glaccount_type from t001 join ska1 on t001.ktopl=ska1.ktopl where t001.bukrs=rule.organ_id and ska1.saknr=rule.subject) ='P'
+              and (rule.cost_center_code !='' or rule.cost_center_code is not null)
+                           then case when (rule.cost_center_code !='' or rule.cost_center_code is not null) then
+                                         case when length(rule.cost_center_code)=6 then concat(rule.organ_id,rule.cost_center_code)
+                                              when length(rule.cost_center_code)=4 then concat(rule.profit_center_code,rule.cost_center_code)
+                                              when length(rule.cost_center_code)=10 then rule.cost_center_code end
+                                     else (select cost_center_code from fss_accounting_rule where organ_id=rule.organ_id and type='2') end
+                       else '' end as cost_center_code,rule.subject,rule.subject_text,rule.profit_center_code,rule.profit_center,
+                  case when (select skb1.mitkz from skb1 where skb1.bukrs=rule.organ_id and skb1.saknr=rule.subject) in ('D','K')
+                           then case when rule.subject_type in('借款往来科目','利息往来科目') then (select b.lifnr from fss_factoring_contract c join fss_base_bank_branch b on c.factoring_bank_id=b.branch_id where c.fc_id=rule.main_id)
+                                     when rule.subject_type='其他应收往来科目' then rule.handling_party_people_id else '' end
+                       else '' end as lifnr,
+                  case when (select skb1.mitkz from skb1 where skb1.bukrs=rule.organ_id and skb1.saknr=rule.subject) in ('D','K')
+                           then case when rule.subject_type in('借款往来科目','利息往来科目') then (select b.lifnr_text from fss_factoring_contract c join fss_base_bank_branch b on c.factoring_bank_id=b.branch_id where c.fc_id=rule.main_id)
+                                     when rule.subject_type='其他应收往来科目' then rule.handling_party_people else '' end
+                       else '' end as lifnr_text,
+                  case when rule.subject_type='借款往来科目' then rule.withdraw_amount
+                       when rule.subject_type='财务费用科目' then coalesce(rule.total_handling_fee,0)-round(coalesce(rule.total_handling_fee,0)*coalesce(rule.owner_handling_fee_ratio,0) :: numeric / 100,2)
+                       when rule.subject_type='其他应收往来科目' then round(coalesce(rule.total_handling_fee,0)*coalesce(rule.owner_handling_fee_ratio,0) :: numeric / 100,2)
+                       when rule.subject_type='银行科目' then rule.withdraw_amount-coalesce(rule.total_handling_fee,0)*(1-coalesce(rule.owner_handling_fee_ratio,0) :: numeric / 100)-
+                                                          coalesce(rule.total_handling_fee,0)*coalesce(rule.owner_handling_fee_ratio,0)/100 else 0 end as amount,
+                  rule.rule_id,rule.commercian_unit_id,rule.commercian_unit,rule.business_module_id,rule.business_module,
+                  rule.business_type,rule.loan_term,rule.project_stage,rule.borrow_loan,rule.subject_type,rule.project_code,rule.project_name,
+                  rule.wbs_element_code,rule.wbs_element,rule.reason_code,rule.internal_order,rule.is_clear,rule.type,
+                  rule.remarks,rule.status,rule.reserve,rule.create_time,rule.creator,rule.update_time,rule.updater,rule.deleted,
+                  rule.business_type_list,rule.subject_type_list,rule.tran_type,rule.organ_id,rule.organ_name,rule.sub_id,rule.main_id,rule.withdraw_amount,
+                  rule.total_handling_fee,rule.owner_handling_fee_ratio,rule.handling_party_people_id,rule.handling_party_people,rule.assigned_number,rule.contract_repayment_date as expiry_date,
+                  rule.contract_name,rule.contract_num,rule.summary,rule.currency_id,rule.currency_code,rule.currency,rule.credit_date
+           from (SELECT case when rr.subject_type='银行科目' then case when (rr.subject='' or rr.subject is null) then (select hkont from v_acc_num where acc_num=c.withdrawal_account) else rr.subject end
+                             when rr.subject_type='财务费用科目' and c.handling_party  in ('金风','双方分摊') then rr.subject
+                             when rr.subject_type='其他应收往来科目' and c.handling_party  in ('客户','双方分摊') then rr.subject
+                             else rr.subject end as subject,
+                        case when (rr.subject='' or rr.subject is null) then
+                                     (select txt50 from v_acc_num where acc_num=c.withdrawal_account) else (select skat.txt50 from skat join t001 on t001.ktopl=skat.ktopl and skat.spras ='1' where skat.saknr=rr.subject and t001.bukrs=c.organ_id) end as subject_text,
+                        case when (rr.profit_center_code='' or rr.profit_center_code is null) then
+                                 (select ru.profit_center_code from fss_accounting_rule ru where ru.organ_id=c.organ_id and type='2') else rr.profit_center_code end as profit_center_code,
+                        case when (rr.profit_center_code='' or rr.profit_center_code is null) then
+                                 (select ru.profit_center from fss_accounting_rule ru where ru.organ_id=c.organ_id and type='2') else rr.profit_center end as profit_center,
+                        rr.rule_id,rr.commercian_unit_id,rr.commercian_unit,rr.business_module_id,rr.business_module,
+                        rr.business_type,rr.loan_term,rr.project_stage,rr.borrow_loan,rr.subject_type,rr.project_code,rr.project_name,
+                        rr.cost_center_code,rr.cost_center,rr.wbs_element_code,rr.wbs_element,rr.reason_code,rr.internal_order,
+                        rr.is_clear,rr.type,rr.remarks,rr.status,rr.reserve,rr.create_time,rr.creator,rr.update_time,rr.updater,rr.deleted,
+                        rr.business_type_list,rr.subject_type_list,rr.tran_type,c.organ_id,c.organ_name,i.fw_id as sub_id,i.fc_id as main_id,i.withdraw_amount,i.total_handling_fee,
+                        c.owner_handling_fee_ratio,c.handling_party_people_id,c.handling_party_people,c.assigned_number,
+                        case when rr.subject_type not in ('财务费用科目','银行科目') then c.contract_repayment_date else null end contract_repayment_date,
+                        c.contract_name,c.contract_code as contract_num,concat(i.factoring_bank,'|保理|提款') as summary,
+                        i.currency_id,i.currency_code,i.currency_name as currency,i.credit_date
+                 FROM fss_factoring_withdraw i JOIN fss_factoring_contract c ON i.fc_id = c.fc_id left join fss_factoring_application a on c.fa_id=a.fa_id
+                                               JOIN v_organ o ON c.organ_id = o.bukrs
+                                               JOIN (select r.*,enum.code from fss_accounting_rule r left join sec_enum enum on enum.id=r.commercian_unit_id where r.type='1') as rr
+                                                    ON rr.business_module = '保理' AND rr.business_type = '提款' AND (o.busi = rr.code OR c.organ_id = rr.organ_id)
+                 WHERE i.fw_id = #{subId}
+                   and (rr.subject_type not in ('财务费用科目','其他应收往来科目') or (rr.subject_type='财务费用科目' and c.handling_party  in ('金风','双方分摊'))
+                     or (rr.subject_type='其他应收往来科目' and c.handling_party  in ('客户','双方分摊')))) as rule) as rru
+      where rru.amount > 0
+  </select>
+
+    <select id="queryFactoringRepaymentAccounting" resultMap="BaseResultMap">
+        select
+            '未入账'                                                                as entry_status,
+            (select cskt.ltext
+             from csks
+                      join cskt on csks.kokrs = cskt.kokrs and csks.bukrs = '1001' and to_date(csks.datbi, 'yyyyMMdd') >= current_date
+             where csks.kostl = rru.cost_center_code and csks.bukrs = rru.organ_id
+             limit 1)                                                            as cost_center,
+            (select t053s.txt40
+             from t053s
+             where t053s.bukrs = rru.organ_id and t053s.rstgr = rru.reason_code) as reason_code_text,
+            rru.repayment_amount                             as amount,
+            rru.subject_type,
+            rru.*
+        from
+            (select
+                 case when (select ska1.glaccount_type
+                            from t001
+                                     join ska1 on t001.ktopl = ska1.ktopl
+                            where t001.bukrs = rule.organ_id and ska1.saknr = rule.subject) = 'P'
+                     and (rule.cost_center_code != '' or rule.cost_center_code is not null)
+                          then case when (rule.cost_center_code != '' or rule.cost_center_code is not null)
+                                        then
+                                        case when length(rule.cost_center_code) = 6
+                                                 then concat(rule.organ_id, rule.cost_center_code)
+                                             when length(rule.cost_center_code) = 4
+                                                 then concat(rule.profit_center_code, rule.cost_center_code)
+                                             when length(rule.cost_center_code) = 10
+                                                 then rule.cost_center_code end
+                                    else (select cost_center_code
+                                          from fss_accounting_rule
+                                          where organ_id = rule.organ_id and type = '2') end
+                      else '' end as cost_center_code,
+                 rule.subject,
+                 rule.subject_text,
+                 rule.profit_center_code,
+                 rule.profit_center,
+                 case when (select skb1.mitkz
+                            from skb1
+                            where skb1.bukrs = rule.organ_id and skb1.saknr = rule.subject) in ('D', 'K')
+                          then case when rule.subject_type in ('借款往来科目')
+                                        then (select b.lifnr
+                                              from fss_factoring_contract c
+                                                       join fss_base_bank_branch b on c.factoring_bank_id = b.branch_id
+                                              where c.fc_id = rule.main_id)
+                                    else '' end
+                      else '' end as lifnr,
+                 case when (select skb1.mitkz
+                            from skb1
+                            where skb1.bukrs = rule.organ_id and skb1.saknr = rule.subject) in ('D', 'K')
+                          then case when rule.subject_type in ('借款往来科目')
+                                        then (select b.lifnr_text
+                                              from fss_factoring_contract c
+                                                       join fss_base_bank_branch b on c.factoring_bank_id = b.branch_id
+                                              where c.fc_id = rule.main_id)
+                                    else '' end
+                      else '' end as lifnr_text,
+                 rule.rule_id,
+                 rule.commercian_unit_id,
+                 rule.commercian_unit,
+                 rule.business_module_id,
+                 rule.business_module,
+                 rule.business_type,
+                 rule.loan_term,
+                 rule.project_stage,
+                 rule.borrow_loan,
+                 rule.subject_type,
+                 rule.project_code,
+                 rule.project_name,
+                 rule.wbs_element_code,
+                 rule.wbs_element,
+                 rule.reason_code,
+                 rule.internal_order,
+                 rule.is_clear,
+                 rule.type,
+                 rule.remarks,
+                 rule.status,
+                 rule.reserve,
+                 rule.create_time,
+                 rule.creator,
+                 rule.update_time,
+                 rule.updater,
+                 rule.deleted,
+                 rule.business_type_list,
+                 rule.subject_type_list,
+                 rule.tran_type,
+                 rule.organ_id,
+                 rule.organ_name,
+                 rule.sub_id,
+                 rule.main_id,
+                 rule.repayment_amount,
+                 rule.total_handling_fee,
+                 rule.owner_handling_fee_ratio,
+                 rule.handling_party_people_id,
+                 rule.handling_party_people,
+                 rule.assigned_number,
+                 rule.contract_repayment_date as expiry_date,
+                 rule.contract_name,rule.contract_num,rule.summary,rule.currency_id,rule.currency_code,rule.currency,rule.credit_date
+             from (SELECT
+                       case when rr.subject_type = '银行科目'
+                                then case when (rr.subject = '' or rr.subject is null)
+                                              then (select hkont
+                                                    from v_acc_num
+                                                    where acc_num = c.withdrawal_account)
+                                          else rr.subject end
+                            else rr.subject end                                                  as subject,
+                       case when (rr.subject = '' or rr.subject is null)
+                                then
+                                (select txt50
+                                 from v_acc_num
+                                 where acc_num = c.withdrawal_account)
+                            else (select skat.txt50
+                                  from skat
+                                           join t001 on t001.ktopl = skat.ktopl and skat.spras ='1'
+                                  where skat.saknr = rr.subject and t001.bukrs = c.organ_id) end as subject_text,
+                       case when (rr.profit_center_code = '' or rr.profit_center_code is null)
+                                then
+                                (select ru.profit_center_code
+                                 from fss_accounting_rule ru
+                                 where ru.organ_id = c.organ_id and type = '2')
+                            else rr.profit_center_code end                                       as profit_center_code,
+                       case when (rr.profit_center_code = '' or rr.profit_center_code is null)
+                                then
+                                (select ru.profit_center
+                                 from fss_accounting_rule ru
+                                 where ru.organ_id = c.organ_id and type = '2')
+                            else rr.profit_center end                                            as profit_center,
+                       rr.rule_id,
+                       rr.commercian_unit_id,
+                       rr.commercian_unit,
+                       rr.business_module_id,
+                       rr.business_module,
+                       rr.business_type,
+                       rr.loan_term,
+                       rr.project_stage,
+                       rr.borrow_loan,
+                       rr.subject_type,
+                       rr.project_code,
+                       rr.project_name,
+                       rr.cost_center_code,
+                       rr.cost_center,
+                       rr.wbs_element_code,
+                       rr.wbs_element,
+                       rr.reason_code,
+                       rr.internal_order,
+                       rr.is_clear,
+                       rr.type,
+                       rr.remarks,
+                       rr.status,
+                       rr.reserve,
+                       rr.create_time,
+                       rr.creator,
+                       rr.update_time,
+                       rr.updater,
+                       rr.deleted,
+                       rr.business_type_list,
+                       rr.subject_type_list,
+                       rr.tran_type,
+                       c.organ_id,
+                       c.organ_name,
+                       i.fri_id as sub_id,
+                       i.fc_id as main_id,
+                       i.repayment_amount,
+                       i.repayment_amount                                                   as total_handling_fee,
+                       a.owner_handling_fee_ratio,
+                       c.handling_party_people_id,
+                       c.handling_party_people,
+                       c.assigned_number,
+                       case when rr.subject_type not in ('财务费用科目','银行科目') then c.contract_repayment_date else null end contract_repayment_date,
+                       c.contract_name,c.contract_code as contract_num,concat(c.factoring_bank,'|保理|还款') as summary,
+                       c.currency_id,c.currency_code,c.currency_name as currency,i.credit_date
+                   FROM fss_factoring_repayment_info i
+                            JOIN fss_factoring_contract c ON i.fc_id = c.fc_id
+                            left join fss_factoring_application a on c.fa_id = a.fa_id
+                            JOIN v_organ o ON c.organ_id = o.bukrs
+                            JOIN (select
+                                      r.*,
+                                      enum.code
+                                  from fss_accounting_rule r
+                                           left join sec_enum enum on enum.id = r.commercian_unit_id
+                                  where r.type = '1') as rr
+                                 ON rr.business_module = '保理' AND rr.business_type = '还款' AND (o.busi = rr.code OR c.organ_id = rr.organ_id)
+                   WHERE i.fri_id = #{subId}) as rule) as rru where rru.repayment_amount > 0
+    </select>
+    <select id="queryFactoringPrewithdrawAccounting" resultMap="BaseResultMap">
+        select
+            '未入账'                                                                as entry_status,
+            (select cskt.ltext
+             from csks
+                      join cskt on csks.kokrs = cskt.kokrs and csks.bukrs = '1001' and to_date(csks.datbi, 'yyyyMMdd') >= current_date
+             where csks.kostl = rru.cost_center_code and csks.bukrs = rru.organ_id
+             limit 1)                                                            as cost_center,
+            (select t053s.txt40
+             from t053s
+             where t053s.bukrs = rru.organ_id and t053s.rstgr = rru.reason_code) as reason_code_text,
+            rru.withdraw_amount                             as amount,
+            rru.subject_type,
+            rru.*
+        from
+            (select
+                 case when (select ska1.glaccount_type
+                            from t001
+                                     join ska1 on t001.ktopl = ska1.ktopl
+                            where t001.bukrs = rule.organ_id and ska1.saknr = rule.subject) = 'P'
+                     and (rule.cost_center_code != '' or rule.cost_center_code is not null)
+                          then case when (rule.cost_center_code != '' or rule.cost_center_code is not null)
+                                        then
+                                        case when length(rule.cost_center_code) = 6
+                                                 then concat(rule.organ_id, rule.cost_center_code)
+                                             when length(rule.cost_center_code) = 4
+                                                 then concat(rule.profit_center_code, rule.cost_center_code)
+                                             when length(rule.cost_center_code) = 10
+                                                 then rule.cost_center_code end
+                                    else (select cost_center_code
+                                          from fss_accounting_rule
+                                          where organ_id = rule.organ_id and type = '2') end
+                      else '' end                  as cost_center_code,
+                 rule.subject,
+                 rule.subject_text,
+                 rule.profit_center_code,
+                 rule.profit_center,
+                 case when (select skb1.mitkz
+                            from skb1
+                            where skb1.bukrs = rule.organ_id and skb1.saknr = rule.subject) in ('D', 'K')
+                          then (select b.lifnr
+                                from fss_factoring_contract c
+                                         join fss_base_bank_branch b on c.factoring_bank_id = b.branch_id
+                                where c.fc_id = rule.main_id)
+                      else '' end                  as lifnr,
+                 case when (select skb1.mitkz
+                            from skb1
+                            where skb1.bukrs = rule.organ_id and skb1.saknr = rule.subject) in ('D', 'K')
+                          then (select b.lifnr_text
+                                from fss_factoring_contract c
+                                         join fss_base_bank_branch b on c.factoring_bank_id = b.branch_id
+                                where c.fc_id = rule.main_id)
+                      else '' end                  as lifnr_text,
+                 rule.rule_id,
+                 rule.commercian_unit_id,
+                 rule.commercian_unit,
+                 rule.business_module_id,
+                 rule.business_module,
+                 rule.business_type,
+                 rule.loan_term,
+                 rule.project_stage,
+                 rule.borrow_loan,
+                 rule.subject_type,
+                 rule.project_code,
+                 rule.project_name,
+                 rule.wbs_element_code,
+                 rule.wbs_element,
+                 rule.reason_code,
+                 rule.internal_order,
+                 rule.is_clear,
+                 rule.type,
+                 rule.remarks,
+                 rule.status,
+                 rule.reserve,
+                 rule.create_time,
+                 rule.creator,
+                 rule.update_time,
+                 rule.updater,
+                 rule.deleted,
+                 rule.business_type_list,
+                 rule.subject_type_list,
+                 rule.tran_type,
+                 rule.organ_id,
+                 rule.organ_name,
+                 rule.sub_id,
+                 rule.main_id,
+                 rule.withdraw_amount,
+                 rule.owner_handling_fee_ratio,
+                 rule.handling_party_people_id,
+                 rule.handling_party_people,
+                 rule.assigned_number,
+                 rule.contract_repayment_date as expiry_date,
+                 rule.contract_name,rule.contract_num,rule.summary,rule.currency_id,rule.currency_code,rule.currency,rule.credit_date
+             from (SELECT
+                       case when (rr.subject = '' or rr.subject is null)
+                                then (select hkont
+                                      from v_acc_num
+                                      where acc_num = c.withdrawal_account)
+                            else rr.subject end                                               as subject,
+                       case when (rr.subject = '' or rr.subject is null)
+                                then
+                                (select txt50
+                                 from v_acc_num
+                                 where acc_num = c.withdrawal_account)
+                            else (select skat.txt50
+                                  from skat
+                                           join t001 on t001.ktopl = skat.ktopl and skat.spras ='1'
+                                  where skat.saknr = rr.subject and t001.bukrs = c.organ_id) end as subject_text,
+                       case when (rr.profit_center_code = '' or rr.profit_center_code is null)
+                                then
+                                (select ru.profit_center_code
+                                 from fss_accounting_rule ru
+                                 where ru.organ_id = c.organ_id and type = '2')
+                            else rr.profit_center_code end                                       as profit_center_code,
+                       case when (rr.profit_center_code = '' or rr.profit_center_code is null)
+                                then
+                                (select ru.profit_center
+                                 from fss_accounting_rule ru
+                                 where ru.organ_id = c.organ_id and type = '2')
+                            else rr.profit_center end                                            as profit_center,
+                       rr.rule_id,
+                       rr.commercian_unit_id,
+                       rr.commercian_unit,
+                       rr.business_module_id,
+                       rr.business_module,
+                       rr.business_type,
+                       rr.loan_term,
+                       rr.project_stage,
+                       rr.borrow_loan,
+                       rr.subject_type,
+                       rr.project_code,
+                       rr.project_name,
+                       rr.cost_center_code,
+                       rr.cost_center,
+                       rr.wbs_element_code,
+                       rr.wbs_element,
+                       rr.reason_code,
+                       rr.internal_order,
+                       rr.is_clear,
+                       rr.type,
+                       rr.remarks,
+                       rr.status,
+                       rr.reserve,
+                       rr.create_time,
+                       rr.creator,
+                       rr.update_time,
+                       rr.updater,
+                       rr.deleted,
+                       rr.business_type_list,
+                       rr.subject_type_list,
+                       rr.tran_type,
+                       c.organ_id,
+                       c.organ_name,
+                       i.fpi_id as sub_id,
+                       i.fc_id as main_id,
+                       case when i.interest_bearer = '双方分息'
+                                then case when fp.interest_bearer = '金风'then fp.withdraw_amount else 0 end
+                            else
+                                i.withdraw_amount end as withdraw_amount,
+                       a.owner_handling_fee_ratio,
+                       c.handling_party_people_id,
+                       c.handling_party_people,
+                       c.assigned_number,
+                       case when rr.subject_type not in ('财务费用科目','银行科目') then c.contract_repayment_date else null end contract_repayment_date,
+                       c.contract_name,c.contract_code as contract_num,concat(i.factoring_bank,'|保理|预提') as summary,
+                       i.currency_id,i.currency_code,i.currency_name as currency,i.credit_date
+                   FROM fss_factoring_prewithdraw_info i
+                            left join (select fpi_id,interest_bearer,sum(this_withdraw_amount) as withdraw_amount
+                                       from fss_factoring_prewithdraw where interest_bearer = '金风' group by fpi_id,interest_bearer) fp  on fp.fpi_id = i.fpi_id
+                            JOIN fss_factoring_contract c ON i.fc_id = c.fc_id
+                            left join fss_factoring_application a on c.fa_id = a.fa_id
+                            JOIN v_organ o ON c.organ_id = o.bukrs
+                            JOIN (select
+                                      r.*,
+                                      enum.code
+                                  from fss_accounting_rule r left join sec_enum enum on enum.id = r.commercian_unit_id
+                                  where r.type = '1') as rr
+                                 ON rr.business_module = '保理' AND rr.business_type = '预提' AND (o.busi = rr.code OR c.organ_id = rr.organ_id)
+                   WHERE i.fpi_id = #{subId}
+                     and c.interest_bearer in ('金风','双方分息') and i.type = '预提'
+                  ) as rule) as rru where rru.withdraw_amount > 0
+    </select>
+    <select id="queryFactoringPrerepaymentAccounting" resultMap="BaseResultMap">
+        select
+            '未入账'                                                                as entry_status,
+            (select cskt.ltext
+             from csks
+                      join cskt on csks.kokrs = cskt.kokrs and csks.bukrs = '1001' and to_date(csks.datbi, 'yyyyMMdd') >= current_date
+             where csks.kostl = rru.cost_center_code and csks.bukrs = rru.organ_id
+             limit 1)                                                            as cost_center,
+            (select t053s.txt40
+             from t053s
+             where t053s.bukrs = rru.organ_id and t053s.rstgr = rru.reason_code) as reason_code_text,
+            rru.withdraw_amount                                                  as amount,
+            rru.subject_type,
+            rru.*
+        from
+            (select
+                 case when (select ska1.glaccount_type
+                            from t001
+                                     join ska1 on t001.ktopl = ska1.ktopl
+                            where t001.bukrs = rule.organ_id and ska1.saknr = rule.subject) = 'P'
+                     and (rule.cost_center_code != '' or rule.cost_center_code is not null)
+                          then case when (rule.cost_center_code != '' or rule.cost_center_code is not null)
+                                        then
+                                        case when length(rule.cost_center_code) = 6
+                                                 then concat(rule.organ_id, rule.cost_center_code)
+                                             when length(rule.cost_center_code) = 4
+                                                 then concat(rule.profit_center_code, rule.cost_center_code)
+                                             when length(rule.cost_center_code) = 10
+                                                 then rule.cost_center_code end
+                                    else (select cost_center_code
+                                          from fss_accounting_rule
+                                          where organ_id = rule.organ_id and type = '2') end
+                      else '' end                  as cost_center_code,
+                 rule.subject,
+                 rule.subject_text,
+                 rule.profit_center_code,
+                 rule.profit_center,
+                 case when (select skb1.mitkz
+                            from skb1
+                            where skb1.bukrs = rule.organ_id and skb1.saknr = rule.subject) in ('D', 'K')
+                          then case when rule.subject_type in ('银行科目', '利息往来科目')
+                                        then (select b.lifnr
+                                              from fss_factoring_contract c
+                                                       join fss_base_bank_branch b on c.factoring_bank_id = b.branch_id
+                                              where c.fc_id = rule.main_id)
+                                    when rule.subject_type = '其他应收往来科目'
+                                        then rule.handling_party_people_id
+                                    else '' end
+                      else '' end                  as lifnr,
+                 case when (select skb1.mitkz
+                            from skb1
+                            where skb1.bukrs = rule.organ_id and skb1.saknr = rule.subject) in ('D', 'K')
+                          then case when rule.subject_type in ('银行科目', '利息往来科目')
+                                        then (select b.lifnr_text
+                                              from fss_factoring_contract c
+                                                       join fss_base_bank_branch b on c.factoring_bank_id = b.branch_id
+                                              where c.fc_id = rule.main_id)
+                                    when rule.subject_type = '其他应收往来科目'
+                                        then rule.handling_party_people
+                                    else '' end
+                      else '' end                  as lifnr_text,
+                 rule.rule_id,
+                 rule.commercian_unit_id,
+                 rule.commercian_unit,
+                 rule.business_module_id,
+                 rule.business_module,
+                 rule.business_type,
+                 rule.loan_term,
+                 rule.project_stage,
+                 rule.borrow_loan,
+                 rule.subject_type,
+                 rule.project_code,
+                 rule.project_name,
+                 rule.wbs_element_code,
+                 rule.wbs_element,
+                 rule.reason_code,
+                 rule.internal_order,
+                 rule.is_clear,
+                 rule.type,
+                 rule.remarks,
+                 rule.status,
+                 rule.reserve,
+                 rule.create_time,
+                 rule.creator,
+                 rule.update_time,
+                 rule.updater,
+                 rule.deleted,
+                 rule.business_type_list,
+                 rule.subject_type_list,
+                 rule.tran_type,
+                 rule.organ_id,
+                 rule.organ_name,
+                 rule.sub_id,
+                 rule.main_id,
+                 rule.withdraw_amount,
+                 rule.owner_handling_fee_ratio,
+                 rule.handling_party_people_id,
+                 rule.handling_party_people,
+                 rule.assigned_number,
+                 rule.contract_repayment_date as expiry_date,
+                 rule.contract_name,rule.contract_num,rule.summary,rule.currency_id,rule.currency_code,rule.currency,rule.credit_date
+             from (SELECT
+                       case when (rr.subject = '' or rr.subject is null)
+                                then (select hkont
+                                      from v_acc_num
+                                      where acc_num = c.withdrawal_account)
+                            else rr.subject end                                            as subject,
+                       case when (rr.subject = '' or rr.subject is null)
+                                then
+                                (select txt50
+                                 from v_acc_num
+                                 where acc_num = c.withdrawal_account)
+                            else (select skat.txt50
+                                  from skat
+                                           join t001 on t001.ktopl = skat.ktopl and skat.spras ='1'
+                                  where skat.saknr = rr.subject and t001.bukrs = c.organ_id) end as subject_text,
+                       case when (rr.profit_center_code = '' or rr.profit_center_code is null)
+                                then
+                                (select ru.profit_center_code
+                                 from fss_accounting_rule ru
+                                 where ru.organ_id = c.organ_id and type = '2')
+                            else rr.profit_center_code end                                       as profit_center_code,
+                       case when (rr.profit_center_code = '' or rr.profit_center_code is null)
+                                then
+                                (select ru.profit_center
+                                 from fss_accounting_rule ru
+                                 where ru.organ_id = c.organ_id and type = '2')
+                            else rr.profit_center end                                            as profit_center,
+                       rr.rule_id,
+                       rr.commercian_unit_id,
+                       rr.commercian_unit,
+                       rr.business_module_id,
+                       rr.business_module,
+                       rr.business_type,
+                       rr.loan_term,
+                       rr.project_stage,
+                       rr.borrow_loan,
+                       rr.subject_type,
+                       rr.project_code,
+                       rr.project_name,
+                       rr.cost_center_code,
+                       rr.cost_center,
+                       rr.wbs_element_code,
+                       rr.wbs_element,
+                       rr.reason_code,
+                       rr.internal_order,
+                       rr.is_clear,
+                       rr.type,
+                       rr.remarks,
+                       rr.status,
+                       rr.reserve,
+                       rr.create_time,
+                       rr.creator,
+                       rr.update_time,
+                       rr.updater,
+                       rr.deleted,
+                       rr.business_type_list,
+                       rr.subject_type_list,
+                       rr.tran_type,
+                       c.organ_id,
+                       c.organ_name,
+                       i.fpi_id as sub_id,
+                       i.fc_id as main_id,
+                       case when i.interest_bearer = '双方分息' and rr.subject_type != '银行科目'
+                                then fp.withdraw_amount
+                            else
+                                i.withdraw_amount end as withdraw_amount,
+                       a.owner_handling_fee_ratio,
+                       c.handling_party_people_id,
+                       c.handling_party_people,
+                       c.assigned_number,
+                       case when rr.subject_type not in ('财务费用科目','银行科目') then c.contract_repayment_date else null end contract_repayment_date,
+                       c.contract_name,c.contract_code as contract_num,concat(i.factoring_bank,'|保理|付息') as summary,
+                       i.currency_id,i.currency_code,i.currency_name as currency,i.credit_date
+                   FROM fss_factoring_prewithdraw_info i
+                            left join (select fpi_id,interest_bearer,sum(this_withdraw_amount) as withdraw_amount
+                                       from fss_factoring_prewithdraw group by fpi_id,interest_bearer) fp  on fp.fpi_id = i.fpi_id
+                            JOIN fss_factoring_contract c ON i.fc_id = c.fc_id
+                            left join fss_factoring_application a on c.fa_id = a.fa_id
+                            JOIN v_organ o ON c.organ_id = o.bukrs
+                            JOIN (select
+                                      r.*,
+                                      enum.code
+                                  from fss_accounting_rule r left join sec_enum enum on enum.id = r.commercian_unit_id
+                                  where r.type = '1') as rr
+                                 ON rr.business_module = '保理' AND rr.business_type = '付息' AND (o.busi = rr.code OR c.organ_id = rr.organ_id)
+                   WHERE i.fpi_id = #{subId} and i.type = '付息'
+                     and ((rr.subject_type = '利息往来科目' and c.interest_bearer in ('金风','双方分息') and fp.interest_bearer = '金风')
+                       or (rr.subject_type = '其他应收往来科目' and c.interest_bearer in ('客户','双方分息') and fp.interest_bearer = '客户') or
+                          (rr.subject_type = '银行科目' and (c.interest_bearer in ('金风','客户') or (c.interest_bearer = '双方分息' and fp.interest_bearer = '金风'))))) as rule) as rru where rru.withdraw_amount > 0
+    </select>
+</mapper>

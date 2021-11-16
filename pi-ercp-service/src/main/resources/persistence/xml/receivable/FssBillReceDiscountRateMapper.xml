@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.receivable.FssBillReceDiscountRateMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBillReceDiscountRateEntity" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="BaseResultMap" property="disId" jdbcType="VARCHAR" />
+    <result column="dis_id" property="disId" jdbcType="VARCHAR" />
+    <result column="dis_date" property="disDate"  />
+    <result column="one_dis_rate" property="oneDisRate" jdbcType="VARCHAR" />
+    <result column="two_dis_rate" property="towDisRate" jdbcType="VARCHAR" />
+    <result column="three_dis_rate" property="threeDisRate" jdbcType="VARCHAR" />
+    <result column="four_dis_rate" property="fourDisRate" jdbcType="VARCHAR" />
+    <result column="creator_date" property="creatorDate" jdbcType="VARCHAR" />
+  </resultMap>
+  <!--新增数据-->
+  <insert id="addFssBillReceDiscountRate" parameterType="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBillReceDiscountRateEntity">
+      insert into fss_bill_rece_discount_rate(dis_id,dis_date,one_dis_rate,two_dis_rate,three_dis_rate,four_dis_rate,creator_date) values
+      (#{disId},#{disDate},#{oneDisRate},#{towDisRate},#{threeDisRate},#{fourDisRate},#{creatorDate})
+  </insert>
+  <select id="selDiscountRateByDate"   resultType="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBillReceDiscountRateEntity">
+    SELECT
+    dis_id AS disId,
+    dis_date as disDate,
+    one_dis_rate AS oneDisRate,
+    two_dis_rate AS towDisRate,
+    three_dis_rate AS threeDisRate,
+    four_dis_rate AS fourDisRate,
+    creator_date AS creatorDate,
+    upd_state as updState
+    FROM
+    fss_bill_rece_discount_rate
+    <if test="disDate!=null">
+      WHERE dis_date = #{disDate}
+    </if>
+  </select>
+  <update id="updFssBillReceDiscountRate" parameterType="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBillReceDiscountRateEntity">
+    update fss_bill_rece_discount_rate set dis_id = #{disId}
+    <if test="disDate!=null">
+      , dis_date = #{disDate}
+    </if>
+    <if test="oneDisRate!=null">
+      , one_dis_rate = #{oneDisRate}
+    </if>
+    <if test="towDisRate!=null">
+      , two_dis_rate = #{towDisRate}
+    </if>
+    <if test="threeDisRate!=null">
+      , three_dis_rate = #{threeDisRate}
+    </if>
+    <if test="fourDisRate!=null">
+      , four_dis_rate = #{fourDisRate}
+    </if>
+     where dis_id = #{disId}
+  </update>
+  <delete id="delFssBillReceDiscountRate">
+    delete from fss_bill_rece_discount_rate where dis_id = #{disId}
+  </delete>
+  <select id="selReceDiscountList" parameterType="cn.com.personnel.ercp.pi.module.receivable.SelBillNoReceInfo" resultType="cn.com.personnel.ercp.pi.module.receivable.BillNoReceInfo">
+    SELECT
+    ri.rece_id as receId,
+    ri.company_id as companyId,
+    ri.company_name as companyName,
+    ri.rece_number as receNumber,
+    ri.c_date as cDate,
+    ri.stop_date as stopDate,
+    ri.rece_money as receMoney,
+    ri.rece_state as receState,
+    dra.drawer_id as drawerId,
+    dra.drawer_name as drawerName,
+    dof.head_id as headId,
+    dof.head_name as headName,
+    dof.category as category,
+    dra.drawer_bank_id as drawerBankId,
+    dra.drawer_bank as drawerBank,
+    dra.drawer_number as drawerNumber,
+    rec.rr_type as rrType,
+    rec.customer_b_id as customerBId,
+    rec.customer_b_name as customerBName,
+    case when wit.with_out = 1 then '确认终止' else '不终止' end as noReceState,
+    res.group_no as groupNo,
+    res.entry_number as entryNumber,
+    res.document_no as documentNo,
+    case when res.entry_status = '' or res.entry_status is null
+    then '未入账'
+    else res.entry_status end
+    as entryStatus,
+    res.error_message as errorMessage
+    FROM
+    fss_bill_receivable_info ri
+    LEFT JOIN fss_bill_receivable_drawer dra ON ri.rece_id = dra.rece_id
+    LEFT JOIN fss_bill_receivable_recite rec ON ri.rr_id = rec.rr_id
+    LEFT JOIN fss_base_bank_head_office dof ON dof.head_id = dra.drawer_head_bank_id
+    LEFT JOIN fss_bank_head_without wit ON wit.head_id = dof.head_id
+    LEFT JOIN fss_bill_rece_entry_state res ON res.rece_id = ri.rece_id <if test="type != null">and res.type = #{type}</if>
+    WHERE ri.is_state = 0
+    <if test="userId != null and userId != ''">
+      and ri.company_id in (select bu.bukrs from  fss_base_role_organ_busi bu join sec_user_role ur on bu.role_id=ur.role_id
+      and ur.user_id=#{userId} group by bu.bukrs)
+    </if>
+    <if test="endDate!=null">
+      and  ri.stop_date &gt; #{endDate}
+    </if>
+    <if test="companyIdStart!=null">
+      and ri.company_id &gt;= #{companyIdStart}
+    </if>
+    <if test="commpanyIdEnd!=null">
+      and ri.company_id &lt;= #{commpanyIdEnd}
+    </if>
+    <if test="noReceState!=null">
+      and wit.with_out = #{noReceState}
+    </if>
+    <if test="rrType!=null">
+      and rec.rr_type = #{rrType}
+    </if>
+    <if test="receState!=null">
+      and ri.rece_state = #{receState}
+    </if>
+    <if test="receState==null || receState==''">
+      and (ri.rece_state = '收存' OR (ri.rece_state = '背书' and rec.rr_type = '外部背书' ))
+    </if>
+    <if test="postDate!=null">
+
+    </if>
+    <if test="postState!=null">
+      <if test="postState == '未入账'.toString()">
+        and (res.entry_status = '未入账' or res.entry_status = '' or res.entry_status is null)
+      </if>
+      <if test="postState=='已入账'.toString() or postState == '已冲销'.toString()">
+        and res.entry_status = #{postState}
+      </if>
+    </if>
+    order BY ri.create_time DESC
+  </select>
+
+  <select id="selMaxDateInfo" resultMap="BaseResultMap">
+    SELECT * from fss_bill_rece_discount_rate where dis_date = (select min(dis_date) from fss_bill_rece_discount_rate where dis_date &gt;= #{endDate})
+  </select>
+
+</mapper>

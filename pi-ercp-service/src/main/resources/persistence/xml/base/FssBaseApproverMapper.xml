@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.base.FssBaseApproverMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.base.FssBaseApprover">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="processdef_id" jdbcType="VARCHAR" property="processdefId" />
+    <result column="activitydef_id" jdbcType="VARCHAR" property="activitydefId" />
+    <result column="people_code" jdbcType="VARCHAR" property="peopleCode" />
+    <result column="people_name" jdbcType="VARCHAR" property="peopleName" />
+    <result column="departent_id" jdbcType="VARCHAR" property="departentId" />
+    <result column="unit_id" jdbcType="VARCHAR" property="unitId" />
+    <result column="system_id" jdbcType="VARCHAR" property="systemId" />
+    <result column="orgeh_id" jdbcType="VARCHAR" property="orgehId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="center_id" jdbcType="VARCHAR" property="centerId" />
+    <result column="processdef_name" jdbcType="VARCHAR" property="processdefName" />
+    <result column="activitydef_name" jdbcType="VARCHAR" property="activitydefName" />
+    <result column="person_flag" jdbcType="VARCHAR" property="personFlag" />
+    <result column="person_type" jdbcType="VARCHAR" property="personType" />
+    <result column="bukrs" jdbcType="VARCHAR" property="bukrs" />
+  </resultMap>
+<select id="getApprover" resultMap="BaseResultMap">
+  select * from fss_base_approver
+  <where>
+    <if test="departentId != null and departentId != ''">
+     and  departent_id like concat('%',#{departentId}, '%')
+    </if>
+    <if test="processdefName != null and processdefName != ''">
+     and  processdef_name=#{processdefName}
+    </if>
+    <if test="unitId != null and unitId != ''">
+     and unit_id=#{unitId}
+    </if>
+    <if test="systemId != null and systemId != ''">
+    and system_id=#{systemId}
+    </if>
+    <if test="orgehId != null and orgehId != ''">
+     and  orgeh_id=#{orgehId}
+    </if>
+    <if test="personFlag != null and personFlag != ''">
+     and  person_flag=#{personFlag}
+    </if>
+    <if test="centerId != null and centerId != ''">
+     and  center_id like concat('%',#{centerId}, '%')
+    </if>
+  </where>
+  order by activitydef_id
+</select>
+</mapper>

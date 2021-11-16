@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.auth.persistence.mapper.SecRoleModuleMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.auth.persistence.entity.SecRoleModule" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="appcod" property="appcod" jdbcType="VARCHAR" />
+    <result column="module_id" property="moduleId" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+  <result column="create_time" property="createTime" jdbcType="DATE" />
+     <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="DATE" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, role_id, module_id , creator, create_time,updator,update_time
+  </sql>
+   <select id="selectByCondition" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sec_role_module
+    <where>
+      <if test="roleId != null">  
+          AND role_id=#{roleId}
+      </if>
+    </where>
+  </select>
+   <select id="selectByRoleId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sec_role_module
+    <where>
+       AND role_id=#{roleId}
+     
+    </where>
+  </select>
+  
+  <delete id="deleteByRoleId" parameterType="java.lang.String">
+  	delete from sec_role_module where role_id=#{roleId}
+  </delete>
+  <!-- 删除模块外键关联的子表数据 -->
+  <delete id="deleteByModuleId" parameterType="java.lang.String">
+	DELETE
+	FROM
+	sec_role_module
+	WHERE
+	module_id IN (
+	SELECT
+	sec_role_module.module_id
+	FROM
+	sec_role_module
+	WHERE
+	sec_role_module.module_id = #{moduleId}
+	)
+  </delete>
+
+    <select id="getModuleIdList" resultType="string">
+        select module_id from sec_role_module where role_id = #{roleId}
+    </select>
+
+    <select id="getPareModuleIdList" resultType="string">
+        select sec_module.parent_id from sec_role_module,sec_module where role_id = #{roleId} and sec_role_module.module_id=sec_module.module_id
+          <![CDATA[ and sec_module.parent_id <> '0' ]]>
+    </select>
+
+    <select id="getNewModuleIdList" resultType="string">
+        select module_id from sec_role_module where role_id = #{roleId} and module_id in
+          <foreach collection="moduleIds" item="id" separator="," open="(" close=")"> #{id} </foreach>
+    </select>
+</mapper>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.innerLoan.FssInnerLoanContractManageMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.innerLoan.FssInnerLoanContractManage">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="manage_id" jdbcType="VARCHAR" property="manageId" />
+    <result column="inner_id" jdbcType="VARCHAR" property="innerId" />
+    <result column="apply_no" jdbcType="VARCHAR" property="applyNo" />
+    <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
+    <result column="contract_num" jdbcType="VARCHAR" property="contractNum" />
+    <result column="is_sign_contract" jdbcType="VARCHAR" property="isSignContract" />
+    <result column="contract_signing_date" jdbcType="VARCHAR" property="contractSigningDate" />
+    <result column="exchange_rate" jdbcType="NUMERIC" property="exchangeRate" />
+    <result column="borrower_bank_id" jdbcType="VARCHAR" property="borrowerBankId" />
+    <result column="borrower_bank_code" jdbcType="VARCHAR" property="borrowerBankCode" />
+    <result column="borrower_bank_all" jdbcType="VARCHAR" property="borrowerBankAll" />
+    <result column="borrower_bank_account" jdbcType="VARCHAR" property="borrowerBankAccount" />
+    <result column="lender_bank_id" jdbcType="VARCHAR" property="lenderBankId" />
+    <result column="lender_bank_code" jdbcType="VARCHAR" property="lenderBankCode" />
+    <result column="lender_bank_all" jdbcType="VARCHAR" property="lenderBankAll" />
+    <result column="lender_bank_account" jdbcType="VARCHAR" property="lenderBankAccount" />
+    <result column="legal_interest" jdbcType="VARCHAR" property="legalInterest" />
+    <result column="manage_interest_calculation" jdbcType="VARCHAR" property="manageInterestCalculation" />
+    <result column="unreported_cause" jdbcType="VARCHAR" property="unreportedCause" />
+    <result column="loan_description" jdbcType="VARCHAR" property="loanDescription" />
+    <result column="qinghu_status" jdbcType="VARCHAR" property="qinghuStatus" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="change_status" jdbcType="VARCHAR" property="changeStatus" />
+    <result column="borrowing_method" jdbcType="VARCHAR" property="borrowingMethod" />
+    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+    <result column="company_id" jdbcType="VARCHAR" property="companyId" />
+    <result column="lender_company_name" jdbcType="VARCHAR" property="lenderCompanyName" />
+    <result column="lender_company_id" jdbcType="VARCHAR" property="lenderCompanyId" />
+    <result column="loan_term_month" jdbcType="NUMERIC" property="loanTermMonth" />
+    <result column="loan_term_year" jdbcType="VARCHAR" property="loanTermYear" />
+    <result column="loan_start_date" jdbcType="VARCHAR" property="loanStartDate" />
+    <result column="loan_end_date" jdbcType="VARCHAR" property="loanEndDate" />
+    <result column="currency_type" jdbcType="VARCHAR" property="currencyType" />
+    <result column="currency_type_id" jdbcType="VARCHAR" property="currencyTypeId" />
+    <result column="loan_amount" jdbcType="NUMERIC" property="loanAmount" />
+    <result column="discount_loan_amount" jdbcType="NUMERIC" property="discountLoanAmount" />
+    <result column="cumulative_loan_amount_this_year" jdbcType="NUMERIC" property="cumulativeLoanAmountThisYear" />
+    <result column="discount_cumulative_loan_amount_this_year" jdbcType="NUMERIC" property="discountCumulativeLoanAmountThisYear" />
+    <result column="annual_net_increase" jdbcType="NUMERIC" property="annualNetIncrease" />
+    <result column="discount_annual_net_increase" jdbcType="NUMERIC" property="discountAnnualNetIncrease" />
+    <result column="interest_days" jdbcType="INTEGER" property="interestDays" />
+    <result column="interest_rate_type_id" jdbcType="VARCHAR" property="interestRateTypeId" />
+    <result column="interest_rate_type" jdbcType="VARCHAR" property="interestRateType" />
+    <result column="interest_rate_float_way" jdbcType="VARCHAR" property="interestRateFloatWay" />
+    <result column="float_rate" jdbcType="NUMERIC" property="floatRate" />
+    <result column="lending_rates" jdbcType="NUMERIC" property="lendingRates" />
+    <result column="adjust_interest_way" jdbcType="VARCHAR" property="adjustInterestWay" />
+    <result column="adjust_interest_date" jdbcType="VARCHAR" property="adjustInterestDate" />
+    <result column="adjust_interest_specific_time" jdbcType="DATE" property="adjustInterestSpecificTime" />
+    <result column="adjust_interest_interval" jdbcType="VARCHAR" property="adjustInterestInterval" />
+    <result column="float_interest_way_desc" jdbcType="VARCHAR" property="floatInterestWayDesc" />
+    <result column="first_interest_payment_date" jdbcType="VARCHAR" property="firstInterestPaymentDate" />
+    <result column="interest_payment_interval_id" jdbcType="VARCHAR" property="interestPaymentIntervalId" />
+    <result column="interest_payment_interval" jdbcType="VARCHAR" property="interestPaymentInterval" />
+    <result column="apply_user" jdbcType="VARCHAR" property="applyUser" />
+    <result column="apply_user_id" jdbcType="VARCHAR" property="applyUserId" />
+    <result column="apply_date" jdbcType="DATE" property="applyDate" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="department_id" jdbcType="VARCHAR" property="departmentId" />
+    <result column="approval_status" jdbcType="VARCHAR" property="approvalStatus" />
+    <result column="approval_time" jdbcType="DATE" property="approvalTime" />
+    <result column="calculation_status" jdbcType="VARCHAR" property="calculationStatus" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="project_id" jdbcType="VARCHAR" property="projectId" />
+    <result column="company_code" jdbcType="VARCHAR" property="companyCode" />
+    <result column="lender_company_code" jdbcType="VARCHAR" property="lenderCompanyCode" />
+    <result column="project_stage" jdbcType="VARCHAR" property="projectStage" />
+    <result column="assigned_number" jdbcType="VARCHAR" property="assignedNumber" />
+    <result column="business_unit" jdbcType="VARCHAR" property="businessUnit" />
+    <result column="business_unit_id" jdbcType="VARCHAR" property="businessUnitId" />
+    <result column="process_type" jdbcType="VARCHAR" property="processType" />
+    <result column="process_type_id" jdbcType="VARCHAR" property="processTypeId" />
+    <result column="project_nature" jdbcType="VARCHAR" property="projectNature" />
+    <result column="prctr" jdbcType="VARCHAR" property="prctr" />
+    <result column="objnr" jdbcType="VARCHAR" property="objnr" />
+  </resultMap>
+
+  <resultMap extends="BaseResultMap" id="BaseResultMapVO" type="cn.com.personnel.ercp.pi.module.innerLoan.FssInnerLoanContractManageVO">
+    <result column="business_unit" jdbcType="VARCHAR" property="businessUnit" />
+    <result column="business_unit_id" jdbcType="VARCHAR" property="businessUnitId" />
+    <result column="loan_description" jdbcType="VARCHAR" property="loanDescription" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+
+  <select id="queryList" resultMap="BaseResultMapVO">
+    SELECT (select case when sum(coalesce(i.withdraw_amount, 0)) is null then 0 else sum(coalesce(i.withdraw_amount, 0)) end as withdraw_amount from fss_inner_loan_contract_iou i
+    where i.withdraw_date &gt;= to_date(concat(to_char((SELECT now()::timestamp),'yyyy'),'-01-01'), 'yyyy-MM-dd')
+    and i.withdraw_date &lt;= to_date(m.loan_start_date,'yyyy-MM-dd') and i.company_id=m.company_id)  as cumulative_loan_amount_this_year,
+    (select case when sum(coalesce(i.withdraw_amount, 0)) is null then 0 else sum(coalesce(i.withdraw_amount, 0)) end as withdraw_amount from fss_inner_loan_contract_iou i
+    where i.withdraw_date &gt;= to_date(concat(to_char((SELECT now()::timestamp),'yyyy'),'-01-01'), 'yyyy-MM-dd')
+    and i.withdraw_date &lt;= to_date(m.loan_start_date,'yyyy-MM-dd') and i.company_id=m.company_id)*coalesce(exchange_rate)  as discount_cumulative_loan_amount_this_year,
+    (select case when sum(coalesce(i.withdraw_amount, 0)) is null then 0 else sum(coalesce(i.withdraw_amount, 0)) end as withdraw_amount from fss_inner_loan_contract_iou i
+    where i.withdraw_date &gt;= to_date(concat(to_char((SELECT now()::timestamp),'yyyy'),'-01-01'), 'yyyy-MM-dd')
+    and i.withdraw_date &lt;= to_date(m.loan_start_date,'yyyy-MM-dd') and i.company_id=m.company_id) -
+    (select case when sum(coalesce(i.repayment_amount, 0)) is null then 0 else sum(coalesce(i.repayment_amount, 0)) end as withdraw_amount from fss_inner_loan_contract_repayment i
+    where i.repayment_date &gt;= to_date(concat(to_char((SELECT now()::timestamp),'yyyy'),'-01-01'),'yyyy-MM-dd')
+    and i.repayment_date &lt;= to_date(m.loan_start_date,'yyyy-MM-dd') and i.company_id=m.company_id)             as annual_net_increase,
+    ((select case when sum(coalesce(i.withdraw_amount, 0)) is null then 0 else sum(coalesce(i.withdraw_amount, 0)) end as withdraw_amount from fss_inner_loan_contract_iou i
+    where i.withdraw_date &gt;= to_date(concat(to_char((SELECT now()::timestamp),'yyyy'),'-01-01'), 'yyyy-MM-dd')
+    and i.withdraw_date &lt;= to_date(m.loan_start_date,'yyyy-MM-dd') and i.company_id=m.company_id) -
+    (select case when sum(coalesce(i.repayment_amount, 0)) is null then 0 else sum(coalesce(i.repayment_amount, 0)) end as withdraw_amount from fss_inner_loan_contract_repayment i
+    where i.repayment_date &gt;= to_date(concat(to_char((SELECT now()::timestamp),'yyyy'),'-01-01'),'yyyy-MM-dd')
+    and i.repayment_date &lt;= to_date(m.loan_start_date,'yyyy-MM-dd') and i.company_id=m.company_id))*coalesce(exchange_rate)       as discount_annual_net_increase,
+    case when interest_rate_type='固定利率' then float_rate else lending_rates end as lending_rates,m.*
+    from fss_inner_loan_contract_manage m
+    <where>
+      <if test="manageId != null and manageId != ''">
+        m.manage_id=#{manageId}
+      </if>
+      <if test="companyName != null and companyName != ''">
+        AND  m.company_name like concat('%', #{companyName},'%')
+      </if>
+      <if test="lenderCompanyName != null and lenderCompanyName != ''">
+        AND  m.lender_company_name like concat('%', #{lenderCompanyName}, '%')
+      </if>
+      <if test="loanAmount != null and loanAmount != ''">
+        AND  m.loan_amount like concat('%', #{loanAmount}, '%')
+      </if>
+      <if test="contractName != null and contractName != ''">
+        AND  m.contract_name like concat('%', #{contractName}, '%')
+      </if>
+      <if test="contractNum != null and contractNum != ''">
+        AND  m.contract_num like concat('%', #{contractNum}, '%')
+      </if>
+      <if test="applyUserId!=null and applyUserId!=''">
+        and (m.company_id in (select bu.bukrs from  fss_base_role_organ_busi bu join sec_user_role ur on bu.role_id=ur.role_id
+        and ur.user_id=#{applyUserId} group by bu.bukrs)
+        or m.lender_company_id in (select bu.bukrs from  fss_base_role_organ_busi bu join sec_user_role ur on bu.role_id=ur.role_id
+        and ur.user_id=#{applyUserId} group by bu.bukrs))
+      </if>
+    </where>
+    order by m.create_time desc
+  </select>
+  <select id="queryChangeList" resultMap="BaseResultMap">
+    SELECT * FROM    fss_inner_loan_contract_manage manage
+    <where>
+      version!=1
+      <if test="fssInnerLoanContractVO.contractNum != null and fssInnerLoanContractVO.contractNum != ''">
+        AND  contract_num like concat('%', #{fssInnerLoanContractVO.contractNum}, '%')
+      </if>
+      <if test="fssInnerLoanContractVO.contractName != null and fssInnerLoanContractVO.contractName != ''">
+        AND  contract_name like concat('%', #{fssInnerLoanContractVO.contractName}, '%')
+      </if>
+      <if test="fssInnerLoanContractVO.lenderCompanyName != null and fssInnerLoanContractVO.lenderCompanyName != ''">
+        AND  lender_company_name like concat('%', #{fssInnerLoanContractVO.lenderCompanyName}, '%')
+      </if>
+      <if test="fssInnerLoanContractVO.companyName != null and fssInnerLoanContractVO.companyName != ''">
+        AND  company_name like concat('%', #{fssInnerLoanContractVO.companyName}, '%')
+      </if>
+      <if test="fssInnerLoanContractVO.approvalStatus != null and fssInnerLoanContractVO.approvalStatus != ''">
+        AND  approval_status = #{fssInnerLoanContractVO.approvalStatus}
+      </if>
+      <if test="fssInnerLoanContractVO.changeStatus != null and fssInnerLoanContractVO.changeStatus != ''">
+        AND  change_status = #{fssInnerLoanContractVO.changeStatus}
+      </if>
+    </where>
+    order by create_time desc
+  </select>
+
+  <update id="updateContractMx" parameterType="java.lang.String" statementType="CALLABLE">
+    {call inner_loan_change_contract (#{manageId,mode=IN,jdbcType=VARCHAR})}
+  </update>
+</mapper>

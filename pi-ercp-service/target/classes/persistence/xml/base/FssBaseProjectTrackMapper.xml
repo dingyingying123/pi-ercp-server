@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.base.FssBaseProjectTrackMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.base.FssBaseProjectTrack" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="track_id" property="trackId" jdbcType="VARCHAR" />
+    <result column="project_id" property="projectId" jdbcType="VARCHAR" />
+    <result column="project_abbreviation" property="projectAbbreviation" jdbcType="VARCHAR" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="year" property="year" jdbcType="VARCHAR" />
+    <result column="wind_power_online" property="windPowerOnline" jdbcType="VARCHAR" />
+    <result column="wind_power_generation_hours" property="windPowerGenerationHours" jdbcType="VARCHAR" />
+    <result column="wind_power_abandonment_rate" property="windPowerAbandonmentRate" jdbcType="VARCHAR" />
+    <result column="wind_power_price_including_tax" property="windPowerPriceIncludingTax" jdbcType="VARCHAR" />
+    <result column="environmental_water_output" property="environmentalWaterOutput" jdbcType="VARCHAR" />
+    <result column="environmental_water_price" property="environmentalWaterPrice" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="reserve" property="reserve" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="queryProjectTrackList" resultMap="BaseResultMap">
+    select * from fss_base_project_track
+    <where>
+      <if test="projectId != null and projectId != ''">
+        project_id = #{projectId}
+      </if>
+      <if test="projectAbbreviation != null and projectAbbreviation != ''">
+        and project_abbreviation like concat('%', #{projectAbbreviation}, '%')
+      </if>
+      <if test="year != null and year != ''">
+        and year = #{year}
+      </if>
+    </where>
+    order by create_time desc
+  </select>
+  <delete id="deleteProjectTrack">
+    <if test="ids != null and ids.size &gt; 0">
+      delete from fss_base_project_track
+      <where> track_id in
+        <foreach close=")" collection="ids" item="id" open="(" separator=","> #{id}</foreach>
+      </where>
+    </if>
+  </delete>
+</mapper>

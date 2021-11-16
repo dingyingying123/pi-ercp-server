@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.financialBill.FssFinancialBillDetailMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.financialBill.FssFinancialBillDetail" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="detail_id" property="detailId" jdbcType="VARCHAR" />
+    <result column="fina_id" property="finaId" jdbcType="VARCHAR" />
+    <result column="bill_number" property="billNumber" jdbcType="VARCHAR" />
+    <result column="bill_issuance_date" property="billIssuanceDate" jdbcType="VARCHAR" />
+    <result column="maturity_date" property="maturityDate" jdbcType="VARCHAR" />
+    <result column="bill_amount" property="billAmount" jdbcType="NUMERIC" />
+    <result column="bill_acceptor_id" property="billAcceptorId" jdbcType="VARCHAR" />
+    <result column="bill_acceptor" property="billAcceptor" jdbcType="VARCHAR" />
+    <result column="holiday_adjustment_days" property="holidayAdjustmentDays" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="deleted" property="deleted" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <update id="updateByFinaId">
+    update fss_financial_bill_detail set fina_id = #{finaId} where fina_id = #{version}
+  </update>
+
+  <delete id="deleteByFinaId">
+      delete from fss_financial_bill_detail where fina_id = #{finaId}
+  </delete>
+
+  <delete id="deleteByDetailId">
+    <if test="ids != null and ids.size &gt; 0">
+      delete from fss_financial_bill_detail where detail_id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")"> #{id}</foreach>
+    </if>
+  </delete>
+
+  <select id="selectFinancialBillDetailByNum" resultMap="BaseResultMap">
+    select * from fss_financial_bill_detail
+    <where>
+      <if test="finaId != null and finaId != ''">
+        fina_id = #{finaId}
+      </if>
+      <if test="billNumber != null and billNumber != ''">
+        and bill_number = #{billNumber}
+      </if>
+    </where>
+    order by create_time desc limit 1
+  </select>
+
+  <select id="getTotalFaceValue" resultType="java.math.BigDecimal">
+      select sum(bill_amount) from fss_financial_bill_detail where fina_id=#{finaId}
+  </select>
+
+  <select id="selectFinancialBillDetailList" resultMap="BaseResultMap">
+    select * from fss_financial_bill_detail
+    <where>
+      <if test="finaId != null and finaId != ''">
+        fina_id = #{finaId}
+      </if>
+      <if test="billNumber != null and billNumber != ''">
+        and bill_number = #{billNumber}
+      </if>
+      <if test="billIssuanceDate != null and billIssuanceDate != ''">
+        and bill_issuance_date = #{billIssuanceDate}
+      </if>
+      <if test="maturityDate != null and maturityDate != ''">
+        and maturity_date = #{maturityDate}
+      </if>
+    </where>
+    order by create_time desc
+  </select>
+</mapper>

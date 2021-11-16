@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.credit.bond.FssBondSummaryRedeemMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.credit.bond.FssBondSummaryRedeem" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="summary_id" property="summaryId" jdbcType="VARCHAR" />
+    <result column="bond_id" property="bondId" jdbcType="VARCHAR" />
+    <result column="business_date" property="businessDate" jdbcType="VARCHAR" />
+    <result column="exchange_rate" property="exchangeRate" jdbcType="NUMERIC" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="this_repayment_sum" property="thisRepaymentSum" jdbcType="NUMERIC" />
+    <result column="amount_after_discount_sum" property="amountAfterDiscountSum" jdbcType="NUMERIC" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+    <resultMap id="BaseResultMapVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.credit.FssBondSummaryRedeemVO">
+        <result column="bond_name" jdbcType="VARCHAR" property="bondName" />
+        <result column="this_repayment" jdbcType="NUMERIC" property="thisRepayment" />
+        <result column="amount_after_discount" jdbcType="NUMERIC" property="amountAfterDiscount" />
+    </resultMap>
+
+  <select id="querySummaryRedeemList" resultMap="BaseResultMapVO">
+    select s.summary_id,s.business_date,s.exchange_rate,s.remark,r.bond_name,sum(r.this_repayment) as this_repayment,
+    sum(r.amount_after_discount) as amount_after_discount from fss_bond_summary_redeem s left join fss_bond_redeem r on s.summary_id = r.summary_id
+    <where>
+      <if test="bondId != null and bondId != ''">
+        s.bond_id = #{bondId}
+      </if>
+      <if test="startDate != null and startDate != ''">
+        and s.business_date &gt;= #{startDate}
+      </if>
+      <if test="endDate != null and endDate != ''">
+        and s.business_date &lt;= #{endDate}
+      </if>
+    </where>
+    group by s.summary_id,s.business_date,s.exchange_rate,s.remark,r.bond_name
+    order by s.create_time desc
+  </select>
+</mapper>

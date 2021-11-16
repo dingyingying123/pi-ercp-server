@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.auth.persistence.mapper.SecModuleMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.auth.persistence.entity.SecModule">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="module_id" jdbcType="VARCHAR" property="moduleId" />
+    <result column="appcod" jdbcType="VARCHAR" property="appcod" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="module_name" jdbcType="VARCHAR" property="moduleName" />
+    <result column="module_url" jdbcType="VARCHAR" property="moduleUrl" />
+    <result column="module_desc" jdbcType="VARCHAR" property="moduleDesc" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="is_leaf" jdbcType="VARCHAR" property="isLeaf" />
+    <result column="valid" jdbcType="VARCHAR" property="valid" />
+    <result column="orderid" jdbcType="INTEGER" property="orderid" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updator" jdbcType="VARCHAR" property="updator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="module_name_en" jdbcType="VARCHAR" property="moduleNameEn" />
+    <result column="vue_title" jdbcType="VARCHAR" property="vueTitle" />
+    <result column="vue_icon" jdbcType="VARCHAR" property="vueIcon" />
+    <result column="vue_nocach" jdbcType="VARCHAR" property="vueNocach" />
+    <result column="vue_component" jdbcType="VARCHAR" property="vueComponent" />
+    <result column="vue_path" jdbcType="VARCHAR" property="vuePath" />
+    <result column="vue_not_add" jdbcType="VARCHAR" property="vueNotAdd" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="redirect" jdbcType="VARCHAR" property="redirect" />
+    <result column="i18n" jdbcType="VARCHAR" property="i18n" />
+    <result column="en_name" jdbcType="VARCHAR" property="enName" />
+    <result column="vue_hidden" jdbcType="VARCHAR" property="vueHidden" />
+  </resultMap>
+
+    <sql id="Base_Column_List">
+    module_id, icon, module_name, appcod, module_url, module_desc, parent_id,is_leaf, valid, creator,create_time,updator,update_time
+    </sql>
+
+    <select id="selectUserModule" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+        select distinct sec_module.*
+        from sec_module,sec_user_role,sec_role_module
+        <where>
+            sec_user_role.role_id = sec_role_module.role_id
+            and sec_role_module.module_id = sec_module.module_id
+            and sec_module.valid = '有效'
+            and sec_user_role.user_id = #{userId}
+            <if test="appcod != null and appcod != ''">
+                and sec_module.appcod = #{appcod}
+            </if>
+        </where>
+        order by orderid
+    </select>
+
+    <select id="selectOderByOrderId" resultMap="BaseResultMap">
+      select sec_module.*
+       from sec_module
+       where appcod = #{appcod}
+       order by orderid asc
+   </select>
+
+    <select id="getModuleByUserId" resultMap="BaseResultMap">
+        SELECT i.module_id,i.module_name,i.module_url,i.parent_id from sec_user_role f
+        LEFT JOIN sec_role g ON f.role_id=g.role_id
+        LEFT JOIN sec_role_module h ON g.role_id=g.role_id
+        LEFT JOIN sec_module i ON i.module_id=h.module_id
+        where f.user_id=#{userId}
+   </select>
+
+    <select id="selectMenusAll" resultMap="BaseResultMap">
+      select distinct sec_module.*
+        from sec_module
+        where  appcod = #{appcod} and sec_module.valid = '有效' and sec_module.parent_id='0'
+        order by sec_module.orderid
+    </select>
+
+    <select id="getModuleByRoleId" resultMap="BaseResultMap">
+        select * from sec_module
+        LEFT JOIN sec_role_module
+        on sec_role_module.module_id = sec_module.module_id
+        where sec_role_module.role_id = #{roleId}
+        and (sec_module.is_leaf='0' or sec_module.is_leaf='是')
+        and sec_module.appcod = #{appcod}
+    </select>
+
+    <select id="getParentModuleByRoleId" resultMap="BaseResultMap">
+        SELECT * from sec_module where module_id in (SELECT DISTINCT(g.parent_id)
+        from sec_role_module f LEFT JOIN sec_module g
+        on f.module_id=g.module_id
+        where f.role_id in
+        <foreach collection="roleId" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and  (g.is_leaf='0' or g.is_leaf='是') and g.appcod = #{appcod} and g.valid = '有效')
+        and appcod=#{appcod}
+        ORDER BY orderid asc
+    </select>
+
+    <select id="getAllModulesByRoles" resultMap="BaseResultMap">
+        select * from (select DISTINCT on ( sec_module.module_id) * from sec_module
+        LEFT JOIN sec_role_module
+        on sec_role_module.module_id = sec_module.module_id
+        where sec_role_module.role_id in
+        <foreach collection="SecUserRole" index="index" item="item" open="(" separator="," close=")">
+            #{item.roleId}
+        </foreach>
+        and (sec_module.is_leaf='0' or sec_module.is_leaf='是')
+        and sec_module.appcod =#{appCode} and sec_module.valid='有效') g
+        ORDER BY g.orderid asc
+    </select>
+</mapper>

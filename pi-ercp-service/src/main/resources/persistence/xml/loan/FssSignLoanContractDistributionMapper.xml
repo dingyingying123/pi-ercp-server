@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.loan.FssSignLoanContractDistributionMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.loan.FssSignLoanContractDistribution">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="distribution_id" jdbcType="VARCHAR" property="distributionId" />
+    <result column="distribution_bank" jdbcType="VARCHAR" property="distributionBank" />
+    <result column="bank_account" jdbcType="VARCHAR" property="bankAccount" />
+    <result column="ratio" jdbcType="NUMERIC" property="ratio" />
+    <result column="distribution_amount" jdbcType="NUMERIC" property="distributionAmount" />
+    <result column="main_id" jdbcType="VARCHAR" property="mainId" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="update_time" jdbcType="DATE" property="updateTime" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="deleted" jdbcType="VARCHAR" property="deleted" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="branch_id" jdbcType="VARCHAR" property="branchId" />
+    <result column="branch_code" jdbcType="VARCHAR" property="branchCode" />
+    <result column="still_bank_account" jdbcType="VARCHAR" property="stillBankAccount"/>
+    <result column="still_bank_account_id" jdbcType="VARCHAR" property="stillBankAccountId"/>
+  </resultMap>
+
+</mapper>

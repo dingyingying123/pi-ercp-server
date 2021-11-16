@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.receivable.FssBankHeadWithoutMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBankHeadWithoutEntity" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="BaseResultMap" property="headId" jdbcType="VARCHAR" />
+    <result column="head_id" property="headId" jdbcType="VARCHAR" />
+    <result column="with_out" property="withOut" jdbcType="VARCHAR" />
+    <result column="creater_id" property="createrId" jdbcType="VARCHAR" />
+    <result column="creater_name" property="createrName" jdbcType="VARCHAR" />
+
+
+  </resultMap>
+  <!--新增数据-->
+  <insert id="addFssBankHeadWithout" parameterType="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBankHeadWithoutEntity">
+      insert  into fss_bank_head_without(head_id,with_out,creater_id,creater_name) values
+      (#{headId},#{withOut},#{createrId},#{createrName})
+  </insert>
+  <select id="selFssBankHeadWithout" parameterType="String" resultMap="BaseResultMap">
+    select * from fss_bank_head_without where head_id = #{headId}
+  </select>
+  <select id="getAllBankInfo" parameterType="cn.com.personnel.ercp.pi.module.receivable.WithOutBankVO" resultType="cn.com.personnel.ercp.pi.module.receivable.ALLBankInfo">
+    SELECT DISTINCT
+    bho.head_id AS headId,
+    bho.head_name AS headName,
+    wit.with_out as withOut
+    FROM
+    fss_base_bank_head_office bho
+    LEFT JOIN fss_bank_head_without wit ON wit.head_id = bho.head_id
+    where 1=1
+    <if test="bankName!=null">
+      and  bho.head_name like concat('%',#{bankName},'%')
+    </if>
+    <if test="withOut!=null">
+      and  wit.with_out = #{withOut}
+    </if>
+  </select>
+
+  <update id="updFssBankHeadWithout" parameterType="cn.com.personnel.ercp.pi.persistence.entity.receivable.FssBankHeadWithoutEntity">
+update fss_bank_head_without set with_out = #{withOut} where head_id = #{headId}
+  </update>
+</mapper>

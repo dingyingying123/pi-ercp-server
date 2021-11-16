@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.reportwork.FssReportWorkPersonnelHoursMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.reportwork.FssReportWorkPersonnelHours" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="hours_id" property="hoursId" jdbcType="VARCHAR" />
+    <result column="month" property="month" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="organ_id" property="organId" jdbcType="VARCHAR" />
+    <result column="organ_name" property="organName" jdbcType="VARCHAR" />
+    <result column="department_id" property="departmentId" jdbcType="VARCHAR" />
+    <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="job" property="job" jdbcType="VARCHAR" />
+    <result column="proportion" property="proportion" jdbcType="NUMERIC" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <select id="queryPersonnelHoursList" resultMap="BaseResultMap">
+    select * from fss_report_work_personnel_hours
+    <where>
+      <if test="userName != null and userName != ''">
+        (user_id like concat('%', #{userName}, '%') or user_name like concat('%', #{userName}, '%'))
+      </if>
+      <if test="organName != null and organName != ''">
+         and (organ_id like concat('%', #{organName}, '%') or organ_name like concat('%', #{organName}, '%'))
+      </if>
+      <if test="type != null and type != ''">
+         and type like concat('%', #{type}, '%')
+      </if>
+    </where>
+    order by create_time
+  </select>
+
+  <select id="getPersonnelHoursByUserId" resultMap="BaseResultMap">
+    select * from fss_report_work_personnel_hours where user_id=#{userId} order by create_time desc limit 1
+  </select>
+
+  <select id="getPersonnels" resultMap="BaseResultMap">
+    select user_id,user_name,organ_id,organ_name,department_id,department_name from fss_report_work_personnel_hours
+    where month=#{month}
+    group by  user_id,user_name,organ_id,organ_name,department_id,department_name
+  </select>
+</mapper>

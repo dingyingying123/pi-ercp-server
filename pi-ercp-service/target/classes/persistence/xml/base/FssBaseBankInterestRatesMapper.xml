@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.base.FssBaseBankInterestRatesMapper" >
+    <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.base.FssBaseBankInterestRates" >
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="sid" property="sid" jdbcType="VARCHAR" />
+        <result column="interest_type_code" property="interestTypeCode" jdbcType="VARCHAR" />
+        <result column="interest_type_name" property="interestTypeName" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="creator" property="creator" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="updater" property="updater" jdbcType="VARCHAR" />
+
+    </resultMap>
+
+    <select id="queryBankInterest" resultMap="BaseResultMap">
+        select * from fss_base_bank_interest_rates
+        <where>
+            <if test="interestRates.interestTypeCode != null and interestRates.interestTypeCode != ''">
+                interest_type_code like concat('%',#{interestRates.interestTypeCode},'%')
+            </if>
+            <if test="interestRates.interestTypeName != null and interestRates.interestTypeName != ''">
+                and  interest_type_name like concat('%',#{interestRates.interestTypeName},'%')
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+
+    <delete id="BankInterestRates">
+        <if test="ids != null and ids.size &gt; 0">
+            delete from fss_base_bank_interest_rates
+            <where> sid in
+                <foreach collection="ids" item="id" separator="," open="(" close=")"> #{id} </foreach>
+            </where>
+        </if>
+    </delete>
+
+    <resultMap id="BankRateMap" type="cn.com.personnel.ercp.pi.module.loan.BankRateVo" >
+        <result column="interest_type_code" property="interestTypeCode" jdbcType="VARCHAR" />
+        <result column="interest_type_name" property="interestTypeName" jdbcType="VARCHAR" />
+        <result column="effect_date" property="effectDate" jdbcType="VARCHAR"/>
+        <result column="interest_type_name" property="interestTypeName" jdbcType="VARCHAR"/>
+        <result column="annual_interest_rate" property="annualInterestRate" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="getNewAndEffectRate" resultMap="BankRateMap">
+        SELECT
+        t2.interest_rate_type,
+        t2.effect_date,
+        t1.interest_type_code,
+        t1.interest_type_name,
+        t2.annual_interest_rate
+        FROM
+        fss_base_bank_interest_rates t1
+        JOIN fss_base_bank_rate t2 ON t1.sid = t2.rates_id
+        WHERE t2.effect_date &lt; #{date} AND interest_type_code=#{code} ORDER BY t2.effect_date DESC  limit 1 ;
+    </select>
+
+    <select id="getNewAndEffectRate2" resultMap="BankRateMap">
+        SELECT
+        t2.interest_rate_type,
+        t2.effect_date,
+        t1.interest_type_code,
+        t1.interest_type_name,
+        t2.annual_interest_rate
+        FROM
+        fss_base_bank_interest_rates t1
+        JOIN fss_base_bank_rate t2 ON t1.sid = t2.rates_id
+        WHERE t2.effect_date &lt;= #{date} AND interest_type_code=#{code} ORDER BY t2.effect_date DESC  limit 1 ;
+    </select>
+    <select id="getEffectRate" resultMap="BankRateMap">
+        SELECT
+        t2.interest_rate_type,
+        t2.effect_date,
+        t1.interest_type_code,
+        t1.interest_type_name,
+        t2.annual_interest_rate
+        FROM
+        fss_base_bank_interest_rates t1
+        JOIN fss_base_bank_rate t2 ON t1.sid = t2.rates_id
+        WHERE t2.effect_date &lt; #{endDate} AND t2.effect_date &gt; #{starDate} AND interest_type_code=#{code} ORDER BY t2.effect_date  ;
+    </select>
+    <select id="getEffectRates" resultMap="BankRateMap">
+        SELECT
+        t2.interest_rate_type,
+        t2.effect_date,
+        t1.interest_type_code,
+        t1.interest_type_name,
+        t2.annual_interest_rate
+        FROM
+        fss_base_bank_interest_rates t1
+        JOIN fss_base_bank_rate t2 ON t1.sid = t2.rates_id
+        WHERE 1=1
+        <if test="endDate!= null">
+           AND t2.effect_date &lt; #{endDate}
+        </if>
+        <if test="starDate!= null">
+            AND t2.effect_date &gt; #{starDate}
+        </if>
+
+        <if test="code!= null and code != ''">
+            AND t1.interest_type_code=#{code}
+        </if>
+        ORDER BY t2.effect_date DESC  ;
+    </select>
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.reportwork.FssReportWorkCoreMemberMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.reportwork.FssReportWorkCoreMember">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="project_no" jdbcType="VARCHAR" property="projectNo" />
+    <result column="company_code" jdbcType="VARCHAR" property="companyCode" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="core_member" jdbcType="VARCHAR" property="coreMember" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updator" jdbcType="VARCHAR" property="updator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+    <resultMap id="BaseResultMapVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.reportWork.FssReportWorkCoreMemberVO">
+        <result column="proportion" property="proportion" jdbcType="NUMERIC" />
+        <result column="project_budget" property="projectBudget" jdbcType="NUMERIC" />
+    </resultMap>
+  <select id="getProjectList" resultMap="BaseResultMap">
+    select * from fss_report_work_core_member
+      <where>
+          1=1
+          <if test="projectNo != null and projectNo != ''">
+              and  project_no like concat('%',#{projectNo},'%')
+          </if>
+          <if test="projectName != null and projectName != ''">
+              and project_name like concat('%',#{projectName},'%')
+          </if>
+      </where>
+      order by project_no
+  </select>
+
+    <select id="getProjectListByCompany" resultMap="BaseResultMapVO">
+        select c.*,e.project_budget from fss_report_work_core_member c left join fss_report_work_tax_project_expand e on c.project_no=e.project_no
+        <where>
+            1=1
+            <if test="projectNo != null and projectNo != ''">
+                and  c.project_no=#{projectNo}
+            </if>
+            <if test="projectName != null and projectName != ''">
+                and c.project_name =#{projectName}
+            </if>
+            <if test="companyCode != null and companyCode != ''">
+                and c.company_code =#{companyCode}
+            </if>
+        </where>
+        order by e.project_budget desc,c.project_no
+    </select>
+</mapper>

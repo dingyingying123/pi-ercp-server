@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.base.FssBaseBankHeadOfficeMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.base.FssBaseBankHeadOffice" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="head_id" property="headId" jdbcType="VARCHAR" />
+    <result column="head_code" property="headCode" jdbcType="VARCHAR" />
+    <result column="head_name" property="headName" jdbcType="VARCHAR" />
+    <result column="institutional_attributes" property="institutionalAttributes" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="category" property="category" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="queryBankHeadOffice" resultMap="BaseResultMap">
+    select * from fss_base_bank_head_office
+    <where>
+      <if test="headCode != null and headCode != ''">
+        head_code like concat('%', #{headCode}, '%')
+      </if>
+      <if test="headName != null and headName != ''">
+         and head_name like concat('%', #{headName}, '%')
+      </if>
+      <if test="institutionalAttributes != null and institutionalAttributes != ''">
+         and institutional_attributes like concat('%', #{institutionalAttributes}, '%')
+      </if>
+      <if test="ids != null and ids.size &gt; 0">
+        and head_id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")"> #{id} </foreach>
+      </if>
+    </where>
+    order by create_time desc
+  </select>
+
+  <delete id="deleteByIds">
+    <if test="ids != null and ids.size &gt; 0">
+      delete from fss_base_bank_head_office
+      <where> head_id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=","> #{id}</foreach>
+       </where>
+    </if>
+  </delete>
+</mapper>

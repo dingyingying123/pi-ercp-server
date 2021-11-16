@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.sap.T001Mapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.sap.T001" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="bukrs" property="bukrs" jdbcType="VARCHAR" />
+    <id column="mandt" property="mandt" jdbcType="VARCHAR" />
+    <result column="butxt" property="butxt" jdbcType="VARCHAR" />
+    <result column="ort01" property="ort01" jdbcType="VARCHAR" />
+    <result column="land1" property="land1" jdbcType="VARCHAR" />
+    <result column="waers" property="waers" jdbcType="VARCHAR" />
+    <result column="spras" property="spras" jdbcType="VARCHAR" />
+    <result column="ktopl" property="ktopl" jdbcType="VARCHAR" />
+    <result column="waabw" property="waabw" jdbcType="VARCHAR" />
+    <result column="periv" property="periv" jdbcType="VARCHAR" />
+    <result column="kokfi" property="kokfi" jdbcType="VARCHAR" />
+    <result column="rcomp" property="rcomp" jdbcType="VARCHAR" />
+    <result column="adrnr" property="adrnr" jdbcType="VARCHAR" />
+    <result column="stceg" property="stceg" jdbcType="VARCHAR" />
+    <result column="fikrs" property="fikrs" jdbcType="VARCHAR" />
+    <result column="xfmco" property="xfmco" jdbcType="VARCHAR" />
+    <result column="xfmcb" property="xfmcb" jdbcType="VARCHAR" />
+    <result column="xfmca" property="xfmca" jdbcType="VARCHAR" />
+    <result column="txjcd" property="txjcd" jdbcType="VARCHAR" />
+    <result column="fmhrdate" property="fmhrdate" jdbcType="VARCHAR" />
+    <result column="xtemplt" property="xtemplt" jdbcType="VARCHAR" />
+    <result column="buvar" property="buvar" jdbcType="VARCHAR" />
+    <result column="fdbuk" property="fdbuk" jdbcType="VARCHAR" />
+    <result column="xfdis" property="xfdis" jdbcType="VARCHAR" />
+    <result column="xvalv" property="xvalv" jdbcType="VARCHAR" />
+    <result column="xskfn" property="xskfn" jdbcType="VARCHAR" />
+    <result column="kkber" property="kkber" jdbcType="VARCHAR" />
+    <result column="xmwsn" property="xmwsn" jdbcType="VARCHAR" />
+    <result column="mregl" property="mregl" jdbcType="VARCHAR" />
+    <result column="xgsbe" property="xgsbe" jdbcType="VARCHAR" />
+    <result column="xgjrv" property="xgjrv" jdbcType="VARCHAR" />
+    <result column="xkdft" property="xkdft" jdbcType="VARCHAR" />
+    <result column="xprod" property="xprod" jdbcType="VARCHAR" />
+    <result column="xeink" property="xeink" jdbcType="VARCHAR" />
+    <result column="xjvaa" property="xjvaa" jdbcType="VARCHAR" />
+    <result column="xvvwa" property="xvvwa" jdbcType="VARCHAR" />
+    <result column="xslta" property="xslta" jdbcType="VARCHAR" />
+    <result column="xfdmm" property="xfdmm" jdbcType="VARCHAR" />
+    <result column="xfdsd" property="xfdsd" jdbcType="VARCHAR" />
+    <result column="xextb" property="xextb" jdbcType="VARCHAR" />
+    <result column="ebukr" property="ebukr" jdbcType="VARCHAR" />
+    <result column="ktop2" property="ktop2" jdbcType="VARCHAR" />
+    <result column="umkrs" property="umkrs" jdbcType="VARCHAR" />
+    <result column="bukrs_glob" property="bukrsGlob" jdbcType="VARCHAR" />
+    <result column="fstva" property="fstva" jdbcType="VARCHAR" />
+    <result column="opvar" property="opvar" jdbcType="VARCHAR" />
+    <result column="xcovr" property="xcovr" jdbcType="VARCHAR" />
+    <result column="txkrs" property="txkrs" jdbcType="VARCHAR" />
+    <result column="wfvar" property="wfvar" jdbcType="VARCHAR" />
+    <result column="xbbbf" property="xbbbf" jdbcType="VARCHAR" />
+    <result column="xbbbe" property="xbbbe" jdbcType="VARCHAR" />
+    <result column="xbbba" property="xbbba" jdbcType="VARCHAR" />
+    <result column="xbbko" property="xbbko" jdbcType="VARCHAR" />
+    <result column="xstdt" property="xstdt" jdbcType="VARCHAR" />
+    <result column="mwskv" property="mwskv" jdbcType="VARCHAR" />
+    <result column="mwska" property="mwska" jdbcType="VARCHAR" />
+    <result column="impda" property="impda" jdbcType="VARCHAR" />
+    <result column="xnegp" property="xnegp" jdbcType="VARCHAR" />
+    <result column="xkkbi" property="xkkbi" jdbcType="VARCHAR" />
+    <result column="wt_newwt" property="wtNewwt" jdbcType="VARCHAR" />
+    <result column="pp_pdate" property="ppPdate" jdbcType="VARCHAR" />
+    <result column="infmt" property="infmt" jdbcType="VARCHAR" />
+    <result column="fstvare" property="fstvare" jdbcType="VARCHAR" />
+    <result column="kopim" property="kopim" jdbcType="VARCHAR" />
+    <result column="dkweg" property="dkweg" jdbcType="VARCHAR" />
+    <result column="offsacct" property="offsacct" jdbcType="VARCHAR" />
+    <result column="bapovar" property="bapovar" jdbcType="VARCHAR" />
+    <result column="xcos" property="xcos" jdbcType="VARCHAR" />
+    <result column="xcession" property="xcession" jdbcType="VARCHAR" />
+    <result column="xsplt" property="xsplt" jdbcType="VARCHAR" />
+    <result column="surccm" property="surccm" jdbcType="VARCHAR" />
+    <result column="dtprov" property="dtprov" jdbcType="VARCHAR" />
+    <result column="dtamtc" property="dtamtc" jdbcType="VARCHAR" />
+    <result column="dttaxc" property="dttaxc" jdbcType="VARCHAR" />
+    <result column="dttdsp" property="dttdsp" jdbcType="VARCHAR" />
+    <result column="dtaxr" property="dtaxr" jdbcType="VARCHAR" />
+    <result column="xvatdate" property="xvatdate" jdbcType="VARCHAR" />
+    <result column="pst_per_var" property="pstPerVar" jdbcType="VARCHAR" />
+    <result column="xbbsc" property="xbbsc" jdbcType="VARCHAR" />
+    <result column="fm_derive_acc" property="fmDeriveAcc" jdbcType="VARCHAR" />
+    <result column="f_obsolete" property="fObsolete" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="BaseResultMapVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.base.OrganizationVO">
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="full_name" property="fullName" jdbcType="VARCHAR" />
+    <result column="busi" property="busi" jdbcType="VARCHAR" />
+    <result column="busitext" property="busiText" jdbcType="VARCHAR" />
+    <result column="com_domain_tr" property="comDomainTr" jdbcType="VARCHAR" />
+    <result column="domaintext" property="domainText" jdbcType="VARCHAR" />
+    <result column="zz_invalid" property="zzInvalid" jdbcType="VARCHAR" />
+    <result column="zz_inclusion" property="zzInclusion" jdbcType="VARCHAR" />
+    <result column="company_no" property="companyNo" jdbcType="VARCHAR"/>
+  </resultMap>
+
+  <resultMap id="BaseResultMap1" type="cn.com.personnel.ercp.pi.module.base.OrganizationBusiVO">
+    <result column="busi" property="busi" jdbcType="VARCHAR" />
+    <result column="busiText" property="busiText" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="BaseResultMap2" type="cn.com.personnel.ercp.pi.module.sap.T001VO">
+    <result column="saknr" property="saknr" jdbcType="VARCHAR" />
+    <result column="txt50" property="txt50" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="queryOrganList" resultMap="BaseResultMapVO">
+    <if test="isNull != null and isNull==true">
+      select '0' as bukrs,'无' as name,'' as butxt,'' as full_name,'' as waers,'' as busi,'' as busitext,'' as com_domain_tr,
+      '' as domaintext,'' as zz_invalid,'' as zz_inclusion
+      union
+    </if>
+    select vo.bukrs,vo.name,vo.butxt,vo.full_name,vo.waers,vo.busi,vo.busitext,vo.com_domain_tr,vo.domaintext,
+    vo.zz_invalid,vo.zz_inclusion
+    from v_organ vo
+    <where>
+      <if test="bukrs != null and bukrs != ''">
+        and vo.bukrs like concat('%', #{bukrs}, '%')
+      </if>
+      <if test="name != null and name != ''">
+        and upper(vo.name) like concat('%', #{name}, '%')
+      </if>
+      <if test="butxt != null and butxt != ''">
+        and vo.butxt like concat('%', #{butxt}, '%')
+      </if>
+      <if test="fullName != null and fullName != ''">
+        and vo.full_name like concat('%', #{fullName}, '%')
+      </if>
+      <if test="fullNameWhole != null and fullNameWhole != ''">
+        and vo.full_name = #{fullNameWhole}
+      </if>
+      <if test="waers != null and waers != ''">
+        and vo.waers = #{waers}
+      </if>
+      <if test="busi != null and busi != ''">
+        and vo.busi like concat('%', #{busi}, '%')
+      </if>
+      <if test="busiText != null and busiText != ''">
+        and vo.busitext like concat('%', #{busiText}, '%')
+      </if>
+      <if test="comDomainTr != null and comDomainTr != ''">
+        and vo.com_domain_tr like concat('%', #{comDomainTr}, '%')
+      </if>
+      <if test="domainText != null and domainText != ''">
+        and vo.domaintext like concat('%', #{domainText}, '%')
+      </if>
+      <if test="zzInvalid != null and zzInvalid != ''">
+        and vo.zz_invalid = #{zzInvalid}
+      </if>
+      <if test="zzInclusion != null and zzInclusion != ''">
+        and vo.zz_inclusion = #{zzInclusion}
+      </if>
+      <if test="companyNo != null and companyNo != ''">
+        and vo.bukrs != #{companyNo}
+      </if>
+      <if test="ids != null and ids.size &gt; 0">
+        and vo.bukrs in
+        <foreach collection="ids" separator="," item="id" open="(" close=")"> #{id} </foreach>
+      </if>
+
+    </where>
+    group by vo.bukrs,vo.name,vo.butxt,vo.full_name,vo.waers,vo.busi,vo.busitext,vo.com_domain_tr,vo.domaintext,
+    vo.zz_invalid,vo.zz_inclusion
+    order by bukrs
+  </select>
+
+  <select id="queryOrganByRoleList1" resultMap="BaseResultMapVO">
+    <if test="isNull != null and isNull==true">
+    select '0' as bukrs,'无' as name,'' as butxt,'' as full_name,'' as waers,'' as busi,'' as busiText,'' as com_domain_tr,
+    '' as domainText,'' as zz_invalid,'' as zz_inclusion
+    union
+    </if>
+    select t001.bukrs,adrc.name1 as name,zfit059.butxt,zfit059.full_name,t001.waers,zfit059.busi,dd07t.ddtext as busiText,zfit006.com_domain_tr,
+    dd.ddtext as domainText,zfit059.zz_invalid,zfit059.zz_inclusion
+    from t001 join adrc on t001.adrnr=adrc.addrnumber
+    left join zfit059 on t001.bukrs=zfit059.bukrs and zfit059.mandt=#{mandt}
+    left join dd07t on dd07t.valpos=zfit059.busi and dd07t.domname='ZZDTBUSI' and dd07t.ddlanguage='1'
+    left join zfit006 on t001.bukrs=zfit006.bukrs and zfit006.mandt=#{mandt}
+    left join dd07t dd on dd.valpos=zfit006.com_domain_tr and dd.domname='ZDDOMAIN_TR' and dd.ddlanguage='1'
+
+    <where> t001.mandt=#{mandt} and adrc.client=#{mandt}
+      <if test="userId != null and userId != ''">
+        and t001.bukrs in (select bu.bukrs from  fss_base_role_organ_busi bu join sec_user_role ur on bu.role_id=ur.role_id
+        and (bu.mandt=#{mandt} or bu.mandt is null or bu.mandt ='') and ur.user_id=#{userId} group by bu.bukrs)
+      </if>
+      <if test="bukrs != null and bukrs != ''">
+         and t001.bukrs like concat('%', #{bukrs}, '%')
+      </if>
+      <if test="name != null and name != ''">
+         and upper(adrc.name1) like concat('%', #{name}, '%')
+      </if>
+      <if test="butxt != null and butxt != ''">
+         and zfit059.butxt like concat('%', #{butxt}, '%')
+      </if>
+      <if test="fullName != null and fullName != ''">
+         and zfit059.full_name like concat('%', #{fullName}, '%')
+      </if>
+      <if test="fullNameWhole != null and fullNameWhole != ''">
+        and zfit059.full_name = #{fullNameWhole}
+      </if>
+      <if test="waers != null and waers != ''">
+         and t001.waers = #{waers}
+      </if>
+      <if test="busi != null and busi != ''">
+        and zfit059.busi like concat('%', #{busi}, '%')
+      </if>
+      <if test="busiText != null and busiText != ''">
+        and dd07t.ddtext like concat('%', #{busiText}, '%')
+      </if>
+      <if test="comDomainTr != null and comDomainTr != ''">
+        and zfit006.com_domain_tr like concat('%', #{comDomainTr}, '%')
+      </if>
+      <if test="domainText != null and domainText != ''">
+        and dd.ddtext like concat('%', #{domainText}, '%')
+      </if>
+      <if test="zzInvalid != null and zzInvalid != ''">
+        and zfit059.zz_invalid = #{zzInvalid}
+      </if>
+      <if test="zzInclusion != null and zzInclusion != ''">
+        and zfit059.zz_inclusion = #{zzInclusion}
+      </if>
+      <if test="companyNo != null and companyNo != ''">
+        and t001.bukrs != #{companyNo}
+      </if>
+      <if test="ids != null and ids.size &gt; 0">
+        and t001.bukrs in
+        <foreach collection="ids" separator="," item="id" open="(" close=")"> #{id} </foreach>
+      </if>
+
+    </where>
+    group by t001.bukrs,adrc.name1,zfit059.butxt,zfit059.full_name,t001.waers,zfit059.busi,dd07t.ddtext,zfit006.com_domain_tr,dd.ddtext,
+    zfit059.zz_invalid,zfit059.zz_inclusion
+    order by bukrs
+  </select>
+
+  <select id="queryOrganByRoleList" resultMap="BaseResultMapVO">
+    <if test="isNull != null and isNull==true">
+      select '0' as bukrs,'无' as name,'' as butxt,'' as full_name,'' as waers,'' as busi,'' as busitext,'' as com_domain_tr,
+      '' as domaintext,'' as zz_invalid,'' as zz_inclusion
+      union
+    </if>
+    select vo.bukrs,vo.name,vo.butxt,vo.full_name,vo.waers,vo.busi,vo.busitext,vo.com_domain_tr,vo.domaintext,
+    vo.zz_invalid,case when vo.zz_inclusion='X' then '否' else '是' end as zz_inclusion
+    from v_organ vo
+    <where>
+      <if test="userId != null and userId != ''">
+        and vo.bukrs in (select bu.bukrs from  fss_base_role_organ_busi bu join sec_user_role ur on bu.role_id=ur.role_id
+        and ur.user_id=#{userId} group by bu.bukrs)
+      </if>
+      <if test="bukrs != null and bukrs != ''">
+        and vo.bukrs like concat('%', #{bukrs}, '%')
+      </if>
+      <if test="name != null and name != ''">
+        and upper(vo.name) like concat('%', #{name}, '%')
+      </if>
+      <if test="butxt != null and butxt != ''">
+        and vo.butxt like concat('%', #{butxt}, '%')
+      </if>
+      <if test="fullName != null and fullName != ''">
+        and vo.full_name like concat('%', #{fullName}, '%')
+      </if>
+      <if test="fullNameWhole != null and fullNameWhole != ''">
+        and vo.full_name = #{fullNameWhole}
+      </if>
+      <if test="waers != null and waers != ''">
+        and vo.waers = #{waers}
+      </if>
+      <if test="busi != null and busi != ''">
+        and vo.busi like concat('%', #{busi}, '%')
+      </if>
+      <if test="busiText != null and busiText != ''">
+        and vo.busitext like concat('%', #{busiText}, '%')
+      </if>
+      <if test="comDomainTr != null and comDomainTr != ''">
+        and vo.com_domain_tr like concat('%', #{comDomainTr}, '%')
+      </if>
+      <if test="domainText != null and domainText != ''">
+        and vo.domaintext like concat('%', #{domainText}, '%')
+      </if>
+      <if test="zzInvalid != null and zzInvalid != ''">
+        and vo.zz_invalid = #{zzInvalid}
+      </if>
+      <if test="zzInclusion != null and zzInclusion != ''">
+        and vo.zz_inclusion = #{zzInclusion}
+      </if>
+      <if test="companyNo != null and companyNo != ''">
+        and vo.bukrs != #{companyNo}
+      </if>
+      <if test="ids != null and ids.size &gt; 0">
+        and vo.bukrs in
+        <foreach collection="ids" separator="," item="id" open="(" close=")"> #{id} </foreach>
+      </if>
+
+    </where>
+  </select>
+
+  <select id="selectExcelByIds" resultMap="BaseResultMapVO">
+    select t001.bukrs,adrc.name1 as name,zfit059.butxt,t001.waers,zfit059.busi,dd07t.ddtext as busiText,zfit006.com_domain_tr,
+    dd.ddtext as domainText,zfit059.zz_invalid,zfit059.zz_inclusion
+    from t001 join adrc on t001.adrnr=adrc.addrnumber
+    left join zfit059 on t001.bukrs=zfit059.bukrs
+    left join dd07t on dd07t.valpos=zfit059.busi and dd07t.domname='ZZDTBUSI' and dd07t.ddlanguage='1'
+    left join zfit006 on t001.bukrs=zfit006.bukrs
+    left join dd07t dd on dd.valpos=zfit006.com_domain_tr and dd.domname='ZDDOMAIN_TR' and dd.ddlanguage='1'
+    <where> t001.mandt=#{mandt} and adrc.client=#{mandt}
+     <if test="ids != null and ids.size &gt; 0">
+       and t001.bukrs in
+       <foreach collection="ids" separator="," item="id" open="(" close=")"> #{id} </foreach>
+     </if>
+    </where>
+    group by t001.bukrs,adrc.name1,zfit059.butxt,t001.waers,zfit059.busi,dd07t.ddtext,zfit006.com_domain_tr,dd.ddtext,
+    zfit059.zz_invalid,zfit059.zz_inclusion
+    order by t001.bukrs
+  </select>
+
+  <select id="queryAllBusi" resultMap="BaseResultMap1">
+    select zfit059.busi,dd07t.ddtext as busiText
+    from zfit059
+    left join dd07t on dd07t.domvalue_l=zfit059.busi and dd07t.domname='ZZDTBUSI' and dd07t.ddlanguage='1' and zfit059.mandt=#{mandt}
+    <where>
+      <if test="busi != null and busi != ''">
+        zfit059.busi like concat('%', #{busi}, '%') or dd07t.ddtext like concat('%', #{busi}, '%')
+      </if>
+    </where>
+	group by zfit059.busi,dd07t.ddtext
+  </select>
+
+  <select id="queryOrganByBusi" resultMap="BaseResultMapVO">
+    select t001.bukrs,adrc.name1 as name,zfit059.butxt,zfit059.full_name,t001.waers,zfit059.busi,dd07t.ddtext as busiText,zfit006.com_domain_tr,
+    dd.ddtext as domainText,zfit059.zz_invalid,zfit059.zz_inclusion
+    from t001 join adrc on t001.adrnr=adrc.addrnumber
+    left join zfit059 on t001.bukrs=zfit059.bukrs and zfit059.mandt=#{mandt}
+    left join dd07t on dd07t.valpos=zfit059.busi and dd07t.domname='ZZDTBUSI' and dd07t.ddlanguage='1'
+    left join zfit006 on t001.bukrs=zfit006.bukrs and zfit006.mandt=#{mandt}
+    left join dd07t dd on dd.valpos=zfit006.com_domain_tr and dd.domname='ZDDOMAIN_TR' and dd.ddlanguage='1'
+    where t001.mandt=#{mandt} and adrc.client=#{mandt}
+    <if test="busi != null">
+      and zfit059.busi=#{busi}
+    </if>
+    <if test="busi == null">
+      and zfit059.busi is null
+    </if>
+    group by t001.bukrs,adrc.name1,zfit059.butxt,zfit059.full_name,t001.waers,zfit059.busi,dd07t.ddtext,zfit006.com_domain_tr,dd.ddtext,
+    zfit059.zz_invalid,zfit059.zz_inclusion
+    order by zfit059.busi,t001.bukrs
+  </select>
+
+  <select id="queryKtoplList" resultMap="BaseResultMap2">
+    select skb1.saknr,t001.bukrs,t001.ktopl,skat.txt50
+    from t001 join skat on t001.ktopl=skat.ktopl and skat.spras='1'
+    join skb1 on skat.saknr=skb1.saknr
+    <where>
+      <if test="bukrs != null and bukrs !=''">
+        t001.bukrs=#{bukrs}
+      </if>
+      <if test="ktopl != null and ktopl != ''">
+        and t001.ktopl like concat('%', #{ktopl}, '%')
+      </if>
+      <if test="saknr != null and saknr != ''">
+        and skb1.saknr like concat('%', #{saknr}, '%')
+      </if>
+      <if test="txt50 != null and txt50 != ''">
+        and skat.txt50 like concat('%', #{txt50}, '%')
+      </if>
+    </where>
+    group by skb1.saknr,t001.bukrs,t001.ktopl,skat.txt50
+    order by t001.ktopl
+  </select>
+
+  <select id="queryBusiByBukrs" resultMap="BaseResultMapVO">
+    select * from v_organ where bukrs=#{bukrs}
+  </select>
+</mapper>

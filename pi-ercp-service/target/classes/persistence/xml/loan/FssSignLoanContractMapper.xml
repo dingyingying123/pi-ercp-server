@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.loan.FssSignLoanContractMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.loan.FssSignLoanContract">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="loan_id" jdbcType="VARCHAR" property="loanId" />
+    <result column="apply_no" jdbcType="VARCHAR" property="applyNo" />
+    <result column="apply_user" jdbcType="VARCHAR" property="applyUser" />
+    <result column="apply_user_id" jdbcType="VARCHAR" property="applyUserId" />
+    <result column="apply_date" jdbcType="DATE" property="applyDate" />
+    <result column="depart" jdbcType="VARCHAR" property="depart" />
+    <result column="depart_id" jdbcType="VARCHAR" property="departId"/>
+    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+    <result column="company_id" jdbcType="VARCHAR" property="companyId" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="project_id" jdbcType="VARCHAR" property="projectId" />
+    <result column="approved_total_investment" jdbcType="NUMERIC" property="approvedTotalInvestment" />
+    <result column="paid_in_capital" jdbcType="NUMERIC" property="paidInCapital" />
+    <result column="project_info" jdbcType="VARCHAR" property="projectInfo" />
+    <result column="loan_type" jdbcType="VARCHAR" property="loanType" />
+    <result column="loan_type_id" jdbcType="VARCHAR" property="loanTypeId" />
+    <result column="is_loop" jdbcType="VARCHAR" property="isLoop" />
+    <result column="is_syndicated_loan" jdbcType="VARCHAR" property="isSyndicatedLoan" />
+    <result column="loan_organization" jdbcType="VARCHAR" property="loanOrganization" />
+    <result column="loan_organization_id" jdbcType="VARCHAR" property="loanOrganizationId" />
+    <result column="bank_account" jdbcType="VARCHAR" property="bankAccount" />
+    <result column="bank_account_id" jdbcType="VARCHAR" property="bankAccountId" />
+    <result column="loan_term_month" jdbcType="VARCHAR" property="loanTermMonth" />
+    <result column="loan_term_year" jdbcType="VARCHAR" property="loanTermYear" />
+    <result column="plan_sign_date" jdbcType="DATE" property="planSignDate" />
+    <result column="currency_type" jdbcType="VARCHAR" property="currencyType" />
+    <result column="currency_type_id" jdbcType="VARCHAR" property="currencyTypeId" />
+    <result column="contract_amount" jdbcType="NUMERIC" property="contractAmount" />
+    <result column="interest_rate_type" jdbcType="VARCHAR" property="interestRateType" />
+    <result column="interest_rate_type_id" jdbcType="VARCHAR" property="interestRateTypeId" />
+    <result column="interest_rate_float_way" jdbcType="VARCHAR" property="interestRateFloatWay" />
+    <result column="float_rate" jdbcType="NUMERIC" property="floatRate" />
+    <result column="contract_rate" jdbcType="NUMERIC" property="contractRate" />
+    <result column="adjust_interest_way" jdbcType="VARCHAR" property="adjustInterestWay" />
+    <result column="adjust_interest_date" jdbcType="VARCHAR" property="adjustInterestDate" />
+    <result column="adjust_interest_specific_time" jdbcType="DATE" property="adjustInterestSpecificTime" />
+    <result column="adjust_interest_interval" jdbcType="VARCHAR" property="adjustInterestInterval" />
+    <result column="interest_days" jdbcType="INTEGER" property="interestDays" />
+    <result column="float_interest_way_desc" jdbcType="VARCHAR" property="floatInterestWayDesc" />
+    <result column="repayment_source" jdbcType="VARCHAR" property="repaymentSource" />
+    <result column="grace_time" jdbcType="DATE" property="graceTime" />
+    <result column="commitment_fee_amount" jdbcType="NUMERIC" property="commitmentFeeAmount" />
+    <result column="commitment_fee_rate" jdbcType="NUMERIC" property="commitmentFeeRate" />
+    <result column="guarantee_type" jdbcType="VARCHAR" property="guaranteeType" />
+    <result column="guarantee_person" jdbcType="VARCHAR" property="guaranteePerson" />
+    <result column="loan_purpose" jdbcType="VARCHAR" property="loanPurpose" />
+    <result column="service_charge_amount" jdbcType="NUMERIC" property="serviceChargeAmount" />
+    <result column="service_charge_rate" jdbcType="NUMERIC" property="serviceChargeRate" />
+    <result column="comprehensive_cost" jdbcType="NUMERIC" property="comprehensiveCost" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="deleted" jdbcType="VARCHAR" property="deleted" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="approval_status" jdbcType="VARCHAR" property="approvalStatus" />
+    <result column="approval_time" jdbcType="TIMESTAMP" property="approvalTime" />
+    <result column="data_check" jdbcType="VARCHAR" property="dataCheck" />
+    <result column="start_date" jdbcType="DATE" property="startDate" />
+    <result column="business_unit" jdbcType="VARCHAR" property="businessUnit" />
+    <result column="business_unit_id" jdbcType="VARCHAR" property="businessUnitId" />
+      <result column="still_bank_account" jdbcType="VARCHAR" property="stillBankAccount"/>
+      <result column="still_bank_account_id" jdbcType="VARCHAR" property="stillBankAccountId"/>
+  </resultMap>
+
+  <select id="getLoanNumber" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT
+    #{ prefix } || CASE WHEN res.str ISNULL THEN '0001' ELSE res.str END
+    FROM (
+    SELECT
+    to_char(MAX(regexp_replace(apply_no,'('|| #{ prefix } ||')(\d{4})','\2','g')::int + 1), 'FM0000') as str
+    FROM
+    fss_loan_contract
+    WHERE apply_no ~ ('^'|| #{ prefix } ||'\d{4}$')
+    ) res
+  </select>
+<!--    BUKRS 公司代码-->
+<!--    BUTXT 账户持有人acc_num-->
+<!--    BANKN 银行帐号-->
+<!--    BRNCH 账户描述-->
+<!--    HKONT 总账科目-->
+<!--    TXT50 科目描述-->
+
+    <select id="getBankList" resultType="java.util.HashMap">
+        SELECT
+        bukrs AS companycode,
+        butxt as accountholder,
+        hbkid as openAcctShort,
+        acc_num as bankaccount,
+        brnch AS accountDescription,
+        hkont as hkont,
+        txt50 as description
+        FROM
+        v_acc_num
+        where 1=1
+        <if test="bankVo.accountHolder != null and bankVo.accountHolder != ''">
+            AND butxt LIKE concat('%', #{bankVo.accountHolder}, '%')
+        </if>
+        <if test="bankVo.bukrs != null and bankVo.bukrs != ''">
+            AND bukrs LIKE concat('%', #{bankVo.bukrs}, '%')
+        </if>
+        <if test="bankVo.accountDescription != null and bankVo.accountDescription != ''">
+            AND brnch LIKE concat('%', #{bankVo.accountDescription}, '%')
+        </if>
+        <if test="bankVo.bankAccount != null and bankVo.bankAccount != ''">
+            AND acc_num LIKE concat('%', #{bankVo.bankAccount}, '%')
+        </if>
+        <if test="bankVo.openAcctShort != null and bankVo.openAcctShort != ''">
+            AND hbkid LIKE concat('%', #{bankVo.openAcctShort}, '%')
+        </if>
+
+    </select>
+
+  <select id="querySignLoanContractList" resultMap="BaseResultMap">
+    SELECT * FROM  fss_loan_contract
+    <where>
+        <if test="signLoanContractVo.applyUserId != null and signLoanContractVo.applyUserId != ''">
+            and company_id in (select bu.bukrs from  fss_base_role_organ_busi bu join sec_user_role ur on bu.role_id=ur.role_id
+            and ur.user_id=#{signLoanContractVo.applyUserId} group by bu.bukrs)
+        </if>
+        <if test="signLoanContractVo.loanType != null and signLoanContractVo.loanType != ''">
+            AND  loan_type = #{signLoanContractVo.loanType}
+        </if>
+        <if test="signLoanContractVo.projectName != null and signLoanContractVo.projectName != ''">
+            AND  project_name LIKE concat('%', #{signLoanContractVo.projectName}, '%')
+        </if>
+        <if test="signLoanContractVo.loanOrganization != null and signLoanContractVo.loanOrganization != ''">
+            AND  loan_organization like concat('%',#{signLoanContractVo.loanOrganization},'%')
+        </if>
+        <if test="signLoanContractVo.loanOrganizationId != null and signLoanContractVo.loanOrganizationId != ''">
+            AND  loan_organization_id = #{signLoanContractVo.loanOrganizationId}
+        </if>
+        <if test="signLoanContractVo.companyName != null and signLoanContractVo.companyName != ''">
+            AND  company_name = #{signLoanContractVo.companyName}
+        </if>
+        <if test="signLoanContractVo.applyDate != null">
+            AND  date(apply_date) = #{signLoanContractVo.applyDate}
+        </if>
+        <if test="signLoanContractVo.approvalStatus != null and signLoanContractVo.approvalStatus != ''">
+            AND  approval_status = #{signLoanContractVo.approvalStatus}
+        </if>
+    </where>
+    order by create_time desc
+  </select>
+    <select id="getSignApplyList" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+            fss_loan_contract t1
+        WHERE
+            t1.apply_no NOT IN (
+                SELECT
+                    t2.apply_no
+                FROM
+                    fss_loan_contract_manage t2  where t2.apply_no is not null
+                GROUP BY
+                    t2.apply_no
+            )
+        AND t1.approval_status = '审批通过'
+        <if test="loanContractVo.projectName != null and loanContractVo.projectName != ''">
+            AND  t1.project_name like concat('%',#{loanContractVo.projectName},'%')
+        </if>
+        <if test="loanContractVo.applyNo != null and loanContractVo.applyNo != ''">
+            AND  t1.apply_no like concat('%',#{loanContractVo.applyNo},'%')
+        </if>
+    </select>
+
+</mapper>

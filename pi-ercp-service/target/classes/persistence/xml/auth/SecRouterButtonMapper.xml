@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.auth.persistence.mapper.SecRouterButtonMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.auth.persistence.entity.SecRouterButton">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="isdelete" jdbcType="INTEGER" property="isdelete" />
+    <result column="appcod" jdbcType="VARCHAR" property="appcod" />
+    <result column="router_id" jdbcType="VARCHAR" property="routerId" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="router" jdbcType="VARCHAR" property="router" />
+    <result column="button" jdbcType="VARCHAR" property="button" />
+    <result column="button_name" jdbcType="VARCHAR" property="buttonName" />
+    <result column="button_desc" jdbcType="VARCHAR" property="buttonDesc" />
+  </resultMap>
+  <select id="getRouterButtonList" resultMap="BaseResultMap">
+    select * from sec_router_button
+    where isdelete = 0  and appcod = #{appcod}
+    and router_id = #{routerId}
+  </select>
+
+  <select id="getButtonByRoleAndRouter" resultType="string">
+    SELECT
+    DISTINCT sec_router_button.button
+    FROM
+      sec_router_button
+        LEFT JOIN sec_role_button ON sec_router_button.ID = sec_role_button.button_id and sec_role_button.isdelete='0'
+    where sec_router_button.router_id = #{routerId} and sec_role_button.router_id = #{routerId}
+    <if test="queryList != null and queryList.size()>0">
+      AND role_id IN
+      <foreach collection="queryList" index="index" item="item" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+  </select>
+  
+  <select id="getButtonsByModuleIds" resultMap="BaseResultMap">
+    select sec_router_button.* from sec_router_button
+    where sec_router_button.isdelete = 0  and sec_router_button.appcod = 'sfs_xd'
+    and sec_router_button.router_id in
+    <foreach collection="moduleIds" item="id" separator="," open="(" close=")">
+      #{id}
+    </foreach>
+    and sec_router_button.router_id not in
+    (select router_id from sec_role_button where sec_role_button.isdelete='0' and sec_role_button.role_id = #{roleId}
+    and router_id not in
+    <foreach collection="moduleIds" item="id" separator="," open="(" close=")">
+      #{id}
+    </foreach>
+        )
+  </select>
+</mapper>

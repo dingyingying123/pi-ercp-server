@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.bankCredit.FssBankCreditInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.bankCredit.FssBankCreditInfo" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="bc_id" property="bcId" jdbcType="VARCHAR" />
+    <result column="letter_number" property="letterNumber" jdbcType="VARCHAR" />
+    <result column="applicant_id" property="applicantId" jdbcType="VARCHAR" />
+    <result column="applicant_name" property="applicantName" jdbcType="VARCHAR" />
+    <result column="applicant_dept_id" property="applicantDeptId" jdbcType="VARCHAR" />
+    <result column="applicant_dept" property="applicantDept" jdbcType="VARCHAR" />
+    <result column="applicant_date" property="applicantDate" jdbcType="VARCHAR" />
+    <result column="organ_id" property="organId" jdbcType="VARCHAR" />
+    <result column="organ_name" property="organName" jdbcType="VARCHAR" />
+    <result column="head_id" property="headId" jdbcType="VARCHAR" />
+    <result column="head_code" property="headCode" jdbcType="VARCHAR" />
+    <result column="head_name" property="headName" jdbcType="VARCHAR" />
+    <result column="currency_id" property="currencyId" jdbcType="VARCHAR" />
+    <result column="currency_code" property="currencyCode" jdbcType="VARCHAR" />
+    <result column="currency_name" property="currencyName" jdbcType="VARCHAR" />
+    <result column="credit_amount" property="creditAmount" jdbcType="NUMERIC" />
+    <result column="credit_varieties_id" property="creditVarietiesId" jdbcType="VARCHAR" />
+    <result column="credit_varieties" property="creditVarieties" jdbcType="VARCHAR" />
+    <result column="credit_expiry_date" property="creditExpiryDate" jdbcType="VARCHAR" />
+    <result column="bank_rating" property="bankRating" jdbcType="VARCHAR" />
+    <result column="rating_expiry_date" property="ratingExpiryDate" jdbcType="VARCHAR" />
+    <result column="plan_approval_date" property="planApprovalDate" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="approval_status" property="approvalStatus" jdbcType="VARCHAR" />
+    <result column="approval_time" property="approvalTime" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="reserve" property="reserve" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="deleted" property="deleted" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="BaseResultMapVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.bankCredit.FssBankCreditInfoVO">
+    <result column="frev_id" property="frevId" jdbcType="VARCHAR" />
+    <result column="process_inst_id" property="processInstId" jdbcType="VARCHAR" />
+    <result column="process_inst_name" property="processInstName" jdbcType="VARCHAR" />
+    <result column="process_def_id" property="processDefId" jdbcType="VARCHAR" />
+    <result column="process_def_name" property="processDefName" jdbcType="VARCHAR" />
+    <result column="work_item_id" property="workItemId" jdbcType="VARCHAR" />
+    <result column="work_item_name" property="workItemName" jdbcType="VARCHAR" />
+    <result column="action_url" property="actionUrl" jdbcType="VARCHAR" />
+    <result column="activity_inst_id" property="activityInstId" jdbcType="VARCHAR" />
+    <result column="activity_inst_name" property="activityInstName" jdbcType="VARCHAR" />
+    <result column="activity_def_id" property="activityDefId" jdbcType="VARCHAR" />
+    <result column="process_status" property="processStatus" jdbcType="VARCHAR" />
+    <result column="islimit" property="islimit" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="queryBankCreditInfoList" resultMap="BaseResultMap">
+    select h.head_code,h.head_name,bc.code as currency_code,bc.name as currency_name,c.*
+    from fss_bank_credit_info c
+    left join fss_base_bank_head_office h on c.head_id=h.head_id
+    left join fss_base_currency bc on c.currency_id=bc.id
+    <where>
+        c.deleted = '0'
+      <if test="fssBankCreditInfo.organName != null and fssBankCreditInfo.organName != ''">
+        and c.organ_name like concat('%', #{fssBankCreditInfo.organName}, '%')
+      </if>
+      <if test="fssBankCreditInfo.headName != null and fssBankCreditInfo.headName != ''">
+        and h.head_name like concat('%', #{fssBankCreditInfo.headName}, '%')
+      </if>
+      <if test="ids != null and ids.size &gt; 0 "> and
+        <foreach collection="ids" item="id" separator="or" open="(" close=")">
+           c.credit_varieties_id like concat('%', #{id}, '%')
+        </foreach>
+      </if>
+      <if test="fssBankCreditInfo.approvalStatus != null and fssBankCreditInfo.approvalStatus != ''">
+        and c.approval_status like concat('%', #{fssBankCreditInfo.approvalStatus}, '%')
+      </if>
+      <if test='fssBankCreditInfo.isView != null and fssBankCreditInfo.isView and fssBankCreditInfo.applicantId != null and fssBankCreditInfo.applicantId != ""'>
+        and c.organ_id in (select bu.bukrs from  fss_base_role_organ_busi bu join sec_user_role ur on bu.role_id=ur.role_id
+        and ur.user_id=#{fssBankCreditInfo.applicantId} group by bu.bukrs)
+      </if>
+      <if test='(fssBankCreditInfo.isView == null or !fssBankCreditInfo.isView) and fssBankCreditInfo.applicantId != null and fssBankCreditInfo.applicantId != ""'>
+        and c.applicant_id = #{fssBankCreditInfo.applicantId}
+      </if>
+    </where>
+    order by c.create_time desc
+  </select>
+  <select id="listFssBankCreditInfoVO" resultMap="BaseResultMapVO">
+    select ci.*,ld.is_limit as islimit from fss_bank_credit_info ci
+    left join (select min(details_id) as id ,bc_id from fss_bank_credit_line_details
+    GROUP BY bc_id) ta on ci.bc_id = ta.bc_id
+    left join fss_bank_credit_line_details ld on ld.details_id = ta.id
+    <where>
+      ci.approval_status = '审批通过' and ci.deleted = '0'
+      <if test="civo.headName != null and civo.headName != ''">
+        and ci.head_name = #{civo.headName}
+      </if>
+      <if test="civo.creditVarieties != null and civo.creditVarieties != ''">
+        and ci.credit_varieties = #{civo.creditVarieties}
+      </if>
+    </where>
+  </select>
+</mapper>

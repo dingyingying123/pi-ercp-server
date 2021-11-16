@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.loan.FssLoanContractRepaymentPlanMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.loan.FssLoanContractRepaymentPlan">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="repayment_id" jdbcType="VARCHAR" property="repaymentId" />
+    <result column="plan_date" jdbcType="DATE" property="planDate" />
+    <result column="plan_repayment_amount" jdbcType="NUMERIC" property="planRepaymentAmount" />
+    <result column="actual_planned_repayment_amount" jdbcType="NUMERIC" property="actualPlannedRepaymentAmount" />
+    <result column="repayment_amount" jdbcType="NUMERIC" property="repaymentAmount" />
+    <result column="main_id" jdbcType="VARCHAR" property="mainId" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="update_time" jdbcType="DATE" property="updateTime" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="branch_id" jdbcType="VARCHAR" property="branchId" />
+    <result column="branch_name" jdbcType="VARCHAR" property="branchName" />
+  </resultMap>
+    <resultMap id="BaseResultMapVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.loan.FssLoanContractRepaymentPlanVo">
+        <result column="planned_repayment_amount" jdbcType="NUMERIC" property="plannedRepaymentAmount" />
+    </resultMap>
+
+  <resultMap id="excelModel" type="cn.com.personnel.ercp.pi.module.loan.RepaymentMoneyPlanExcelModel">
+    <result column="repaymentId" property="repaymentId"/>
+    <result column="planDate" property="planDate"/>
+    <result column="planRepaymentAmount" property="plannedRepaymentAmount"/>
+      <result column="actualPlannedRepaymentAmount" property="actualPlannedRepaymentAmount"/>
+    <result column="contractName" property="contractName"/>
+  </resultMap>
+    <resultMap id="repaymentPlan" type="cn.com.personnel.ercp.pi.module.loan.RepaymentPlanVo">
+        <result column="repaymentAmount" property="repaymentAmount"/>
+        <result column="actualPlannedRepaymentAmount" property="actualPlannedRepaymentAmount"/>
+        <result column="repaymentId" property="repaymentId"/>
+        <result column="planDate" property="planDate"/>
+        <result column="planRepaymentAmount" property="planRepaymentAmount"/>
+        <result column="mainId" property="mainId"/>
+        <result column="branch_id" property="branchId"/>
+        <result column="branch_name" property="branchName"/>
+    </resultMap>
+    <select id="queryByMainId" resultMap="BaseResultMap">
+      select * from fss_loan_contract_repayment_plan where main_id = #{loanId}
+    </select>
+    <select id="queryExcelDataByMainId" resultMap="excelModel">
+  select
+    flcm.contract_name  as contractName,
+	coalesce(t2.actual_planned_repayment_amount,0) as actualPlannedRepaymentAmount,
+	flcrp.repayment_id as repaymentId,
+	flcrp.plan_date as planDate,
+	flcrp.plan_repayment_amount as planRepaymentAmount ,
+	flcrp.main_id as mainId
+from
+	fss_loan_contract_repayment_plan flcrp
+	JOIN fss_loan_contract_manage flcm ON flcrp.main_id = flcm.manage_id
+left join (
+	select
+		sum(actual_planned_repayment_amount) as actual_planned_repayment_amount, flcarp.plan_date
+	from
+		fss_loan_contract_actual_repayment_plan flcarp
+	where
+		manage_id = #{manageId}
+	group by
+		flcarp.plan_date ) as t2 on
+	t2.plan_date = flcrp.plan_date
+left join (select repayment_plan_id,sum(this_repayment_amount) as repaymentAmount  from fss_loan_contract_repayment_item  group by repayment_plan_id)  as t3 on  t3.repayment_plan_id=flcrp.repayment_id
+	where flcrp.main_id = #{manageId} order by flcrp.plan_date
+    </select>
+
+
+  <select id="queryByManageId" resultMap="repaymentPlan">
+  select
+	coalesce(t3.repaymentAmount,0) as repaymentAmount ,
+	coalesce(t2.actual_planned_repayment_amount,0) as actualPlannedRepaymentAmount,
+	flcrp.repayment_id as repaymentId,
+	flcrp.plan_date as planDate,
+	flcrp.plan_repayment_amount as planRepaymentAmount ,
+	flcrp.main_id as mainId,
+    flcrp.branch_id,flcrp.branch_name
+from
+	fss_loan_contract_repayment_plan flcrp
+left join (
+	select
+		sum(actual_planned_repayment_amount) as  actual_planned_repayment_amount, flcarp.plan_date,flcarp.branch_id ,flcarp.branch_name
+    from
+		fss_loan_contract_iou_repayment_plan flcarp
+		    --join fss_loan_contract_iou flci on flci.iou_id =flcarp.main_id
+    where
+        flcarp.manage_id = #{manageId}
+	group by
+		flcarp.plan_date,flcarp.branch_id ,flcarp.branch_name ) as t2 on
+	t2.plan_date = flcrp.plan_date and t2.branch_id = flcrp.branch_id and t2.branch_name = flcrp.branch_name
+left join (select repayment_plan_id,sum(this_repayment_amount) as repaymentAmount  from fss_loan_contract_repayment_item  group by repayment_plan_id)  as t3 on  t3.repayment_plan_id=flcrp.repayment_id
+	where flcrp.main_id = #{manageId} order by flcrp.plan_date
+  </select>
+
+    <select id="queryRepaymentBalance" resultMap="BaseResultMapVO">
+        select coalesce(flcrp.plan_repayment_amount,0)-coalesce(t2.repayment_amount,0) as planned_repayment_amount, flcrp.* from fss_loan_contract_repayment_plan flcrp
+            left join (
+            select
+                repayment_plan_id ,sum(this_repayment_amount) as repayment_amount
+            from
+                fss_loan_contract_repayment_item
+            where manage_id = #{manageId}
+        <if test="itemId != null and itemId != ''">
+            and item_id !=#{itemId}
+        </if>
+            group by
+                repayment_plan_id) t2 on
+            t2.repayment_plan_id= flcrp.repayment_id
+        where flcrp.main_id =#{manageId}
+        order by flcrp.plan_date
+    </select>
+
+    <select id="queryRepaymentPlanByPlanDateByBranch" resultMap="BaseResultMap">
+        select * from fss_loan_contract_repayment_plan p
+        <where>
+            <if test="planDate != null and planDate != ''">
+                to_char(p.plan_date,'YYYY-MM-DD') = #{planDate}
+            </if>
+            <if test="branchName != null and branchName != ''">
+                and p.branch_name = #{branchName}
+            </if>
+            <if test="manageId != null and manageId != ''">
+                and p.main_id = #{manageId}
+            </if>
+        </where>
+    </select>
+</mapper>

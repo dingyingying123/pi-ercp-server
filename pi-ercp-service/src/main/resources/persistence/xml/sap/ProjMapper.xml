@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.sap.ProjMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.sap.Proj" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="mandt" property="mandt" jdbcType="VARCHAR" />
+    <id column="pspnr" property="pspnr" jdbcType="VARCHAR" />
+    <result column="pspid" property="pspid" jdbcType="VARCHAR" />
+    <result column="post1" property="post1" jdbcType="VARCHAR" />
+    <result column="objnr" property="objnr" jdbcType="VARCHAR" />
+    <result column="ernam" property="ernam" jdbcType="VARCHAR" />
+    <result column="erdat" property="erdat" jdbcType="VARCHAR" />
+    <result column="aenam" property="aenam" jdbcType="VARCHAR" />
+    <result column="aedat" property="aedat" jdbcType="VARCHAR" />
+    <result column="kimsk" property="kimsk" jdbcType="VARCHAR" />
+    <result column="autod" property="autod" jdbcType="VARCHAR" />
+    <result column="stspd" property="stspd" jdbcType="VARCHAR" />
+    <result column="stspr" property="stspr" jdbcType="VARCHAR" />
+    <result column="vernr" property="vernr" jdbcType="VARCHAR" />
+    <result column="verna" property="verna" jdbcType="VARCHAR" />
+    <result column="astnr" property="astnr" jdbcType="VARCHAR" />
+    <result column="astna" property="astna" jdbcType="VARCHAR" />
+    <result column="vbukr" property="vbukr" jdbcType="VARCHAR" />
+    <result column="vgsbr" property="vgsbr" jdbcType="VARCHAR" />
+    <result column="vkokr" property="vkokr" jdbcType="VARCHAR" />
+    <result column="prctr" property="prctr" jdbcType="VARCHAR" />
+    <result column="pwhie" property="pwhie" jdbcType="VARCHAR" />
+    <result column="zuord" property="zuord" jdbcType="VARCHAR" />
+    <result column="trmeq" property="trmeq" jdbcType="VARCHAR" />
+    <result column="plfaz" property="plfaz" jdbcType="VARCHAR" />
+    <result column="plsez" property="plsez" jdbcType="VARCHAR" />
+    <result column="werks" property="werks" jdbcType="VARCHAR" />
+    <result column="kalid" property="kalid" jdbcType="VARCHAR" />
+    <result column="vgplf" property="vgplf" jdbcType="VARCHAR" />
+    <result column="ewplf" property="ewplf" jdbcType="VARCHAR" />
+    <result column="zteht" property="zteht" jdbcType="VARCHAR" />
+    <result column="nzanz" property="nzanz" jdbcType="VARCHAR" />
+    <result column="plnaw" property="plnaw" jdbcType="VARCHAR" />
+    <result column="vprof" property="vprof" jdbcType="VARCHAR" />
+    <result column="profl" property="profl" jdbcType="VARCHAR" />
+    <result column="bprof" property="bprof" jdbcType="VARCHAR" />
+    <result column="txtsp" property="txtsp" jdbcType="VARCHAR" />
+    <result column="kostl" property="kostl" jdbcType="VARCHAR" />
+    <result column="ktrg" property="ktrg" jdbcType="VARCHAR" />
+    <result column="aedte" property="aedte" jdbcType="VARCHAR" />
+    <result column="aedtp" property="aedtp" jdbcType="VARCHAR" />
+    <result column="berst" property="berst" jdbcType="VARCHAR" />
+    <result column="bertr" property="bertr" jdbcType="VARCHAR" />
+    <result column="berko" property="berko" jdbcType="VARCHAR" />
+    <result column="berbu" property="berbu" jdbcType="VARCHAR" />
+    <result column="spsnr" property="spsnr" jdbcType="VARCHAR" />
+    <result column="besta" property="besta" jdbcType="VARCHAR" />
+    <result column="scope" property="scope" jdbcType="VARCHAR" />
+    <result column="xstat" property="xstat" jdbcType="VARCHAR" />
+    <result column="txjcd" property="txjcd" jdbcType="VARCHAR" />
+    <result column="zschm" property="zschm" jdbcType="VARCHAR" />
+    <result column="scprf" property="scprf" jdbcType="VARCHAR" />
+    <result column="imprf" property="imprf" jdbcType="VARCHAR" />
+    <result column="fmprf" property="fmprf" jdbcType="VARCHAR" />
+    <result column="abgsl" property="abgsl" jdbcType="VARCHAR" />
+    <result column="postu" property="postu" jdbcType="VARCHAR" />
+    <result column="pprof" property="pprof" jdbcType="VARCHAR" />
+    <result column="plint" property="plint" jdbcType="VARCHAR" />
+    <result column="loevm" property="loevm" jdbcType="VARCHAR" />
+    <result column="inact" property="inact" jdbcType="VARCHAR" />
+    <result column="kzbws" property="kzbws" jdbcType="VARCHAR" />
+    <result column="smprf" property="smprf" jdbcType="VARCHAR" />
+    <result column="flgvrg" property="flgvrg" jdbcType="VARCHAR" />
+    <result column="grtop" property="grtop" jdbcType="VARCHAR" />
+    <result column="pgprf" property="pgprf" jdbcType="VARCHAR" />
+    <result column="stort" property="stort" jdbcType="VARCHAR" />
+    <result column="logsystem" property="logsystem" jdbcType="VARCHAR" />
+    <result column="kzerb" property="kzerb" jdbcType="VARCHAR" />
+    <result column="pargr" property="pargr" jdbcType="VARCHAR" />
+    <result column="func_area" property="funcArea" jdbcType="VARCHAR" />
+    <result column="vkorg" property="vkorg" jdbcType="VARCHAR" />
+    <result column="vtweg" property="vtweg" jdbcType="VARCHAR" />
+    <result column="spart" property="spart" jdbcType="VARCHAR" />
+    <result column="dppprof" property="dppprof" jdbcType="VARCHAR" />
+    <result column="vpkstu" property="vpkstu" jdbcType="VARCHAR" />
+    <result column="pspid_edit" property="pspidEdit" jdbcType="VARCHAR" />
+    <result column="vname" property="vname" jdbcType="VARCHAR" />
+    <result column="recid" property="recid" jdbcType="VARCHAR" />
+    <result column="etype" property="etype" jdbcType="VARCHAR" />
+    <result column="otype" property="otype" jdbcType="VARCHAR" />
+    <result column="jibcl" property="jibcl" jdbcType="VARCHAR" />
+    <result column="jibsa" property="jibsa" jdbcType="VARCHAR" />
+    <result column="eew_proj_ps_dummy" property="eewProjPsDummy" jdbcType="VARCHAR" />
+    <result column="schtyp" property="schtyp" jdbcType="VARCHAR" />
+    <result column="sprog" property="sprog" jdbcType="VARCHAR" />
+    <result column="eprog" property="eprog" jdbcType="VARCHAR" />
+    <result column="cpd_updat" property="cpdUpdat" jdbcType="NUMERIC" />
+    <result column="ferc_ind" property="fercInd" jdbcType="VARCHAR" />
+    <result column="proj_status" property="projStatus" jdbcType="INTEGER" />
+    <result column="cpcurr" property="cpcurr" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="queryProjList1" resultMap="BaseResultMap">
+    select replace(ltrim(replace(pspnr,'0',' ')),' ','0') as pspnr,* from proj
+    <where>
+      <if test="vbukr != null and vbukr != ''">
+        vbukr=#{vbukr}
+      </if>
+      <if test="pspnr != null and pspnr != ''">
+        and replace(ltrim(replace(pspnr,'0',' ')),' ','0')=#{pspnr}
+      </if>
+      <if test="post1 != null and post1 != ''">
+        and post1 like concat('%', #{post1}, '%')
+      </if>
+    </where>
+  </select>
+
+  <select id="queryProjList" resultMap="BaseResultMap">
+    select * from proj
+    <where>
+      <if test="vbukr != null and vbukr != ''">
+        vbukr=#{vbukr}
+      </if>
+      <if test="pspnr != null and pspnr != ''">
+        and pspnr like concat('%',#{pspnr},'%')
+      </if>
+      <if test="pspid != null and pspid != ''">
+        and pspid like concat('%',#{pspid},'%')
+      </if>
+      <if test="post1 != null and post1 != ''">
+        and post1 like concat('%', #{post1}, '%')
+      </if>
+    </where>
+  </select>
+</mapper>

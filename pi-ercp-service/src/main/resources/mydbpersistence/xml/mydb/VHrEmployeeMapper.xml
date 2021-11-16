@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.ca.mydbpersistence.mapper.VHrEmployeeMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.ca.mydbpersistence.entity.VHrEmployee">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="pernr" jdbcType="VARCHAR" property="pernr" />
+    <result column="ename" jdbcType="VARCHAR" property="ename" />
+    <result column="inits" jdbcType="VARCHAR" property="inits" />
+    <result column="gesc" jdbcType="VARCHAR" property="gesc" />
+    <result column="orgeh" jdbcType="VARCHAR" property="orgeh" />
+    <result column="plans" jdbcType="VARCHAR" property="plans" />
+    <result column="zhr_otext" jdbcType="VARCHAR" property="zhrOtext" />
+    <result column="zhr_ptext" jdbcType="VARCHAR" property="zhrPtext" />
+    <result column="unit_id" jdbcType="VARCHAR" property="unitId" />
+    <result column="unit_txt" jdbcType="VARCHAR" property="unitTxt" />
+    <result column="system_id" jdbcType="VARCHAR" property="systemId" />
+    <result column="system_txt" jdbcType="VARCHAR" property="systemTxt" />
+    <result column="center_id" jdbcType="VARCHAR" property="centerId" />
+    <result column="center_txt" jdbcType="VARCHAR" property="centerTxt" />
+    <result column="dept_id" jdbcType="VARCHAR" property="deptId" />
+    <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+    <result column="office_id" jdbcType="VARCHAR" property="officeId" />
+    <result column="office_name" jdbcType="VARCHAR" property="officeName" />
+    <result column="stell" jdbcType="VARCHAR" property="stell" />
+    <result column="zhr_stext" jdbcType="VARCHAR" property="zhrStext" />
+    <result column="usrid" jdbcType="VARCHAR" property="usrid" />
+    <result column="landx50" jdbcType="VARCHAR" property="landx50" />
+    <result column="ltext" jdbcType="VARCHAR" property="ltext" />
+    <result column="ptext" jdbcType="VARCHAR" property="ptext" />
+    <result column="zhr_time1" jdbcType="VARCHAR" property="zhrTime1" />
+    <result column="zhr_ptype" jdbcType="VARCHAR" property="zhrPtype" />
+<!--    <result column="zhr_time2" jdbcType="VARCHAR" property="zhrTime2" />-->
+<!--    <result column="zhr_time3" jdbcType="VARCHAR" property="zhrTime3" />-->
+    <result column="ftext" jdbcType="VARCHAR" property="ftext" />
+    <result column="zhr_email" jdbcType="VARCHAR" property="zhrEmail" />
+    <result column="zhr_cell" jdbcType="VARCHAR" property="zhrCell" />
+    <result column="zhr_tell" jdbcType="VARCHAR" property="zhrTell" />
+    <result column="zhr_loca" jdbcType="VARCHAR" property="zhrLoca" />
+    <result column="zhr_xqtc" jdbcType="VARCHAR" property="zhrXqtc" />
+    <result column="zhr_prov" jdbcType="VARCHAR" property="zhrProv" />
+    <result column="zhr_city" jdbcType="VARCHAR" property="zhrCity" />
+<!--    <result column="zhr_hypy" jdbcType="VARCHAR" property="zhrHypy" />-->
+    <result column="zhr_bank" jdbcType="VARCHAR" property="zhrBank" />
+    <result column="zhr_account" jdbcType="VARCHAR" property="zhrAccount" />
+    <result column="gbdat" jdbcType="VARCHAR" property="gbdat" />
+    <result column="gbort" jdbcType="VARCHAR" property="gbort" />
+    <result column="zhr_btype" jdbcType="VARCHAR" property="zhrBtype" />
+    <result column="zhr_zsfbs" jdbcType="VARCHAR" property="zhrZsfbs" />
+    <result column="zhr_cjgz" jdbcType="VARCHAR" property="zhrCjgz" />
+<!--    <result column="zhr_zzrq" jdbcType="VARCHAR" property="zhrZzrq" />-->
+    <result column="locat" jdbcType="VARCHAR" property="locat" />
+    <result column="zhr_rzrq" jdbcType="VARCHAR" property="zhrRzrq" />
+    <result column="zhr_lzrq" jdbcType="VARCHAR" property="zhrLzrq" />
+    <result column="zz_khhs" jdbcType="VARCHAR" property="zzKhhs" />
+    <result column="zz_khhd" jdbcType="VARCHAR" property="zzKhhd" />
+    <result column="zz_khh" jdbcType="VARCHAR" property="zzKhh" />
+    <result column="zz_yhh" jdbcType="VARCHAR" property="zzYhh" />
+    <result column="zz_lhh" jdbcType="VARCHAR" property="zzLhh" />
+    <result column="trfgr" jdbcType="VARCHAR" property="trfgr" />
+    <result column="werks" jdbcType="VARCHAR" property="werks" />
+    <result column="werks_t" jdbcType="VARCHAR" property="werksT" />
+    <result column="btrtl" jdbcType="VARCHAR" property="btrtl" />
+    <result column="btrtl_t" jdbcType="VARCHAR" property="btrtlT" />
+    <result column="qdzt" jdbcType="VARCHAR" property="qdzt" />
+    <result column="qdzt_t" jdbcType="VARCHAR" property="qdztT" />
+    <result column="persg" jdbcType="VARCHAR" property="persg" />
+    <result column="persk" jdbcType="VARCHAR" property="persk" />
+    <result column="levelpk" jdbcType="VARCHAR" property="levelpk" />
+    <result column="zhr_cost" jdbcType="VARCHAR" property="zhrCost" />
+    <result column="zhr_costtxt" jdbcType="VARCHAR" property="zhrCosttxt" />
+    <result column="zhr_yglx" jdbcType="VARCHAR" property="zhrYglx" />
+  </resultMap>
+  
+  <select id="findByPernr" resultMap="BaseResultMap">
+        select 
+            * 
+        from 
+            v_zhr_employee
+        where
+            ltrim((pernr), '0') = #{pernr}
+            limit 1
+    </select>
+     
+  <select id="findStaff" resultMap="BaseResultMap">
+      SELECT
+      v_zhr_employee.ename,
+      ltrim((pernr), '0') as pernr,
+    (case when v_zhr_employee.dept_id = '10028908' then ''
+      else  v_zhr_employee.zhr_cell end) as zhr_cell,
+      v_zhr_employee.zhr_ptext,
+      v_zhr_employee.unit_txt,
+      v_zhr_employee.center_txt,
+      v_zhr_employee.zhr_otext,
+      v_zhr_employee.zhr_email,
+      v_zhr_employee.zhr_stext
+    FROM
+      v_zhr_employee
+
+    <if test="keyword != null and keyword !=''">
+      where ltrim((v_zhr_employee.pernr), '0') like  CONCAT('%',#{keyword},'%' )   
+      or v_zhr_employee.ename like CONCAT('%',#{keyword},'%' )
+      or v_zhr_employee.zhr_email like lower(CONCAT('%',#{keyword},'%','@','%' ))
+      or v_zhr_employee.zhr_email like upper(CONCAT('%',#{keyword},'%','@','%' ))
+    </if>
+    </select>
+    
+    <select id="findPeopleList" resultType="cn.com.personnel.ercp.ca.mydbpersistence.entity.PeopleJson">
+       select  ltrim((pernr), '0') as pernr,ename,dept_name as deptName,zhr_ptext as zhrPtext,dept_id as deptId,
+       zhr_tell as zhrTell,zhr_cell as zhrCell,lower(zhr_email) as zhrEmail from v_zhr_employee where 1=1
+      <if test="keyword != null and keyword !=''">
+      and (ltrim((v_zhr_employee.pernr), '0') like  CONCAT('%',#{keyword},'%' )
+      or v_zhr_employee.ename like CONCAT('%',#{keyword},'%')
+      or v_zhr_employee.zhr_email like lower(CONCAT('%',#{keyword},'%','@','%' ))
+      or v_zhr_employee.zhr_email like upper(CONCAT('%',#{keyword},'%','@','%' )))
+
+      </if>
+      <if test="deptId != null and deptId !=''">
+        and (#{deptId} = dept_id or #{deptId} = center_id or #{deptId} = unit_id
+        or #{deptId} = office_id or #{deptId} = '01000000')
+      </if>
+    </select>
+  <!--移动端通讯录-->
+  <select id="findAllPeopleList" resultType="cn.com.personnel.ercp.ca.mydbpersistence.entity.PeopleJson">
+  select  ltrim((pernr), '0') as pernr,ename,dept_name as deptName,zhr_ptext as zhrPtext,zhr_stext as zhrStext,
+  zhr_tell as zhrTell,zhr_cell as zhrCell,lower(zhr_email) as zhrEmail from v_zhr_employee where 1=1
+  <if test="keyword != null and keyword !=''">
+    and (ltrim((v_zhr_employee.pernr), '0') like  CONCAT('%',#{keyword},'%' )
+    or v_zhr_employee.ename like CONCAT('%',#{keyword},'%')
+    or v_zhr_employee.zhr_email like lower(CONCAT('%',#{keyword},'%','@','%' ))
+    or v_zhr_employee.zhr_email like upper(CONCAT('%',#{keyword},'%','@','%' )))
+
+  </if>
+</select>
+  <!--移动端通讯录-->
+  <select id="peopleDetail" resultType="cn.com.personnel.ercp.ca.mydbpersistence.entity.PeopleJson">
+    select  ltrim((pernr), '0') as pernr,ename,dept_name as deptName,zhr_ptext as zhrPtext,zhr_stext as zhrStext,
+    zhr_tell as zhrTell,zhr_cell as zhrCell,lower(zhr_email) as zhrEmail from v_zhr_employee where 1=1
+    <if test="pernr!= null and pernr !=''">
+      and pernr =#{pernr}
+    </if>
+  </select>
+  <!--移动端根据员工编号查询所在单位-->
+  <select id="findPeopleUnit" resultMap="BaseResultMap">
+    select * from v_zhr_employee where pernr =#{pernr}
+  </select>
+
+
+  <!--移动端通讯录-->
+  <select id="findAllPeople" resultType="cn.com.personnel.ercp.ca.mydbpersistence.entity.PeopleJson">
+    select  ltrim((pernr), '0') as pernr,ename,dept_name as deptName,zhr_ptext as zhrPtext,zhr_stext as zhrStext,
+    zhr_tell as zhrTell,zhr_cell as zhrCell,lower(zhr_email) as zhrEmail from v_zhr_employee where  orgeh =#{unitId}
+  </select>
+  
+  
+   <!--查询所有-->
+  <select id="VHrEmployeeAll" resultType="cn.com.personnel.ercp.ca.mydbpersistence.entity.ZVHrEmployee">
+    select 
+    
+      Vzhr.pernr as pernr,
+      Vzhr.ename as ename ,
+      Vzhr.dept_name as deptName ,
+      Vzhr.zhr_ptext as zhrPtext,
+      Vzhr.zhr_tell as zhrTell,
+      Vzhr.zhr_cell as zhrCell,
+      Vzhr.zhr_email as  zhrEmail ,
+      Vzhr.zhr_stext as zhrStext 
+    
+    from v_zhr_employee  Vzhr
+  </select>
+ 
+  
+  <!--pernr查询数据-->
+  <select id="VHrEmployeeKey" resultType="cn.com.personnel.ercp.ca.mydbpersistence.entity.ZVHrEmployee">
+    select 
+      zhr.key as pernr,
+      Vzhr.ename as ename ,
+      Vzhr.dept_name as deptName ,
+      Vzhr.zhr_ptext as zhrPtext,
+      Vzhr.zhr_tell as zhrTell,
+      Vzhr.zhr_cell as zhrCell,
+      Vzhr.zhr_email as  zhrEmail ,
+      Vzhr.zhr_stext as zhrStext ,
+       zhr.flag  
+     from zhr_sync_logs zhr
+      LEFT JOIN v_zhr_employee Vzhr ON Vzhr.pernr = zhr.key
+    where zhr.create_time &gt;  #{createTime}
+    	ORDER BY zhr.create_time 
+  </select>
+  <!--获取部门总人数-->
+  <select id="getTotalNumberByDepartmentId" resultType="java.lang.Integer">
+    select count(*) from v_zhr_employee z  where z.orgeh in
+    <foreach collection="textNoList" index="index" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+     <![CDATA[and z.PERSG <> 'G' ]]>
+    and (z.zhr_status = '3' and z.persg  not in ('D','E','Z')   <![CDATA[and  z.orgeh <> '00000000' ]]>)
+  </select>
+  <!--获取公司-->
+  <select id="selectWerks" resultType="cn.com.personnel.ercp.pi.persistence.entity.reportwork.FssReportWorkCompany">
+    SELECT distinct(werks_t)as companyName,werks as companyCode FROM "v_zhr_employee" where werks not in
+    <foreach collection="werksList" index="index" item="werks" open="(" separator="," close=")">
+      #{werks}
+    </foreach>
+  </select>
+</mapper>
