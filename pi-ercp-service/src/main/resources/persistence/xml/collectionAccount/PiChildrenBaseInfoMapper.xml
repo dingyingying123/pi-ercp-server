@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.fss.persistence.mapper.collectionAccount.PiChildrenBaseInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.fss.persistence.entity.collectionAccount.PiChildrenBaseInfo" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="child_id" property="childId" jdbcType="VARCHAR" />
+    <result column="child_name" property="childName" jdbcType="VARCHAR" />
+    <result column="child_id_no" property="childIdNo" jdbcType="VARCHAR" />
+    <result column="child_tel_no" property="childTelNo" jdbcType="VARCHAR" />
+    <result column="child_nationality" property="childNationality" jdbcType="VARCHAR" />
+    <result column="child_male" property="childMale" jdbcType="VARCHAR" />
+    <result column="child_account_address" property="childAccountAddress" jdbcType="VARCHAR" />
+    <result column="child_current_address" property="childCurrentAddress" jdbcType="VARCHAR" />
+    <result column="child_health_status" property="childHealthStatus" jdbcType="VARCHAR" />
+    <result column="child_escalation_type" property="childEscalationType" jdbcType="VARCHAR" />
+    <result column="child_disability_type" property="childDisabilityType" jdbcType="VARCHAR" />
+    <result column="child_disability_level" property="childDisabilityLevel" jdbcType="VARCHAR" />
+    <result column="child_disease_type" property="childDiseaseType" jdbcType="VARCHAR" />
+    <result column="child_school_attendance" property="childSchoolAttendance" jdbcType="VARCHAR" />
+    <result column="child_other_cases" property="childOtherCases" jdbcType="VARCHAR" />
+    <result column="child_poverty_alleviation_implementation" property="childPovertyAlleviationImplementation" jdbcType="VARCHAR" />
+    <result column="child_violation_guardian" property="childViolationGuardian" jdbcType="VARCHAR" />
+    <result column="father_name" property="fatherName" jdbcType="VARCHAR" />
+    <result column="father_id_no" property="fatherIdNo" jdbcType="VARCHAR" />
+    <result column="father_tel_no" property="fatherTelNo" jdbcType="VARCHAR" />
+    <result column="father_account_address" property="fatherAccountAddress" jdbcType="VARCHAR" />
+    <result column="father_current_address" property="fatherCurrentAddress" jdbcType="VARCHAR" />
+    <result column="father_health_status" property="fatherHealthStatus" jdbcType="VARCHAR" />
+    <result column="father_disability_type" property="fatherDisabilityType" jdbcType="VARCHAR" />
+    <result column="father_disability_level" property="fatherDisabilityLevel" jdbcType="VARCHAR" />
+    <result column="father_disease_type" property="fatherDiseaseType" jdbcType="VARCHAR" />
+    <result column="father_family_income" property="fatherFamilyIncome" jdbcType="VARCHAR" />
+    <result column="father_other_cases" property="fatherOtherCases" jdbcType="VARCHAR" />
+    <result column="mother_name" property="motherName" jdbcType="VARCHAR" />
+    <result column="mother_id_no" property="motherIdNo" jdbcType="VARCHAR" />
+    <result column="mother_tel_no" property="motherTelNo" jdbcType="VARCHAR" />
+    <result column="mother_account_address" property="motherAccountAddress" jdbcType="VARCHAR" />
+    <result column="mother_current_address" property="motherCurrentAddress" jdbcType="VARCHAR" />
+    <result column="mother_health_status" property="motherHealthStatus" jdbcType="VARCHAR" />
+    <result column="mother_disability_type" property="motherDisabilityType" jdbcType="VARCHAR" />
+    <result column="mother_disability_level" property="motherDisabilityLevel" jdbcType="VARCHAR" />
+    <result column="mother_disease_type" property="motherDiseaseType" jdbcType="VARCHAR" />
+    <result column="mother_family_income" property="motherFamilyIncome" jdbcType="VARCHAR" />
+    <result column="mother_other_cases" property="motherOtherCases" jdbcType="VARCHAR" />
+    <result column="other_guardian_name" property="otherGuardianName" jdbcType="VARCHAR" />
+    <result column="other_guardian_id_no" property="otherGuardianIdNo" jdbcType="VARCHAR" />
+    <result column="other_guardian_tel_no" property="otherGuardianTelNo" jdbcType="VARCHAR" />
+    <result column="other_guardian_relationship_with_children" property="otherGuardianRelationshipWithChildren" jdbcType="VARCHAR" />
+    <result column="other_guardian_health_status" property="otherGuardianHealthStatus" jdbcType="VARCHAR" />
+    <result column="other_guardian_disability_type" property="otherGuardianDisabilityType" jdbcType="VARCHAR" />
+    <result column="other_guardian_disability_level" property="otherGuardianDisabilityLevel" jdbcType="VARCHAR" />
+    <result column="other_guardian_disease_type" property="otherGuardianDiseaseType" jdbcType="VARCHAR" />
+    <result column="other_guardian_reasons" property="otherGuardianReasons" jdbcType="VARCHAR" />
+    <result column="organization_name" property="organizationName" jdbcType="VARCHAR" />
+    <result column="organization_principal" property="organizationPrincipal" jdbcType="VARCHAR" />
+    <result column="organization_tel_no" property="organizationTelNo" jdbcType="VARCHAR" />
+    <result column="organization_nature" property="organizationNature" jdbcType="VARCHAR" />
+    <result column="organization_residential_address" property="organizationResidentialAddress" jdbcType="VARCHAR" />
+    <result column="help_suggestions" property="helpSuggestions" jdbcType="VARCHAR" />
+    <result column="security_fee_collection_method" property="securityFeeCollectionMethod" jdbcType="VARCHAR" />
+    <result column="security_fee_collector" property="securityFeeCollector" jdbcType="VARCHAR" />
+    <result column="security_fee_recipient_relationship" property="securityFeeRecipientRelationship" jdbcType="VARCHAR" />
+    <result column="security_fee_guarantee_standard" property="securityFeeGuaranteeStandard" jdbcType="VARCHAR" />
+    <result column="isdelete" property="isdelete" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+</mapper>

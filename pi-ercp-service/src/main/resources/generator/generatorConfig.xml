@@ -30,7 +30,7 @@
 
 		<!--生成代码地址-->
 		<javaModelGenerator targetPackage="cn.com.personnel.ercp.fss.persistence.entity.collectionAccount"
-							targetProject="D:\workspace\git\pi-ercp-serve\pi-ercp-server\pi-ercp-common/src/main/java"/>
+							targetProject="D:\git\pi-ercp-server\pi-ercp-common/src/main/java"/>
 
 		<sqlMapGenerator targetPackage="persistence.xml.collectionAccount"
 						 targetProject="src/main/resources"/>
