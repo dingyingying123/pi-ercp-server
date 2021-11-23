@@ -3,16 +3,16 @@ package cn.com.personnel.ercp.common.persistence.entity;
 import java.io.Serializable;
 
 public class ReturnEntity implements Serializable {
-    private int code;
+    private String status;
     private String message;
     private Object data;
 
-    public int getCode() {
-        return this.code;
+    public String getStatus() {
+        return this.status;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getMessage() {
@@ -31,18 +31,18 @@ public class ReturnEntity implements Serializable {
         this.data = data;
     }
 
-    public ReturnEntity(int code, String message, Object data) {
-        this.code = code;
+    public ReturnEntity(String status, String message, Object data) {
+        this.status = status;
         this.message = message;
         this.data = data;
     }
 
     public String toString() {
-        return "ReturnEntity{code=" + this.code + ", message='" + this.message + '\'' + ", data=" + this.data + '}';
+        return "ReturnEntity{status=" + this.status + ", message='" + this.message + '\'' + ", data=" + this.data + '}';
     }
 
-    public static ReturnEntity error(int code, String message, Object data) {
-        return new ReturnEntity(code, message, data);
+    public static ReturnEntity error(String status, String message, Object data) {
+        return new ReturnEntity(status, message, data);
     }
 
     public static ReturnEntity error() {
@@ -50,7 +50,7 @@ public class ReturnEntity implements Serializable {
     }
 
     public static ReturnEntity errorMsg(String message) {
-        return new ReturnEntity(0, message, (Object)null);
+        return new ReturnEntity("4000", message, (Object)null);
     }
 
     public static ReturnEntity ok(Object data) {
@@ -62,7 +62,7 @@ public class ReturnEntity implements Serializable {
     }
 
     public ReturnEntity(Object data) {
-        this.code = 1;
+        this.status = "2000";
         this.message = "成功";
         this.data = data;
     }

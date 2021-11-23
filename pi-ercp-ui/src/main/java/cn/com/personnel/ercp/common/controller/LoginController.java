@@ -202,7 +202,7 @@ public class LoginController extends PageController {
                 requestMap.put("inputStr", loginInfo.getCode());
                 boolean b = checkVerify(requestMap, session);
                 if (!b) {
-                    returnEntity.setCode(CommonConstants.ERROR_CODE);
+                    returnEntity.setStatus(CommonConstants.ERROR_CODE);
                     returnEntity.setMessage("验证码有误，请重新输入！");
                     userMap.put("faild", true);
                     userMap.put("message", "验证码有误，请重新输入！");
@@ -240,7 +240,7 @@ public class LoginController extends PageController {
             String othername = java.util.Base64.getEncoder().encodeToString(loginInfo.getPwd().getBytes());
             Cookie cookie = new Cookie("othername", othername);
         } catch (AuthenticationException ex) {
-            returnEntity.setCode(CommonConstants.ERROR_CODE);
+            returnEntity.setStatus(CommonConstants.ERROR_CODE);
             returnEntity.setMessage(CommonConstants.ERROR_MESSAGE);
             session.setAttribute("SHOWVERIFYCODE", true);
             userMap.put("success", false);

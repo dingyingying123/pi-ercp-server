@@ -177,7 +177,7 @@ public class SecModuleController extends PageController{
 
 		if(result <= 0 ){
 			returnEntity.setMessage(CommonConstants.ERROR_MESSAGE);
-			returnEntity.setCode(CommonConstants.ERROR_CODE);
+			returnEntity.setStatus(CommonConstants.ERROR_CODE);
 		}
 
 		Map<String,Object> data =  new HashMap<>();
@@ -248,7 +248,7 @@ public class SecModuleController extends PageController{
 		int result = secModuleService.deleteModule(module);
 		if(result<=0){
 			returnEntity.setMessage(CommonConstants.ERROR_MESSAGE);
-			returnEntity.setCode(CommonConstants.ERROR_CODE);
+			returnEntity.setStatus(CommonConstants.ERROR_CODE);
 		}
 		return returnEntity;
 	}

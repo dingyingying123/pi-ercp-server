@@ -130,7 +130,7 @@ public class FileController extends PageController {
             returnEntity.setData(map);
         } catch (Exception e) {
             // TODO Auto-generated catch block
-            returnEntity.setCode(0);
+            returnEntity.setStatus(CommonConstants.ERROR_CODE);
             returnEntity.setMessage(e.getMessage());
             e.printStackTrace();
         }

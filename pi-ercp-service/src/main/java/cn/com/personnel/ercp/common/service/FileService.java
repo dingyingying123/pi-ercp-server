@@ -312,7 +312,7 @@ public class FileService extends BaseService implements IFileService {
         ReturnEntity returnEntity = new ReturnEntity(CommonConstants.SUCCESS_CODE, CommonConstants.SUCCESS_MESSAGE, null);
         FileInfo fileInfo = fileInfoMapper.selectByPrimaryKey(fileKey);
         if(fileInfo == null){
-            returnEntity.setCode(CommonConstants.ERROR_CODE);
+            returnEntity.setStatus(CommonConstants.ERROR_CODE);
             returnEntity.setMessage("文件不存在！");
         }
         String savePath = fileKitConfig.getFilePath();

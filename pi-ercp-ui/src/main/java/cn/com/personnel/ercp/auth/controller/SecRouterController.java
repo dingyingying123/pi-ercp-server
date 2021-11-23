@@ -34,7 +34,7 @@ public class SecRouterController extends PageController {
         ReturnEntity returnEntity = new ReturnEntity(CommonConstants.SUCCESS_CODE,CommonConstants.SUCCESS_MESSAGE,null);
         List list = secRouterService.getRouter(ApplicationConfig.APP_CODE,secRouter.getValid(),buildPagenation());
         if(list==null){
-            returnEntity.setCode(CommonConstants.ERROR_CODE);
+            returnEntity.setStatus(CommonConstants.ERROR_CODE);
             returnEntity.setMessage(CommonConstants.ERROR_MESSAGE);
             return returnEntity;
         }
@@ -48,7 +48,7 @@ public class SecRouterController extends PageController {
         ReturnEntity returnEntity = new ReturnEntity(CommonConstants.SUCCESS_CODE,CommonConstants.SUCCESS_MESSAGE,null);
         int i = secRouterService.deleteRouter(ids);
         if(i<=0){
-            returnEntity.setCode(CommonConstants.ERROR_CODE);
+            returnEntity.setStatus(CommonConstants.ERROR_CODE);
             returnEntity.setMessage(CommonConstants.ERROR_MESSAGE);
             return returnEntity;
         }
@@ -64,7 +64,7 @@ public class SecRouterController extends PageController {
         secRouter.setUpdateTime(new Date());
         int i =  secRouterService.updateRouter(secRouter);
         if(i<=0){
-            returnEntity.setCode(CommonConstants.ERROR_CODE);
+            returnEntity.setStatus(CommonConstants.ERROR_CODE);
             returnEntity.setMessage(CommonConstants.ERROR_MESSAGE);
             return returnEntity;
         }
@@ -89,7 +89,7 @@ public class SecRouterController extends PageController {
             i = secRouterService.updateRouter(secRouter);
         }
         if(i<=0){
-            returnEntity.setCode(CommonConstants.ERROR_CODE);
+            returnEntity.setStatus(CommonConstants.ERROR_CODE);
             returnEntity.setMessage(CommonConstants.ERROR_MESSAGE);
             return returnEntity;
         }
@@ -102,7 +102,7 @@ public class SecRouterController extends PageController {
         ReturnEntity returnEntity = new ReturnEntity(CommonConstants.SUCCESS_CODE,CommonConstants.SUCCESS_MESSAGE,null);
         List list = secRouterService.selectCondition(secRouter,buildDataTablePagenation());
         if(list==null&&list.size()>0){
-            returnEntity.setCode(CommonConstants.ERROR_CODE);
+            returnEntity.setStatus(CommonConstants.ERROR_CODE);
             returnEntity.setMessage(CommonConstants.ERROR_MESSAGE);
             return returnEntity;
         }
