@@ -20,24 +20,15 @@
 			connectionURL="${oadb.url}" userId="${oadb.username}" password="${oadb.password}">
 		</jdbcConnection>
 
-		<!--<javaModelGenerator targetPackage="cn.com.personnel.ercp.fss.persistence.entity.base"
-			targetProject="E:\gwdata\pi-ercp-server\pi-ercp-common/src/main/java" />
-		<sqlMapGenerator targetPackage="persistence.xml.base"
+		<!--生成代码地址-->
+		<javaModelGenerator targetPackage="cn.com.personnel.ercp.pi.persistence.entity.child"
+			targetProject="D:\git\pi-ercp-server\pi-ercp-common/src/main/java" />
+		<sqlMapGenerator targetPackage="persistence.xml.child"
 			targetProject="src/main/resources" />
 
-		<javaClientGenerator targetPackage="cn.com.personnel.ercp.fss.persistence.mapper.base"
-			targetProject="src/main/java" type="XMLMAPPER" />-->
+		<javaClientGenerator targetPackage="cn.com.personnel.ercp.pi.persistence.mapper.child"
+			targetProject="src/main/java" type="XMLMAPPER" />
 
-		<!--生成代码地址-->
-		<javaModelGenerator targetPackage="cn.com.personnel.ercp.fss.persistence.entity.collectionAccount"
-							targetProject="D:\git\pi-ercp-server\pi-ercp-common/src/main/java"/>
-
-		<sqlMapGenerator targetPackage="persistence.xml.collectionAccount"
-						 targetProject="src/main/resources"/>
-
-		<javaClientGenerator targetPackage="cn.com.personnel.ercp.fss.persistence.mapper.collectionAccount"
-
-							 targetProject="src/main/java" type="XMLMAPPER"/>
 
 		<table tableName="pi_children_base_info" domainObjectName="PiChildrenBaseInfo" >
 			<generatedKey column="child_id"  sqlStatement="JDBC"/>

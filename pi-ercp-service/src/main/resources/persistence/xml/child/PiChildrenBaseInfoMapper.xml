@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.child.PiChildrenBaseInfoMapper">
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenBaseInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="child_id" jdbcType="VARCHAR" property="childId" />
+    <result column="child_name" jdbcType="VARCHAR" property="childName" />
+    <result column="child_id_no" jdbcType="VARCHAR" property="childIdNo" />
+    <result column="child_tel_no" jdbcType="VARCHAR" property="childTelNo" />
+    <result column="child_nationality" jdbcType="VARCHAR" property="childNationality" />
+    <result column="child_male" jdbcType="VARCHAR" property="childMale" />
+    <result column="child_account_address" jdbcType="VARCHAR" property="childAccountAddress" />
+    <result column="child_current_address" jdbcType="VARCHAR" property="childCurrentAddress" />
+    <result column="child_health_status" jdbcType="VARCHAR" property="childHealthStatus" />
+    <result column="child_escalation_type" jdbcType="VARCHAR" property="childEscalationType" />
+    <result column="child_disability_type" jdbcType="VARCHAR" property="childDisabilityType" />
+    <result column="child_disability_level" jdbcType="VARCHAR" property="childDisabilityLevel" />
+    <result column="child_disease_type" jdbcType="VARCHAR" property="childDiseaseType" />
+    <result column="child_school_attendance" jdbcType="VARCHAR" property="childSchoolAttendance" />
+    <result column="child_other_cases" jdbcType="VARCHAR" property="childOtherCases" />
+    <result column="child_poverty_alleviation_implementation" jdbcType="VARCHAR" property="childPovertyAlleviationImplementation" />
+    <result column="child_violation_guardian" jdbcType="VARCHAR" property="childViolationGuardian" />
+    <result column="father_name" jdbcType="VARCHAR" property="fatherName" />
+    <result column="father_id_no" jdbcType="VARCHAR" property="fatherIdNo" />
+    <result column="father_tel_no" jdbcType="VARCHAR" property="fatherTelNo" />
+    <result column="father_account_address" jdbcType="VARCHAR" property="fatherAccountAddress" />
+    <result column="father_current_address" jdbcType="VARCHAR" property="fatherCurrentAddress" />
+    <result column="father_health_status" jdbcType="VARCHAR" property="fatherHealthStatus" />
+    <result column="father_disability_type" jdbcType="VARCHAR" property="fatherDisabilityType" />
+    <result column="father_disability_level" jdbcType="VARCHAR" property="fatherDisabilityLevel" />
+    <result column="father_disease_type" jdbcType="VARCHAR" property="fatherDiseaseType" />
+    <result column="father_family_income" jdbcType="VARCHAR" property="fatherFamilyIncome" />
+    <result column="father_other_cases" jdbcType="VARCHAR" property="fatherOtherCases" />
+    <result column="mother_name" jdbcType="VARCHAR" property="motherName" />
+    <result column="mother_id_no" jdbcType="VARCHAR" property="motherIdNo" />
+    <result column="mother_tel_no" jdbcType="VARCHAR" property="motherTelNo" />
+    <result column="mother_account_address" jdbcType="VARCHAR" property="motherAccountAddress" />
+    <result column="mother_current_address" jdbcType="VARCHAR" property="motherCurrentAddress" />
+    <result column="mother_health_status" jdbcType="VARCHAR" property="motherHealthStatus" />
+    <result column="mother_disability_type" jdbcType="VARCHAR" property="motherDisabilityType" />
+    <result column="mother_disability_level" jdbcType="VARCHAR" property="motherDisabilityLevel" />
+    <result column="mother_disease_type" jdbcType="VARCHAR" property="motherDiseaseType" />
+    <result column="mother_family_income" jdbcType="VARCHAR" property="motherFamilyIncome" />
+    <result column="mother_other_cases" jdbcType="VARCHAR" property="motherOtherCases" />
+    <result column="other_guardian_name" jdbcType="VARCHAR" property="otherGuardianName" />
+    <result column="other_guardian_id_no" jdbcType="VARCHAR" property="otherGuardianIdNo" />
+    <result column="other_guardian_tel_no" jdbcType="VARCHAR" property="otherGuardianTelNo" />
+    <result column="other_guardian_relationship_with_children" jdbcType="VARCHAR" property="otherGuardianRelationshipWithChildren" />
+    <result column="other_guardian_health_status" jdbcType="VARCHAR" property="otherGuardianHealthStatus" />
+    <result column="other_guardian_disability_type" jdbcType="VARCHAR" property="otherGuardianDisabilityType" />
+    <result column="other_guardian_disability_level" jdbcType="VARCHAR" property="otherGuardianDisabilityLevel" />
+    <result column="other_guardian_disease_type" jdbcType="VARCHAR" property="otherGuardianDiseaseType" />
+    <result column="other_guardian_reasons" jdbcType="VARCHAR" property="otherGuardianReasons" />
+    <result column="organization_name" jdbcType="VARCHAR" property="organizationName" />
+    <result column="organization_principal" jdbcType="VARCHAR" property="organizationPrincipal" />
+    <result column="organization_tel_no" jdbcType="VARCHAR" property="organizationTelNo" />
+    <result column="organization_nature" jdbcType="VARCHAR" property="organizationNature" />
+    <result column="organization_residential_address" jdbcType="VARCHAR" property="organizationResidentialAddress" />
+    <result column="help_suggestions" jdbcType="VARCHAR" property="helpSuggestions" />
+    <result column="security_fee_collection_method" jdbcType="VARCHAR" property="securityFeeCollectionMethod" />
+    <result column="security_fee_collector" jdbcType="VARCHAR" property="securityFeeCollector" />
+    <result column="security_fee_recipient_relationship" jdbcType="VARCHAR" property="securityFeeRecipientRelationship" />
+    <result column="security_fee_guarantee_standard" jdbcType="VARCHAR" property="securityFeeGuaranteeStandard" />
+    <result column="isdelete" jdbcType="VARCHAR" property="isdelete" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updator" jdbcType="VARCHAR" property="updator" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <select id="queryPiChildrenBaseInfoList" resultMap="BaseResultMap">
+    select * from pi_children_base_info i
+    <where>
+      <if test="info.childAccountAddress != null and info.childAccountAddress != ''">
+        i.child_account_address like concat('%', #{info.childAccountAddress}, '%')
+      </if>
+      <if test="info.childCurrentAddress != null and info.childCurrentAddress != ''">
+         and i.child_current_address like concat('%', #{info.childCurrentAddress}, '%')
+      </if>
+      <if test="info.childName != null and info.childName != ''">
+         and i.child_name like concat('%', #{info.childName}, '%')
+      </if>
+      <if test="info.childIdNo != null and info.childIdNo != ''">
+         and i.child_id_no like concat('%', #{info.childIdNo}, '%')
+      </if>
+      <if test="info.childTelNo != null and info.childTelNo != ''">
+         and i.child_tel_no like concat('%', #{info.childTelNo}, '%')
+      </if>
+      <if test="info.childNationality != null and info.childNationality != ''">
+         and i.child_nationality like concat('%', #{info.childNationality}, '%')
+      </if>
+      <if test="info.childMale != null and info.childMale != ''">
+         and i.child_male like concat('%', #{info.childMale}, '%')
+      </if>
+      <if test="info.childHealthStatus != null and info.childHealthStatus != ''">
+         and i.child_health_status like concat('%', #{info.childHealthStatus}, '%')
+      </if>
+      <if test="info.childHealthStatus != null and info.childHealthStatus != ''">
+         and i.child_health_status like concat('%', #{info.childHealthStatus}, '%')
+      </if>
+      <if test="info.childEscalationType != null and info.childEscalationType != ''">
+         and i.child_escalation_type like concat('%', #{info.childEscalationType}, '%')
+      </if>
+      <if test="info.childDisabilityType != null and info.childDisabilityType != ''">
+         and i.child_disability_type like concat('%', #{info.childDisabilityType}, '%')
+      </if>
+      <if test="info.childViolationGuardian != null and info.childViolationGuardian != ''">
+         and i.child_violation_guardian like concat('%', #{info.childViolationGuardian}, '%')
+      </if>
+    </where>
+    order by i.create_time desc
+  </select>
+</mapper>
