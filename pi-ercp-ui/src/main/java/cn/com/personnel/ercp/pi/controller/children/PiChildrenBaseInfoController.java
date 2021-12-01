@@ -40,4 +40,16 @@ public class PiChildrenBaseInfoController extends PageController {
         SecUser secUser = (SecUser) getLoginUser();
         return piChildrenBaseInfoService.savePiChildrenBaseInfo(piChildrenBaseInfo, secUser);
     }
+
+    /**
+     * 删除儿童基本信息
+     * @param piChildrenBaseInfo
+     * @return
+     */
+    @RequestMapping("/deletePiChildrenBaseInfo")
+    @ResponseBody
+    public ReturnEntity deletePiChildrenBaseInfo(@RequestBody PiChildrenBaseInfo piChildrenBaseInfo){
+        SecUser secUser = (SecUser) getLoginUser();
+        return piChildrenBaseInfoService.deletePiChildrenBaseInfo(piChildrenBaseInfo, secUser);
+    }
 }

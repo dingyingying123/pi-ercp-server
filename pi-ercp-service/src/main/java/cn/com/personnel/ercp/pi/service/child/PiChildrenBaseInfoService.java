@@ -22,8 +22,11 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
 
     @Override
     public ReturnEntity queryPiChildrenBaseInfoList(PiChildrenBaseInfo piChildrenBaseInfo, PagenationQueryParameter buildPagenation) {
+        //分页
         setPageHelper(buildPagenation);
+        //根据条件查询
         List<PiChildrenBaseInfo> childrenBaseInfoList = piChildrenBaseInfoMapper.queryPiChildrenBaseInfoList(piChildrenBaseInfo);
+        //返回数据
         return ReturnEntity.ok(new PageInfo<PiChildrenBaseInfo>(childrenBaseInfoList));
     }
 
@@ -41,5 +44,11 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
             piChildrenBaseInfoMapper.insert(piChildrenBaseInfo);
         }
         return ReturnEntity.ok(piChildrenBaseInfo);
+    }
+
+    @Override
+    public ReturnEntity deletePiChildrenBaseInfo(PiChildrenBaseInfo piChildrenBaseInfo, SecUser secUser) {
+
+        return null;
     }
 }

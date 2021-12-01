@@ -52,10 +52,10 @@ public class GlobalExceptionHandler implements ErrorController {
         logger.error(req.getRequestURI() + "出现错误", e);
         if(e instanceof BusinessException){
             BusinessException exception = (BusinessException) e;
-            return ReturnEntity.error(0,exception.getMessage(),null);
+            return ReturnEntity.error("4000",exception.getMessage(),null);
         }else{
             logger.error("系统异常，{}",e);
-            return ReturnEntity.error(0, "程序错误",null);
+            return ReturnEntity.error("4000", "程序错误",null);
         }
     }
 

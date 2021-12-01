@@ -3,7 +3,6 @@ package cn.com.personnel.ercp.common.controller;
 import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
 import cn.com.personnel.ercp.auth.persistence.mapper.SecUserMapper;
 import cn.com.personnel.ercp.auth.service.ISecUserService;
-import cn.com.personnel.ercp.ca.mydbpersistence.entity.SecUserCA;
 import cn.com.personnel.ercp.common.kit.CommonConfig;
 import cn.com.personnel.ercp.common.service.ILoginService;
 import cn.com.personnel.springboot.framework.core.controller.PageController;

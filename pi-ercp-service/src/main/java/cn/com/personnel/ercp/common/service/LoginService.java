@@ -2,7 +2,6 @@ package cn.com.personnel.ercp.common.service;
 
 import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
 import cn.com.personnel.ercp.auth.persistence.mapper.SecUserMapper;
-import cn.com.personnel.ercp.ca.mydbpersistence.entity.SecUserCA;
 import cn.com.personnel.ercp.framework.config.ApplicationConfig;
 import cn.com.personnel.ercp.framework.exception.AuthenticationException;
 import org.apache.commons.lang3.StringUtils;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.Locale;
-import java.util.Map;
 
 @Component
 public class LoginService extends BaseLoginService implements ILoginService {
