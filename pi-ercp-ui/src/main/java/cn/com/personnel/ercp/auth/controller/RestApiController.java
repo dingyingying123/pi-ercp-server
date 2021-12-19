@@ -72,12 +72,12 @@ public class RestApiController extends PageController{
 		secUser.setTelNo(restUser.getZhr_cell());
 		secUser.setEmail(restUser.getZhr_email());
 		
-		if(restUser.getZhr_status()!=null&&restUser.getZhr_status().equals("3")) {
-			secUser.setActiveType("已激活");
-		}else {
-			secUser.setActiveType("未激活");
-		}
-		secUser.setDepartmentId(restUser.getOrgeh());
+//		if(restUser.getZhr_status()!=null&&restUser.getZhr_status().equals("3")) {
+//			secUser.setActiveType("已激活");
+//		}else {
+//			secUser.setActiveType("未激活");
+//		}
+//		secUser.setDepartmentId(restUser.getOrgeh());
 	}
 
 }

@@ -40,7 +40,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
             piChildrenBaseInfo.setChildId(UUIDKit.getUUID());
             piChildrenBaseInfo.setCreateTime(new Date());
             piChildrenBaseInfo.setCreator(secUser.getUserId());
-            piChildrenBaseInfo.setStatus("起草");
+            piChildrenBaseInfo.setStatus("进行中");
             piChildrenBaseInfoMapper.insert(piChildrenBaseInfo);
         }
         return ReturnEntity.ok(piChildrenBaseInfo);
@@ -49,6 +49,42 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
     @Override
     public ReturnEntity deletePiChildrenBaseInfo(PiChildrenBaseInfo piChildrenBaseInfo, SecUser secUser) {
 
+        return null;
+    }
+
+    @Override
+    public ReturnEntity submitPiChildrenBaseInfo(PiChildrenBaseInfo piChildrenBaseInfo, SecUser secUser) {
+        if(piChildrenBaseInfo != null && StringUtils.isNotEmpty(piChildrenBaseInfo.getChildId())){
+            return ReturnEntity.errorMsg("数据不存在！");
+        }
+        PiChildrenBaseInfo info = piChildrenBaseInfoMapper.selectByPrimaryKey(piChildrenBaseInfo.getChildId());
+        if(info == null){
+            return ReturnEntity.errorMsg("数据不存在！");
+        }
+        if(StringUtils.isEmpty(info.getArea())){
+            return ReturnEntity.errorMsg("区域为必填项！");
+        }
+        if(StringUtils.isEmpty(info.getChildName())){
+            return ReturnEntity.errorMsg("儿童姓名为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(info.getChildIdNo())){
+            return ReturnEntity.errorMsg("儿童身份证号为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(info.getChildTelNo())){
+            return ReturnEntity.errorMsg("儿童联系电话为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(info.getChildNationality())){
+            return ReturnEntity.errorMsg("儿童民族为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(info.getChildMale())){
+            return ReturnEntity.errorMsg("儿童性别为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(info.getChildAccountAddress())){
+            return ReturnEntity.errorMsg("儿童户口地址为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(info.getChildCurrentAddress())){
+            return ReturnEntity.errorMsg("儿童现住址为必填项，不能为空！");
+        }
         return null;
     }
 }

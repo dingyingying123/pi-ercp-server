@@ -21,6 +21,4 @@ public interface ILoginService extends IService {
     public void verifyPwd(String pwd) throws AuthenticationException;
 
     SecUser autoLogin(SecUser secUser) throws AuthenticationException;
-
-    SecUser transferToSecUser(SecUser secUser);
 }

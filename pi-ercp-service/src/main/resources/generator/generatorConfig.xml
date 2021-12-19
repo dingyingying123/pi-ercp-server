@@ -6,8 +6,8 @@
 <generatorConfiguration>
 	<properties resource="generator.properties" />
 
-	<context id="jim" targetRuntime="MyBatis3Simple"
-		defaultModelType="flat">
+	<context id="jim" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+
 		<property name="beginningDelimiter" value="`" />
 		<property name="endingDelimiter" value="`" />
 
@@ -15,6 +15,15 @@
 			<property name="mappers"
 				value="cn.com.personnel.springboot.framework.core.persistence.BaseMapper" />
 		</plugin>
+
+		<!-- optional，旨在创建class时，对注释进行控制 -->
+		<commentGenerator>
+			<property name="suppressDate" value="true" />
+		</commentGenerator>
+
+<!--		<commentGenerator type="cn.com.personnel.ercp.common.autoconfig.MyCommentGenerator">-->
+<!--			<property name="suppressAllComments" value="true"/>-->
+<!--		</commentGenerator>-->
 
 		<jdbcConnection driverClass="${oadb.driverClass}"
 			connectionURL="${oadb.url}" userId="${oadb.username}" password="${oadb.password}">
@@ -33,6 +42,9 @@
 		<table tableName="pi_children_base_info" domainObjectName="PiChildrenBaseInfo" >
 			<generatedKey column="child_id"  sqlStatement="JDBC"/>
 		</table>
+<!--		<table tableName="sec_user" domainObjectName="SecUser" >-->
+<!--			<generatedKey column="user_id"  sqlStatement="JDBC"/>-->
+<!--		</table>-->
 
    </context>
 </generatorConfiguration>

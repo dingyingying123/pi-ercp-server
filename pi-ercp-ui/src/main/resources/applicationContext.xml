@@ -8,26 +8,35 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
 
     <!-- 建立数据源 -->
-    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
-        <!-- 数据库驱动，我这里使用的是Mysql数据库 -->
-        <property name="driverClassName">
-            <value>com.mysql.jdbc.Driver</value>
-        </property>
-        <!-- 数据库地址，这里也要注意一下编码，不然乱码可是很郁闷的哦！ -->
-        <property name="url">
-            <value>
-                jdbc:mysql://192.168.0.2:3306/pi-test?useUnicode=true&amp;characterEncoding=utf-8
-            </value>
-        </property>
-        <!-- 数据库的用户名 -->
-        <property name="username">
-            <value>root</value>
-        </property>
-        <!-- 数据库的密码 -->
-        <property name="password">
-            <value>123</value>
-        </property>
-    </bean>
+<!--    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">-->
+<!--        &lt;!&ndash; 数据库驱动，我这里使用的是Mysql数据库 &ndash;&gt;-->
+<!--        <property name="driverClassName">-->
+<!--            <value>com.mysql.jdbc.Driver</value>-->
+<!--        </property>-->
+<!--        &lt;!&ndash; 数据库地址，这里也要注意一下编码，不然乱码可是很郁闷的哦！ &ndash;&gt;-->
+<!--        <property name="url">-->
+<!--            <value>-->
+<!--                jdbc:mysql://192.168.0.2:3306/pi-test?useUnicode=true&amp;characterEncoding=utf-8-->
+<!--            </value>-->
+<!--        </property>-->
+<!--        <property name="username">-->
+<!--            <value>root</value>-->
+<!--        </property>-->
+<!--        <property name="password">-->
+<!--            <value>Piservice123</value>-->
+<!--        </property>-->
+<!--&lt;!&ndash;        <property name="url">&ndash;&gt;-->
+<!--&lt;!&ndash;            <value>&ndash;&gt;-->
+<!--&lt;!&ndash;                jdbc:mysql://localhost:3306/pi-test?useUnicode=true&amp;characterEncoding=utf-8&ndash;&gt;-->
+<!--&lt;!&ndash;            </value>&ndash;&gt;-->
+<!--&lt;!&ndash;        </property>&ndash;&gt;-->
+<!--&lt;!&ndash;        <property name="username">&ndash;&gt;-->
+<!--&lt;!&ndash;            <value>root</value>&ndash;&gt;-->
+<!--&lt;!&ndash;        </property>&ndash;&gt;-->
+<!--&lt;!&ndash;        <property name="password">&ndash;&gt;-->
+<!--&lt;!&ndash;            <value></value>&ndash;&gt;-->
+<!--&lt;!&ndash;        </property>&ndash;&gt;-->
+<!--    </bean>-->
 
 
     <bean id="abstractXADataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean"
@@ -43,7 +52,7 @@
         <property name="maintenanceInterval" value="60" />
     </bean>
 
-    <!--<bean id="mainDataSource" primary="true" parent="abstractXADataSource">
+    <bean id="mainDataSource" primary="true" parent="abstractXADataSource">
         <property name="uniqueResourceName" value="db_main" />
         <property name="xaProperties">
             <props>
@@ -51,15 +60,15 @@
                                  <prop key="url">jdbc:postgresql://localhost:5432/personel?currentSchema=public</prop>
                                  <prop key="user">postgres</prop>
                                  <prop key="password" >Dyy13664171388</prop>
-                <prop key="url">jdbc:postgresql://10.12.1.102:5432/sfsprd?currentSchema=public</prop>
-                <prop key="user">sfsuser</prop>
-                <prop key="password" >9TY(fj7kd</prop>
+<!--                <prop key="url">jdbc:postgresql://10.12.1.102:5432/sfsprd?currentSchema=public</prop>-->
+<!--                <prop key="user">sfsuser</prop>-->
+<!--                <prop key="password" >9TY(fj7kd</prop>-->
             </props>
         </property>
-    </bean>-->
+    </bean>
 
     <bean id="mainSqlSessionFactory" primary="true" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
+        <property name="dataSource" ref="mainDataSource" />
         <property name="configLocation" value="classpath:persistence/mybatis-config.xml" />
         <property name="mapperLocations" value="classpath*:persistence/xml/**/*.xml" />
     </bean>

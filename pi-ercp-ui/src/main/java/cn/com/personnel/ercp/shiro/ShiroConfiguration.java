@@ -46,6 +46,7 @@ public class ShiroConfiguration {
         // ================ 通用 ==============================//
         filterChainDefinitionMap.put("/logout", "logout"); // 退出接口
         filterChainDefinitionMap.put("/login", "anon"); // 登录接口
+        filterChainDefinitionMap.put("/mobileLogin", "anon"); // 登录接口
         filterChainDefinitionMap.put("/login_web", "anon"); // 登录接口
         filterChainDefinitionMap.put("/autoLogin_web", "anon"); // 登录接口
         filterChainDefinitionMap.put("/showLogin", "anon"); // 弹出登录框

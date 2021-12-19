@@ -60,5 +60,15 @@ public interface SecUserMapper extends BaseMapper<SecUser> {
 
 
 
+    /**
+     * 密码错误次数
+     * @param userId
+     */
+    void updatePwdTimes(@Param("userId") String userId);
 
+    /**
+     * 重置密码次数
+     * @param userId
+     */
+    void resetPwdTimes(@Param("userId") String userId);
 }

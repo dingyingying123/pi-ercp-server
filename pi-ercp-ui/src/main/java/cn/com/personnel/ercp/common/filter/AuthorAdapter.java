@@ -9,7 +9,7 @@ public class AuthorAdapter extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new AuthorInterceptor()).addPathPatterns("/fss/bps/**");
+        registry.addInterceptor(new AuthorInterceptor()).addPathPatterns("/**");
         super.addInterceptors(registry);
     }
 

@@ -1,23 +1,35 @@
 package cn.com.personnel.ercp.common.filter;
 
+import cn.com.personnel.ercp.auth.impl.SecUserService;
 import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
+import cn.com.personnel.ercp.common.kit.JwtUtil;
+import cn.com.personnel.ercp.framework.auth.SecurityContext;
+import eu.bitwalker.useragentutils.DeviceType;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class AuthorInterceptor implements HandlerInterceptor {
     private Logger logger  = LoggerFactory.getLogger(AuthorInterceptor.class);
+    @Autowired
+    SecUserService secUserService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -42,44 +54,45 @@ public class AuthorInterceptor implements HandlerInterceptor {
             UserAgent ua = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
             OperatingSystem os = ua.getOperatingSystem();
             logger.info("设备类型：" + os.getDeviceType());
-//            if(DeviceType.MOBILE.getName().equals(os.getDeviceType().getName())) {//移动端
-//                logger.info("移动连接");
-//                String token = request.getHeader("token");
-//                String deviceCode = request.getParameter("deviceCode");
-//                logger.info("==============token: " + token + ", deviceCode: " + deviceCode);
-//                if(!StringUtils.isEmpty(token)){
-//                    userId = JwtUtil.getUID(token);
-//                    logger.info("==============用户信息:" + userId);
-//                    //验证token
-//                    Map<String, Object> tokenMap = JwtUtil.verify(token, userId, "access_token", deviceCode);
-//                    logger.info("==============token验证：" + tokenMap);
-//                    if(!(Boolean) (tokenMap.get("success"))){
-//                        return false;
-//                    }
-//                    //向session中插入用户信息，可以按需插入相关用户信息
-//                    secUser.setUserId(userId);
-//                    secUser.setUserName(JwtUtil.getUsername(token));
-//                    subject.getSession().setAttribute(SecurityContext.Authentication, secUser);
-//                }
-//            }
-//            else{
-//                logger.info("pc连接");
-//                userId = request.getParameter("userId");
-//                //前后端分离的系统，用sign方式验证，非前后端分离的系统不用sign方式验证
-//                String sign = request.getParameter("sign") == null ? "" : request.getParameter("sign");
-//                String genKey = DigestUtils.md5DigestAsHex((userId + "@" + wbsApiConfig.getEisPassword()).getBytes());
-//                if (!genKey.equals(sign)) {
-//                    logger.info("验证错误");
-//                    return false;
-//                }
-//                Map<String, Object> userMap = new HashMap<String, Object>();
-//                secUser = secUserService.selectByUserId(userId);
-//                UsernamePasswordToken tokenUser = new UsernamePasswordToken(secUser.getUserId(), secUser.getPwd());
-//                subject.login(tokenUser);
-//                if (subject.isAuthenticated()) {
-//                    subject.getSession().setAttribute(SecurityContext.Authentication, secUser);
-//                }
-//            }
+            if(DeviceType.MOBILE.getName().equals(os.getDeviceType().getName())) {//移动端
+                logger.info("移动连接");
+                String token = request.getHeader("token");
+                String deviceCode = request.getParameter("deviceCode");
+                logger.info("==============token: " + token + ", deviceCode: " + deviceCode);
+                if(!StringUtils.isEmpty(token)){
+                    userId = JwtUtil.getUID(token);
+                    logger.info("==============用户信息:" + userId);
+                    //验证token
+                    Map<String, Object> tokenMap = JwtUtil.verify(token, userId, "access_token", deviceCode);
+                    logger.info("==============token验证：" + tokenMap);
+                    if(!(Boolean) (tokenMap.get("success"))){
+                        return false;
+                    }
+                    //向session中插入用户信息，可以按需插入相关用户信息
+                    secUser.setUserId(userId);
+                    secUser.setUserName(JwtUtil.getUsername(token));
+                    subject.getSession().setAttribute(SecurityContext.Authentication, secUser);
+                }
+            }else{
+                logger.info("pc连接");
+                userId = request.getParameter("userId");
+                //前后端分离的系统，用sign方式验证，非前后端分离的系统不用sign方式验证
+                String sign = request.getParameter("sign") == null ? "" : request.getParameter("sign");
+                String genKey = DigestUtils.md5DigestAsHex((userId + "@" ).getBytes());
+//                        + wbsApiConfig.getEisPassword()).getBytes()
+
+                if (!genKey.equals(sign)) {
+                    logger.info("验证错误");
+                    return false;
+                }
+                Map<String, Object> userMap = new HashMap<String, Object>();
+                secUser = secUserService.selectByUserId(userId);
+                UsernamePasswordToken tokenUser = new UsernamePasswordToken(secUser.getUserId(), secUser.getPwd());
+                subject.login(tokenUser);
+                if (subject.isAuthenticated()) {
+                    subject.getSession().setAttribute(SecurityContext.Authentication, secUser);
+                }
+            }
             return true;
         }catch (Exception e){
             e.printStackTrace();

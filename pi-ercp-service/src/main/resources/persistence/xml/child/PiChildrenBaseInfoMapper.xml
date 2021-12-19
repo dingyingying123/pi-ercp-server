@@ -6,6 +6,7 @@
       WARNING - @mbg.generated
     -->
     <id column="child_id" jdbcType="VARCHAR" property="childId" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
     <result column="child_name" jdbcType="VARCHAR" property="childName" />
     <result column="child_id_no" jdbcType="VARCHAR" property="childIdNo" />
     <result column="child_tel_no" jdbcType="VARCHAR" property="childTelNo" />
@@ -70,7 +71,7 @@
     <result column="updator" jdbcType="VARCHAR" property="updator" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
-  
+
   <select id="queryPiChildrenBaseInfoList" resultMap="BaseResultMap">
     select * from pi_children_base_info i
     <where>

@@ -6,9 +6,9 @@
       WARNING - @mbg.generated
     -->
     <id column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="pwd" jdbcType="VARCHAR" property="pwd" />
     <result column="pwd_lock" jdbcType="VARCHAR" property="pwdLock" />
-    <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="male" jdbcType="VARCHAR" property="male" />
     <result column="tel_no" jdbcType="VARCHAR" property="telNo" />
     <result column="email" jdbcType="VARCHAR" property="email" />
@@ -22,8 +22,8 @@
     <result column="updator" jdbcType="VARCHAR" property="updator" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
-    <result column="active_type" jdbcType="VARCHAR" property="activeType" />
-    <result column="departmentId" jdbcType="VARCHAR" property="department_id" />
+    <result column="ischange" jdbcType="VARCHAR" property="ischange" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
   </resultMap>
 
     <resultMap id="SecUserDepartment" type="cn.com.personnel.ercp.auth.module.SecUserDepartment">
@@ -89,10 +89,16 @@ FROM
       where user_id = #{userId}
   </select>
 
+    <update id="updatePwdTimes">
+        update sec_user
+        set pwd_times = pwd_times + 1
+        where user_id = #{userId}
+    </update>
 
-
-
-
-
+    <update id="resetPwdTimes">
+        update sec_user
+        set pwd_times = 0
+        where user_id = #{userId}
+    </update>
 
 </mapper>

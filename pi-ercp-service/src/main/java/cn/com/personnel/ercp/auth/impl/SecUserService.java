@@ -7,30 +7,26 @@ import cn.com.personnel.ercp.auth.persistence.mapper.SecUserRoleMapper;
 import cn.com.personnel.ercp.auth.service.ISecUserService;
 import cn.com.personnel.springboot.framework.core.page.PagenationQueryParameter;
 import cn.com.personnel.springboot.framework.service.BaseService;
+import org.apache.axis.encoding.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.DigestUtils;
 
 import javax.transaction.Transactional;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 
 @Component
 public class SecUserService extends BaseService implements ISecUserService {
-
     @Autowired
     private SecUserMapper         secUserMapper;
     @Autowired
     private SecUserRoleMapper         secUserRoleMapper;
-//    @Autowired
-//    private CaApiUserMapper caApiUserMapper;
-//    @Autowired
-//    private CaApiConfigMapper caApiConfigMapper;
-//    @Autowired
-//    private CaApiMainMapper caApiMainMapper;
-//    @Autowired
-//    private CaApiLogMapper caApiLogMapper;
+
+    private static String SHA_SALT = "!@#$%qwe@#!";
 
     /**
      * 条件查询
@@ -328,4 +324,62 @@ public class SecUserService extends BaseService implements ISecUserService {
 //        }
         return false;
     }
+
+    @Override
+    public boolean checkPassword(String inputPwd, String dbPwd) {
+
+        try {
+            boolean check = verifySHA(dbPwd,inputPwd);
+            if (!check) {
+                check = DigestUtils.md5DigestAsHex(inputPwd.getBytes()).equals(dbPwd);
+            }
+            return check;
+        }catch (Exception e) {
+            return false;
+        }
+    }
+
+    private boolean verifySHA(String ldappw, String inputpw) throws NoSuchAlgorithmException {
+        logger.info("verifySHA开始进行用户密码检查..."+ ldappw);
+        // MessageDigest 提供了消息摘要算法，如 MD5 或 SHA，的功能，这里LDAP使用的是SHA-1
+        MessageDigest md = MessageDigest.getInstance("SHA-1");
+
+        // 取出加密字符
+        if (ldappw.startsWith("{SSHA}")) {
+            ldappw = ldappw.substring(6);
+        } else if (ldappw.startsWith("{SHA}")) {
+            ldappw = ldappw.substring(5);
+        }
+
+        // 解码BASE64
+        byte[] ldappwbyte = Base64.decode(ldappw);
+        byte[] shacode;
+        byte[] salt;
+
+        // 前20位是SHA-1加密段，20位后是最初加密时的随机明文
+        if (ldappwbyte.length <= 20) {
+            shacode = ldappwbyte;
+            salt = SHA_SALT.getBytes();
+        } else {
+            shacode = new byte[20];
+            salt = new byte[ldappwbyte.length - 20];
+            System.arraycopy(ldappwbyte, 0, shacode, 0, 20);
+            System.arraycopy(ldappwbyte, 20, salt, 0, salt.length);
+        }
+
+        // 把用户输入的密码添加到摘要计算信息
+        md.update(inputpw.getBytes());
+
+        // 把随机明文添加到摘要计算信息
+        md.update(salt);
+
+        // 按SSHA把当前用户密码进行计算
+        byte[] inputpwbyte = md.digest();
+
+        logger.info("verifySHA用户密码检查完毕...");
+        // 返回校验结果
+        return MessageDigest.isEqual(shacode, inputpwbyte);
+    }
+
+
 }

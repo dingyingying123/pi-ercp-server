@@ -139,9 +139,8 @@ public abstract class BaseLoginService extends BaseService implements ILoginServ
     public SecUser login(SecUser secUser) throws AuthenticationException {
         beforeLogin(secUser);
         SecUser result = innerLogin(secUser, true);
-        SecUser sfsUser = transferToSecUser(result);
         //处理用户角色相关数据
-        return sfsUser;
+        return result;
     }
 
 
@@ -238,31 +237,5 @@ public abstract class BaseLoginService extends BaseService implements ILoginServ
         if (!matcher.matches()) {
             throw new AuthenticationException("1001", "密码为至少8位数字字母组合,请重新输入或到登录OA修改密码！");
         }
-    }
-
-    public SecUser transferToSecUser(SecUser secUser){
-        SecUser sfsUser = new SecUser();
-        sfsUser.setUserId(secUser.getUserId());
-        sfsUser.setUserName(secUser.getUserName());
-        sfsUser.setActiveType(secUser.getActiveType());
-        sfsUser.setPwd(secUser.getPwd());
-        sfsUser.setStatus(secUser.getStatus());
-        sfsUser.setMale(secUser.getMale());
-        sfsUser.setLoginIp(secUser.getLoginIp());
-        sfsUser.setLoginTime(secUser.getLoginTime());
-        sfsUser.setPwdLock(secUser.getPwdLock());
-        sfsUser.setDepartmentId(secUser.getDepartmentId());
-        sfsUser.setEmail(secUser.getEmail());
-        sfsUser.setTelNo(secUser.getTelNo());
-        sfsUser.setGovernor(secUser.getGovernor());
-        sfsUser.setUserType(secUser.getUserType());
-        sfsUser.setRememberMe(secUser.getRememberMe());
-        sfsUser.setLockFlag(secUser.getLockFlag());
-        sfsUser.setIschange(secUser.getIschange());
-        sfsUser.setCreator(secUser.getCreator());
-        sfsUser.setCreateTime(secUser.getCreateTime());
-        sfsUser.setUpdator(secUser.getUpdator());
-        sfsUser.setUpdateTime(secUser.getUpdateTime());
-        return sfsUser;
     }
 }

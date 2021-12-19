@@ -2,6 +2,7 @@ package cn.com.personnel.ercp.common.service;
 
 import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
 import cn.com.personnel.ercp.auth.persistence.mapper.SecUserMapper;
+import cn.com.personnel.ercp.auth.service.ISecUserService;
 import cn.com.personnel.ercp.framework.config.ApplicationConfig;
 import cn.com.personnel.ercp.framework.exception.AuthenticationException;
 import org.apache.commons.lang3.StringUtils;
@@ -10,17 +11,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.DigestUtils;
 
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
 @Component
 public class LoginService extends BaseLoginService implements ILoginService {
     private Logger logger = LoggerFactory.getLogger(LoginService.class);
     @Autowired
     private SecUserMapper secUserMapper;
-//    @Autowired
-//    private VHrEmployeeMapper vHrEmployeeMapper;
+    @Autowired
+    private ISecUserService secUserService;
 //    @Autowired
 //    private ICAService icaApiService;
 //    @Autowired
@@ -53,7 +56,7 @@ public class LoginService extends BaseLoginService implements ILoginService {
         }
         String pwd = secUser.getPwd();
 //        VHrEmployee vHrEmployee = vHrEmployeeMapper.findByPernr(secUser.getUserId());
-        SecUser secUserCA = secUserMapper.selectByPrimaryKey(secUser.getUserId());
+        SecUser user = secUserMapper.selectByPrimaryKey(secUser.getUserId());
         if(needCheck) {
 //            if(ApplicationConfig.APP_MODULE.equals(ApplicationConfig.DEV_MODULE) || "外部".equals(result.getUserType())) {
             if(ApplicationConfig.APP_MODULE.equals(ApplicationConfig.DEV_MODULE)) {
@@ -75,14 +78,14 @@ public class LoginService extends BaseLoginService implements ILoginService {
                 try{
 //                    oimCheckLogin(secUser.getUserId(), pwd);
 //                     新的认证
-//                    Map<String, Object> authByRest = icaApiService.authenticate(secUser.getUserId(), pwd, secUser.getLoginIp());
-//                    if (!"000".equals(authByRest.get("code"))) {
-//                        if (locale.toString().equals("en_US")){
-//                            throw new AuthenticationException("1002","Username or password incorrect");
-//                        }else {
-//                            throw new AuthenticationException("1002", "用户名或密码不正确");
-//                        }
-//                    }
+                    boolean authByRest = authenticate(secUser, pwd);
+                    if (!authByRest) {
+                        if (locale.toString().equals("en_US")){
+                            throw new AuthenticationException("1002","Username or password incorrect");
+                        }else {
+                            throw new AuthenticationException("1002", "用户名或密码不正确");
+                        }
+                    }
                 }catch (Exception e) {
                     logger.error("idm 认证错误 " + e.getMessage());
                     if (locale.toString().equals("en_US")){
@@ -102,17 +105,42 @@ public class LoginService extends BaseLoginService implements ILoginService {
         updataLoginInfo.setLoginTime(new Date());
         secUserMapper.updateByPrimaryKeySelective(updataLoginInfo);
         updataLoginInfo.setPwd(secUser.getPwd());
-        if(secUserCA!=null&&secUserCA.getMale()!=null&&secUserCA.getMale().equals("男"))
+        if(user!=null&&user.getMale()!=null&&user.getMale().equals("男"))
             updataLoginInfo.setMale("男");
         else updataLoginInfo.setMale("女");
-        if(secUserCA!=null) {
-            updataLoginInfo.setUserName(secUserCA.getUserName());
+        if(user!=null) {
+            updataLoginInfo.setUserName(user.getUserName());
         }
         return updataLoginInfo;
     }
 
     protected SecUser afterLogin(SecUser result ) {
         return result;
+    }
+
+    public boolean authenticate(SecUser secUser, String password) {
+        boolean flag = true;
+        if (secUser != null) {
+            if (secUser.getStatus() != null && secUser.getStatus().equals("作废")) {
+                logger.info(secUser.getUserId() + "已离职，认证失败");
+                return false;
+            }
+            if (!secUserService.checkPassword(password, secUser.getPwd())) {
+                logger.info(secUser.getUserId() + "密码错误，认证失败");
+                secUserMapper.updatePwdTimes(secUser.getUserId());
+                //return false;
+                flag = false;
+            } else {
+                secUserMapper.resetPwdTimes(secUser.getUserId());
+                //return true;
+                flag = true;
+            }
+        } else {
+            logger.info("不存在，认证失败");
+            flag = false;
+            //return false;
+        }
+        return flag;
     }
 
 

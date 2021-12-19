@@ -10,6 +10,8 @@ public class PiChildrenBaseInfo {
     @GeneratedValue(generator = "JDBC")
     private String childId;
 
+    private String area;
+
     @Column(name = "child_name")
     private String childName;
 
@@ -207,6 +209,20 @@ public class PiChildrenBaseInfo {
      */
     public void setChildId(String childId) {
         this.childId = childId;
+    }
+
+    /**
+     * @return area
+     */
+    public String getArea() {
+        return area;
+    }
+
+    /**
+     * @param area
+     */
+    public void setArea(String area) {
+        this.area = area;
     }
 
     /**

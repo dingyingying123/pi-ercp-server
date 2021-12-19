@@ -63,14 +63,14 @@ spring:
 
 logging:
   config: classpath:logback-dev.xml
-  path: /data/sfs/xd/logs
+  path: /usr/local/local/pi/logs
 
 
 app:
-  app_code: sfs_xd
-  app_name: 共享财务平台
+  app_code: pi
+  app_name: 儿童服务平台
   app_module: devlop                #factory/devlop
-  app_cookie_name: fss_cookie_dev
+  app_cookie_name: pi_cookie_dev
   expire_time: 7200000  #过期时间
 
 oa:
@@ -86,6 +86,8 @@ open:
 
 token:
   refreshTokenExpireTime: 1800
+  deviceCode: piservice
+
 
 sap:
   mandt: 401

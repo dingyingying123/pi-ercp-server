@@ -9,6 +9,7 @@ import cn.com.personnel.ercp.auth.module.MenuList;
 import cn.com.personnel.ercp.auth.module.MenuTree;
 import cn.com.personnel.ercp.auth.module.MenuTreeChildrenVue;
 import cn.com.personnel.ercp.auth.module.MenuTreeVue;
+import cn.com.personnel.ercp.auth.persistence.entity.PortalToken;
 import cn.com.personnel.ercp.auth.persistence.entity.SecModule;
 import cn.com.personnel.ercp.auth.persistence.entity.SecRouter;
 import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
@@ -18,15 +19,18 @@ import cn.com.personnel.ercp.common.kit.CommonConfig;
 import cn.com.personnel.ercp.common.kit.VerificationCodeKit;
 import cn.com.personnel.ercp.common.persistence.entity.ReturnEntity;
 import cn.com.personnel.ercp.common.service.ILoginService;
+import cn.com.personnel.ercp.common.service.IPortalTokenService;
 import cn.com.personnel.ercp.framework.auth.SecurityContext;
 import cn.com.personnel.ercp.framework.config.ApplicationConfig;
 import cn.com.personnel.ercp.framework.exception.AuthenticationException;
+import cn.com.personnel.ercp.framework.kit.UUIDKit;
 import cn.com.personnel.springboot.framework.core.controller.PageController;
 import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -46,6 +50,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -77,6 +83,13 @@ public class LoginController extends PageController {
     private ICesRouterService cesRouterService;
     @Autowired
     private ISecUserLoginLogService secUserLoginLogService;
+    @Autowired
+    private IPortalTokenService portalTokenService;
+    @Autowired
+    private IPortalLoginInfoService portalLoginInfoService;
+
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private final Logger logger = Logger.getLogger(this.getClass());
 
     @RequestMapping("home")
     public String home() {
@@ -133,8 +146,8 @@ public class LoginController extends PageController {
     @ApiImplicitParam()
     @RequestMapping("login")
     @ResponseBody
-    public Map<String, Object> login(@RequestBody SecUserVo loginInfo, Map<String, Object> requestMap,
-                                     HttpSession session) {
+    public ReturnEntity login(@RequestBody SecUserVo loginInfo, Map<String, Object> requestMap, HttpSession session) {
+        ReturnEntity returnEntity = new ReturnEntity(CommonConstants.SUCCESS_CODE, CommonConstants.SUCCESS_MESSAGE, null);
         Map<String, Object> userMap = new HashMap<String, Object>();
         try {
             if (loginInfo.getCode() != null && loginInfo.getCode() != "") {
@@ -142,9 +155,11 @@ public class LoginController extends PageController {
                 requestMap.put("inputStr", loginInfo.getCode());
                 boolean b = checkVerify(requestMap, session);
                 if (!b) {
-                    userMap.put("faild", true);
-                    userMap.put("message", "验证码有误，请重新输入！");
-                    return userMap;
+//                    userMap.put("faild", true);
+//                    userMap.put("message", "验证码有误，请重新输入！");
+                    returnEntity.setStatus(CommonConstants.ERROR_CODE);
+                    returnEntity.setMessage("验证码有误，请重新输入！");
+                    return returnEntity;
                 }
             }
 
@@ -159,9 +174,8 @@ public class LoginController extends PageController {
                 setLoginUser(secUser);
             }
             String sessionId = subject.getSession().getId().toString();
-            userMap.put("success", true);
-            userMap.put("message", "登陆成功");
-            userMap.put("sessionId", sessionId);
+//            userMap.put("success", true);
+//            userMap.put("message", "登陆成功");
             userMap.put("user", secUser);
             userMap.put("menu", getMenuTreeVue());
             userMap.put("sessionId", sessionId);
@@ -172,13 +186,85 @@ public class LoginController extends PageController {
             //根据登录用户获取菜单
             String othername = java.util.Base64.getEncoder().encodeToString(loginInfo.getPwd().getBytes());
             Cookie cookie = new Cookie("othername", othername);
+            returnEntity.setData(userMap);
         } catch (AuthenticationException ex) {
             session.setAttribute("SHOWVERIFYCODE", true);
-            userMap.put("success", false);
-            userMap.put("message", ex.getMessage());
-
+//            userMap.put("success", false);
+//            userMap.put("message", ex.getMessage());
+            returnEntity.setStatus(CommonConstants.ERROR_CODE);
+            returnEntity.setMessage(ex.getMessage());
         }
-        return userMap;
+        return returnEntity;
+    }
+
+    /**
+     * 移动端登录
+     *
+     * @param loginInfo
+     * @param deviceCode
+     * @return
+     * @throws ParseException
+     */
+    @RequestMapping("mobileLogin")
+    @ResponseBody
+    public ReturnEntity mobileLogin(SecUserVo loginInfo, String deviceCode) throws ParseException, AuthenticationException {
+        loginInfo.setLoginIp(getRemortIP(request));
+        try {
+            response.setCharacterEncoding("UTF-8");
+            SecUser secUser = loginService.login(loginInfo);
+            // 生成token并返回前端
+            Map<String, Object> refreshTokenMap = portalTokenService.sign(secUser.getUserId(), secUser.getUserName(), deviceCode);
+            Map<String, Object> accessTokenMap = portalTokenService.accessSign(String.valueOf(refreshTokenMap.get("refresh_token")), deviceCode);
+            insertOrUpdateToken(secUser.getUserId(), String.valueOf(refreshTokenMap.get("refresh_token")), deviceCode, "refresh_token", sdf.parse(String.valueOf(refreshTokenMap.get("refresh_token_exipre_time"))));
+            insertOrUpdateToken(secUser.getUserId(), String.valueOf(accessTokenMap.get("access_token")), deviceCode, "access_token", sdf.parse(String.valueOf(accessTokenMap.get("access_token_exipre_time"))));
+            // 保存登录信息
+            portalLoginInfoService.saveLoginInfo(secUser.getUserId(), secUser.getUserName(), "mobile",getRemortIP(request));
+            refreshTokenMap.putAll(accessTokenMap);
+            return ReturnEntity.ok(refreshTokenMap);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ReturnEntity.errorMsg("登录失败！");
+        }
+    }
+
+    /**
+     * 移动端注册access_token
+     *
+     * @param userid
+     * @param deviceCode
+     * @return
+     * @throws ParseException
+     */
+    @RequestMapping("accessSign")
+    @ResponseBody
+    public ReturnEntity accessSign(String userid, String deviceCode) throws ParseException {
+        try {
+            String token = request.getHeader("token");
+//          String token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiIzNjQ2NyIsImV4cCI6MTU1MzA2MTQ1OCwidXNlcm5hbWUiOiLlkLTpnIfpkasifQ.p5QzHYBf9UkpF8pswLjqhJPDZ2IKYvujXXrQSlQsbdQ";
+            response.setCharacterEncoding("UTF-8");
+            // 检查refreshtoken是否合法
+            Map<String, Object> check = portalTokenService.checkToken(token, "refresh_token", deviceCode);
+            if (check == null || !"success".equals(check.get("message"))) {
+                return ReturnEntity.ok(String.valueOf(check.get("message")));
+            }
+            // 刷新access_token
+            Map<String, Object> accessSign = portalTokenService.accessSign(token, deviceCode);
+            Map<String, String> userMap = portalTokenService.parseSign(token);
+            PortalToken accessToken = new PortalToken();
+            accessToken.setUserId(userMap.get("uid"));
+            accessToken.setToken(String.valueOf(accessSign.get("access_token")));
+            accessToken.setDeviceCode(deviceCode);
+            accessToken.setTokenType("access_token");
+            accessToken.setExpDate(sdf.parse(String.valueOf(accessSign.get("access_token_exipre_time"))));
+            insertOrUpdateToken(userMap.get("uid"), String.valueOf(accessSign.get("access_token")), deviceCode, "access_token", sdf.parse(String.valueOf(accessSign.get("access_token_exipre_time"))));
+            return ReturnEntity.ok(accessSign);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            Map<String,String> map=new HashMap<String,String>();
+            map.put("errorMsg",e.getMessage());
+            return ReturnEntity.errorMsg("由于你长时间未登陆，导致token失效。请重新登陆");
+        }
     }
 
 
@@ -280,12 +366,11 @@ public class LoginController extends PageController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        SecUser sfsUser = loginService.transferToSecUser(secUser);
         // 获取当前的Subject
         Subject subject = SecurityUtils.getSubject();
         subject.login(token);
         if (subject.isAuthenticated()) {
-            setLoginUser(sfsUser);
+            setLoginUser(secUser);
         }
 
         String sessionId = subject.getSession().getId().toString();
@@ -636,7 +721,22 @@ public class LoginController extends PageController {
         return childList;
     }
 
-
+    private void insertOrUpdateToken(String uid, String tokenStr, String deviceCode, String tokenType, Date exipreTime) {
+        PortalToken token = new PortalToken();
+        token.setUserId(uid);
+        token.setToken(tokenStr);
+        token.setDeviceCode(deviceCode);
+        token.setTokenType(tokenType);
+        token.setExpDate(exipreTime);
+        PortalToken existToken = portalTokenService.getTokenByUserIDAndType(uid, tokenType);
+        if (existToken != null) {
+            token.setId(existToken.getId());
+            portalTokenService.updateToken(token);
+        } else {
+            token.setId(UUIDKit.getUUID());
+            portalTokenService.saveToken(token);
+        }
+    }
 
 }
 
@@ -653,13 +753,4 @@ class SecUserVo extends SecUser {
         this.code = code;
     }
 
-    @Override
-    public Boolean getIschange() {
-        return ischange;
-    }
-
-    @Override
-    public void setIschange(Boolean ischange) {
-        this.ischange = ischange;
-    }
 }

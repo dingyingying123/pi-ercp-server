@@ -42,6 +42,18 @@ public class PiChildrenBaseInfoController extends PageController {
     }
 
     /**
+     * 提交儿童基本信息
+     * @param piChildrenBaseInfo
+     * @return
+     */
+    @RequestMapping("/submitPiChildrenBaseInfo")
+    @ResponseBody
+    public ReturnEntity submitPiChildrenBaseInfo(@RequestBody PiChildrenBaseInfo piChildrenBaseInfo){
+        SecUser secUser = (SecUser) getLoginUser();
+        return piChildrenBaseInfoService.submitPiChildrenBaseInfo(piChildrenBaseInfo, secUser);
+    }
+
+    /**
      * 删除儿童基本信息
      * @param piChildrenBaseInfo
      * @return

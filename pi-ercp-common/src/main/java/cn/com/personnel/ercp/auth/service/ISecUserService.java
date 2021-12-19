@@ -60,4 +60,6 @@ public interface ISecUserService extends IService {
     SecUser selectByUserId(String userId);
 
     boolean checkAuth(String api, String ip, String userName, String password);
+
+    boolean checkPassword(String inputPwd, String dbPwd);
 }
