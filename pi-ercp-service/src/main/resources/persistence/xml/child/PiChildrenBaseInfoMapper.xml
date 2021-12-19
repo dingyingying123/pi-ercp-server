@@ -99,9 +99,6 @@
       <if test="info.childHealthStatus != null and info.childHealthStatus != ''">
          and i.child_health_status like concat('%', #{info.childHealthStatus}, '%')
       </if>
-      <if test="info.childHealthStatus != null and info.childHealthStatus != ''">
-         and i.child_health_status like concat('%', #{info.childHealthStatus}, '%')
-      </if>
       <if test="info.childEscalationType != null and info.childEscalationType != ''">
          and i.child_escalation_type like concat('%', #{info.childEscalationType}, '%')
       </if>

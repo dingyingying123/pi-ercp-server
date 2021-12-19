@@ -56,12 +56,11 @@ public class CommonConstants {
      * 流程审批状态
      */
     public static class ApprovalStatus {
-        public static final String DRAFT = "起草";
-        public static final String REJECT = "驳回";
-        public static final String REVOKE = "撤回";
-        public static final String APPROVING = "审批中";
+        public static final String DRAFT = "进行中";
+        public static final String COMPLETED = "已完成";
+        public static final String APPROVING = "已发送审批";
         public static final String APPROVED = "审批通过";
-        public static final String TERMINATE = "终止";
+        public static final String NOTPASS = "审批不通过";
     }
 
     // 通过delete字段进行控制 1:显示 0:不显示 2：变更中

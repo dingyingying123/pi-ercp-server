@@ -209,9 +209,20 @@ public class LoginController extends PageController {
     @ResponseBody
     public ReturnEntity mobileLogin(SecUserVo loginInfo, String deviceCode) throws ParseException, AuthenticationException {
         loginInfo.setLoginIp(getRemortIP(request));
+        Map<String, Object> userMap = new HashMap<String, Object>();
         try {
             response.setCharacterEncoding("UTF-8");
             SecUser secUser = loginService.login(loginInfo);
+            UsernamePasswordToken token = new UsernamePasswordToken(secUser.getUserId(), secUser.getPwd());
+            // 获取当前的Subject
+            Subject subject = SecurityUtils.getSubject();
+            subject.login(token);
+            if (subject.isAuthenticated()) {
+                setLoginUser(secUser);
+            }
+            List<String> userRoles = new ArrayList<>();
+            userRoles = secUserRoleService.getUserRoleList(secUser.getUserId(), ApplicationConfig.APP_CODE);
+            userMap.put("roleIds", userRoles);
             // 生成token并返回前端
             Map<String, Object> refreshTokenMap = portalTokenService.sign(secUser.getUserId(), secUser.getUserName(), deviceCode);
             Map<String, Object> accessTokenMap = portalTokenService.accessSign(String.valueOf(refreshTokenMap.get("refresh_token")), deviceCode);
@@ -219,8 +230,9 @@ public class LoginController extends PageController {
             insertOrUpdateToken(secUser.getUserId(), String.valueOf(accessTokenMap.get("access_token")), deviceCode, "access_token", sdf.parse(String.valueOf(accessTokenMap.get("access_token_exipre_time"))));
             // 保存登录信息
             portalLoginInfoService.saveLoginInfo(secUser.getUserId(), secUser.getUserName(), "mobile",getRemortIP(request));
-            refreshTokenMap.putAll(accessTokenMap);
-            return ReturnEntity.ok(refreshTokenMap);
+            userMap.putAll(refreshTokenMap);
+            userMap.putAll(accessTokenMap);
+            return ReturnEntity.ok(userMap);
         } catch (Exception e) {
             e.printStackTrace();
             return ReturnEntity.errorMsg("登录失败！");

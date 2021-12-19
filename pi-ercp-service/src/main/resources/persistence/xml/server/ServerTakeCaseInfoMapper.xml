@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.server.ServerTakeCaseInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.server.ServerTakeCaseInfo" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="case_id" property="caseId" jdbcType="VARCHAR" />
+    <result column="child_id" property="childId" jdbcType="VARCHAR" />
+    <result column="case_no" property="caseNo" jdbcType="VARCHAR" />
+    <result column="child_name" property="childName" jdbcType="VARCHAR" />
+    <result column="male" property="male" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="VARCHAR" />
+    <result column="case_source" property="caseSource" jdbcType="VARCHAR" />
+    <result column="referral_source" property="referralSource" jdbcType="VARCHAR" />
+    <result column="referral_reason" property="referralReason" jdbcType="VARCHAR" />
+    <result column="problems_and_needs_faced" property="problemsAndNeedsFaced" jdbcType="VARCHAR" />
+    <result column="case_date" property="caseDate" jdbcType="VARCHAR" />
+    <result column="receiver" property="receiver" jdbcType="VARCHAR" />
+    <result column="isdelete" property="isdelete" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+</mapper>

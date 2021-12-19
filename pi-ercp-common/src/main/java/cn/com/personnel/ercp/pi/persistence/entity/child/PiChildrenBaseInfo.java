@@ -3,6 +3,69 @@ package cn.com.personnel.ercp.pi.persistence.entity.child;
 import java.util.Date;
 import javax.persistence.*;
 
+/**
+ * childId	儿童信息表ID
+ * area	区域
+ * childName	儿童姓名
+ * childIdNo	儿童身份证号
+ * childTelNo	儿童联系电话
+ * childNationality	儿童民族
+ * childMale	儿童性别
+ * childAccountAddress	儿童户口地址
+ * childCurrentAddress	儿童现住址
+ * childHealthStatus	儿童健康状态
+ * childEscalationType	儿童上报类型
+ * childDisabilityType	儿童残疾类型
+ * childDisabilityLevel	儿童残疾等级
+ * childDiseaseType	儿童患病病种
+ * childSchoolAttendance	儿童就学情况
+ * childOtherCases	儿童其他情况
+ * childPovertyAlleviationImplementation	儿童社会福利救助扶贫落实情况
+ * childViolationGuardian	儿童遭受监护人侵害的情形
+ * guardian	监护人
+ * fatherName	父亲姓名
+ * fatherIdNo	父亲身份证号
+ * fatherTelNo	父亲联系电话
+ * fatherAccountAddress	父亲户口地址
+ * fatherCurrentAddress	父亲现/务工住址
+ * fatherHealthStatus	父亲健康状况
+ * fatherDisabilityType	父亲残疾类型
+ * fatherDisabilityLevel	父亲残疾级别
+ * fatherDiseaseType	父亲患病类型
+ * fatherFamilyIncome	父亲家庭经济来源
+ * fatherOtherCases	父亲其他情况
+ * motherName	母亲姓名
+ * motherIdNo	母亲身份证号
+ * motherTelNo	母亲联系电话
+ * motherAccountAddress	母亲户口地址
+ * motherCurrentAddress	母亲现/务工住址
+ * motherHealthStatus	母亲健康状况
+ * motherDisabilityType	母亲残疾类型
+ * motherDisabilityLevel	母亲残疾级别
+ * motherDiseaseType	母亲患病类型
+ * motherFamilyIncome	母亲家庭经济来源
+ * motherOtherCases	母亲其他情况
+ * otherGuardianName	其他监护人姓名
+ * otherGuardianIdNo	其他监护人身份证号
+ * otherGuardianTelNo	其他监护人联系电话
+ * otherGuardianRelationshipWithChildren	其他监护人与儿童关系
+ * otherGuardianHealthStatus	其他监护人健康状况
+ * otherGuardianDisabilityType	其他监护人残疾类型
+ * otherGuardianDisabilityLevel	其他监护人残疾级别
+ * otherGuardianDiseaseType	其他监护人患病类型
+ * otherGuardianReasons	其他监护人原由
+ * organizationName	机构名称
+ * organizationPrincipal	机构负责人
+ * organizationTelNo	机构联系电话
+ * organizationNature	机构单位性质
+ * organizationResidentialAddress	机构居住地址
+ * helpSuggestions	帮扶建议
+ * securityFeeCollectionMethod	保障费发放情况领取方式
+ * securityFeeCollector	保障费发放情况领取人（开户人）
+ * securityFeeRecipientRelationship	保障费发放情况领取人与儿童关系
+ * securityFeeGuaranteeStandard	保障费发放情况保障标准
+ */
+
 @Table(name = "pi_children_base_info")
 public class PiChildrenBaseInfo {
     @Id

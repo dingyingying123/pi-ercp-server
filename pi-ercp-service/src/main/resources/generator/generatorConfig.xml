@@ -30,21 +30,21 @@
 		</jdbcConnection>
 
 		<!--生成代码地址-->
-		<javaModelGenerator targetPackage="cn.com.personnel.ercp.pi.persistence.entity.child"
+		<javaModelGenerator targetPackage="cn.com.personnel.ercp.pi.persistence.entity.server"
 			targetProject="D:\git\pi-ercp-server\pi-ercp-common/src/main/java" />
-		<sqlMapGenerator targetPackage="persistence.xml.child"
+		<sqlMapGenerator targetPackage="persistence.xml.server"
 			targetProject="src/main/resources" />
 
-		<javaClientGenerator targetPackage="cn.com.personnel.ercp.pi.persistence.mapper.child"
+		<javaClientGenerator targetPackage="cn.com.personnel.ercp.pi.persistence.mapper.server"
 			targetProject="src/main/java" type="XMLMAPPER" />
 
 
-		<table tableName="pi_children_base_info" domainObjectName="PiChildrenBaseInfo" >
-			<generatedKey column="child_id"  sqlStatement="JDBC"/>
+		<table tableName="server_take_case_info" domainObjectName="ServerTakeCaseInfo" >
+			<generatedKey column="case_id"  sqlStatement="JDBC"/>
 		</table>
-<!--		<table tableName="sec_user" domainObjectName="SecUser" >-->
-<!--			<generatedKey column="user_id"  sqlStatement="JDBC"/>-->
-<!--		</table>-->
+		<table tableName="server_take_case_family_member" domainObjectName="ServerTakeCaseFamilyMember" >
+			<generatedKey column="mem_id"  sqlStatement="JDBC"/>
+		</table>
 
    </context>
 </generatorConfiguration>
