@@ -168,4 +168,29 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
         piChildrenBaseInfoMapper.updateByPrimaryKeySelective(piChildrenBaseInfo);
         return ReturnEntity.ok(piChildrenBaseInfo);
     }
+
+    @Override
+    public ReturnEntity submitPiChildrenBaseInfoList(List<PiChildrenBaseInfo> piChildrenBaseInfoList, SecUser secUser) {
+        if(piChildrenBaseInfoList != null && piChildrenBaseInfoList.size() > 0){
+            for(PiChildrenBaseInfo piChildrenBaseInfo : piChildrenBaseInfoList){
+                piChildrenBaseInfo.setStatus(CommonConstants.ApprovalStatus.APPROVING);
+                piChildrenBaseInfo.setUpdateTime(new Date());
+                piChildrenBaseInfo.setUpdator(secUser.getUserId());
+                piChildrenBaseInfoMapper.updateByPrimaryKeySelective(piChildrenBaseInfo);
+            }
+        }
+        return ReturnEntity.ok(piChildrenBaseInfoList);
+    }
+
+    @Override
+    public ReturnEntity approvePiChildrenBaseInfo(PiChildrenBaseInfo piChildrenBaseInfo, SecUser secUser) {
+        if(piChildrenBaseInfo == null && StringUtils.isEmpty(piChildrenBaseInfo.getChildId())){
+            return ReturnEntity.errorMsg("参数错误！");
+        }
+//        piChildrenBaseInfo.setStatus(CommonConstants.ApprovalStatus.APPROVING);
+        piChildrenBaseInfo.setUpdateTime(new Date());
+        piChildrenBaseInfo.setUpdator(secUser.getUserId());
+        piChildrenBaseInfoMapper.updateByPrimaryKeySelective(piChildrenBaseInfo);
+        return ReturnEntity.ok(piChildrenBaseInfo);
+    }
 }

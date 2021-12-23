@@ -19,9 +19,11 @@ public class ServerTakeCaseInfo {
     @Column(name = "child_name")
     private String childName;
 
-    private String male;
+    @Column(name = "child_male")
+    private String childMale;
 
-    private String age;
+    @Column(name = "child_age")
+    private String childAge;
 
     @Column(name = "case_source")
     private String caseSource;
@@ -53,6 +55,9 @@ public class ServerTakeCaseInfo {
 
     @Column(name = "update_time")
     private Date updateTime;
+
+    @Column(name = "sta_id")
+    private String staId;
 
     /**
      * @return case_id
@@ -110,32 +115,20 @@ public class ServerTakeCaseInfo {
         this.childName = childName;
     }
 
-    /**
-     * @return male
-     */
-    public String getMale() {
-        return male;
+    public String getChildMale() {
+        return childMale;
     }
 
-    /**
-     * @param male
-     */
-    public void setMale(String male) {
-        this.male = male;
+    public void setChildMale(String childMale) {
+        this.childMale = childMale;
     }
 
-    /**
-     * @return age
-     */
-    public String getAge() {
-        return age;
+    public String getChildAge() {
+        return childAge;
     }
 
-    /**
-     * @param age
-     */
-    public void setAge(String age) {
-        this.age = age;
+    public void setChildAge(String childAge) {
+        this.childAge = childAge;
     }
 
     /**
@@ -304,5 +297,13 @@ public class ServerTakeCaseInfo {
      */
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getStaId() {
+        return staId;
+    }
+
+    public void setStaId(String staId) {
+        this.staId = staId;
     }
 }

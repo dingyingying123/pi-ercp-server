@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/piChildrenBaseInfo")
 public class PiChildrenBaseInfoController extends PageController {
@@ -63,5 +65,29 @@ public class PiChildrenBaseInfoController extends PageController {
     public ReturnEntity deletePiChildrenBaseInfo(@RequestBody PiChildrenBaseInfo piChildrenBaseInfo){
         SecUser secUser = (SecUser) getLoginUser();
         return piChildrenBaseInfoService.deletePiChildrenBaseInfo(piChildrenBaseInfo, secUser);
+    }
+
+    /**
+     * 数据上传儿童基本信息
+     * @param piChildrenBaseInfoList
+     * @return
+     */
+    @RequestMapping("/submitPiChildrenBaseInfoList")
+    @ResponseBody
+    public ReturnEntity submitPiChildrenBaseInfoList(@RequestBody List<PiChildrenBaseInfo> piChildrenBaseInfoList){
+        SecUser secUser = (SecUser) getLoginUser();
+        return piChildrenBaseInfoService.submitPiChildrenBaseInfoList(piChildrenBaseInfoList, secUser);
+    }
+
+    /**
+     * 审批儿童基本信息
+     * @param piChildrenBaseInfo
+     * @return
+     */
+    @RequestMapping("/approvePiChildrenBaseInfo")
+    @ResponseBody
+    public ReturnEntity approvePiChildrenBaseInfo(@RequestBody PiChildrenBaseInfo piChildrenBaseInfo){
+        SecUser secUser = (SecUser) getLoginUser();
+        return piChildrenBaseInfoService.approvePiChildrenBaseInfo(piChildrenBaseInfo, secUser);
     }
 }

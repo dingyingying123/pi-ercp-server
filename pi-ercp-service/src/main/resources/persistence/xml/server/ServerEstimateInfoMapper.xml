@@ -1,21 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.server.ServerTakeCaseInfoMapper" >
-  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.server.ServerTakeCaseInfo" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.server.ServerEstimateInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.server.ServerEstimateInfo" >
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="case_id" property="caseId" jdbcType="VARCHAR" />
+    <id column="est_id" property="estId" jdbcType="VARCHAR" />
     <result column="child_id" property="childId" jdbcType="VARCHAR" />
-    <result column="case_no" property="caseNo" jdbcType="VARCHAR" />
+    <result column="sta_id" property="staId" jdbcType="VARCHAR" />
+    <result column="estimate_no" property="estimateNo" jdbcType="VARCHAR" />
     <result column="child_name" property="childName" jdbcType="VARCHAR" />
     <result column="child_male" property="childMale" jdbcType="VARCHAR" />
     <result column="child_age" property="childAge" jdbcType="VARCHAR" />
-    <result column="case_source" property="caseSource" jdbcType="VARCHAR" />
-    <result column="referral_source" property="referralSource" jdbcType="VARCHAR" />
-    <result column="referral_reason" property="referralReason" jdbcType="VARCHAR" />
-    <result column="problems_and_needs_faced" property="problemsAndNeedsFaced" jdbcType="VARCHAR" />
-    <result column="case_date" property="caseDate" jdbcType="VARCHAR" />
+    <result column="acceptance_reason" property="acceptanceReason" jdbcType="VARCHAR" />
+    <result column="family_background" property="familyBackground" jdbcType="VARCHAR" />
+    <result column="family_background_instructions" property="familyBackgroundInstructions" jdbcType="VARCHAR" />
+    <result column="academic_performance" property="academicPerformance" jdbcType="VARCHAR" />
+    <result column="classmate_relationship" property="classmateRelationship" jdbcType="VARCHAR" />
+    <result column="teacher_student_relationship" property="teacherStudentRelationship" jdbcType="VARCHAR" />
+    <result column="adaptability" property="adaptability" jdbcType="VARCHAR" />
+    <result column="school_performance_instructions" property="schoolPerformanceInstructions" jdbcType="VARCHAR" />
+    <result column="peer_relationship_good_or_bad" property="peerRelationshipGoodOrBad" jdbcType="VARCHAR" />
+    <result column="peer_time" property="peerTime" jdbcType="VARCHAR" />
+    <result column="peer_to_peer_relationship" property="peerToPeerRelationship" jdbcType="VARCHAR" />
+    <result column="peer_relationship_instructions" property="peerRelationshipInstructions" jdbcType="VARCHAR" />
+    <result column="important_growth_experience" property="importantGrowthExperience" jdbcType="VARCHAR" />
+    <result column="other" property="other" jdbcType="VARCHAR" />
+    <result column="behavior_observation_interview" property="behaviorObservationInterview" jdbcType="VARCHAR" />
+    <result column="initial_evaluation" property="initialEvaluation" jdbcType="VARCHAR" />
+    <result column="problem_diagnosis" property="problemDiagnosis" jdbcType="VARCHAR" />
+    <result column="determine_service_method" property="determineServiceMethod" jdbcType="VARCHAR" />
+    <result column="determine_service_method_instruction" property="determineServiceMethodInstruction" jdbcType="VARCHAR" />
+    <result column="suggest_referral_resources" property="suggestReferralResources" jdbcType="VARCHAR" />
+    <result column="suggest_referral_resources_instruction" property="suggestReferralResourcesInstruction" jdbcType="VARCHAR" />
+    <result column="estimate_date" property="estimateDate" jdbcType="VARCHAR" />
     <result column="receiver" property="receiver" jdbcType="VARCHAR" />
     <result column="isdelete" property="isdelete" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
@@ -23,10 +41,9 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="updator" property="updator" jdbcType="VARCHAR" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="sta_id" property="staId" jdbcType="VARCHAR"/>
   </resultMap>
 
-  <resultMap id="BaseResultMapVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.server.ServerTakeCaseInfoVO">
+  <resultMap id="BaseResultMapVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.server.ServerEstimateInfoVO">
     <result column="area" jdbcType="VARCHAR" property="area" />
     <result column="child_id_no" jdbcType="VARCHAR" property="childIdNo" />
     <result column="child_tel_no" jdbcType="VARCHAR" property="childTelNo" />
@@ -92,22 +109,25 @@
     <result column="case_closed_status" property="caseClosedStatus" jdbcType="VARCHAR" />
   </resultMap>
 
-  <select id="queryTakeCaseList" resultMap="BaseResultMapVO">
-    select * from server_take_case_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
+  <select id="queryEstimateList" resultMap="BaseResultMapVO">
+    select * from server_estimate_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
     <where>
-        <if test="childName != null and childName != '' ">
-          i.child_name like concat('%', #{childName}, '%')
-        </if>
-        <if test="childId != null and childId != '' ">
-          and i.child_id = #{childId}
-        </if>
-        <if test="area != null and area != '' ">
-          and b.area like concat('%', #{area}, '%')
-        </if>
-        <if test="caseStatus != null and caseStatus != ''">
-          and s.case_status = #{caseStatus}
-        </if>
+      <if test="childName != null and childName != '' ">
+        i.child_name like concat('%', #{childName}, '%')
+      </if>
+      <if test="childId != null and childId != '' ">
+        and i.child_id = #{childId}
+      </if>
+      <if test="area != null and area != '' ">
+        and b.area like concat('%', #{area}, '%')
+      </if>
+      <if test="caseStatus != null and caseStatus != ''">
+        and s.case_status = #{caseStatus}
+      </if>
+      <if test="estimateStatus != null and estimateStatus != ''">
+        and s.estimate_status = #{estimateStatus}
+      </if>
     </where>
-    order by case_date deac
+    order by estimate_date deac
   </select>
 </mapper>

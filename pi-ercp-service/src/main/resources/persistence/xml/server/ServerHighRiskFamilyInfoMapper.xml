@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.server.ServerHighRiskFamilyInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.server.ServerHighRiskFamilyInfo" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="risk_id" property="riskId" jdbcType="VARCHAR" />
+    <result column="est_id" property="estId" jdbcType="VARCHAR" />
+    <result column="child_id" property="childId" jdbcType="VARCHAR" />
+    <result column="sta_id" property="staId" jdbcType="VARCHAR" />
+    <result column="high_risk_no" property="highRiskNo" jdbcType="VARCHAR" />
+    <result column="high_risk_date" property="highRiskDate" jdbcType="VARCHAR" />
+    <result column="guardian_name" property="guardianName" jdbcType="VARCHAR" />
+    <result column="guardian_tel" property="guardianTel" jdbcType="VARCHAR" />
+    <result column="guardian_home_address" property="guardianHomeAddress" jdbcType="VARCHAR" />
+    <result column="family_conflict" property="familyConflict" jdbcType="VARCHAR" />
+    <result column="disadvantages" property="disadvantages" jdbcType="VARCHAR" />
+    <result column="unemployed" property="unemployed" jdbcType="VARCHAR" />
+    <result column="one_party_death" property="onePartyDeath" jdbcType="VARCHAR" />
+    <result column="parents_too_busy" property="parentsTooBusy" jdbcType="VARCHAR" />
+    <result column="suicidal_tendency" property="suicidalTendency" jdbcType="VARCHAR" />
+    <result column="family_assessment_other" property="familyAssessmentOther" jdbcType="VARCHAR" />
+    <result column="family_assessment_other_instruction" property="familyAssessmentOtherInstruction" jdbcType="VARCHAR" />
+    <result column="provided_service_unit" property="providedServiceUnit" jdbcType="VARCHAR" />
+    <result column="provided_service_unit_instruction" property="providedServiceUnitInstruction" jdbcType="VARCHAR" />
+    <result column="government_policy_resources" property="governmentPolicyResources" jdbcType="VARCHAR" />
+    <result column="government_policy_resources_instruction" property="governmentPolicyResourcesInstruction" jdbcType="VARCHAR" />
+    <result column="civil_society_welfare_resources" property="civilSocietyWelfareResources" jdbcType="VARCHAR" />
+    <result column="civil_society_welfare_resources_instruction" property="civilSocietyWelfareResourcesInstruction" jdbcType="VARCHAR" />
+    <result column="relatives_support" property="relativesSupport" jdbcType="VARCHAR" />
+    <result column="relatives_support_instruction" property="relativesSupportInstruction" jdbcType="VARCHAR" />
+    <result column="relief_resources_other" property="reliefResourcesOther" jdbcType="VARCHAR" />
+    <result column="relief_resources_other_instruction" property="reliefResourcesOtherInstruction" jdbcType="VARCHAR" />
+    <result column="brief_description_case" property="briefDescriptionCase" jdbcType="VARCHAR" />
+    <result column="assessor" property="assessor" jdbcType="VARCHAR" />
+    <result column="assessor_tel" property="assessorTel" jdbcType="VARCHAR" />
+    <result column="do_you_need_follow_up_service" property="doYouNeedFollowUpService" jdbcType="VARCHAR" />
+    <result column="receiver" property="receiver" jdbcType="VARCHAR" />
+    <result column="isdelete" property="isdelete" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+</mapper>

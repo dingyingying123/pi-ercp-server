@@ -108,6 +108,9 @@
       <if test="info.childViolationGuardian != null and info.childViolationGuardian != ''">
          and i.child_violation_guardian like concat('%', #{info.childViolationGuardian}, '%')
       </if>
+      <if test="info.status != null and info.status != ''">
+         and i.status = #{info.childViolationGuardian}
+      </if>
     </where>
     order by i.create_time desc
   </select>

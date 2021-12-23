@@ -37,21 +37,6 @@ public class CommonConstants {
     //查看权限
     public static final String CK = "CK";
 
-    public static String AccountingPerson = "分录知会";
-    public static String BillTransPerson = "应收内部调拨单";
-    public static String HZHZDSZ = "合资合作董事长";
-    public static String HZHZCWZJ = "合资合作财务总监";
-    public static String HZHZZJL = "合资合作总经理";
-    public static String HZHZCWBZ = "合资合作财务部长";
-    public static String HZHZCN = "合资合作出纳";
-    public static String HZHZYWCW = "合资合作业务财务";
-    public static String HZHZZJFH = "合资合作资金复核";
-    public static String HZHZZGLD = "合资合作主管领导";
-    public static String NBJKXMGSCW = "内部借款项目公司财务";
-    public static String NBJKFGSCWZJ = "内部借款分公司财务总监";
-    public static String BHXMKJ = "保函项目会计";
-    public static String BHCWBP = "保函财务BP";
-
     /**
      * 流程审批状态
      */
@@ -61,6 +46,22 @@ public class CommonConstants {
         public static final String APPROVING = "已发送审批";
         public static final String APPROVED = "审批通过";
         public static final String NOTPASS = "审批不通过";
+    }
+
+    /**
+     * 流程审批状态
+     */
+    public static class ServerApprovalStatus {
+        public static final String CASE_SAVE = "接案保存";
+        public static final String CASE_SUBMITED = "接案已提交";
+        public static final String ESTIMATE_SAVE = "预估保存";
+        public static final String ESTIMATE_SUBMITED = "预估已提交";
+        public static final String PLANING = "计划中";
+        public static final String PLANPARTSUBMIT = "计划部分提交";
+        public static final String PLANSUBMITED = "计划已提交";
+        public static final String INTERVENTIONING = "介入中";
+        public static final String INTERVENTIONPARTSUBMIT = "介入部分提交";
+        public static final String INTERVENTIONSUBMITED = "介入已提交";
     }
 
     // 通过delete字段进行控制 1:显示 0:不显示 2：变更中

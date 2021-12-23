@@ -39,11 +39,24 @@
 			targetProject="src/main/java" type="XMLMAPPER" />
 
 
-		<table tableName="server_take_case_info" domainObjectName="ServerTakeCaseInfo" >
-			<generatedKey column="case_id"  sqlStatement="JDBC"/>
+<!--		<table tableName="server_take_case_info" domainObjectName="ServerTakeCaseInfo" >-->
+<!--			<generatedKey column="case_id"  sqlStatement="JDBC"/>-->
+<!--		</table>-->
+<!--		<table tableName="server_take_case_family_member" domainObjectName="ServerTakeCaseFamilyMember" >-->
+<!--			<generatedKey column="mem_id"  sqlStatement="JDBC"/>-->
+<!--		</table>-->
+<!--		<table tableName="server_child_status_info" domainObjectName="ServerChildStatusInfo" >-->
+<!--			<generatedKey column="sta_id"  sqlStatement="JDBC"/>-->
+<!--		</table>-->
+
+		<table tableName="server_estimate_info" domainObjectName="ServerEstimateInfo" >
+			<generatedKey column="est_id"  sqlStatement="JDBC"/>
 		</table>
-		<table tableName="server_take_case_family_member" domainObjectName="ServerTakeCaseFamilyMember" >
-			<generatedKey column="mem_id"  sqlStatement="JDBC"/>
+		<table tableName="server_high_risk_family_info" domainObjectName="ServerHighRiskFamilyInfo" >
+			<generatedKey column="risk_id"  sqlStatement="JDBC"/>
+		</table>
+		<table tableName="server_assessee_child" domainObjectName="ServerAssesseeChild" >
+			<generatedKey column="assessee_id"  sqlStatement="JDBC"/>
 		</table>
 
    </context>
