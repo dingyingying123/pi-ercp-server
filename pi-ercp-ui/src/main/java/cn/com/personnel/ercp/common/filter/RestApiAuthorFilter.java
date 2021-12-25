@@ -75,9 +75,9 @@ public class RestApiAuthorFilter extends BaseFilter implements Filter{
        logger.info("==============token: " + token + ", deviceCode: " + deviceCode);
        Map<String, Object> check = portalTokenService.checkToken(token, "access_token", deviceCode);
        logger.info("==============access_token:" + check);
-//       if (check == null || !"success".equals(check.get("message"))) {
-//           return false;
-//       }
+       if (check == null || !"success".equals(check.get("message"))) {
+           return false;
+       }
 //	   return secUserService.checkAuth(api, ip, userName, password);
 	   return true;
    }

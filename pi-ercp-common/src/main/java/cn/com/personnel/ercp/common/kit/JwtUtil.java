@@ -44,7 +44,8 @@ public class JwtUtil {
         try {
             String key = null;
             if ("access_token".equals(tokenType)) {
-                key = getUsername(token) + uid + "piservice" + deviceCode + 2021;
+//                key = getUsername(token) + uid + "piservice" + deviceCode + 2021;
+                key = getUsername(token) + uid + ApplicationConfig.APP_CODE + deviceCode + 2021;
             } else {
                 returnMap.put("success", false);
                 returnMap.put("code", "05");
@@ -209,7 +210,7 @@ public class JwtUtil {
         String uid = getUID(token);
         String username = getUsername(token);
         Date date = new Date(System.currentTimeMillis() + 120 * 60 * 1000);
-        String key = username + uid + ApplicationConfig.APP_CODE + deviceCode + "2019";
+        String key = username + uid + ApplicationConfig.APP_CODE + deviceCode + "2021";
         return generateToken(key, uid, username, date, "access_token");
     }
 
