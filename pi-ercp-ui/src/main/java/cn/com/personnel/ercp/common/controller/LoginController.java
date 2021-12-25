@@ -201,16 +201,16 @@ public class LoginController extends PageController {
      * 移动端登录
      *
      * @param loginInfo
-     * @param deviceCode
      * @return
      * @throws ParseException
      */
     @RequestMapping("mobileLogin")
     @ResponseBody
-    public ReturnEntity mobileLogin(SecUserVo loginInfo, String deviceCode) throws ParseException, AuthenticationException {
+    public ReturnEntity mobileLogin(SecUserVo loginInfo) throws ParseException, AuthenticationException {
         loginInfo.setLoginIp(getRemortIP(request));
         Map<String, Object> userMap = new HashMap<String, Object>();
         try {
+            String deviceCode = commonConfig.getDeviceCode();
             response.setCharacterEncoding("UTF-8");
             SecUser secUser = loginService.login(loginInfo);
             UsernamePasswordToken token = new UsernamePasswordToken(secUser.getUserId(), secUser.getPwd());

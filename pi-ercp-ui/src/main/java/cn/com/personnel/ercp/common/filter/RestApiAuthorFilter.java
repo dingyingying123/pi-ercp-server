@@ -2,6 +2,8 @@ package cn.com.personnel.ercp.common.filter;
 
 
 import cn.com.personnel.ercp.auth.service.ISecUserService;
+import cn.com.personnel.ercp.common.kit.CommonConfig;
+import cn.com.personnel.ercp.common.service.IPortalTokenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +17,15 @@ import java.io.PrintWriter;
 import java.util.Map;
 
 
-@WebFilter(urlPatterns = "/rest/*", filterName = "apiRestAuthorFilter")
+@WebFilter(urlPatterns = "/pi/*", filterName = "apiRestAuthorFilter")
 public class RestApiAuthorFilter extends BaseFilter implements Filter{
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private ISecUserService secUserService;
-
+    @Autowired
+    IPortalTokenService portalTokenService;
+    @Autowired
+    CommonConfig commonConfig;
     
     @Override
     public void destroy() {
@@ -57,16 +62,25 @@ public class RestApiAuthorFilter extends BaseFilter implements Filter{
 	   String api = request.getRequestURI();
        String ip = getIPAddress(request);
        Map<String,String> userPwd= getBaseAuthUserPwd(request);
-       if(userPwd == null){
-    	   return false;
-       }
+//       if(userPwd == null){
+//    	   return false;
+//       }
        logger.info("=========api:" + api);
        logger.info("=========ip:" + ip);
        logger.info("=========userPwd:" + userPwd);
-       String userName= userPwd.get("userName");
-       String password= userPwd.get("password");
-	   return secUserService.checkAuth(api, ip, userName, password);
-   }  
+//       String userName= userPwd.get("userName");
+//       String password= userPwd.get("password");
+       String token = request.getHeader("token");
+       String deviceCode = commonConfig.getDeviceCode();
+       logger.info("==============token: " + token + ", deviceCode: " + deviceCode);
+       Map<String, Object> check = portalTokenService.checkToken(token, "access_token", deviceCode);
+       logger.info("==============access_token:" + check);
+//       if (check == null || !"success".equals(check.get("message"))) {
+//           return false;
+//       }
+//	   return secUserService.checkAuth(api, ip, userName, password);
+	   return true;
+   }
     
     public void nextStep(HttpServletRequest request, HttpServletResponse response) throws IOException {  
         PrintWriter pw = response.getWriter();  

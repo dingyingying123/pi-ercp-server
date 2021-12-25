@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.server.ServerAvailableResourcesInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.server.ServerAvailableResourcesInfo" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ava_id" property="avaId" jdbcType="VARCHAR" />
+    <result column="sta_id" property="staId" jdbcType="VARCHAR" />
+    <result column="child_id" property="childId" jdbcType="VARCHAR" />
+    <result column="available_no" property="availableNo" jdbcType="VARCHAR" />
+    <result column="child_name" property="childName" jdbcType="VARCHAR" />
+    <result column="available_date" property="availableDate" jdbcType="VARCHAR" />
+    <result column="children_service_agency_tel" property="childrenServiceAgencyTel" jdbcType="VARCHAR" />
+    <result column="children_service_agency_address" property="childrenServiceAgencyAddress" jdbcType="VARCHAR" />
+    <result column="children_service_agency_can_help" property="childrenServiceAgencyCanHelp" jdbcType="VARCHAR" />
+    <result column="children_hospital_tel" property="childrenHospitalTel" jdbcType="VARCHAR" />
+    <result column="children_hospital_address" property="childrenHospitalAddress" jdbcType="VARCHAR" />
+    <result column="children_hospital_can_help" property="childrenHospitalCanHelp" jdbcType="VARCHAR" />
+    <result column="private_service_organization_tel" property="privateServiceOrganizationTel" jdbcType="VARCHAR" />
+    <result column="private_service_organization_address" property="privateServiceOrganizationAddress" jdbcType="VARCHAR" />
+    <result column="private_service_organization_can_help" property="privateServiceOrganizationCanHelp" jdbcType="VARCHAR" />
+    <result column="various_foundations_tel" property="variousFoundationsTel" jdbcType="VARCHAR" />
+    <result column="various_foundations_address" property="variousFoundationsAddress" jdbcType="VARCHAR" />
+    <result column="various_foundations_can_help" property="variousFoundationsCanHelp" jdbcType="VARCHAR" />
+    <result column="community_committees_tel" property="communityCommitteesTel" jdbcType="VARCHAR" />
+    <result column="community_committees_address" property="communityCommitteesAddress" jdbcType="VARCHAR" />
+    <result column="community_committees_can_help" property="communityCommitteesCanHelp" jdbcType="VARCHAR" />
+    <result column="community_hospital_tel" property="communityHospitalTel" jdbcType="VARCHAR" />
+    <result column="community_hospital_address" property="communityHospitalAddress" jdbcType="VARCHAR" />
+    <result column="community_hospital_can_help" property="communityHospitalCanHelp" jdbcType="VARCHAR" />
+    <result column="community_volunteers_tel" property="communityVolunteersTel" jdbcType="VARCHAR" />
+    <result column="community_volunteers_address" property="communityVolunteersAddress" jdbcType="VARCHAR" />
+    <result column="community_volunteers_can_help" property="communityVolunteersCanHelp" jdbcType="VARCHAR" />
+    <result column="community_organization_community_hospital_tel" property="communityOrganizationCommunityHospitalTel" jdbcType="VARCHAR" />
+    <result column="community_organization_community_hospital_address" property="communityOrganizationCommunityHospitalAddress" jdbcType="VARCHAR" />
+    <result column="community_organization_community_hospital_can_help" property="communityOrganizationCommunityHospitalCanHelp" jdbcType="VARCHAR" />
+    <result column="community_unit_tel" property="communityUnitTel" jdbcType="VARCHAR" />
+    <result column="community_unit_address" property="communityUnitAddress" jdbcType="VARCHAR" />
+    <result column="community_unit_can_help" property="communityUnitCanHelp" jdbcType="VARCHAR" />
+    <result column="nearby_police_station_tel" property="nearbyPoliceStationTel" jdbcType="VARCHAR" />
+    <result column="nearby_police_station_address" property="nearbyPoliceStationAddress" jdbcType="VARCHAR" />
+    <result column="nearby_police_station_can_help" property="nearbyPoliceStationCanHelp" jdbcType="VARCHAR" />
+    <result column="school_principal_tel" property="schoolPrincipalTel" jdbcType="VARCHAR" />
+    <result column="school_principal_address" property="schoolPrincipalAddress" jdbcType="VARCHAR" />
+    <result column="school_principal_can_help" property="schoolPrincipalCanHelp" jdbcType="VARCHAR" />
+    <result column="school_counselor_tel" property="schoolCounselorTel" jdbcType="VARCHAR" />
+    <result column="school_counselor_address" property="schoolCounselorAddress" jdbcType="VARCHAR" />
+    <result column="school_counselor_can_help" property="schoolCounselorCanHelp" jdbcType="VARCHAR" />
+    <result column="head_teacher_tel" property="headTeacherTel" jdbcType="VARCHAR" />
+    <result column="head_teacher_address" property="headTeacherAddress" jdbcType="VARCHAR" />
+    <result column="head_teacher_can_help" property="headTeacherCanHelp" jdbcType="VARCHAR" />
+    <result column="school_counseling_teacher_tel" property="schoolCounselingTeacherTel" jdbcType="VARCHAR" />
+    <result column="school_counseling_teacher_address" property="schoolCounselingTeacherAddress" jdbcType="VARCHAR" />
+    <result column="school_counseling_teacher_can_help" property="schoolCounselingTeacherCanHelp" jdbcType="VARCHAR" />
+    <result column="various_related_policies_tel" property="variousRelatedPoliciesTel" jdbcType="VARCHAR" />
+    <result column="various_related_policies_address" property="variousRelatedPoliciesAddress" jdbcType="VARCHAR" />
+    <result column="various_related_policies_can_help" property="variousRelatedPoliciesCanHelp" jdbcType="VARCHAR" />
+    <result column="care_next_generation_committee_tel" property="careNextGenerationCommitteeTel" jdbcType="VARCHAR" />
+    <result column="care_next_generation_committee_address" property="careNextGenerationCommitteeAddress" jdbcType="VARCHAR" />
+    <result column="care_next_generation_committee_can_help" property="careNextGenerationCommitteeCanHelp" jdbcType="VARCHAR" />
+    <result column="local_civil_affairs_department_tel" property="localCivilAffairsDepartmentTel" jdbcType="VARCHAR" />
+    <result column="local_civil_affairs_department_address" property="localCivilAffairsDepartmentAddress" jdbcType="VARCHAR" />
+    <result column="local_civil_affairs_department_can_help" property="localCivilAffairsDepartmentCanHelp" jdbcType="VARCHAR" />
+    <result column="local_women_federation_tel" property="localWomenFederationTel" jdbcType="VARCHAR" />
+    <result column="local_women_federation_address" property="localWomenFederationAddress" jdbcType="VARCHAR" />
+    <result column="local_women_federation_can_help" property="localWomenFederationCanHelp" jdbcType="VARCHAR" />
+    <result column="local_education_expert_tel" property="localEducationExpertTel" jdbcType="VARCHAR" />
+    <result column="local_education_expert_address" property="localEducationExpertAddress" jdbcType="VARCHAR" />
+    <result column="local_education_expert_can_help" property="localEducationExpertCanHelp" jdbcType="VARCHAR" />
+    <result column="local_childcare_expert_tel" property="localChildcareExpertTel" jdbcType="VARCHAR" />
+    <result column="local_childcare_expert_address" property="localChildcareExpertAddress" jdbcType="VARCHAR" />
+    <result column="local_childcare_expert_can_help" property="localChildcareExpertCanHelp" jdbcType="VARCHAR" />
+    <result column="policy_resources_other_tel" property="policyResourcesOtherTel" jdbcType="VARCHAR" />
+    <result column="policy_resources_other_address" property="policyResourcesOtherAddress" jdbcType="VARCHAR" />
+    <result column="policy_resources_other_can_help" property="policyResourcesOtherCanHelp" jdbcType="VARCHAR" />
+    <result column="receiver" property="receiver" jdbcType="VARCHAR" />
+    <result column="isdelete" property="isdelete" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+</mapper>

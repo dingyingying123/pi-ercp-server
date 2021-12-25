@@ -59,7 +59,7 @@ spring:
       max-wait: 1
     timeout: 0
     database: 1
-    password: hfj8cq!u2^
+    password:
 
 logging:
   config: classpath:logback-dev.xml
@@ -69,7 +69,7 @@ logging:
 app:
   app_code: pi
   app_name: 儿童服务平台
-  app_module: devlop                #factory/devlop
+  app_module: factory                #factory/devlop
   app_cookie_name: pi_cookie_dev
   expire_time: 7200000  #过期时间
 

@@ -3,6 +3,7 @@ package cn.com.personnel.ercp.common.filter;
 import cn.com.personnel.ercp.auth.impl.SecUserService;
 import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
 import cn.com.personnel.ercp.common.kit.JwtUtil;
+import cn.com.personnel.ercp.common.service.IPortalTokenService;
 import cn.com.personnel.ercp.framework.auth.SecurityContext;
 import eu.bitwalker.useragentutils.DeviceType;
 import eu.bitwalker.useragentutils.OperatingSystem;
@@ -31,6 +32,7 @@ public class AuthorInterceptor implements HandlerInterceptor {
     @Autowired
     SecUserService secUserService;
 
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         logger.info("============AuthorFilter执行=============");
@@ -54,7 +56,7 @@ public class AuthorInterceptor implements HandlerInterceptor {
             UserAgent ua = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
             OperatingSystem os = ua.getOperatingSystem();
             logger.info("设备类型：" + os.getDeviceType());
-            if(DeviceType.MOBILE.getName().equals(os.getDeviceType().getName())) {//移动端
+//            if(DeviceType.MOBILE.getName().equals(os.getDeviceType().getName())) {//移动端
                 logger.info("移动连接");
                 String token = request.getHeader("token");
                 String deviceCode = request.getParameter("deviceCode");
@@ -62,37 +64,43 @@ public class AuthorInterceptor implements HandlerInterceptor {
                 if(!StringUtils.isEmpty(token)){
                     userId = JwtUtil.getUID(token);
                     logger.info("==============用户信息:" + userId);
+//                    Map<String, Object> check = portalTokenService.checkToken(token, "access_token", deviceCode);
+//                    logger.info("==============access_token:" + check);
+//                    if (check == null || !"success".equals(check.get("message"))) {
+//                        return false;
+//                    }
                     //验证token
                     Map<String, Object> tokenMap = JwtUtil.verify(token, userId, "access_token", deviceCode);
                     logger.info("==============token验证：" + tokenMap);
                     if(!(Boolean) (tokenMap.get("success"))){
                         return false;
                     }
-                    //向session中插入用户信息，可以按需插入相关用户信息
-                    secUser.setUserId(userId);
-                    secUser.setUserName(JwtUtil.getUsername(token));
-                    subject.getSession().setAttribute(SecurityContext.Authentication, secUser);
-                }
-            }else{
-                logger.info("pc连接");
-                userId = request.getParameter("userId");
-                //前后端分离的系统，用sign方式验证，非前后端分离的系统不用sign方式验证
-                String sign = request.getParameter("sign") == null ? "" : request.getParameter("sign");
-                String genKey = DigestUtils.md5DigestAsHex((userId + "@" ).getBytes());
-//                        + wbsApiConfig.getEisPassword()).getBytes()
 
-                if (!genKey.equals(sign)) {
-                    logger.info("验证错误");
-                    return false;
+                    //向session中插入用户信息，可以按需插入相关用户信息
+//                    secUser.setUserId(userId);
+//                    secUser.setUserName(JwtUtil.getUsername(token));
+//                    subject.getSession().setAttribute(SecurityContext.Authentication, secUser);
                 }
-                Map<String, Object> userMap = new HashMap<String, Object>();
-                secUser = secUserService.selectByUserId(userId);
-                UsernamePasswordToken tokenUser = new UsernamePasswordToken(secUser.getUserId(), secUser.getPwd());
-                subject.login(tokenUser);
-                if (subject.isAuthenticated()) {
-                    subject.getSession().setAttribute(SecurityContext.Authentication, secUser);
-                }
-            }
+//            }else{
+//                logger.info("pc连接");
+//                userId = request.getParameter("userId");
+//                //前后端分离的系统，用sign方式验证，非前后端分离的系统不用sign方式验证
+//                String sign = request.getParameter("sign") == null ? "" : request.getParameter("sign");
+//                String genKey = DigestUtils.md5DigestAsHex((userId + "@" ).getBytes());
+////                        + wbsApiConfig.getEisPassword()).getBytes()
+//
+//                if (!genKey.equals(sign)) {
+//                    logger.info("验证错误");
+//                    return false;
+//                }
+//                Map<String, Object> userMap = new HashMap<String, Object>();
+//                secUser = secUserService.selectByUserId(userId);
+//                UsernamePasswordToken tokenUser = new UsernamePasswordToken(secUser.getUserId(), secUser.getPwd());
+//                subject.login(tokenUser);
+//                if (subject.isAuthenticated()) {
+//                    subject.getSession().setAttribute(SecurityContext.Authentication, secUser);
+//                }
+//            }
             return true;
         }catch (Exception e){
             e.printStackTrace();

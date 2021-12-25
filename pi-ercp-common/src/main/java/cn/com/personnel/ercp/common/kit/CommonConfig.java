@@ -225,18 +225,10 @@ public class CommonConfig {
         return env.getProperty("oa.serverUrl")+"/seeyon/login/portalsso";
     }
 
-    /*===========CES开始==============*/
-    public String getCesOnlineTime(){
-        return env.getProperty("ces.onlineTime");
+    /*===========token开始==============*/
+    public String getDeviceCode(){
+        return env.getProperty("token.deviceCode");
     }
-    public String getCesServerUrl(){
-        return env.getProperty("ces.serverUrl");
-    }
-    public String getCesUserName(){
-        return env.getProperty("ces.userName");
-    }
-    public String getCesPassword(){
-        return env.getProperty("ces.password");
-    }
+
     /*===========SAP结束==============*/
 }

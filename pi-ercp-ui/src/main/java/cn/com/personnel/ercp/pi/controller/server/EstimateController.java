@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * 预估
  */
 @Controller
-@RequestMapping("/estimate")
+@RequestMapping("/pi/estimate")
 public class EstimateController extends PageController {
     @Autowired
     IEstimateService estimateService;

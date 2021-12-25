@@ -3,6 +3,7 @@ package cn.com.personnel.ercp.common.service;
 import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
 import cn.com.personnel.ercp.auth.persistence.mapper.SecUserMapper;
 import cn.com.personnel.ercp.auth.service.ISecUserService;
+import cn.com.personnel.ercp.common.kit.CommonConfig;
 import cn.com.personnel.ercp.framework.config.ApplicationConfig;
 import cn.com.personnel.ercp.framework.exception.AuthenticationException;
 import org.apache.commons.lang3.StringUtils;
@@ -78,7 +79,7 @@ public class LoginService extends BaseLoginService implements ILoginService {
                 try{
 //                    oimCheckLogin(secUser.getUserId(), pwd);
 //                     新的认证
-                    boolean authByRest = authenticate(secUser, pwd);
+                    boolean authByRest = authenticate(user, pwd);
                     if (!authByRest) {
                         if (locale.toString().equals("en_US")){
                             throw new AuthenticationException("1002","Username or password incorrect");

@@ -123,7 +123,7 @@ public class ShiroConfiguration {
         Collection<SessionListener> listeners = new ArrayList<SessionListener>();
         listeners.add(customShiroSessionListener);
         sessionManager.setSessionListeners(listeners);
-        sessionManager.setSessionDAO(redisSessionDAO());
+//        sessionManager.setSessionDAO(redisSessionDAO());
         return sessionManager;
     }
 

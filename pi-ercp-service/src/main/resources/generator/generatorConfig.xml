@@ -30,12 +30,12 @@
 		</jdbcConnection>
 
 		<!--生成代码地址-->
-		<javaModelGenerator targetPackage="cn.com.personnel.ercp.pi.persistence.entity.server"
+		<javaModelGenerator targetPackage="cn.com.personnel.ercp.auth.persistence.entity.server"
 			targetProject="D:\git\pi-ercp-server\pi-ercp-common/src/main/java" />
-		<sqlMapGenerator targetPackage="persistence.xml.server"
+		<sqlMapGenerator targetPackage="persistence.xml.auth"
 			targetProject="src/main/resources" />
 
-		<javaClientGenerator targetPackage="cn.com.personnel.ercp.pi.persistence.mapper.server"
+		<javaClientGenerator targetPackage="cn.com.personnel.ercp.auth.persistence.mapper.server"
 			targetProject="src/main/java" type="XMLMAPPER" />
 
 
@@ -49,14 +49,27 @@
 <!--			<generatedKey column="sta_id"  sqlStatement="JDBC"/>-->
 <!--		</table>-->
 
-		<table tableName="server_estimate_info" domainObjectName="ServerEstimateInfo" >
-			<generatedKey column="est_id"  sqlStatement="JDBC"/>
-		</table>
-		<table tableName="server_high_risk_family_info" domainObjectName="ServerHighRiskFamilyInfo" >
-			<generatedKey column="risk_id"  sqlStatement="JDBC"/>
-		</table>
-		<table tableName="server_assessee_child" domainObjectName="ServerAssesseeChild" >
-			<generatedKey column="assessee_id"  sqlStatement="JDBC"/>
+<!--		<table tableName="server_estimate_info" domainObjectName="ServerEstimateInfo" >-->
+<!--			<generatedKey column="est_id"  sqlStatement="JDBC"/>-->
+<!--		</table>-->
+<!--		<table tableName="server_high_risk_family_info" domainObjectName="ServerHighRiskFamilyInfo" >-->
+<!--			<generatedKey column="risk_id"  sqlStatement="JDBC"/>-->
+<!--		</table>-->
+<!--		<table tableName="server_assessee_child" domainObjectName="ServerAssesseeChild" >-->
+<!--			<generatedKey column="assessee_id"  sqlStatement="JDBC"/>-->
+<!--		</table>-->
+<!--		<table tableName="server_available_resources_info" domainObjectName="ServerAvailableResourcesInfo" >-->
+<!--			<generatedKey column="ava_id"  sqlStatement="JDBC"/>-->
+<!--		</table>-->
+<!--		<table tableName="server_plan_info" domainObjectName="ServerPlanInfo" >-->
+<!--			<generatedKey column="plan_id"  sqlStatement="JDBC"/>-->
+<!--		</table>-->
+<!--		<table tableName="server_interview_intervention_info" domainObjectName="ServerInterviewInterventionInfo" >-->
+<!--			<generatedKey column="view_id"  sqlStatement="JDBC"/>-->
+<!--		</table>-->
+
+		<table tableName="sec_token" domainObjectName="SecToken" >
+			<generatedKey column="token_id"  sqlStatement="JDBC"/>
 		</table>
 
    </context>

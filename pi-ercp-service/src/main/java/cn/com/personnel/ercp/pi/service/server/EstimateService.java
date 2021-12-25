@@ -80,7 +80,7 @@ public class EstimateService extends BaseService implements IEstimateService {
         if(StringUtils.isNotEmpty(serverEstimateInfoVO.getEstId())){
             String estId = UUIDKit.getUUID();
             serverEstimateInfoVO.setEstId(estId);
-            serverEstimateInfoVO.setEstimateStatus(CommonConstants.ServerApprovalStatus.ESTIMATE_SAVE);
+            serverEstimateInfoVO.setStatus(CommonConstants.ServerApprovalStatus.ESTIMATE_SAVE);
             serverEstimateInfoVO.setCreator(secUser.getUserId());
             serverEstimateInfoVO.setCreateTime(new Date());
             serverEstimateInfoMapper.insert(serverEstimateInfoVO);

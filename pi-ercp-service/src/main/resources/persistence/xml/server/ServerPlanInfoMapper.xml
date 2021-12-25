@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.server.ServerPlanInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.server.ServerPlanInfo" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="plan_id" property="planId" jdbcType="VARCHAR" />
+    <result column="sta_id" property="staId" jdbcType="VARCHAR" />
+    <result column="child_id" property="childId" jdbcType="VARCHAR" />
+    <result column="plan_no" property="planNo" jdbcType="VARCHAR" />
+    <result column="child_name" property="childName" jdbcType="VARCHAR" />
+    <result column="problem_escription" property="problemEscription" jdbcType="VARCHAR" />
+    <result column="expected_goal" property="expectedGoal" jdbcType="VARCHAR" />
+    <result column="specific_strategies_and_methods" property="specificStrategiesAndMethods" jdbcType="VARCHAR" />
+    <result column="executor" property="executor" jdbcType="VARCHAR" />
+    <result column="expected_execution" property="expectedExecution" jdbcType="VARCHAR" />
+    <result column="implementation_status" property="implementationStatus" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="plan_date" property="planDate" jdbcType="VARCHAR" />
+    <result column="receiver" property="receiver" jdbcType="VARCHAR" />
+    <result column="isdelete" property="isdelete" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <resultMap id="BaseResultMapVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.server.ServerPlanInfoVO">
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="child_id_no" jdbcType="VARCHAR" property="childIdNo" />
+    <result column="child_tel_no" jdbcType="VARCHAR" property="childTelNo" />
+    <result column="child_nationality" jdbcType="VARCHAR" property="childNationality" />
+    <result column="child_male" jdbcType="VARCHAR" property="childMale" />
+    <result column="child_account_address" jdbcType="VARCHAR" property="childAccountAddress" />
+    <result column="child_current_address" jdbcType="VARCHAR" property="childCurrentAddress" />
+    <result column="child_health_status" jdbcType="VARCHAR" property="childHealthStatus" />
+    <result column="child_escalation_type" jdbcType="VARCHAR" property="childEscalationType" />
+    <result column="child_disability_type" jdbcType="VARCHAR" property="childDisabilityType" />
+    <result column="child_disability_level" jdbcType="VARCHAR" property="childDisabilityLevel" />
+    <result column="child_disease_type" jdbcType="VARCHAR" property="childDiseaseType" />
+    <result column="child_school_attendance" jdbcType="VARCHAR" property="childSchoolAttendance" />
+    <result column="child_other_cases" jdbcType="VARCHAR" property="childOtherCases" />
+    <result column="child_poverty_alleviation_implementation" jdbcType="VARCHAR" property="childPovertyAlleviationImplementation" />
+    <result column="child_violation_guardian" jdbcType="VARCHAR" property="childViolationGuardian" />
+    <result column="father_name" jdbcType="VARCHAR" property="fatherName" />
+    <result column="father_id_no" jdbcType="VARCHAR" property="fatherIdNo" />
+    <result column="father_tel_no" jdbcType="VARCHAR" property="fatherTelNo" />
+    <result column="father_account_address" jdbcType="VARCHAR" property="fatherAccountAddress" />
+    <result column="father_current_address" jdbcType="VARCHAR" property="fatherCurrentAddress" />
+    <result column="father_health_status" jdbcType="VARCHAR" property="fatherHealthStatus" />
+    <result column="father_disability_type" jdbcType="VARCHAR" property="fatherDisabilityType" />
+    <result column="father_disability_level" jdbcType="VARCHAR" property="fatherDisabilityLevel" />
+    <result column="father_disease_type" jdbcType="VARCHAR" property="fatherDiseaseType" />
+    <result column="father_family_income" jdbcType="VARCHAR" property="fatherFamilyIncome" />
+    <result column="father_other_cases" jdbcType="VARCHAR" property="fatherOtherCases" />
+    <result column="mother_name" jdbcType="VARCHAR" property="motherName" />
+    <result column="mother_id_no" jdbcType="VARCHAR" property="motherIdNo" />
+    <result column="mother_tel_no" jdbcType="VARCHAR" property="motherTelNo" />
+    <result column="mother_account_address" jdbcType="VARCHAR" property="motherAccountAddress" />
+    <result column="mother_current_address" jdbcType="VARCHAR" property="motherCurrentAddress" />
+    <result column="mother_health_status" jdbcType="VARCHAR" property="motherHealthStatus" />
+    <result column="mother_disability_type" jdbcType="VARCHAR" property="motherDisabilityType" />
+    <result column="mother_disability_level" jdbcType="VARCHAR" property="motherDisabilityLevel" />
+    <result column="mother_disease_type" jdbcType="VARCHAR" property="motherDiseaseType" />
+    <result column="mother_family_income" jdbcType="VARCHAR" property="motherFamilyIncome" />
+    <result column="mother_other_cases" jdbcType="VARCHAR" property="motherOtherCases" />
+    <result column="other_guardian_name" jdbcType="VARCHAR" property="otherGuardianName" />
+    <result column="other_guardian_id_no" jdbcType="VARCHAR" property="otherGuardianIdNo" />
+    <result column="other_guardian_tel_no" jdbcType="VARCHAR" property="otherGuardianTelNo" />
+    <result column="other_guardian_relationship_with_children" jdbcType="VARCHAR" property="otherGuardianRelationshipWithChildren" />
+    <result column="other_guardian_health_status" jdbcType="VARCHAR" property="otherGuardianHealthStatus" />
+    <result column="other_guardian_disability_type" jdbcType="VARCHAR" property="otherGuardianDisabilityType" />
+    <result column="other_guardian_disability_level" jdbcType="VARCHAR" property="otherGuardianDisabilityLevel" />
+    <result column="other_guardian_disease_type" jdbcType="VARCHAR" property="otherGuardianDiseaseType" />
+    <result column="other_guardian_reasons" jdbcType="VARCHAR" property="otherGuardianReasons" />
+    <result column="organization_name" jdbcType="VARCHAR" property="organizationName" />
+    <result column="organization_principal" jdbcType="VARCHAR" property="organizationPrincipal" />
+    <result column="organization_tel_no" jdbcType="VARCHAR" property="organizationTelNo" />
+    <result column="organization_nature" jdbcType="VARCHAR" property="organizationNature" />
+    <result column="organization_residential_address" jdbcType="VARCHAR" property="organizationResidentialAddress" />
+    <result column="help_suggestions" jdbcType="VARCHAR" property="helpSuggestions" />
+    <result column="security_fee_collection_method" jdbcType="VARCHAR" property="securityFeeCollectionMethod" />
+    <result column="security_fee_collector" jdbcType="VARCHAR" property="securityFeeCollector" />
+    <result column="security_fee_recipient_relationship" jdbcType="VARCHAR" property="securityFeeRecipientRelationship" />
+    <result column="security_fee_guarantee_standard" jdbcType="VARCHAR" property="securityFeeGuaranteeStandard" />
+    <result column="case_status" property="caseStatus" jdbcType="VARCHAR" />
+    <result column="estimate_status" property="estimateStatus" jdbcType="VARCHAR" />
+    <result column="plan_status" property="planStatus" jdbcType="VARCHAR" />
+    <result column="intervention_status" property="interventionStatus" jdbcType="VARCHAR" />
+    <result column="evaluate_status" property="evaluateStatus" jdbcType="VARCHAR" />
+    <result column="case_closed_status" property="caseClosedStatus" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="queryPlanList" resultMap="BaseResultMapVO">
+    select * from server_plan_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
+    <where>
+      <if test="childName != null and childName != '' ">
+        i.child_name like concat('%', #{childName}, '%')
+      </if>
+      <if test="childId != null and childId != '' ">
+        and i.child_id = #{childId}
+      </if>
+      <if test="area != null and area != '' ">
+        and b.area like concat('%', #{area}, '%')
+      </if>
+      <if test="planStatus != null and planStatus != ''">
+        and s.plan_status = #{planStatus}
+      </if>
+    </where>
+    order by plan_date deac
+  </select>
+</mapper>

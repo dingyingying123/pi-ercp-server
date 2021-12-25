@@ -1,0 +1,127 @@
+package cn.com.personnel.ercp.pi.service.server;
+
+import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
+import cn.com.personnel.ercp.common.constants.CommonConstants;
+import cn.com.personnel.ercp.common.persistence.entity.ReturnEntity;
+import cn.com.personnel.ercp.framework.kit.UUIDKit;
+import cn.com.personnel.ercp.pi.module.server.ServerEstimateInfoVO;
+import cn.com.personnel.ercp.pi.module.server.ServerPlanInfoVO;
+import cn.com.personnel.ercp.pi.persistence.entity.server.ServerChildStatusInfo;
+import cn.com.personnel.ercp.pi.persistence.entity.server.ServerPlanInfo;
+import cn.com.personnel.ercp.pi.persistence.mapper.server.ServerChildStatusInfoMapper;
+import cn.com.personnel.ercp.pi.persistence.mapper.server.ServerEstimateInfoMapper;
+import cn.com.personnel.ercp.pi.persistence.mapper.server.ServerPlanInfoMapper;
+import cn.com.personnel.springboot.framework.core.page.PagenationQueryParameter;
+import cn.com.personnel.springboot.framework.service.BaseService;
+import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
+
+import java.util.Date;
+import java.util.List;
+
+@Service
+public class PlanService extends BaseService implements IPlanService {
+    @Autowired
+    ServerEstimateInfoMapper serverEstimateInfoMapper;
+    @Autowired
+    ServerChildStatusInfoMapper serverChildStatusInfoMapper;
+    @Autowired
+    ServerPlanInfoMapper serverPlanInfoMapper;
+
+    @Override
+    public ReturnEntity queryPlanList(ServerPlanInfoVO serverPlanInfoVO, PagenationQueryParameter buildPagenation) {
+        setPageHelper(buildPagenation);
+        List<ServerPlanInfoVO> queryPlanList = serverPlanInfoMapper.queryPlanList(serverPlanInfoVO);
+        return ReturnEntity.ok(new PageInfo<>(queryPlanList));
+    }
+
+    @Override
+    public ReturnEntity queryPlanInfo(ServerPlanInfoVO serverPlanInfoVO) {
+        if(serverPlanInfoVO == null || StringUtils.isNotEmpty(serverPlanInfoVO.getPlanId())){
+            return ReturnEntity.errorMsg("参数错误！");
+        }
+        ServerPlanInfoVO planInfoVO = (ServerPlanInfoVO) serverPlanInfoMapper.selectByPrimaryKey(serverPlanInfoVO.getPlanId());
+
+        ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(planInfoVO.getStaId());
+        planInfoVO.setCaseStatus(serverChildStatusInfo.getCaseStatus());
+        planInfoVO.setEstimateStatus(serverChildStatusInfo.getEstimateStatus());
+        planInfoVO.setPlanStatus(serverChildStatusInfo.getPlanStatus());
+        planInfoVO.setInterventionStatus(serverChildStatusInfo.getInterventionStatus());
+        planInfoVO.setEvaluateStatus(serverChildStatusInfo.getEvaluateStatus());
+        planInfoVO.setCaseClosedStatus(serverChildStatusInfo.getCaseClosedStatus());
+        return ReturnEntity.ok(planInfoVO);
+    }
+
+    @Override
+    public ReturnEntity querySubmitEstimateList(ServerEstimateInfoVO serverEstimateInfoVO, PagenationQueryParameter buildPagenation) {
+        setPageHelper(buildPagenation);
+        serverEstimateInfoVO.setEstimateStatus(CommonConstants.ServerApprovalStatus.ESTIMATE_SUBMITED);
+        List<ServerEstimateInfoVO> serverEstimateInfoVOList = serverEstimateInfoMapper.queryEstimateList(serverEstimateInfoVO);
+        return ReturnEntity.ok(new PageInfo<>(serverEstimateInfoVOList));
+    }
+
+    @Override
+    public ReturnEntity savePlanInfo(ServerPlanInfoVO serverPlanInfoVO, SecUser secUser) {
+        if(StringUtils.isNotEmpty(serverPlanInfoVO.getPlanId())){
+            String planId = UUIDKit.getUUID();
+            serverPlanInfoVO.setPlanId(planId);
+            serverPlanInfoVO.setStatus(CommonConstants.ServerApprovalStatus.PLAN_SAVE);
+            serverPlanInfoVO.setCreator(secUser.getUserId());
+            serverPlanInfoVO.setCreateTime(new Date());
+            serverPlanInfoMapper.insert(serverPlanInfoVO);
+
+            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(serverPlanInfoVO.getStaId());
+            serverChildStatusInfo.setEstimateStatus(CommonConstants.ServerApprovalStatus.PLANING);
+            serverChildStatusInfo.setUpdator(secUser.getUserId());
+            serverChildStatusInfo.setUpdateTime(new Date());
+            serverChildStatusInfoMapper.updateByPrimaryKeySelective(serverChildStatusInfo);
+        }else{
+            serverPlanInfoVO.setUpdator(secUser.getUserId());
+            serverPlanInfoVO.setUpdateTime(new Date());
+            serverPlanInfoMapper.updateByPrimaryKeySelective(serverPlanInfoVO);
+        }
+        return ReturnEntity.ok(serverPlanInfoVO);
+    }
+
+    @Override
+    public ReturnEntity deletePlanInfo(ServerPlanInfoVO serverPlanInfoVO) {
+        if(StringUtils.isEmpty(serverPlanInfoVO.getPlanId())){
+            return ReturnEntity.errorMsg("参数错误！");
+        }
+        ServerPlanInfo serverPlanInfo = serverPlanInfoMapper.selectByPrimaryKey(serverPlanInfoVO.getPlanId());
+        if(CommonConstants.ServerApprovalStatus.PLANSUBMITED.equals(serverPlanInfo.getStatus())){
+            return ReturnEntity.errorMsg("计划已提交，不能删除！");
+        }
+
+        serverPlanInfoMapper.deleteByPrimaryKey(serverPlanInfoVO.getPlanId());
+        serverChildStatusInfoMapper.deleteByPrimaryKey(serverPlanInfo.getStaId());
+        return ReturnEntity.ok(serverPlanInfoVO);
+    }
+
+    @Override
+    public ReturnEntity submitPlanInfo(ServerPlanInfoVO serverPlanInfoVO, SecUser secUser) {
+        if(StringUtils.isEmpty(serverPlanInfoVO.getPlanId())){
+            return ReturnEntity.errorMsg("参数错误！");
+        }
+        serverPlanInfoVO.setStatus(CommonConstants.ServerApprovalStatus.PLANPARTSUBMIT);
+        serverPlanInfoVO.setUpdateTime(new Date());
+        serverPlanInfoVO.setUpdator(secUser.getUserId());
+        serverPlanInfoMapper.updateByPrimaryKeySelective(serverPlanInfoVO);
+
+        ServerChildStatusInfo statusInfo = new ServerChildStatusInfo();
+        statusInfo.setStaId(serverPlanInfoVO.getStaId());
+        if("全部提交".equals(serverPlanInfoVO.getAllSubmit())){
+            statusInfo.setCaseStatus(CommonConstants.ServerApprovalStatus.PLANSUBMITED);
+        }else {
+            statusInfo.setCaseStatus(CommonConstants.ServerApprovalStatus.PLANPARTSUBMIT);
+        }
+        statusInfo.setUpdator(secUser.getUserId());
+        statusInfo.setUpdateTime(new Date());
+        serverChildStatusInfoMapper.updateByPrimaryKeySelective(statusInfo);
+
+        return ReturnEntity.ok(serverPlanInfoVO);
+    }
+}

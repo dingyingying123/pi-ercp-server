@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
-@RequestMapping("/piChildrenBaseInfo")
+@RequestMapping("/pi/piChildrenBaseInfo")
 public class PiChildrenBaseInfoController extends PageController {
 
     @Autowired

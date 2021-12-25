@@ -56,6 +56,7 @@ public class CommonConstants {
         public static final String CASE_SUBMITED = "接案已提交";
         public static final String ESTIMATE_SAVE = "预估保存";
         public static final String ESTIMATE_SUBMITED = "预估已提交";
+        public static final String PLAN_SAVE = "计划保存";
         public static final String PLANING = "计划中";
         public static final String PLANPARTSUBMIT = "计划部分提交";
         public static final String PLANSUBMITED = "计划已提交";

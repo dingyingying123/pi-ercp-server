@@ -9,7 +9,7 @@ public class AuthorAdapter extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new AuthorInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(new AuthorInterceptor()).addPathPatterns("/pi/**");
         super.addInterceptors(registry);
     }
 

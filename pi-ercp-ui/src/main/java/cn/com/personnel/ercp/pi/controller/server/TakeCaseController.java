@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * 接案
  */
 @Controller
-@RequestMapping("/takeCase")
+@RequestMapping("/pi/takeCase")
 public class TakeCaseController extends PageController {
     @Autowired
     ITakeCaseService takeCaseService;
