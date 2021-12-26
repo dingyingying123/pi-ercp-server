@@ -210,7 +210,7 @@ public class EstimateService extends BaseService implements IEstimateService {
 
         ServerChildStatusInfo statusInfo = new ServerChildStatusInfo();
         statusInfo.setStaId(serverEstimateInfoVO.getStaId());
-        statusInfo.setCaseStatus(CommonConstants.ServerApprovalStatus.ESTIMATE_SUBMITED);
+        statusInfo.setEstimateStatus(CommonConstants.ServerApprovalStatus.ESTIMATE_SUBMITED);
         statusInfo.setUpdator(secUser.getUserId());
         statusInfo.setUpdateTime(new Date());
         serverChildStatusInfoMapper.updateByPrimaryKeySelective(statusInfo);

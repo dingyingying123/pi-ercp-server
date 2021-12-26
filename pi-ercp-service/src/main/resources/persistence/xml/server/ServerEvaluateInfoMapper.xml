@@ -1,23 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.server.ServerInterviewInterventionInfoMapper" >
-  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.server.ServerInterviewInterventionInfo" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.server.ServerEvaluateInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.server.ServerEvaluateInfo" >
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="view_id" property="viewId" jdbcType="VARCHAR" />
-    <result column="sta_id" property="staId" jdbcType="VARCHAR" />
+    <id column="evaluate_id" property="evaluateId" jdbcType="VARCHAR" />
     <result column="child_id" property="childId" jdbcType="VARCHAR" />
-    <result column="view_no" property="viewNo" jdbcType="VARCHAR" />
+    <result column="sta_id" property="staId" jdbcType="VARCHAR" />
+    <result column="evaluate_no" property="evaluateNo" jdbcType="VARCHAR" />
+    <result column="evaluate_date" property="evaluateDate" jdbcType="VARCHAR" />
     <result column="child_name" property="childName" jdbcType="VARCHAR" />
-    <result column="view_date" property="viewDate" jdbcType="VARCHAR" />
-    <result column="date_time" property="dateTime" jdbcType="VARCHAR" />
-    <result column="place" property="place" jdbcType="VARCHAR" />
-    <result column="target" property="target" jdbcType="VARCHAR" />
-    <result column="main_content" property="mainContent" jdbcType="VARCHAR" />
-    <result column="evaluation_and_reflection" property="evaluationAndReflection" jdbcType="VARCHAR" />
-    <result column="follow_up_plan" property="followUpPlan" jdbcType="VARCHAR" />
-    <result column="supervisor_opinion" property="supervisorOpinion" jdbcType="VARCHAR" />
+    <result column="child_male" property="childMale" jdbcType="VARCHAR" />
+    <result column="child_age" property="childAge" jdbcType="VARCHAR" />
+    <result column="case_description" property="caseDescription" jdbcType="VARCHAR" />
+    <result column="service_goal" property="serviceGoal" jdbcType="VARCHAR" />
+    <result column="service_start_date" property="serviceStartDate" jdbcType="VARCHAR" />
+    <result column="service_end_date" property="serviceEndDate" jdbcType="VARCHAR" />
+    <result column="services_provided_and_progress" property="servicesProvidedAndProgress" jdbcType="VARCHAR" />
+    <result column="current_status_children" property="currentStatusChildren" jdbcType="VARCHAR" />
+    <result column="case_closed_situation" property="caseClosedSituation" jdbcType="VARCHAR" />
+    <result column="case_closed_situation_other" property="caseClosedSituationOther" jdbcType="VARCHAR" />
+    <result column="intervention_work_reflection" property="interventionWorkReflection" jdbcType="VARCHAR" />
+    <result column="track_service_plan" property="trackServicePlan" jdbcType="VARCHAR" />
+    <result column="help_received" property="helpReceived" jdbcType="VARCHAR" />
+    <result column="help_received_other" property="helpReceivedOther" jdbcType="VARCHAR" />
+    <result column="is_meets_expectations" property="isMeetsExpectations" jdbcType="VARCHAR" />
+    <result column="supervisory_opinion" property="supervisoryOpinion" jdbcType="VARCHAR" />
     <result column="receiver" property="receiver" jdbcType="VARCHAR" />
     <result column="isdelete" property="isdelete" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
@@ -27,7 +36,7 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
 
-  <resultMap id="BaseResultMapVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.server.ServerInterviewInterventionVO">
+  <resultMap id="BaseResultMapVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.server.ServerEvaluateInfoVO">
     <result column="area" jdbcType="VARCHAR" property="area" />
     <result column="child_id_no" jdbcType="VARCHAR" property="childIdNo" />
     <result column="child_tel_no" jdbcType="VARCHAR" property="childTelNo" />
@@ -94,8 +103,8 @@
   </resultMap>
 
 
-  <select id="queryInterviewInterventionList" resultMap="BaseResultMapVO">
-    select * from server_interview_intervention_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
+  <select id="queryEvaluateList" resultMap="BaseResultMapVO">
+    select * from server_evaluate_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
     <where>
       <if test="childName != null and childName != '' ">
         i.child_name like concat('%', #{childName}, '%')
@@ -106,10 +115,10 @@
       <if test="area != null and area != '' ">
         and b.area like concat('%', #{area}, '%')
       </if>
-      <if test="interventionStatus != null and interventionStatus != ''">
-        and s.intervention_status = #{interventionStatus}
+      <if test="evaluateStatus != null and evaluateStatus != ''">
+        and s.evaluate_status = #{evaluateStatus}
       </if>
     </where>
-    order by i.view_date deac
+    order by i.evaluate_date deac
   </select>
 </mapper>

@@ -61,8 +61,13 @@ public class CommonConstants {
         public static final String PLANPARTSUBMIT = "计划部分提交";
         public static final String PLANSUBMITED = "计划已提交";
         public static final String INTERVENTIONING = "介入中";
+        public static final String INTERVENTIONING_SAVE = "介入保存";
         public static final String INTERVENTIONPARTSUBMIT = "介入部分提交";
         public static final String INTERVENTIONSUBMITED = "介入已提交";
+        public static final String EVALUATE_SAVE = "评价保存";
+        public static final String EVALUATE_SUBMIT = "评价已提交";
+        public static final String CLOSE_CASE_SAVE = "结案保存";
+        public static final String CLOSE_CASE_SUBMIT = "结案已提交";
     }
 
     // 通过delete字段进行控制 1:显示 0:不显示 2：变更中

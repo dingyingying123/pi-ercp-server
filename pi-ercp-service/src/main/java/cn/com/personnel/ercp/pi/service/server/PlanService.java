@@ -74,7 +74,7 @@ public class PlanService extends BaseService implements IPlanService {
             serverPlanInfoMapper.insert(serverPlanInfoVO);
 
             ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(serverPlanInfoVO.getStaId());
-            serverChildStatusInfo.setEstimateStatus(CommonConstants.ServerApprovalStatus.PLANING);
+            serverChildStatusInfo.setPlanStatus(CommonConstants.ServerApprovalStatus.PLANING);
             serverChildStatusInfo.setUpdator(secUser.getUserId());
             serverChildStatusInfo.setUpdateTime(new Date());
             serverChildStatusInfoMapper.updateByPrimaryKeySelective(serverChildStatusInfo);
@@ -113,10 +113,10 @@ public class PlanService extends BaseService implements IPlanService {
 
         ServerChildStatusInfo statusInfo = new ServerChildStatusInfo();
         statusInfo.setStaId(serverPlanInfoVO.getStaId());
-        if("全部提交".equals(serverPlanInfoVO.getAllSubmit())){
-            statusInfo.setCaseStatus(CommonConstants.ServerApprovalStatus.PLANSUBMITED);
+        if("是".equals(serverPlanInfoVO.getAllSubmit())){
+            statusInfo.setPlanStatus(CommonConstants.ServerApprovalStatus.PLANSUBMITED);
         }else {
-            statusInfo.setCaseStatus(CommonConstants.ServerApprovalStatus.PLANPARTSUBMIT);
+            statusInfo.setPlanStatus(CommonConstants.ServerApprovalStatus.PLANPARTSUBMIT);
         }
         statusInfo.setUpdator(secUser.getUserId());
         statusInfo.setUpdateTime(new Date());

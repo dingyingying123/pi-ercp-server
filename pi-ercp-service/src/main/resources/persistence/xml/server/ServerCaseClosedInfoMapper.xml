@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.server.ServerInterviewInterventionInfoMapper" >
-  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.server.ServerInterviewInterventionInfo" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.server.ServerCaseClosedInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.server.ServerCaseClosedInfo" >
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="view_id" property="viewId" jdbcType="VARCHAR" />
-    <result column="sta_id" property="staId" jdbcType="VARCHAR" />
+    <id column="close_id" property="closeId" jdbcType="VARCHAR" />
     <result column="child_id" property="childId" jdbcType="VARCHAR" />
-    <result column="view_no" property="viewNo" jdbcType="VARCHAR" />
+    <result column="sta_id" property="staId" jdbcType="VARCHAR" />
+    <result column="close_no" property="closeNo" jdbcType="VARCHAR" />
+    <result column="close_date" property="closeDate" jdbcType="VARCHAR" />
     <result column="child_name" property="childName" jdbcType="VARCHAR" />
-    <result column="view_date" property="viewDate" jdbcType="VARCHAR" />
-    <result column="date_time" property="dateTime" jdbcType="VARCHAR" />
-    <result column="place" property="place" jdbcType="VARCHAR" />
-    <result column="target" property="target" jdbcType="VARCHAR" />
-    <result column="main_content" property="mainContent" jdbcType="VARCHAR" />
-    <result column="evaluation_and_reflection" property="evaluationAndReflection" jdbcType="VARCHAR" />
-    <result column="follow_up_plan" property="followUpPlan" jdbcType="VARCHAR" />
-    <result column="supervisor_opinion" property="supervisorOpinion" jdbcType="VARCHAR" />
+    <result column="child_male" property="childMale" jdbcType="VARCHAR" />
+    <result column="child_age" property="childAge" jdbcType="VARCHAR" />
+    <result column="referral_application_date" property="referralApplicationDate" jdbcType="VARCHAR" />
+    <result column="filing_date" property="filingDate" jdbcType="VARCHAR" />
+    <result column="case_closed_date" property="caseClosedDate" jdbcType="VARCHAR" />
+    <result column="case_nature_and_brief_description" property="caseNatureAndBriefDescription" jdbcType="VARCHAR" />
+    <result column="coaching_goals" property="coachingGoals" jdbcType="VARCHAR" />
+    <result column="services_provided_and_case_progress" property="servicesProvidedAndCaseProgress" jdbcType="VARCHAR" />
+    <result column="current_status_service_objects" property="currentStatusServiceObjects" jdbcType="VARCHAR" />
+    <result column="reason_for_closing" property="reasonForClosing" jdbcType="VARCHAR" />
+    <result column="reason_for_closing_directions" property="reasonForClosingDirections" jdbcType="VARCHAR" />
+    <result column="do_you_know_end" property="doYouKnowEnd" jdbcType="VARCHAR" />
     <result column="receiver" property="receiver" jdbcType="VARCHAR" />
     <result column="isdelete" property="isdelete" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
@@ -27,7 +32,7 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
 
-  <resultMap id="BaseResultMapVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.server.ServerInterviewInterventionVO">
+  <resultMap id="BaseResultMapVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.server.ServerCaseClosedInfoVO">
     <result column="area" jdbcType="VARCHAR" property="area" />
     <result column="child_id_no" jdbcType="VARCHAR" property="childIdNo" />
     <result column="child_tel_no" jdbcType="VARCHAR" property="childTelNo" />
@@ -94,8 +99,8 @@
   </resultMap>
 
 
-  <select id="queryInterviewInterventionList" resultMap="BaseResultMapVO">
-    select * from server_interview_intervention_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
+  <select id="queryCaseClosedList" resultMap="BaseResultMapVO">
+    select * from server_case_closed_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
     <where>
       <if test="childName != null and childName != '' ">
         i.child_name like concat('%', #{childName}, '%')
@@ -106,10 +111,10 @@
       <if test="area != null and area != '' ">
         and b.area like concat('%', #{area}, '%')
       </if>
-      <if test="interventionStatus != null and interventionStatus != ''">
-        and s.intervention_status = #{interventionStatus}
+      <if test="caseClosedStatus != null and caseClosedStatus != ''">
+        and s.case_closed_status = #{caseClosedStatus}
       </if>
     </where>
-    order by i.view_date deac
+    order by i.close_date deac
   </select>
 </mapper>
