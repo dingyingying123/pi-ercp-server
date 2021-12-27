@@ -21,7 +21,7 @@ public class CaseCloseController extends PageController {
     ICaseCloseService caseCloseService;
 
     /**
-     * 获取面谈介入列表
+     * 获取结案列表
      * @param serverCaseClosedInfoVO
      * @return
      */
@@ -32,7 +32,7 @@ public class CaseCloseController extends PageController {
     }
 
     /**
-     * 获取面谈介入信息
+     * 获取结案信息
      * @param serverCaseClosedInfoVO
      * @return
      */
@@ -43,7 +43,7 @@ public class CaseCloseController extends PageController {
     }
 
     /**
-     * 获取计划已提交的儿童列表
+     * 获取评估已提交的儿童列表
      * @param serverEvaluateInfoVO
      * @return
      */
@@ -54,7 +54,7 @@ public class CaseCloseController extends PageController {
     }
 
     /**
-     * 保存面谈介入信息
+     * 保存结案信息
      * @param serverCaseClosedInfoVO
      * @return
      */
@@ -66,7 +66,7 @@ public class CaseCloseController extends PageController {
     }
 
     /**
-     * 提交面谈介入信息
+     * 提交结案信息
      * @param serverCaseClosedInfoVO
      * @return
      */
@@ -78,7 +78,7 @@ public class CaseCloseController extends PageController {
     }
 
     /**
-     * 删除面谈介入信息
+     * 删除结案信息
      * @param serverCaseClosedInfoVO
      * @return
      */

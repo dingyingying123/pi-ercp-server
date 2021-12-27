@@ -21,7 +21,7 @@ public class EvaluateController extends PageController {
     IEvaluateService evaluateService;
 
     /**
-     * 获取面谈介入列表
+     * 获取评估列表
      * @param serverEvaluateInfoVO
      * @return
      */
@@ -32,7 +32,7 @@ public class EvaluateController extends PageController {
     }
 
     /**
-     * 获取面谈介入信息
+     * 获取评估信息
      * @param serverEvaluateInfoVO
      * @return
      */
@@ -43,7 +43,7 @@ public class EvaluateController extends PageController {
     }
 
     /**
-     * 获取计划已提交的儿童列表
+     * 获取介入已提交的儿童列表
      * @param serverInterviewInterventionVO
      * @return
      */
@@ -54,7 +54,7 @@ public class EvaluateController extends PageController {
     }
 
     /**
-     * 保存面谈介入信息
+     * 保存评估信息
      * @param serverEvaluateInfoVO
      * @return
      */
@@ -66,7 +66,7 @@ public class EvaluateController extends PageController {
     }
 
     /**
-     * 提交面谈介入信息
+     * 提交评估信息
      * @param serverEvaluateInfoVO
      * @return
      */
@@ -78,7 +78,7 @@ public class EvaluateController extends PageController {
     }
 
     /**
-     * 删除面谈介入信息
+     * 删除评估信息
      * @param serverEvaluateInfoVO
      * @return
      */
