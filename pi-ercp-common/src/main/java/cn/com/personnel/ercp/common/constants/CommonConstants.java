@@ -8,6 +8,7 @@ public class CommonConstants {
     public static final String SUCCESS_CODE = "2000";
     public static final String SUCCESS_MESSAGE = "成功";
     public static final String ERROR_CODE = "4000";
+    public static final String Login_ERROR_CODE = "4005";
     public static final String ERROR_MESSAGE = "失败";
     public static final int ERROR_SERVERCODE = 9001;
     public static final String ERROR_SERVERMESSAGE = "服务内部错误";

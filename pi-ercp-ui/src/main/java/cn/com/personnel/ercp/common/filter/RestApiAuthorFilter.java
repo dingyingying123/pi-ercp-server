@@ -1,9 +1,18 @@
 package cn.com.personnel.ercp.common.filter;
 
 
+import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
+import cn.com.personnel.ercp.auth.persistence.mapper.SecUserMapper;
 import cn.com.personnel.ercp.auth.service.ISecUserService;
+import cn.com.personnel.ercp.common.constants.CommonConstants;
 import cn.com.personnel.ercp.common.kit.CommonConfig;
+import cn.com.personnel.ercp.common.persistence.entity.ReturnEntity;
 import cn.com.personnel.ercp.common.service.IPortalTokenService;
+import cn.com.personnel.ercp.framework.auth.SecurityContext;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +35,8 @@ public class RestApiAuthorFilter extends BaseFilter implements Filter{
     IPortalTokenService portalTokenService;
     @Autowired
     CommonConfig commonConfig;
+    @Autowired
+    SecUserMapper secUserMapper;
     
     @Override
     public void destroy() {
@@ -41,7 +52,7 @@ public class RestApiAuthorFilter extends BaseFilter implements Filter{
         HttpServletResponse response = (HttpServletResponse) res;
         
         if(!checkHeaderAuth(request, response)){  
-            response.setStatus(401);  
+            response.setStatus(401);
             response.setHeader("Cache-Control", "no-store");  
             response.setDateHeader("Expires", 0);  
             response.setHeader("WWW-authenticate", "Basic Realm=\"auth\"");  
@@ -76,8 +87,15 @@ public class RestApiAuthorFilter extends BaseFilter implements Filter{
        Map<String, Object> check = portalTokenService.checkToken(token, "access_token", deviceCode);
        logger.info("==============access_token:" + check);
        if (check == null || !"success".equals(check.get("message"))) {
+           ReturnEntity returnEntity = new ReturnEntity(CommonConstants.Login_ERROR_CODE,"请登录","");
+           JSONObject jsonObject =   (JSONObject) JSONObject.toJSON(returnEntity);
+           response.setContentType("application/json");
+           response.setCharacterEncoding("UTF-8");
+           PrintWriter writer = response.getWriter();
+           writer.write(JSON.toJSONString(jsonObject));
            return false;
        }
+
 //	   return secUserService.checkAuth(api, ip, userName, password);
 	   return true;
    }

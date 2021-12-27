@@ -2,9 +2,13 @@ package cn.com.personnel.ercp.common.filter;
 
 import cn.com.personnel.ercp.auth.impl.SecUserService;
 import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
+import cn.com.personnel.ercp.common.constants.CommonConstants;
 import cn.com.personnel.ercp.common.kit.JwtUtil;
+import cn.com.personnel.ercp.common.persistence.entity.ReturnEntity;
 import cn.com.personnel.ercp.common.service.IPortalTokenService;
 import cn.com.personnel.ercp.framework.auth.SecurityContext;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import eu.bitwalker.useragentutils.DeviceType;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
@@ -23,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +47,12 @@ public class AuthorInterceptor implements HandlerInterceptor {
             response.setHeader("Cache-Control", "no-store");
             response.setDateHeader("Expires", 0);
             response.setHeader("WWW-authenticate", "Basic Realm=\"auth\"");
+            ReturnEntity returnEntity = new ReturnEntity(CommonConstants.Login_ERROR_CODE,"请登录","");
+            JSONObject jsonObject =   (JSONObject) JSONObject.toJSON(returnEntity);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            PrintWriter writer = response.getWriter();
+            writer.write(JSON.toJSONString(jsonObject));
             return false;
         }
         return true;
@@ -49,20 +60,20 @@ public class AuthorInterceptor implements HandlerInterceptor {
 
     private boolean checkHeaderAuth(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-//            Subject subject = SecurityUtils.getSubject();
-//            String userId = "";
-//            SecUser secUser = new SecUser();
+            Subject subject = SecurityUtils.getSubject();
+            String userId = "";
+            SecUser secUser = new SecUser();
 //            //判断是否是移动
 //            UserAgent ua = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
 //            OperatingSystem os = ua.getOperatingSystem();
 //            logger.info("设备类型：" + os.getDeviceType());
 ////            if(DeviceType.MOBILE.getName().equals(os.getDeviceType().getName())) {//移动端
 //                logger.info("移动连接");
-//                String token = request.getHeader("token");
+                String token = request.getHeader("token");
 //                String deviceCode = request.getParameter("deviceCode");
 //                logger.info("==============token: " + token + ", deviceCode: " + deviceCode);
 //                if(!StringUtils.isEmpty(token)){
-//                    userId = JwtUtil.getUID(token);
+                    userId = JwtUtil.getUID(token);
 //                    logger.info("==============用户信息:" + userId);
 ////                    Map<String, Object> check = portalTokenService.checkToken(token, "access_token", deviceCode);
 ////                    logger.info("==============access_token:" + check);
@@ -77,9 +88,9 @@ public class AuthorInterceptor implements HandlerInterceptor {
 //                    }
 //
 //                    //向session中插入用户信息，可以按需插入相关用户信息
-////                    secUser.setUserId(userId);
-////                    secUser.setUserName(JwtUtil.getUsername(token));
-////                    subject.getSession().setAttribute(SecurityContext.Authentication, secUser);
+                    secUser.setUserId(userId);
+                    secUser.setUserName(JwtUtil.getUsername(token));
+                    subject.getSession().setAttribute(SecurityContext.Authentication, secUser);
 //                }
 //            }else{
 //                logger.info("pc连接");

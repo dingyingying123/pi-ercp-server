@@ -222,6 +222,7 @@ public class LoginController extends PageController {
             }
             List<String> userRoles = new ArrayList<>();
             userRoles = secUserRoleService.getUserRoleList(secUser.getUserId(), ApplicationConfig.APP_CODE);
+            userMap.put("user", secUser);
             userMap.put("roleIds", userRoles);
             // 生成token并返回前端
             Map<String, Object> refreshTokenMap = portalTokenService.sign(secUser.getUserId(), secUser.getUserName(), deviceCode);
