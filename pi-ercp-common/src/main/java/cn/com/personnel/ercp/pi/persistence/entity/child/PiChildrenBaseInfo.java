@@ -3,69 +3,6 @@ package cn.com.personnel.ercp.pi.persistence.entity.child;
 import java.util.Date;
 import javax.persistence.*;
 
-/**
- * childId	儿童信息表ID
- * area	区域
- * childName	儿童姓名
- * childIdNo	儿童身份证号
- * childTelNo	儿童联系电话
- * childNationality	儿童民族
- * childMale	儿童性别
- * childAccountAddress	儿童户口地址
- * childCurrentAddress	儿童现住址
- * childHealthStatus	儿童健康状态
- * childEscalationType	儿童上报类型
- * childDisabilityType	儿童残疾类型
- * childDisabilityLevel	儿童残疾等级
- * childDiseaseType	儿童患病病种
- * childSchoolAttendance	儿童就学情况
- * childOtherCases	儿童其他情况
- * childPovertyAlleviationImplementation	儿童社会福利救助扶贫落实情况
- * childViolationGuardian	儿童遭受监护人侵害的情形
- * guardian	监护人
- * fatherName	父亲姓名
- * fatherIdNo	父亲身份证号
- * fatherTelNo	父亲联系电话
- * fatherAccountAddress	父亲户口地址
- * fatherCurrentAddress	父亲现/务工住址
- * fatherHealthStatus	父亲健康状况
- * fatherDisabilityType	父亲残疾类型
- * fatherDisabilityLevel	父亲残疾级别
- * fatherDiseaseType	父亲患病类型
- * fatherFamilyIncome	父亲家庭经济来源
- * fatherOtherCases	父亲其他情况
- * motherName	母亲姓名
- * motherIdNo	母亲身份证号
- * motherTelNo	母亲联系电话
- * motherAccountAddress	母亲户口地址
- * motherCurrentAddress	母亲现/务工住址
- * motherHealthStatus	母亲健康状况
- * motherDisabilityType	母亲残疾类型
- * motherDisabilityLevel	母亲残疾级别
- * motherDiseaseType	母亲患病类型
- * motherFamilyIncome	母亲家庭经济来源
- * motherOtherCases	母亲其他情况
- * otherGuardianName	其他监护人姓名
- * otherGuardianIdNo	其他监护人身份证号
- * otherGuardianTelNo	其他监护人联系电话
- * otherGuardianRelationshipWithChildren	其他监护人与儿童关系
- * otherGuardianHealthStatus	其他监护人健康状况
- * otherGuardianDisabilityType	其他监护人残疾类型
- * otherGuardianDisabilityLevel	其他监护人残疾级别
- * otherGuardianDiseaseType	其他监护人患病类型
- * otherGuardianReasons	其他监护人原由
- * organizationName	机构名称
- * organizationPrincipal	机构负责人
- * organizationTelNo	机构联系电话
- * organizationNature	机构单位性质
- * organizationResidentialAddress	机构居住地址
- * helpSuggestions	帮扶建议
- * securityFeeCollectionMethod	保障费发放情况领取方式
- * securityFeeCollector	保障费发放情况领取人（开户人）
- * securityFeeRecipientRelationship	保障费发放情况领取人与儿童关系
- * securityFeeGuaranteeStandard	保障费发放情况保障标准
- */
-
 @Table(name = "pi_children_base_info")
 public class PiChildrenBaseInfo {
     @Id
@@ -90,8 +27,26 @@ public class PiChildrenBaseInfo {
     @Column(name = "child_male")
     private String childMale;
 
+    @Column(name = "child_account_province")
+    private String childAccountProvince;
+
+    @Column(name = "child_account_city")
+    private String childAccountCity;
+
+    @Column(name = "child_account_county")
+    private String childAccountCounty;
+
     @Column(name = "child_account_address")
     private String childAccountAddress;
+
+    @Column(name = "child_current_province")
+    private String childCurrentProvince;
+
+    @Column(name = "child_current_city")
+    private String childCurrentCity;
+
+    @Column(name = "child_current_county")
+    private String childCurrentCounty;
 
     @Column(name = "child_current_address")
     private String childCurrentAddress;
@@ -132,8 +87,26 @@ public class PiChildrenBaseInfo {
     @Column(name = "father_tel_no")
     private String fatherTelNo;
 
+    @Column(name = "father_account_province")
+    private String fatherAccountProvince;
+
+    @Column(name = "father_account_city")
+    private String fatherAccountCity;
+
+    @Column(name = "father_account_county")
+    private String fatherAccountCounty;
+
     @Column(name = "father_account_address")
     private String fatherAccountAddress;
+
+    @Column(name = "father_current_province")
+    private String fatherCurrentProvince;
+
+    @Column(name = "father_current_city")
+    private String fatherCurrentCity;
+
+    @Column(name = "father_current_county")
+    private String fatherCurrentCounty;
 
     @Column(name = "father_current_address")
     private String fatherCurrentAddress;
@@ -165,8 +138,26 @@ public class PiChildrenBaseInfo {
     @Column(name = "mother_tel_no")
     private String motherTelNo;
 
+    @Column(name = "mother_account_province")
+    private String motherAccountProvince;
+
+    @Column(name = "mother_account_city")
+    private String motherAccountCity;
+
+    @Column(name = "mother_account_county")
+    private String motherAccountCounty;
+
     @Column(name = "mother_account_address")
     private String motherAccountAddress;
+
+    @Column(name = "mother_current_province")
+    private String motherCurrentProvince;
+
+    @Column(name = "mother_current_city")
+    private String motherCurrentCity;
+
+    @Column(name = "mother_current_county")
+    private String motherCurrentCounty;
 
     @Column(name = "mother_current_address")
     private String motherCurrentAddress;
@@ -227,6 +218,15 @@ public class PiChildrenBaseInfo {
 
     @Column(name = "organization_nature")
     private String organizationNature;
+
+    @Column(name = "organization_residential_province")
+    private String organizationResidentialProvince;
+
+    @Column(name = "organization_residential_city")
+    private String organizationResidentialCity;
+
+    @Column(name = "organization_residential_county")
+    private String organizationResidentialCounty;
 
     @Column(name = "organization_residential_address")
     private String organizationResidentialAddress;
@@ -364,6 +364,48 @@ public class PiChildrenBaseInfo {
     }
 
     /**
+     * @return child_account_province
+     */
+    public String getChildAccountProvince() {
+        return childAccountProvince;
+    }
+
+    /**
+     * @param childAccountProvince
+     */
+    public void setChildAccountProvince(String childAccountProvince) {
+        this.childAccountProvince = childAccountProvince;
+    }
+
+    /**
+     * @return child_account_city
+     */
+    public String getChildAccountCity() {
+        return childAccountCity;
+    }
+
+    /**
+     * @param childAccountCity
+     */
+    public void setChildAccountCity(String childAccountCity) {
+        this.childAccountCity = childAccountCity;
+    }
+
+    /**
+     * @return child_account_county
+     */
+    public String getChildAccountCounty() {
+        return childAccountCounty;
+    }
+
+    /**
+     * @param childAccountCounty
+     */
+    public void setChildAccountCounty(String childAccountCounty) {
+        this.childAccountCounty = childAccountCounty;
+    }
+
+    /**
      * @return child_account_address
      */
     public String getChildAccountAddress() {
@@ -375,6 +417,48 @@ public class PiChildrenBaseInfo {
      */
     public void setChildAccountAddress(String childAccountAddress) {
         this.childAccountAddress = childAccountAddress;
+    }
+
+    /**
+     * @return child_current_province
+     */
+    public String getChildCurrentProvince() {
+        return childCurrentProvince;
+    }
+
+    /**
+     * @param childCurrentProvince
+     */
+    public void setChildCurrentProvince(String childCurrentProvince) {
+        this.childCurrentProvince = childCurrentProvince;
+    }
+
+    /**
+     * @return child_current_city
+     */
+    public String getChildCurrentCity() {
+        return childCurrentCity;
+    }
+
+    /**
+     * @param childCurrentCity
+     */
+    public void setChildCurrentCity(String childCurrentCity) {
+        this.childCurrentCity = childCurrentCity;
+    }
+
+    /**
+     * @return child_current_county
+     */
+    public String getChildCurrentCounty() {
+        return childCurrentCounty;
+    }
+
+    /**
+     * @param childCurrentCounty
+     */
+    public void setChildCurrentCounty(String childCurrentCounty) {
+        this.childCurrentCounty = childCurrentCounty;
     }
 
     /**
@@ -560,6 +644,48 @@ public class PiChildrenBaseInfo {
     }
 
     /**
+     * @return father_account_province
+     */
+    public String getFatherAccountProvince() {
+        return fatherAccountProvince;
+    }
+
+    /**
+     * @param fatherAccountProvince
+     */
+    public void setFatherAccountProvince(String fatherAccountProvince) {
+        this.fatherAccountProvince = fatherAccountProvince;
+    }
+
+    /**
+     * @return father_account_city
+     */
+    public String getFatherAccountCity() {
+        return fatherAccountCity;
+    }
+
+    /**
+     * @param fatherAccountCity
+     */
+    public void setFatherAccountCity(String fatherAccountCity) {
+        this.fatherAccountCity = fatherAccountCity;
+    }
+
+    /**
+     * @return father_account_county
+     */
+    public String getFatherAccountCounty() {
+        return fatherAccountCounty;
+    }
+
+    /**
+     * @param fatherAccountCounty
+     */
+    public void setFatherAccountCounty(String fatherAccountCounty) {
+        this.fatherAccountCounty = fatherAccountCounty;
+    }
+
+    /**
      * @return father_account_address
      */
     public String getFatherAccountAddress() {
@@ -571,6 +697,48 @@ public class PiChildrenBaseInfo {
      */
     public void setFatherAccountAddress(String fatherAccountAddress) {
         this.fatherAccountAddress = fatherAccountAddress;
+    }
+
+    /**
+     * @return father_current_province
+     */
+    public String getFatherCurrentProvince() {
+        return fatherCurrentProvince;
+    }
+
+    /**
+     * @param fatherCurrentProvince
+     */
+    public void setFatherCurrentProvince(String fatherCurrentProvince) {
+        this.fatherCurrentProvince = fatherCurrentProvince;
+    }
+
+    /**
+     * @return father_current_city
+     */
+    public String getFatherCurrentCity() {
+        return fatherCurrentCity;
+    }
+
+    /**
+     * @param fatherCurrentCity
+     */
+    public void setFatherCurrentCity(String fatherCurrentCity) {
+        this.fatherCurrentCity = fatherCurrentCity;
+    }
+
+    /**
+     * @return father_current_county
+     */
+    public String getFatherCurrentCounty() {
+        return fatherCurrentCounty;
+    }
+
+    /**
+     * @param fatherCurrentCounty
+     */
+    public void setFatherCurrentCounty(String fatherCurrentCounty) {
+        this.fatherCurrentCounty = fatherCurrentCounty;
     }
 
     /**
@@ -714,6 +882,48 @@ public class PiChildrenBaseInfo {
     }
 
     /**
+     * @return mother_account_province
+     */
+    public String getMotherAccountProvince() {
+        return motherAccountProvince;
+    }
+
+    /**
+     * @param motherAccountProvince
+     */
+    public void setMotherAccountProvince(String motherAccountProvince) {
+        this.motherAccountProvince = motherAccountProvince;
+    }
+
+    /**
+     * @return mother_account_city
+     */
+    public String getMotherAccountCity() {
+        return motherAccountCity;
+    }
+
+    /**
+     * @param motherAccountCity
+     */
+    public void setMotherAccountCity(String motherAccountCity) {
+        this.motherAccountCity = motherAccountCity;
+    }
+
+    /**
+     * @return mother_account_county
+     */
+    public String getMotherAccountCounty() {
+        return motherAccountCounty;
+    }
+
+    /**
+     * @param motherAccountCounty
+     */
+    public void setMotherAccountCounty(String motherAccountCounty) {
+        this.motherAccountCounty = motherAccountCounty;
+    }
+
+    /**
      * @return mother_account_address
      */
     public String getMotherAccountAddress() {
@@ -725,6 +935,48 @@ public class PiChildrenBaseInfo {
      */
     public void setMotherAccountAddress(String motherAccountAddress) {
         this.motherAccountAddress = motherAccountAddress;
+    }
+
+    /**
+     * @return mother_current_province
+     */
+    public String getMotherCurrentProvince() {
+        return motherCurrentProvince;
+    }
+
+    /**
+     * @param motherCurrentProvince
+     */
+    public void setMotherCurrentProvince(String motherCurrentProvince) {
+        this.motherCurrentProvince = motherCurrentProvince;
+    }
+
+    /**
+     * @return mother_current_city
+     */
+    public String getMotherCurrentCity() {
+        return motherCurrentCity;
+    }
+
+    /**
+     * @param motherCurrentCity
+     */
+    public void setMotherCurrentCity(String motherCurrentCity) {
+        this.motherCurrentCity = motherCurrentCity;
+    }
+
+    /**
+     * @return mother_current_county
+     */
+    public String getMotherCurrentCounty() {
+        return motherCurrentCounty;
+    }
+
+    /**
+     * @param motherCurrentCounty
+     */
+    public void setMotherCurrentCounty(String motherCurrentCounty) {
+        this.motherCurrentCounty = motherCurrentCounty;
     }
 
     /**
@@ -1008,6 +1260,48 @@ public class PiChildrenBaseInfo {
     }
 
     /**
+     * @return organization_residential_province
+     */
+    public String getOrganizationResidentialProvince() {
+        return organizationResidentialProvince;
+    }
+
+    /**
+     * @param organizationResidentialProvince
+     */
+    public void setOrganizationResidentialProvince(String organizationResidentialProvince) {
+        this.organizationResidentialProvince = organizationResidentialProvince;
+    }
+
+    /**
+     * @return organization_residential_city
+     */
+    public String getOrganizationResidentialCity() {
+        return organizationResidentialCity;
+    }
+
+    /**
+     * @param organizationResidentialCity
+     */
+    public void setOrganizationResidentialCity(String organizationResidentialCity) {
+        this.organizationResidentialCity = organizationResidentialCity;
+    }
+
+    /**
+     * @return organization_residential_county
+     */
+    public String getOrganizationResidentialCounty() {
+        return organizationResidentialCounty;
+    }
+
+    /**
+     * @param organizationResidentialCounty
+     */
+    public void setOrganizationResidentialCounty(String organizationResidentialCounty) {
+        this.organizationResidentialCounty = organizationResidentialCounty;
+    }
+
+    /**
      * @return organization_residential_address
      */
     public String getOrganizationResidentialAddress() {
@@ -1175,18 +1469,30 @@ public class PiChildrenBaseInfo {
         this.updateTime = updateTime;
     }
 
+    /**
+     * @return guardian
+     */
     public String getGuardian() {
         return guardian;
     }
 
+    /**
+     * @param guardian
+     */
     public void setGuardian(String guardian) {
         this.guardian = guardian;
     }
 
+    /**
+     * @return child_age
+     */
     public String getChildAge() {
         return childAge;
     }
 
+    /**
+     * @param childAge
+     */
     public void setChildAge(String childAge) {
         this.childAge = childAge;
     }

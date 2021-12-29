@@ -36,11 +36,13 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
         if(piChildrenBaseInfo != null && StringUtils.isNotEmpty(piChildrenBaseInfo.getChildId())){
             piChildrenBaseInfo.setUpdateTime(new Date());
             piChildrenBaseInfo.setUpdator(secUser.getUserId());
+            piChildrenBaseInfo.setArea(secUser.getArea());
             piChildrenBaseInfoMapper.updateByPrimaryKeySelective(piChildrenBaseInfo);
         }else{
             piChildrenBaseInfo.setChildId(UUIDKit.getUUID());
             piChildrenBaseInfo.setCreateTime(new Date());
             piChildrenBaseInfo.setCreator(secUser.getUserId());
+            piChildrenBaseInfo.setArea(secUser.getArea());
             piChildrenBaseInfo.setStatus(CommonConstants.ApprovalStatus.DRAFT);//进行中
             piChildrenBaseInfoMapper.insert(piChildrenBaseInfo);
         }
@@ -165,6 +167,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
         piChildrenBaseInfo.setStatus(CommonConstants.ApprovalStatus.COMPLETED);//已完成
         piChildrenBaseInfo.setUpdateTime(new Date());
         piChildrenBaseInfo.setUpdator(secUser.getUserId());
+        piChildrenBaseInfo.setArea(secUser.getArea());
         piChildrenBaseInfoMapper.updateByPrimaryKeySelective(piChildrenBaseInfo);
         return ReturnEntity.ok(piChildrenBaseInfo);
     }
@@ -176,6 +179,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
                 piChildrenBaseInfo.setStatus(CommonConstants.ApprovalStatus.APPROVING);
                 piChildrenBaseInfo.setUpdateTime(new Date());
                 piChildrenBaseInfo.setUpdator(secUser.getUserId());
+                piChildrenBaseInfo.setArea(secUser.getArea());
                 piChildrenBaseInfoMapper.updateByPrimaryKeySelective(piChildrenBaseInfo);
             }
         }
@@ -190,6 +194,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
 //        piChildrenBaseInfo.setStatus(CommonConstants.ApprovalStatus.APPROVING);
         piChildrenBaseInfo.setUpdateTime(new Date());
         piChildrenBaseInfo.setUpdator(secUser.getUserId());
+        piChildrenBaseInfo.setArea(secUser.getArea());
         piChildrenBaseInfoMapper.updateByPrimaryKeySelective(piChildrenBaseInfo);
         return ReturnEntity.ok(piChildrenBaseInfo);
     }

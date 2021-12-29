@@ -70,16 +70,19 @@ public class CaseCloseService extends BaseService implements ICaseCloseService {
             serverCaseClosedInfoVO.setStatus(CommonConstants.ServerApprovalStatus.CLOSE_CASE_SAVE);
             serverCaseClosedInfoVO.setCreator(secUser.getUserId());
             serverCaseClosedInfoVO.setCreateTime(new Date());
+            serverCaseClosedInfoVO.setArea(secUser.getArea());
             serverCaseClosedInfoMapper.insert(serverCaseClosedInfoVO);
 
             ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(serverCaseClosedInfoVO.getStaId());
             serverChildStatusInfo.setEstimateStatus(CommonConstants.ServerApprovalStatus.CLOSE_CASE_SAVE);
             serverChildStatusInfo.setUpdator(secUser.getUserId());
             serverChildStatusInfo.setUpdateTime(new Date());
+            serverChildStatusInfo.setArea(secUser.getArea());
             serverChildStatusInfoMapper.updateByPrimaryKeySelective(serverChildStatusInfo);
         }else{
             serverCaseClosedInfoVO.setUpdator(secUser.getUserId());
             serverCaseClosedInfoVO.setUpdateTime(new Date());
+            serverCaseClosedInfoVO.setArea(secUser.getArea());
             serverCaseClosedInfoMapper.updateByPrimaryKeySelective(serverCaseClosedInfoVO);
         }
         return ReturnEntity.ok(serverCaseClosedInfoVO);
@@ -93,6 +96,7 @@ public class CaseCloseService extends BaseService implements ICaseCloseService {
         serverCaseClosedInfoVO.setStatus(CommonConstants.ServerApprovalStatus.CLOSE_CASE_SUBMIT);
         serverCaseClosedInfoVO.setUpdateTime(new Date());
         serverCaseClosedInfoVO.setUpdator(secUser.getUserId());
+        serverCaseClosedInfoVO.setArea(secUser.getArea());
         serverCaseClosedInfoMapper.updateByPrimaryKeySelective(serverCaseClosedInfoVO);
 
         ServerChildStatusInfo statusInfo = new ServerChildStatusInfo();
@@ -100,6 +104,7 @@ public class CaseCloseService extends BaseService implements ICaseCloseService {
         statusInfo.setEvaluateStatus(CommonConstants.ServerApprovalStatus.CLOSE_CASE_SUBMIT);
         statusInfo.setUpdator(secUser.getUserId());
         statusInfo.setUpdateTime(new Date());
+        statusInfo.setArea(secUser.getArea());
         serverChildStatusInfoMapper.updateByPrimaryKeySelective(statusInfo);
 
         return ReturnEntity.ok(serverCaseClosedInfoVO);

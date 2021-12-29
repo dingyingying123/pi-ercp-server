@@ -70,6 +70,7 @@ public class TakeCaseService extends BaseService implements ITakeCaseService {
         if(StringUtils.isNotEmpty(serverTakeCaseInfoVO.getCaseId()) && StringUtils.isNotEmpty(serverTakeCaseInfoVO.getStaId())){
             serverTakeCaseInfoVO.setUpdateTime(new Date());
             serverTakeCaseInfoVO.setUpdator(secUser.getUserId());
+            serverTakeCaseInfoVO.setArea(secUser.getArea());
             serverTakeCaseInfoMapper.updateByPrimaryKeySelective(serverTakeCaseInfoVO);
             Example example = new Example(ServerTakeCaseFamilyMember.class);
             example.createCriteria().andEqualTo("caseId", serverTakeCaseInfoVO.getCaseId());
@@ -91,12 +92,14 @@ public class TakeCaseService extends BaseService implements ITakeCaseService {
             statusInfo.setCaseStatus(CommonConstants.ServerApprovalStatus.CASE_SAVE);
             statusInfo.setCreator(secUser.getUserId());
             statusInfo.setCreateTime(new Date());
+            statusInfo.setArea(secUser.getArea());
             serverChildStatusInfoMapper.insert(statusInfo);
             //添加接案信息
             serverTakeCaseInfoVO.setStatus(CommonConstants.ServerApprovalStatus.CASE_SAVE);
             serverTakeCaseInfoVO.setCaseId(UUIDKit.getUUID());
             serverTakeCaseInfoVO.setCreator(secUser.getUserId());
             serverTakeCaseInfoVO.setCreateTime(new Date());
+            serverTakeCaseInfoVO.setArea(secUser.getArea());
             serverTakeCaseInfoMapper.insert(serverTakeCaseInfoVO);
             //添加家庭成员
             if(serverTakeCaseInfoVO.getServerTakeCaseFamilyMemberList() != null && serverTakeCaseInfoVO.getServerTakeCaseFamilyMemberList().size() > 0){
@@ -136,6 +139,7 @@ public class TakeCaseService extends BaseService implements ITakeCaseService {
         serverTakeCaseInfoVO.setStatus(CommonConstants.ServerApprovalStatus.CASE_SUBMITED);
         serverTakeCaseInfoVO.setUpdateTime(new Date());
         serverTakeCaseInfoVO.setUpdator(secUser.getUserId());
+        serverTakeCaseInfoVO.setArea(secUser.getArea());
         serverTakeCaseInfoMapper.updateByPrimaryKeySelective(serverTakeCaseInfoVO);
 
         Example example = new Example(ServerTakeCaseFamilyMember.class);
@@ -155,6 +159,7 @@ public class TakeCaseService extends BaseService implements ITakeCaseService {
         statusInfo.setCaseStatus(CommonConstants.ServerApprovalStatus.CASE_SUBMITED);
         statusInfo.setUpdator(secUser.getUserId());
         statusInfo.setCreateTime(new Date());
+        statusInfo.setArea(secUser.getArea());
         serverChildStatusInfoMapper.updateByPrimaryKeySelective(statusInfo);
 
         return ReturnEntity.ok(serverTakeCaseInfoVO);

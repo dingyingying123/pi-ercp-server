@@ -119,6 +119,6 @@
         and s.evaluate_status = #{evaluateStatus}
       </if>
     </where>
-    order by i.evaluate_date deac
+    order by i.evaluate_date desc
   </select>
 </mapper>

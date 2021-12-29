@@ -83,6 +83,7 @@ public class EstimateService extends BaseService implements IEstimateService {
             serverEstimateInfoVO.setStatus(CommonConstants.ServerApprovalStatus.ESTIMATE_SAVE);
             serverEstimateInfoVO.setCreator(secUser.getUserId());
             serverEstimateInfoVO.setCreateTime(new Date());
+            serverEstimateInfoVO.setArea(secUser.getArea());
             serverEstimateInfoMapper.insert(serverEstimateInfoVO);
             if(serverEstimateInfoVO.getServerHighRiskFamilyInfo() != null){
                 ServerHighRiskFamilyInfo serverHighRiskFamilyInfo = serverEstimateInfoVO.getServerHighRiskFamilyInfo();
@@ -108,10 +109,12 @@ public class EstimateService extends BaseService implements IEstimateService {
             serverChildStatusInfo.setEstimateStatus(CommonConstants.ServerApprovalStatus.ESTIMATE_SAVE);
             serverChildStatusInfo.setUpdator(secUser.getUserId());
             serverChildStatusInfo.setUpdateTime(new Date());
+            serverChildStatusInfo.setArea(secUser.getArea());
             serverChildStatusInfoMapper.updateByPrimaryKeySelective(serverChildStatusInfo);
         }else{
             serverEstimateInfoVO.setUpdator(secUser.getUserId());
             serverEstimateInfoVO.setUpdateTime(new Date());
+            serverEstimateInfoVO.setArea(secUser.getArea());
             serverEstimateInfoMapper.updateByPrimaryKeySelective(serverEstimateInfoVO);
             if(serverEstimateInfoVO.getServerHighRiskFamilyInfo() != null){
                 ServerHighRiskFamilyInfo serverHighRiskFamilyInfo = serverEstimateInfoVO.getServerHighRiskFamilyInfo();
@@ -175,6 +178,7 @@ public class EstimateService extends BaseService implements IEstimateService {
         serverEstimateInfoVO.setStatus(CommonConstants.ServerApprovalStatus.ESTIMATE_SUBMITED);
         serverEstimateInfoVO.setUpdateTime(new Date());
         serverEstimateInfoVO.setUpdator(secUser.getUserId());
+        serverEstimateInfoVO.setArea(secUser.getArea());
         serverEstimateInfoMapper.updateByPrimaryKeySelective(serverEstimateInfoVO);
 
         if(serverEstimateInfoVO.getServerHighRiskFamilyInfo() != null){
@@ -213,6 +217,7 @@ public class EstimateService extends BaseService implements IEstimateService {
         statusInfo.setEstimateStatus(CommonConstants.ServerApprovalStatus.ESTIMATE_SUBMITED);
         statusInfo.setUpdator(secUser.getUserId());
         statusInfo.setUpdateTime(new Date());
+        statusInfo.setArea(secUser.getArea());
         serverChildStatusInfoMapper.updateByPrimaryKeySelective(statusInfo);
 
         return ReturnEntity.ok(serverEstimateInfoVO);

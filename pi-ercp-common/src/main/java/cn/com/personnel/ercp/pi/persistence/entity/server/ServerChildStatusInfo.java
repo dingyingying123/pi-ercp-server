@@ -48,6 +48,8 @@ public class ServerChildStatusInfo {
     @Column(name = "update_time")
     private Date updateTime;
 
+    private String area;
+
     /**
      * @return sta_id
      */
@@ -256,5 +258,13 @@ public class ServerChildStatusInfo {
      */
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 }

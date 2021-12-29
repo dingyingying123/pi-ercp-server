@@ -12,7 +12,13 @@
     <result column="child_tel_no" jdbcType="VARCHAR" property="childTelNo" />
     <result column="child_nationality" jdbcType="VARCHAR" property="childNationality" />
     <result column="child_male" jdbcType="VARCHAR" property="childMale" />
+    <result column="child_account_province" jdbcType="VARCHAR" property="childAccountProvince" />
+    <result column="child_account_city" jdbcType="VARCHAR" property="childAccountCity" />
+    <result column="child_account_county" jdbcType="VARCHAR" property="childAccountCounty" />
     <result column="child_account_address" jdbcType="VARCHAR" property="childAccountAddress" />
+    <result column="child_current_province" jdbcType="VARCHAR" property="childCurrentProvince" />
+    <result column="child_current_city" jdbcType="VARCHAR" property="childCurrentCity" />
+    <result column="child_current_county" jdbcType="VARCHAR" property="childCurrentCounty" />
     <result column="child_current_address" jdbcType="VARCHAR" property="childCurrentAddress" />
     <result column="child_health_status" jdbcType="VARCHAR" property="childHealthStatus" />
     <result column="child_escalation_type" jdbcType="VARCHAR" property="childEscalationType" />
@@ -26,7 +32,13 @@
     <result column="father_name" jdbcType="VARCHAR" property="fatherName" />
     <result column="father_id_no" jdbcType="VARCHAR" property="fatherIdNo" />
     <result column="father_tel_no" jdbcType="VARCHAR" property="fatherTelNo" />
+    <result column="father_account_province" jdbcType="VARCHAR" property="fatherAccountProvince" />
+    <result column="father_account_city" jdbcType="VARCHAR" property="fatherAccountCity" />
+    <result column="father_account_county" jdbcType="VARCHAR" property="fatherAccountCounty" />
     <result column="father_account_address" jdbcType="VARCHAR" property="fatherAccountAddress" />
+    <result column="father_current_province" jdbcType="VARCHAR" property="fatherCurrentProvince" />
+    <result column="father_current_city" jdbcType="VARCHAR" property="fatherCurrentCity" />
+    <result column="father_current_county" jdbcType="VARCHAR" property="fatherCurrentCounty" />
     <result column="father_current_address" jdbcType="VARCHAR" property="fatherCurrentAddress" />
     <result column="father_health_status" jdbcType="VARCHAR" property="fatherHealthStatus" />
     <result column="father_disability_type" jdbcType="VARCHAR" property="fatherDisabilityType" />
@@ -37,7 +49,13 @@
     <result column="mother_name" jdbcType="VARCHAR" property="motherName" />
     <result column="mother_id_no" jdbcType="VARCHAR" property="motherIdNo" />
     <result column="mother_tel_no" jdbcType="VARCHAR" property="motherTelNo" />
+    <result column="mother_account_province" jdbcType="VARCHAR" property="motherAccountProvince" />
+    <result column="mother_account_city" jdbcType="VARCHAR" property="motherAccountCity" />
+    <result column="mother_account_county" jdbcType="VARCHAR" property="motherAccountCounty" />
     <result column="mother_account_address" jdbcType="VARCHAR" property="motherAccountAddress" />
+    <result column="mother_current_province" jdbcType="VARCHAR" property="motherCurrentProvince" />
+    <result column="mother_current_city" jdbcType="VARCHAR" property="motherCurrentCity" />
+    <result column="mother_current_county" jdbcType="VARCHAR" property="motherCurrentCounty" />
     <result column="mother_current_address" jdbcType="VARCHAR" property="motherCurrentAddress" />
     <result column="mother_health_status" jdbcType="VARCHAR" property="motherHealthStatus" />
     <result column="mother_disability_type" jdbcType="VARCHAR" property="motherDisabilityType" />
@@ -58,6 +76,9 @@
     <result column="organization_principal" jdbcType="VARCHAR" property="organizationPrincipal" />
     <result column="organization_tel_no" jdbcType="VARCHAR" property="organizationTelNo" />
     <result column="organization_nature" jdbcType="VARCHAR" property="organizationNature" />
+    <result column="organization_residential_province" jdbcType="VARCHAR" property="organizationResidentialProvince" />
+    <result column="organization_residential_city" jdbcType="VARCHAR" property="organizationResidentialCity" />
+    <result column="organization_residential_county" jdbcType="VARCHAR" property="organizationResidentialCounty" />
     <result column="organization_residential_address" jdbcType="VARCHAR" property="organizationResidentialAddress" />
     <result column="help_suggestions" jdbcType="VARCHAR" property="helpSuggestions" />
     <result column="security_fee_collection_method" jdbcType="VARCHAR" property="securityFeeCollectionMethod" />
@@ -70,6 +91,8 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="updator" jdbcType="VARCHAR" property="updator" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="guardian" jdbcType="VARCHAR" property="guardian" />
+    <result column="child_age" jdbcType="VARCHAR" property="childAge" />
   </resultMap>
 
   <select id="queryPiChildrenBaseInfoList" resultMap="BaseResultMap">
@@ -109,7 +132,7 @@
          and i.child_violation_guardian like concat('%', #{info.childViolationGuardian}, '%')
       </if>
       <if test="info.status != null and info.status != ''">
-         and i.status = #{info.childViolationGuardian}
+         and i.status = #{info.status}
       </if>
     </where>
     order by i.create_time desc

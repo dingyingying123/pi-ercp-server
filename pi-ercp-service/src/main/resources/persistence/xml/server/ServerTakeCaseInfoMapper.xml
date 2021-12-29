@@ -108,6 +108,6 @@
           and s.case_status = #{caseStatus}
         </if>
     </where>
-    order by case_date deac
+    order by case_date desc
   </select>
 </mapper>

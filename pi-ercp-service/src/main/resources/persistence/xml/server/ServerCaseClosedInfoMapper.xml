@@ -115,6 +115,6 @@
         and s.case_closed_status = #{caseClosedStatus}
       </if>
     </where>
-    order by i.close_date deac
+    order by i.close_date desc
   </select>
 </mapper>

@@ -109,6 +109,6 @@
         and s.plan_status = #{planStatus}
       </if>
     </where>
-    order by plan_date deac
+    order by plan_date desc
   </select>
 </mapper>

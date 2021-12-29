@@ -72,16 +72,19 @@ public class InterviewInterventionService extends BaseService implements IInterv
             serverInterviewInterventionVO.setStatus(CommonConstants.ServerApprovalStatus.INTERVENTIONING_SAVE);
             serverInterviewInterventionVO.setCreator(secUser.getUserId());
             serverInterviewInterventionVO.setCreateTime(new Date());
+            serverInterviewInterventionVO.setArea(secUser.getArea());
             serverInterviewInterventionInfoMapper.insert(serverInterviewInterventionVO);
 
             ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(serverInterviewInterventionVO.getStaId());
             serverChildStatusInfo.setInterventionStatus(CommonConstants.ServerApprovalStatus.INTERVENTIONING);
             serverChildStatusInfo.setUpdator(secUser.getUserId());
             serverChildStatusInfo.setUpdateTime(new Date());
+            serverChildStatusInfo.setArea(secUser.getArea());
             serverChildStatusInfoMapper.updateByPrimaryKeySelective(serverChildStatusInfo);
         }else{
             serverInterviewInterventionVO.setUpdator(secUser.getUserId());
             serverInterviewInterventionVO.setUpdateTime(new Date());
+            serverInterviewInterventionVO.setArea(secUser.getArea());
             serverInterviewInterventionInfoMapper.updateByPrimaryKeySelective(serverInterviewInterventionVO);
         }
         return ReturnEntity.ok(serverInterviewInterventionVO);
@@ -95,6 +98,7 @@ public class InterviewInterventionService extends BaseService implements IInterv
         serverInterviewInterventionVO.setStatus(CommonConstants.ServerApprovalStatus.INTERVENTIONSUBMITED);
         serverInterviewInterventionVO.setUpdateTime(new Date());
         serverInterviewInterventionVO.setUpdator(secUser.getUserId());
+        serverInterviewInterventionVO.setArea(secUser.getArea());
         serverInterviewInterventionInfoMapper.updateByPrimaryKeySelective(serverInterviewInterventionVO);
 
         ServerChildStatusInfo statusInfo = new ServerChildStatusInfo();
@@ -106,6 +110,7 @@ public class InterviewInterventionService extends BaseService implements IInterv
         }
         statusInfo.setUpdator(secUser.getUserId());
         statusInfo.setUpdateTime(new Date());
+        statusInfo.setArea(secUser.getArea());
         serverChildStatusInfoMapper.updateByPrimaryKeySelective(statusInfo);
 
         return ReturnEntity.ok(serverInterviewInterventionVO);

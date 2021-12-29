@@ -20,5 +20,6 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="updator" property="updator" jdbcType="VARCHAR" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
   </resultMap>
 </mapper>

@@ -110,6 +110,6 @@
         and s.intervention_status = #{interventionStatus}
       </if>
     </where>
-    order by i.view_date deac
+    order by i.view_date desc
   </select>
 </mapper>

@@ -128,6 +128,6 @@
         and s.estimate_status = #{estimateStatus}
       </if>
     </where>
-    order by estimate_date deac
+    order by estimate_date desc
   </select>
 </mapper>

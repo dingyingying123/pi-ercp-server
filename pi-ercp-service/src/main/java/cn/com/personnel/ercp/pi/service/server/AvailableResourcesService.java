@@ -61,16 +61,19 @@ public class AvailableResourcesService extends BaseService implements IAvailable
             serverAvailableResourcesInfoVO.setStatus(CommonConstants.ServerApprovalStatus.INTERVENTIONING_SAVE);
             serverAvailableResourcesInfoVO.setCreator(secUser.getUserId());
             serverAvailableResourcesInfoVO.setCreateTime(new Date());
+            serverAvailableResourcesInfoVO.setArea(secUser.getArea());
             serverAvailableResourcesInfoMapper.insert(serverAvailableResourcesInfoVO);
 
             ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(serverAvailableResourcesInfoVO.getStaId());
             serverChildStatusInfo.setInterventionStatus(CommonConstants.ServerApprovalStatus.INTERVENTIONING);
             serverChildStatusInfo.setUpdator(secUser.getUserId());
             serverChildStatusInfo.setUpdateTime(new Date());
+            serverChildStatusInfo.setArea(secUser.getArea());
             serverChildStatusInfoMapper.updateByPrimaryKeySelective(serverChildStatusInfo);
         }else{
             serverAvailableResourcesInfoVO.setUpdator(secUser.getUserId());
             serverAvailableResourcesInfoVO.setUpdateTime(new Date());
+            serverAvailableResourcesInfoVO.setArea(secUser.getArea());
             serverAvailableResourcesInfoMapper.updateByPrimaryKeySelective(serverAvailableResourcesInfoVO);
         }
         return ReturnEntity.ok(serverAvailableResourcesInfoVO);
@@ -84,6 +87,7 @@ public class AvailableResourcesService extends BaseService implements IAvailable
         serverAvailableResourcesInfoVO.setStatus(CommonConstants.ServerApprovalStatus.INTERVENTIONSUBMITED);
         serverAvailableResourcesInfoVO.setUpdateTime(new Date());
         serverAvailableResourcesInfoVO.setUpdator(secUser.getUserId());
+        serverAvailableResourcesInfoVO.setArea(secUser.getArea());
         serverAvailableResourcesInfoMapper.updateByPrimaryKeySelective(serverAvailableResourcesInfoVO);
 
         ServerChildStatusInfo statusInfo = new ServerChildStatusInfo();
@@ -95,6 +99,7 @@ public class AvailableResourcesService extends BaseService implements IAvailable
         }
         statusInfo.setUpdator(secUser.getUserId());
         statusInfo.setUpdateTime(new Date());
+        statusInfo.setArea(secUser.getArea());
         serverChildStatusInfoMapper.updateByPrimaryKeySelective(statusInfo);
 
         return ReturnEntity.ok(serverAvailableResourcesInfoVO);

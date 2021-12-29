@@ -30,12 +30,12 @@
 		</jdbcConnection>
 
 		<!--生成代码地址-->
-		<javaModelGenerator targetPackage="cn.com.personnel.ercp.pi.persistence.entity.server"
+		<javaModelGenerator targetPackage="cn.com.personnel.ercp.pi.persistence.entity.child"
 			targetProject="D:\git\pi-ercp-server\pi-ercp-common/src/main/java" />
-		<sqlMapGenerator targetPackage="persistence.xml.server"
+		<sqlMapGenerator targetPackage="persistence.xml.child"
 			targetProject="src/main/resources" />
 
-		<javaClientGenerator targetPackage="cn.com.personnel.ercp.pi.persistence.mapper.server"
+		<javaClientGenerator targetPackage="cn.com.personnel.ercp.pi.persistence.mapper.child"
 			targetProject="src/main/java" type="XMLMAPPER" />
 
 
@@ -72,11 +72,14 @@
 <!--			<generatedKey column="token_id"  sqlStatement="JDBC"/>-->
 <!--		</table>-->
 
-		<table tableName="server_evaluate_info" domainObjectName="ServerEvaluateInfo" >
-			<generatedKey column="evaluate_id"  sqlStatement="JDBC"/>
-		</table>
-		<table tableName="server_case_closed_info" domainObjectName="ServerCaseClosedInfo" >
-			<generatedKey column="close_id"  sqlStatement="JDBC"/>
+<!--		<table tableName="server_evaluate_info" domainObjectName="ServerEvaluateInfo" >-->
+<!--			<generatedKey column="evaluate_id"  sqlStatement="JDBC"/>-->
+<!--		</table>-->
+<!--		<table tableName="server_case_closed_info" domainObjectName="ServerCaseClosedInfo" >-->
+<!--			<generatedKey column="close_id"  sqlStatement="JDBC"/>-->
+<!--		</table>-->
+		<table tableName="pi_children_base_info" domainObjectName="PiChildrenBaseInfo" >
+			<generatedKey column="child_id"  sqlStatement="JDBC"/>
 		</table>
 
    </context>

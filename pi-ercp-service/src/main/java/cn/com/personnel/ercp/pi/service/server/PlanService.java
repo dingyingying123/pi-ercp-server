@@ -71,16 +71,19 @@ public class PlanService extends BaseService implements IPlanService {
             serverPlanInfoVO.setStatus(CommonConstants.ServerApprovalStatus.PLAN_SAVE);
             serverPlanInfoVO.setCreator(secUser.getUserId());
             serverPlanInfoVO.setCreateTime(new Date());
+            serverPlanInfoVO.setArea(secUser.getArea());
             serverPlanInfoMapper.insert(serverPlanInfoVO);
 
             ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(serverPlanInfoVO.getStaId());
             serverChildStatusInfo.setPlanStatus(CommonConstants.ServerApprovalStatus.PLANING);
             serverChildStatusInfo.setUpdator(secUser.getUserId());
             serverChildStatusInfo.setUpdateTime(new Date());
+            serverChildStatusInfo.setArea(secUser.getArea());
             serverChildStatusInfoMapper.updateByPrimaryKeySelective(serverChildStatusInfo);
         }else{
             serverPlanInfoVO.setUpdator(secUser.getUserId());
             serverPlanInfoVO.setUpdateTime(new Date());
+            serverPlanInfoVO.setArea(secUser.getArea());
             serverPlanInfoMapper.updateByPrimaryKeySelective(serverPlanInfoVO);
         }
         return ReturnEntity.ok(serverPlanInfoVO);
@@ -109,6 +112,7 @@ public class PlanService extends BaseService implements IPlanService {
         serverPlanInfoVO.setStatus(CommonConstants.ServerApprovalStatus.PLANPARTSUBMIT);
         serverPlanInfoVO.setUpdateTime(new Date());
         serverPlanInfoVO.setUpdator(secUser.getUserId());
+        serverPlanInfoVO.setArea(secUser.getArea());
         serverPlanInfoMapper.updateByPrimaryKeySelective(serverPlanInfoVO);
 
         ServerChildStatusInfo statusInfo = new ServerChildStatusInfo();
@@ -120,6 +124,7 @@ public class PlanService extends BaseService implements IPlanService {
         }
         statusInfo.setUpdator(secUser.getUserId());
         statusInfo.setUpdateTime(new Date());
+        statusInfo.setArea(secUser.getArea());
         serverChildStatusInfoMapper.updateByPrimaryKeySelective(statusInfo);
 
         return ReturnEntity.ok(serverPlanInfoVO);

@@ -13,7 +13,13 @@ public class ServerTakeCaseInfoVO extends ServerTakeCaseInfo {
     private String childTelNo;
     private String childNationality;
     private String childMale;
+    private String childAccountProvince;
+    private String childAccountCity;
+    private String childAccountCounty;
     private String childAccountAddress;
+    private String childCurrentProvince;
+    private String childCurrentCity;
+    private String childCurrentCounty;
     private String childCurrentAddress;
     private String childHealthStatus;
     private String childEscalationType;
@@ -27,7 +33,13 @@ public class ServerTakeCaseInfoVO extends ServerTakeCaseInfo {
     private String fatherName;
     private String fatherIdNo;
     private String fatherTelNo;
+    private String fatherAccountProvince;
+    private String fatherAccountCity;
+    private String fatherAccountCounty;
     private String fatherAccountAddress;
+    private String fatherCurrentProvince;
+    private String fatherCurrentCity;
+    private String fatherCurrentCounty;
     private String fatherCurrentAddress;
     private String fatherHealthStatus;
     private String fatherDisabilityType;
@@ -38,7 +50,13 @@ public class ServerTakeCaseInfoVO extends ServerTakeCaseInfo {
     private String motherName;
     private String motherIdNo;
     private String motherTelNo;
+    private String motherAccountProvince;
+    private String motherAccountCity;
+    private String motherAccountCounty;
     private String motherAccountAddress;
+    private String motherCurrentProvince;
+    private String motherCurrentCity;
+    private String motherCurrentCounty;
     private String motherCurrentAddress;
     private String motherHealthStatus;
     private String motherDisabilityType;
@@ -59,6 +77,9 @@ public class ServerTakeCaseInfoVO extends ServerTakeCaseInfo {
     private String organizationPrincipal;
     private String organizationTelNo;
     private String organizationNature;
+    private String organizationResidentialProvince;
+    private String organizationResidentialCity;
+    private String organizationResidentialCounty;
     private String organizationResidentialAddress;
     private String helpSuggestions;
     private String securityFeeCollectionMethod;
@@ -594,5 +615,173 @@ public class ServerTakeCaseInfoVO extends ServerTakeCaseInfo {
 
     public void setCaseClosedStatus(String caseClosedStatus) {
         this.caseClosedStatus = caseClosedStatus;
+    }
+
+    public String getChildAccountProvince() {
+        return childAccountProvince;
+    }
+
+    public void setChildAccountProvince(String childAccountProvince) {
+        this.childAccountProvince = childAccountProvince;
+    }
+
+    public String getChildAccountCity() {
+        return childAccountCity;
+    }
+
+    public void setChildAccountCity(String childAccountCity) {
+        this.childAccountCity = childAccountCity;
+    }
+
+    public String getChildAccountCounty() {
+        return childAccountCounty;
+    }
+
+    public void setChildAccountCounty(String childAccountCounty) {
+        this.childAccountCounty = childAccountCounty;
+    }
+
+    public String getChildCurrentProvince() {
+        return childCurrentProvince;
+    }
+
+    public void setChildCurrentProvince(String childCurrentProvince) {
+        this.childCurrentProvince = childCurrentProvince;
+    }
+
+    public String getChildCurrentCity() {
+        return childCurrentCity;
+    }
+
+    public void setChildCurrentCity(String childCurrentCity) {
+        this.childCurrentCity = childCurrentCity;
+    }
+
+    public String getChildCurrentCounty() {
+        return childCurrentCounty;
+    }
+
+    public void setChildCurrentCounty(String childCurrentCounty) {
+        this.childCurrentCounty = childCurrentCounty;
+    }
+
+    public String getFatherAccountProvince() {
+        return fatherAccountProvince;
+    }
+
+    public void setFatherAccountProvince(String fatherAccountProvince) {
+        this.fatherAccountProvince = fatherAccountProvince;
+    }
+
+    public String getFatherAccountCity() {
+        return fatherAccountCity;
+    }
+
+    public void setFatherAccountCity(String fatherAccountCity) {
+        this.fatherAccountCity = fatherAccountCity;
+    }
+
+    public String getFatherAccountCounty() {
+        return fatherAccountCounty;
+    }
+
+    public void setFatherAccountCounty(String fatherAccountCounty) {
+        this.fatherAccountCounty = fatherAccountCounty;
+    }
+
+    public String getFatherCurrentProvince() {
+        return fatherCurrentProvince;
+    }
+
+    public void setFatherCurrentProvince(String fatherCurrentProvince) {
+        this.fatherCurrentProvince = fatherCurrentProvince;
+    }
+
+    public String getFatherCurrentCity() {
+        return fatherCurrentCity;
+    }
+
+    public void setFatherCurrentCity(String fatherCurrentCity) {
+        this.fatherCurrentCity = fatherCurrentCity;
+    }
+
+    public String getFatherCurrentCounty() {
+        return fatherCurrentCounty;
+    }
+
+    public void setFatherCurrentCounty(String fatherCurrentCounty) {
+        this.fatherCurrentCounty = fatherCurrentCounty;
+    }
+
+    public String getMotherAccountProvince() {
+        return motherAccountProvince;
+    }
+
+    public void setMotherAccountProvince(String motherAccountProvince) {
+        this.motherAccountProvince = motherAccountProvince;
+    }
+
+    public String getMotherAccountCity() {
+        return motherAccountCity;
+    }
+
+    public void setMotherAccountCity(String motherAccountCity) {
+        this.motherAccountCity = motherAccountCity;
+    }
+
+    public String getMotherAccountCounty() {
+        return motherAccountCounty;
+    }
+
+    public void setMotherAccountCounty(String motherAccountCounty) {
+        this.motherAccountCounty = motherAccountCounty;
+    }
+
+    public String getMotherCurrentProvince() {
+        return motherCurrentProvince;
+    }
+
+    public void setMotherCurrentProvince(String motherCurrentProvince) {
+        this.motherCurrentProvince = motherCurrentProvince;
+    }
+
+    public String getMotherCurrentCity() {
+        return motherCurrentCity;
+    }
+
+    public void setMotherCurrentCity(String motherCurrentCity) {
+        this.motherCurrentCity = motherCurrentCity;
+    }
+
+    public String getMotherCurrentCounty() {
+        return motherCurrentCounty;
+    }
+
+    public void setMotherCurrentCounty(String motherCurrentCounty) {
+        this.motherCurrentCounty = motherCurrentCounty;
+    }
+
+    public String getOrganizationResidentialProvince() {
+        return organizationResidentialProvince;
+    }
+
+    public void setOrganizationResidentialProvince(String organizationResidentialProvince) {
+        this.organizationResidentialProvince = organizationResidentialProvince;
+    }
+
+    public String getOrganizationResidentialCity() {
+        return organizationResidentialCity;
+    }
+
+    public void setOrganizationResidentialCity(String organizationResidentialCity) {
+        this.organizationResidentialCity = organizationResidentialCity;
+    }
+
+    public String getOrganizationResidentialCounty() {
+        return organizationResidentialCounty;
+    }
+
+    public void setOrganizationResidentialCounty(String organizationResidentialCounty) {
+        this.organizationResidentialCounty = organizationResidentialCounty;
     }
 }

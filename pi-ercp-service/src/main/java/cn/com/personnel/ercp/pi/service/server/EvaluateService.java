@@ -70,16 +70,19 @@ public class EvaluateService extends BaseService implements IEvaluateService {
             serverEvaluateInfoVO.setStatus(CommonConstants.ServerApprovalStatus.EVALUATE_SAVE);
             serverEvaluateInfoVO.setCreator(secUser.getUserId());
             serverEvaluateInfoVO.setCreateTime(new Date());
+            serverEvaluateInfoVO.setArea(secUser.getArea());
             serverEvaluateInfoMapper.insert(serverEvaluateInfoVO);
 
             ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(serverEvaluateInfoVO.getStaId());
             serverChildStatusInfo.setEstimateStatus(CommonConstants.ServerApprovalStatus.EVALUATE_SAVE);
             serverChildStatusInfo.setUpdator(secUser.getUserId());
             serverChildStatusInfo.setUpdateTime(new Date());
+            serverChildStatusInfo.setArea(secUser.getArea());
             serverChildStatusInfoMapper.updateByPrimaryKeySelective(serverChildStatusInfo);
         }else{
             serverEvaluateInfoVO.setUpdator(secUser.getUserId());
             serverEvaluateInfoVO.setUpdateTime(new Date());
+            serverEvaluateInfoVO.setArea(secUser.getArea());
             serverEvaluateInfoMapper.updateByPrimaryKeySelective(serverEvaluateInfoVO);
         }
         return ReturnEntity.ok(serverEvaluateInfoVO);
@@ -93,6 +96,7 @@ public class EvaluateService extends BaseService implements IEvaluateService {
         serverEvaluateInfoVO.setStatus(CommonConstants.ServerApprovalStatus.EVALUATE_SUBMIT);
         serverEvaluateInfoVO.setUpdateTime(new Date());
         serverEvaluateInfoVO.setUpdator(secUser.getUserId());
+        serverEvaluateInfoVO.setArea(secUser.getArea());
         serverEvaluateInfoMapper.updateByPrimaryKeySelective(serverEvaluateInfoVO);
 
         ServerChildStatusInfo statusInfo = new ServerChildStatusInfo();
@@ -100,6 +104,7 @@ public class EvaluateService extends BaseService implements IEvaluateService {
         statusInfo.setEvaluateStatus(CommonConstants.ServerApprovalStatus.EVALUATE_SUBMIT);
         statusInfo.setUpdator(secUser.getUserId());
         statusInfo.setUpdateTime(new Date());
+        statusInfo.setArea(secUser.getArea());
         serverChildStatusInfoMapper.updateByPrimaryKeySelective(statusInfo);
 
         return ReturnEntity.ok(serverEvaluateInfoVO);

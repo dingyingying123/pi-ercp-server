@@ -42,33 +42,33 @@ public class CommonConstants {
      * 流程审批状态
      */
     public static class ApprovalStatus {
-        public static final String DRAFT = "进行中";
-        public static final String COMPLETED = "已完成";
-        public static final String APPROVING = "已发送审批";
-        public static final String APPROVED = "审批通过";
-        public static final String NOTPASS = "审批不通过";
+        public static final String DRAFT = "0";//进行中
+        public static final String COMPLETED = "1";//已完成
+        public static final String APPROVING = "2";//已发送审批
+        public static final String APPROVED = "3";//审批通过
+        public static final String NOTPASS = "4";//审批不通过
     }
 
     /**
      * 流程审批状态
      */
     public static class ServerApprovalStatus {
-        public static final String CASE_SAVE = "接案保存";
-        public static final String CASE_SUBMITED = "接案已提交";
-        public static final String ESTIMATE_SAVE = "预估保存";
-        public static final String ESTIMATE_SUBMITED = "预估已提交";
-        public static final String PLAN_SAVE = "计划保存";
-        public static final String PLANING = "计划中";
-        public static final String PLANPARTSUBMIT = "计划部分提交";
-        public static final String PLANSUBMITED = "计划已提交";
-        public static final String INTERVENTIONING = "介入中";
-        public static final String INTERVENTIONING_SAVE = "介入保存";
-        public static final String INTERVENTIONPARTSUBMIT = "介入部分提交";
-        public static final String INTERVENTIONSUBMITED = "介入已提交";
-        public static final String EVALUATE_SAVE = "评价保存";
-        public static final String EVALUATE_SUBMIT = "评价已提交";
-        public static final String CLOSE_CASE_SAVE = "结案保存";
-        public static final String CLOSE_CASE_SUBMIT = "结案已提交";
+        public static final String CASE_SAVE = "0";//接案保存
+        public static final String CASE_SUBMITED = "1";//接案已提交
+        public static final String ESTIMATE_SAVE = "0";//预估保存
+        public static final String ESTIMATE_SUBMITED = "1";//预估已提交
+        public static final String PLAN_SAVE = "0";//计划保存
+        public static final String PLANING = "1";//计划中
+        public static final String PLANPARTSUBMIT = "2";//计划部分提交
+        public static final String PLANSUBMITED = "3";//计划已提交
+        public static final String INTERVENTIONING = "1";//介入中
+        public static final String INTERVENTIONING_SAVE = "0";//介入保存
+        public static final String INTERVENTIONPARTSUBMIT = "2";//介入部分提交
+        public static final String INTERVENTIONSUBMITED = "3";//介入已提交
+        public static final String EVALUATE_SAVE = "0";//评价保存
+        public static final String EVALUATE_SUBMIT = "1";//评价已提交
+        public static final String CLOSE_CASE_SAVE = "0";//结案保存
+        public static final String CLOSE_CASE_SUBMIT = "1";//结案已提交
     }
 
     // 通过delete字段进行控制 1:显示 0:不显示 2：变更中
@@ -87,6 +87,7 @@ public class CommonConstants {
     public static final String UNIT_8000 = "8000";
 
     //成功标识
+
     public static final String S = "S";
     //执行中标识
     public static final String P = "P";
