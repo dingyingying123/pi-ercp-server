@@ -30,6 +30,9 @@ public class PiChildrenBaseInfo {
     @Column(name = "child_account_province")
     private String childAccountProvince;
 
+    @Column(name = "child_account_town")
+    private String childAccountTown;
+
     @Column(name = "child_account_city")
     private String childAccountCity;
 
@@ -47,6 +50,9 @@ public class PiChildrenBaseInfo {
 
     @Column(name = "child_current_county")
     private String childCurrentCounty;
+
+    @Column(name = "child_current_town")
+    private String childCurrentTown;
 
     @Column(name = "child_current_address")
     private String childCurrentAddress;
@@ -77,135 +83,6 @@ public class PiChildrenBaseInfo {
 
     @Column(name = "child_violation_guardian")
     private String childViolationGuardian;
-
-    @Column(name = "father_name")
-    private String fatherName;
-
-    @Column(name = "father_id_no")
-    private String fatherIdNo;
-
-    @Column(name = "father_tel_no")
-    private String fatherTelNo;
-
-    @Column(name = "father_account_province")
-    private String fatherAccountProvince;
-
-    @Column(name = "father_account_city")
-    private String fatherAccountCity;
-
-    @Column(name = "father_account_county")
-    private String fatherAccountCounty;
-
-    @Column(name = "father_account_address")
-    private String fatherAccountAddress;
-
-    @Column(name = "father_current_province")
-    private String fatherCurrentProvince;
-
-    @Column(name = "father_current_city")
-    private String fatherCurrentCity;
-
-    @Column(name = "father_current_county")
-    private String fatherCurrentCounty;
-
-    @Column(name = "father_current_address")
-    private String fatherCurrentAddress;
-
-    @Column(name = "father_health_status")
-    private String fatherHealthStatus;
-
-    @Column(name = "father_disability_type")
-    private String fatherDisabilityType;
-
-    @Column(name = "father_disability_level")
-    private String fatherDisabilityLevel;
-
-    @Column(name = "father_disease_type")
-    private String fatherDiseaseType;
-
-    @Column(name = "father_family_income")
-    private String fatherFamilyIncome;
-
-    @Column(name = "father_other_cases")
-    private String fatherOtherCases;
-
-    @Column(name = "mother_name")
-    private String motherName;
-
-    @Column(name = "mother_id_no")
-    private String motherIdNo;
-
-    @Column(name = "mother_tel_no")
-    private String motherTelNo;
-
-    @Column(name = "mother_account_province")
-    private String motherAccountProvince;
-
-    @Column(name = "mother_account_city")
-    private String motherAccountCity;
-
-    @Column(name = "mother_account_county")
-    private String motherAccountCounty;
-
-    @Column(name = "mother_account_address")
-    private String motherAccountAddress;
-
-    @Column(name = "mother_current_province")
-    private String motherCurrentProvince;
-
-    @Column(name = "mother_current_city")
-    private String motherCurrentCity;
-
-    @Column(name = "mother_current_county")
-    private String motherCurrentCounty;
-
-    @Column(name = "mother_current_address")
-    private String motherCurrentAddress;
-
-    @Column(name = "mother_health_status")
-    private String motherHealthStatus;
-
-    @Column(name = "mother_disability_type")
-    private String motherDisabilityType;
-
-    @Column(name = "mother_disability_level")
-    private String motherDisabilityLevel;
-
-    @Column(name = "mother_disease_type")
-    private String motherDiseaseType;
-
-    @Column(name = "mother_family_income")
-    private String motherFamilyIncome;
-
-    @Column(name = "mother_other_cases")
-    private String motherOtherCases;
-
-    @Column(name = "other_guardian_name")
-    private String otherGuardianName;
-
-    @Column(name = "other_guardian_id_no")
-    private String otherGuardianIdNo;
-
-    @Column(name = "other_guardian_tel_no")
-    private String otherGuardianTelNo;
-
-    @Column(name = "other_guardian_relationship_with_children")
-    private String otherGuardianRelationshipWithChildren;
-
-    @Column(name = "other_guardian_health_status")
-    private String otherGuardianHealthStatus;
-
-    @Column(name = "other_guardian_disability_type")
-    private String otherGuardianDisabilityType;
-
-    @Column(name = "other_guardian_disability_level")
-    private String otherGuardianDisabilityLevel;
-
-    @Column(name = "other_guardian_disease_type")
-    private String otherGuardianDiseaseType;
-
-    @Column(name = "other_guardian_reasons")
-    private String otherGuardianReasons;
 
     @Column(name = "organization_name")
     private String organizationName;
@@ -264,6 +141,9 @@ public class PiChildrenBaseInfo {
 
     @Column(name = "child_age")
     private String childAge;
+
+    @Column(name = "approve_opinion")
+    private String approveOpinion;
 
     /**
      * @return child_id
@@ -363,18 +243,12 @@ public class PiChildrenBaseInfo {
         this.childMale = childMale;
     }
 
-    /**
-     * @return child_account_province
-     */
-    public String getChildAccountProvince() {
-        return childAccountProvince;
+    public String getChildAccountTown() {
+        return childAccountTown;
     }
 
-    /**
-     * @param childAccountProvince
-     */
-    public void setChildAccountProvince(String childAccountProvince) {
-        this.childAccountProvince = childAccountProvince;
+    public void setChildAccountTown(String childAccountTown) {
+        this.childAccountTown = childAccountTown;
     }
 
     /**
@@ -599,608 +473,6 @@ public class PiChildrenBaseInfo {
      */
     public void setChildViolationGuardian(String childViolationGuardian) {
         this.childViolationGuardian = childViolationGuardian;
-    }
-
-    /**
-     * @return father_name
-     */
-    public String getFatherName() {
-        return fatherName;
-    }
-
-    /**
-     * @param fatherName
-     */
-    public void setFatherName(String fatherName) {
-        this.fatherName = fatherName;
-    }
-
-    /**
-     * @return father_id_no
-     */
-    public String getFatherIdNo() {
-        return fatherIdNo;
-    }
-
-    /**
-     * @param fatherIdNo
-     */
-    public void setFatherIdNo(String fatherIdNo) {
-        this.fatherIdNo = fatherIdNo;
-    }
-
-    /**
-     * @return father_tel_no
-     */
-    public String getFatherTelNo() {
-        return fatherTelNo;
-    }
-
-    /**
-     * @param fatherTelNo
-     */
-    public void setFatherTelNo(String fatherTelNo) {
-        this.fatherTelNo = fatherTelNo;
-    }
-
-    /**
-     * @return father_account_province
-     */
-    public String getFatherAccountProvince() {
-        return fatherAccountProvince;
-    }
-
-    /**
-     * @param fatherAccountProvince
-     */
-    public void setFatherAccountProvince(String fatherAccountProvince) {
-        this.fatherAccountProvince = fatherAccountProvince;
-    }
-
-    /**
-     * @return father_account_city
-     */
-    public String getFatherAccountCity() {
-        return fatherAccountCity;
-    }
-
-    /**
-     * @param fatherAccountCity
-     */
-    public void setFatherAccountCity(String fatherAccountCity) {
-        this.fatherAccountCity = fatherAccountCity;
-    }
-
-    /**
-     * @return father_account_county
-     */
-    public String getFatherAccountCounty() {
-        return fatherAccountCounty;
-    }
-
-    /**
-     * @param fatherAccountCounty
-     */
-    public void setFatherAccountCounty(String fatherAccountCounty) {
-        this.fatherAccountCounty = fatherAccountCounty;
-    }
-
-    /**
-     * @return father_account_address
-     */
-    public String getFatherAccountAddress() {
-        return fatherAccountAddress;
-    }
-
-    /**
-     * @param fatherAccountAddress
-     */
-    public void setFatherAccountAddress(String fatherAccountAddress) {
-        this.fatherAccountAddress = fatherAccountAddress;
-    }
-
-    /**
-     * @return father_current_province
-     */
-    public String getFatherCurrentProvince() {
-        return fatherCurrentProvince;
-    }
-
-    /**
-     * @param fatherCurrentProvince
-     */
-    public void setFatherCurrentProvince(String fatherCurrentProvince) {
-        this.fatherCurrentProvince = fatherCurrentProvince;
-    }
-
-    /**
-     * @return father_current_city
-     */
-    public String getFatherCurrentCity() {
-        return fatherCurrentCity;
-    }
-
-    /**
-     * @param fatherCurrentCity
-     */
-    public void setFatherCurrentCity(String fatherCurrentCity) {
-        this.fatherCurrentCity = fatherCurrentCity;
-    }
-
-    /**
-     * @return father_current_county
-     */
-    public String getFatherCurrentCounty() {
-        return fatherCurrentCounty;
-    }
-
-    /**
-     * @param fatherCurrentCounty
-     */
-    public void setFatherCurrentCounty(String fatherCurrentCounty) {
-        this.fatherCurrentCounty = fatherCurrentCounty;
-    }
-
-    /**
-     * @return father_current_address
-     */
-    public String getFatherCurrentAddress() {
-        return fatherCurrentAddress;
-    }
-
-    /**
-     * @param fatherCurrentAddress
-     */
-    public void setFatherCurrentAddress(String fatherCurrentAddress) {
-        this.fatherCurrentAddress = fatherCurrentAddress;
-    }
-
-    /**
-     * @return father_health_status
-     */
-    public String getFatherHealthStatus() {
-        return fatherHealthStatus;
-    }
-
-    /**
-     * @param fatherHealthStatus
-     */
-    public void setFatherHealthStatus(String fatherHealthStatus) {
-        this.fatherHealthStatus = fatherHealthStatus;
-    }
-
-    /**
-     * @return father_disability_type
-     */
-    public String getFatherDisabilityType() {
-        return fatherDisabilityType;
-    }
-
-    /**
-     * @param fatherDisabilityType
-     */
-    public void setFatherDisabilityType(String fatherDisabilityType) {
-        this.fatherDisabilityType = fatherDisabilityType;
-    }
-
-    /**
-     * @return father_disability_level
-     */
-    public String getFatherDisabilityLevel() {
-        return fatherDisabilityLevel;
-    }
-
-    /**
-     * @param fatherDisabilityLevel
-     */
-    public void setFatherDisabilityLevel(String fatherDisabilityLevel) {
-        this.fatherDisabilityLevel = fatherDisabilityLevel;
-    }
-
-    /**
-     * @return father_disease_type
-     */
-    public String getFatherDiseaseType() {
-        return fatherDiseaseType;
-    }
-
-    /**
-     * @param fatherDiseaseType
-     */
-    public void setFatherDiseaseType(String fatherDiseaseType) {
-        this.fatherDiseaseType = fatherDiseaseType;
-    }
-
-    /**
-     * @return father_family_income
-     */
-    public String getFatherFamilyIncome() {
-        return fatherFamilyIncome;
-    }
-
-    /**
-     * @param fatherFamilyIncome
-     */
-    public void setFatherFamilyIncome(String fatherFamilyIncome) {
-        this.fatherFamilyIncome = fatherFamilyIncome;
-    }
-
-    /**
-     * @return father_other_cases
-     */
-    public String getFatherOtherCases() {
-        return fatherOtherCases;
-    }
-
-    /**
-     * @param fatherOtherCases
-     */
-    public void setFatherOtherCases(String fatherOtherCases) {
-        this.fatherOtherCases = fatherOtherCases;
-    }
-
-    /**
-     * @return mother_name
-     */
-    public String getMotherName() {
-        return motherName;
-    }
-
-    /**
-     * @param motherName
-     */
-    public void setMotherName(String motherName) {
-        this.motherName = motherName;
-    }
-
-    /**
-     * @return mother_id_no
-     */
-    public String getMotherIdNo() {
-        return motherIdNo;
-    }
-
-    /**
-     * @param motherIdNo
-     */
-    public void setMotherIdNo(String motherIdNo) {
-        this.motherIdNo = motherIdNo;
-    }
-
-    /**
-     * @return mother_tel_no
-     */
-    public String getMotherTelNo() {
-        return motherTelNo;
-    }
-
-    /**
-     * @param motherTelNo
-     */
-    public void setMotherTelNo(String motherTelNo) {
-        this.motherTelNo = motherTelNo;
-    }
-
-    /**
-     * @return mother_account_province
-     */
-    public String getMotherAccountProvince() {
-        return motherAccountProvince;
-    }
-
-    /**
-     * @param motherAccountProvince
-     */
-    public void setMotherAccountProvince(String motherAccountProvince) {
-        this.motherAccountProvince = motherAccountProvince;
-    }
-
-    /**
-     * @return mother_account_city
-     */
-    public String getMotherAccountCity() {
-        return motherAccountCity;
-    }
-
-    /**
-     * @param motherAccountCity
-     */
-    public void setMotherAccountCity(String motherAccountCity) {
-        this.motherAccountCity = motherAccountCity;
-    }
-
-    /**
-     * @return mother_account_county
-     */
-    public String getMotherAccountCounty() {
-        return motherAccountCounty;
-    }
-
-    /**
-     * @param motherAccountCounty
-     */
-    public void setMotherAccountCounty(String motherAccountCounty) {
-        this.motherAccountCounty = motherAccountCounty;
-    }
-
-    /**
-     * @return mother_account_address
-     */
-    public String getMotherAccountAddress() {
-        return motherAccountAddress;
-    }
-
-    /**
-     * @param motherAccountAddress
-     */
-    public void setMotherAccountAddress(String motherAccountAddress) {
-        this.motherAccountAddress = motherAccountAddress;
-    }
-
-    /**
-     * @return mother_current_province
-     */
-    public String getMotherCurrentProvince() {
-        return motherCurrentProvince;
-    }
-
-    /**
-     * @param motherCurrentProvince
-     */
-    public void setMotherCurrentProvince(String motherCurrentProvince) {
-        this.motherCurrentProvince = motherCurrentProvince;
-    }
-
-    /**
-     * @return mother_current_city
-     */
-    public String getMotherCurrentCity() {
-        return motherCurrentCity;
-    }
-
-    /**
-     * @param motherCurrentCity
-     */
-    public void setMotherCurrentCity(String motherCurrentCity) {
-        this.motherCurrentCity = motherCurrentCity;
-    }
-
-    /**
-     * @return mother_current_county
-     */
-    public String getMotherCurrentCounty() {
-        return motherCurrentCounty;
-    }
-
-    /**
-     * @param motherCurrentCounty
-     */
-    public void setMotherCurrentCounty(String motherCurrentCounty) {
-        this.motherCurrentCounty = motherCurrentCounty;
-    }
-
-    /**
-     * @return mother_current_address
-     */
-    public String getMotherCurrentAddress() {
-        return motherCurrentAddress;
-    }
-
-    /**
-     * @param motherCurrentAddress
-     */
-    public void setMotherCurrentAddress(String motherCurrentAddress) {
-        this.motherCurrentAddress = motherCurrentAddress;
-    }
-
-    /**
-     * @return mother_health_status
-     */
-    public String getMotherHealthStatus() {
-        return motherHealthStatus;
-    }
-
-    /**
-     * @param motherHealthStatus
-     */
-    public void setMotherHealthStatus(String motherHealthStatus) {
-        this.motherHealthStatus = motherHealthStatus;
-    }
-
-    /**
-     * @return mother_disability_type
-     */
-    public String getMotherDisabilityType() {
-        return motherDisabilityType;
-    }
-
-    /**
-     * @param motherDisabilityType
-     */
-    public void setMotherDisabilityType(String motherDisabilityType) {
-        this.motherDisabilityType = motherDisabilityType;
-    }
-
-    /**
-     * @return mother_disability_level
-     */
-    public String getMotherDisabilityLevel() {
-        return motherDisabilityLevel;
-    }
-
-    /**
-     * @param motherDisabilityLevel
-     */
-    public void setMotherDisabilityLevel(String motherDisabilityLevel) {
-        this.motherDisabilityLevel = motherDisabilityLevel;
-    }
-
-    /**
-     * @return mother_disease_type
-     */
-    public String getMotherDiseaseType() {
-        return motherDiseaseType;
-    }
-
-    /**
-     * @param motherDiseaseType
-     */
-    public void setMotherDiseaseType(String motherDiseaseType) {
-        this.motherDiseaseType = motherDiseaseType;
-    }
-
-    /**
-     * @return mother_family_income
-     */
-    public String getMotherFamilyIncome() {
-        return motherFamilyIncome;
-    }
-
-    /**
-     * @param motherFamilyIncome
-     */
-    public void setMotherFamilyIncome(String motherFamilyIncome) {
-        this.motherFamilyIncome = motherFamilyIncome;
-    }
-
-    /**
-     * @return mother_other_cases
-     */
-    public String getMotherOtherCases() {
-        return motherOtherCases;
-    }
-
-    /**
-     * @param motherOtherCases
-     */
-    public void setMotherOtherCases(String motherOtherCases) {
-        this.motherOtherCases = motherOtherCases;
-    }
-
-    /**
-     * @return other_guardian_name
-     */
-    public String getOtherGuardianName() {
-        return otherGuardianName;
-    }
-
-    /**
-     * @param otherGuardianName
-     */
-    public void setOtherGuardianName(String otherGuardianName) {
-        this.otherGuardianName = otherGuardianName;
-    }
-
-    /**
-     * @return other_guardian_id_no
-     */
-    public String getOtherGuardianIdNo() {
-        return otherGuardianIdNo;
-    }
-
-    /**
-     * @param otherGuardianIdNo
-     */
-    public void setOtherGuardianIdNo(String otherGuardianIdNo) {
-        this.otherGuardianIdNo = otherGuardianIdNo;
-    }
-
-    /**
-     * @return other_guardian_tel_no
-     */
-    public String getOtherGuardianTelNo() {
-        return otherGuardianTelNo;
-    }
-
-    /**
-     * @param otherGuardianTelNo
-     */
-    public void setOtherGuardianTelNo(String otherGuardianTelNo) {
-        this.otherGuardianTelNo = otherGuardianTelNo;
-    }
-
-    /**
-     * @return other_guardian_relationship_with_children
-     */
-    public String getOtherGuardianRelationshipWithChildren() {
-        return otherGuardianRelationshipWithChildren;
-    }
-
-    /**
-     * @param otherGuardianRelationshipWithChildren
-     */
-    public void setOtherGuardianRelationshipWithChildren(String otherGuardianRelationshipWithChildren) {
-        this.otherGuardianRelationshipWithChildren = otherGuardianRelationshipWithChildren;
-    }
-
-    /**
-     * @return other_guardian_health_status
-     */
-    public String getOtherGuardianHealthStatus() {
-        return otherGuardianHealthStatus;
-    }
-
-    /**
-     * @param otherGuardianHealthStatus
-     */
-    public void setOtherGuardianHealthStatus(String otherGuardianHealthStatus) {
-        this.otherGuardianHealthStatus = otherGuardianHealthStatus;
-    }
-
-    /**
-     * @return other_guardian_disability_type
-     */
-    public String getOtherGuardianDisabilityType() {
-        return otherGuardianDisabilityType;
-    }
-
-    /**
-     * @param otherGuardianDisabilityType
-     */
-    public void setOtherGuardianDisabilityType(String otherGuardianDisabilityType) {
-        this.otherGuardianDisabilityType = otherGuardianDisabilityType;
-    }
-
-    /**
-     * @return other_guardian_disability_level
-     */
-    public String getOtherGuardianDisabilityLevel() {
-        return otherGuardianDisabilityLevel;
-    }
-
-    /**
-     * @param otherGuardianDisabilityLevel
-     */
-    public void setOtherGuardianDisabilityLevel(String otherGuardianDisabilityLevel) {
-        this.otherGuardianDisabilityLevel = otherGuardianDisabilityLevel;
-    }
-
-    /**
-     * @return other_guardian_disease_type
-     */
-    public String getOtherGuardianDiseaseType() {
-        return otherGuardianDiseaseType;
-    }
-
-    /**
-     * @param otherGuardianDiseaseType
-     */
-    public void setOtherGuardianDiseaseType(String otherGuardianDiseaseType) {
-        this.otherGuardianDiseaseType = otherGuardianDiseaseType;
-    }
-
-    /**
-     * @return other_guardian_reasons
-     */
-    public String getOtherGuardianReasons() {
-        return otherGuardianReasons;
-    }
-
-    /**
-     * @param otherGuardianReasons
-     */
-    public void setOtherGuardianReasons(String otherGuardianReasons) {
-        this.otherGuardianReasons = otherGuardianReasons;
     }
 
     /**
@@ -1495,5 +767,29 @@ public class PiChildrenBaseInfo {
      */
     public void setChildAge(String childAge) {
         this.childAge = childAge;
+    }
+
+    public String getChildAccountProvince() {
+        return childAccountProvince;
+    }
+
+    public void setChildAccountProvince(String childAccountProvince) {
+        this.childAccountProvince = childAccountProvince;
+    }
+
+    public String getChildCurrentTown() {
+        return childCurrentTown;
+    }
+
+    public void setChildCurrentTown(String childCurrentTown) {
+        this.childCurrentTown = childCurrentTown;
+    }
+
+    public String getApproveOpinion() {
+        return approveOpinion;
+    }
+
+    public void setApproveOpinion(String approveOpinion) {
+        this.approveOpinion = approveOpinion;
     }
 }

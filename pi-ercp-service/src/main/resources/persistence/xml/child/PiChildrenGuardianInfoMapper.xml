@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.child.PiChildrenGuardianInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenGuardianInfo" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="guardian_id" property="guardianId" jdbcType="VARCHAR" />
+    <result column="child_id" property="childId" jdbcType="VARCHAR" />
+    <result column="child_name" property="childName" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="id_no" property="idNo" jdbcType="VARCHAR" />
+    <result column="tel_no" property="telNo" jdbcType="VARCHAR" />
+    <result column="account_town" property="accountTown" jdbcType="VARCHAR" />
+    <result column="account_province" property="accountProvince" jdbcType="VARCHAR" />
+    <result column="account_city" property="accountCity" jdbcType="VARCHAR" />
+    <result column="account_county" property="accountCounty" jdbcType="VARCHAR" />
+    <result column="account_address" property="accountAddress" jdbcType="VARCHAR" />
+    <result column="current_province" property="currentProvince" jdbcType="VARCHAR" />
+    <result column="current_town" property="currentTown" jdbcType="VARCHAR" />
+    <result column="current_city" property="currentCity" jdbcType="VARCHAR" />
+    <result column="current_county" property="currentCounty" jdbcType="VARCHAR" />
+    <result column="current_address" property="currentAddress" jdbcType="VARCHAR" />
+    <result column="health_status" property="healthStatus" jdbcType="VARCHAR" />
+    <result column="disability_type" property="disabilityType" jdbcType="VARCHAR" />
+    <result column="disability_level" property="disabilityLevel" jdbcType="VARCHAR" />
+    <result column="disease_type" property="diseaseType" jdbcType="VARCHAR" />
+    <result column="family_income" property="familyIncome" jdbcType="VARCHAR" />
+    <result column="other_cases" property="otherCases" jdbcType="VARCHAR" />
+    <result column="relationship" property="relationship" jdbcType="VARCHAR" />
+    <result column="reasons" property="reasons" jdbcType="VARCHAR" />
+    <result column="isdelete" property="isdelete" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <resultMap id="BaseResultMapVO" type="cn.com.personnel.ercp.common.persistence.entity.FileInfo" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="file_key" property="fileKey" jdbcType="VARCHAR" />
+    <result column="appcode" property="appcode" jdbcType="VARCHAR" />
+    <result column="file_cat" property="fileCat" jdbcType="VARCHAR" />
+    <result column="file_name" property="fileName" jdbcType="VARCHAR" />
+    <result column="file_type" property="fileType" jdbcType="VARCHAR" />
+    <result column="file_size" property="fileSize" jdbcType="BIGINT" />
+    <result column="file_loc" property="fileLoc" jdbcType="VARCHAR" />
+    <result column="file_path" property="filePath" jdbcType="VARCHAR" />
+    <result column="uploader" property="uploader" jdbcType="VARCHAR" />
+    <result column="upload_time" property="uploadTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="file_flag" property="fileFlag" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="queryGuardianFileList" resultMap="BaseResultMapVO">
+    select * from pi_children_guardian_info i join sec_file_info f on i.guardian_id=f.file_flag
+    <where>
+      <if test="childId != null and childId != ''">
+        i.child_id = #{childId}
+      </if>
+      <if test="guardianId != null and guardianId != ''">
+        and guardian_id = #{guardianId}
+      </if>
+    </where>
+    order by f.file_cat, upload_time desc
+  </select>
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.personnel.ercp.pi.persistence.mapper.group.ServerGroupActivityInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.personnel.ercp.pi.persistence.entity.group.ServerGroupActivityInfo" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="group_id" property="groupId" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="activity_time" property="activityTime" jdbcType="VARCHAR" />
+    <result column="activity_location" property="activityLocation" jdbcType="VARCHAR" />
+    <result column="activity_theme" property="activityTheme" jdbcType="VARCHAR" />
+    <result column="host" property="host" jdbcType="VARCHAR" />
+    <result column="recorder" property="recorder" jdbcType="VARCHAR" />
+    <result column="participants" property="participants" jdbcType="VARCHAR" />
+    <result column="activities" property="activities" jdbcType="VARCHAR" />
+    <result column="summarize" property="summarize" jdbcType="VARCHAR" />
+    <result column="isdelete" property="isdelete" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <select id="queryGroupActivityList" resultMap="BaseResultMap">
+    select * from server_group_activity_info i
+    <where>
+      <if test="activityTime != null and activityTime != '' ">
+        i.activity_time like concat('%', #{activityTime}, '%')
+      </if>
+      <if test="activityLocation != null and activityLocation != '' ">
+        and i.activity_location = #{activityLocation}
+      </if>
+      <if test="activityTheme != null and activityTheme != '' ">
+        and i.activity_theme = #{activityTheme}
+      </if>
+      <if test="area != null and area != '' ">
+        and i.area like concat('%', #{area}, '%')
+      </if>
+      <if test="status != null and status != ''">
+        and i.status = #{status}
+      </if>
+    </where>
+    order by activity_time desc
+  </select>
+</mapper>

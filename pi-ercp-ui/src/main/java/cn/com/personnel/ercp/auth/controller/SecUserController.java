@@ -35,9 +35,9 @@ public class SecUserController extends PageController {
      */
     @RequestMapping("query")
     @ResponseBody
-    public PageInfo<SecUser> queryData(@RequestBody SecUser condition) {
+    public ReturnEntity queryData(@RequestBody SecUser condition) {
         PageInfo<SecUser> rs = new PageInfo<SecUser>(secUserService.queryUser(condition, buildPagenation()));
-        return rs;
+        return ReturnEntity.ok(rs);
     }
 
 

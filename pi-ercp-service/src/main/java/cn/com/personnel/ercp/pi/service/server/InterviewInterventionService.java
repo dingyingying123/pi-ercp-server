@@ -41,7 +41,7 @@ public class InterviewInterventionService extends BaseService implements IInterv
 
     @Override
     public ReturnEntity queryInterviewInterventionInfo(ServerInterviewInterventionVO serverInterviewInterventionVO) {
-        if(serverInterviewInterventionVO == null || StringUtils.isNotEmpty(serverInterviewInterventionVO.getViewId())){
+        if(serverInterviewInterventionVO == null || StringUtils.isEmpty(serverInterviewInterventionVO.getViewId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
         ServerInterviewInterventionVO interviewInterventionVO = (ServerInterviewInterventionVO) serverInterviewInterventionInfoMapper.selectByPrimaryKey(serverInterviewInterventionVO.getViewId());

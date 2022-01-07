@@ -78,8 +78,17 @@
 <!--		<table tableName="server_case_closed_info" domainObjectName="ServerCaseClosedInfo" >-->
 <!--			<generatedKey column="close_id"  sqlStatement="JDBC"/>-->
 <!--		</table>-->
-		<table tableName="pi_children_base_info" domainObjectName="PiChildrenBaseInfo" >
-			<generatedKey column="child_id"  sqlStatement="JDBC"/>
+<!--		<table tableName="server_group_activity_info" domainObjectName="ServerGroupActivityInfo" >-->
+<!--			<generatedKey column="group_id"  sqlStatement="JDBC"/>-->
+<!--		</table>-->
+<!--		<table tableName="pi_children_guardian_info" domainObjectName="PiChildrenGuardianInfo" >-->
+<!--			<generatedKey column="guardian_id"  sqlStatement="JDBC"/>-->
+<!--		</table>-->
+<!--		<table tableName="pi_children_location_info" domainObjectName="PiChildrenLocationInfo" >-->
+<!--			<generatedKey column="location_id"  sqlStatement="JDBC"/>-->
+<!--		</table>-->
+		<table tableName="pi_sign_in_info" domainObjectName="PiSignInInfo" >
+			<generatedKey column="sign_id"  sqlStatement="JDBC"/>
 		</table>
 
    </context>

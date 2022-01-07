@@ -2,7 +2,10 @@ package cn.com.personnel.ercp.pi.controller.children;
 
 import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
 import cn.com.personnel.ercp.common.persistence.entity.ReturnEntity;
+import cn.com.personnel.ercp.pi.module.child.PiChildrenBaseInfoVO;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenBaseInfo;
+import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenGuardianInfo;
+import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenLocationInfo;
 import cn.com.personnel.ercp.pi.service.child.IPiChildrenBaseInfoService;
 import cn.com.personnel.springboot.framework.core.controller.PageController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +35,24 @@ public class PiChildrenBaseInfoController extends PageController {
     }
 
     /**
+     * 查询儿童基本信息信息
+     * @param piChildrenBaseInfo
+     * @return
+     */
+    @RequestMapping("/queryPiChildrenBaseInfo")
+    @ResponseBody
+    public ReturnEntity queryPiChildrenBaseInfo(@RequestBody PiChildrenBaseInfo piChildrenBaseInfo){
+        return piChildrenBaseInfoService.queryPiChildrenBaseInfo(piChildrenBaseInfo);
+    }
+
+    /**
      * 保存儿童基本信息
      * @param piChildrenBaseInfo
      * @return
      */
     @RequestMapping("/savePiChildrenBaseInfo")
     @ResponseBody
-    public ReturnEntity savePiChildrenBaseInfo(@RequestBody PiChildrenBaseInfo piChildrenBaseInfo){
+    public ReturnEntity savePiChildrenBaseInfo(@RequestBody PiChildrenBaseInfoVO piChildrenBaseInfo){
         SecUser secUser = (SecUser) getLoginUser();
         return piChildrenBaseInfoService.savePiChildrenBaseInfo(piChildrenBaseInfo, secUser);
     }
@@ -81,13 +95,68 @@ public class PiChildrenBaseInfoController extends PageController {
 
     /**
      * 审批儿童基本信息
-     * @param piChildrenBaseInfo
      * @return
      */
     @RequestMapping("/approvePiChildrenBaseInfo")
     @ResponseBody
-    public ReturnEntity approvePiChildrenBaseInfo(@RequestBody PiChildrenBaseInfo piChildrenBaseInfo){
+    public ReturnEntity approvePiChildrenBaseInfo(){
         SecUser secUser = (SecUser) getLoginUser();
-        return piChildrenBaseInfoService.approvePiChildrenBaseInfo(piChildrenBaseInfo, secUser);
+        return piChildrenBaseInfoService.approvePiChildrenBaseInfo(secUser);
+    }
+
+    /**
+     * 查询成员列表
+     * @return
+     */
+    @RequestMapping("/queryPiChildrenGuardianInfoList")
+    @ResponseBody
+    public ReturnEntity queryPiChildrenGuardianInfoList(@RequestBody PiChildrenGuardianInfo piChildrenGuardianInfo){
+        SecUser secUser = (SecUser) getLoginUser();
+        return piChildrenBaseInfoService.queryPiChildrenGuardianInfoList(piChildrenGuardianInfo);
+    }
+
+    /**
+     * 保存儿童地址信息
+     * @param piChildrenLocationInfo
+     * @return
+     */
+    @RequestMapping("/savePiChildrenLocationInfo")
+    @ResponseBody
+    public ReturnEntity savePiChildrenLocationInfo(@RequestBody PiChildrenLocationInfo piChildrenLocationInfo){
+        SecUser secUser = (SecUser) getLoginUser();
+        return piChildrenBaseInfoService.savePiChildrenLocationInfo(piChildrenLocationInfo, secUser);
+    }
+
+    /**
+     * 查询儿童地址信息
+     * @param piChildrenLocationInfo
+     * @return
+     */
+    @RequestMapping("/queryPiChildrenLocationInfo")
+    @ResponseBody
+    public ReturnEntity queryPiChildrenLocationInfo(@RequestBody PiChildrenLocationInfo piChildrenLocationInfo){
+        return piChildrenBaseInfoService.queryPiChildrenLocationInfo(piChildrenLocationInfo);
+    }
+
+    /**
+     * 查询儿童附件信息
+     * @param piChildrenBaseInfo
+     * @return
+     */
+    @RequestMapping("/queryChildrenFileList")
+    @ResponseBody
+    public ReturnEntity queryChildrenFileList(@RequestBody PiChildrenBaseInfo piChildrenBaseInfo){
+        return piChildrenBaseInfoService.queryChildrenFileList(piChildrenBaseInfo);
+    }
+
+    /**
+     * 查询儿童信息统计表
+     * @param piChildrenBaseInfo
+     * @return
+     */
+    @RequestMapping("/queryChildrenStatisticsList")
+    @ResponseBody
+    public ReturnEntity queryChildrenStatisticsList(@RequestBody PiChildrenBaseInfo piChildrenBaseInfo){
+        return piChildrenBaseInfoService.queryChildrenStatisticsList(piChildrenBaseInfo);
     }
 }

@@ -38,7 +38,7 @@ public class AvailableResourcesService extends BaseService implements IAvailable
 
     @Override
     public ReturnEntity queryAvailableResourcesInfo(ServerAvailableResourcesInfoVO serverAvailableResourcesInfoVO) {
-        if(serverAvailableResourcesInfoVO == null || StringUtils.isNotEmpty(serverAvailableResourcesInfoVO.getAvaId())){
+        if(serverAvailableResourcesInfoVO == null || StringUtils.isEmpty(serverAvailableResourcesInfoVO.getAvaId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
         ServerAvailableResourcesInfoVO interviewInterventionVO = (ServerAvailableResourcesInfoVO) serverAvailableResourcesInfoMapper.selectByPrimaryKey(serverAvailableResourcesInfoVO.getAvaId());

@@ -69,6 +69,8 @@ public class CommonConstants {
         public static final String EVALUATE_SUBMIT = "1";//评价已提交
         public static final String CLOSE_CASE_SAVE = "0";//结案保存
         public static final String CLOSE_CASE_SUBMIT = "1";//结案已提交
+        public static final String GROUP_SAVE = "0";//小组活动保存
+        public static final String GROUP_SUBMIT = "1";//小组活动提交
     }
 
     // 通过delete字段进行控制 1:显示 0:不显示 2：变更中

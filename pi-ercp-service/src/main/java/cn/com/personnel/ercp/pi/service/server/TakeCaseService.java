@@ -44,7 +44,7 @@ public class TakeCaseService extends BaseService implements ITakeCaseService {
 
     @Override
     public ReturnEntity queryTakeCaseInfo(ServerTakeCaseInfoVO serverTakeCaseInfoVO) {
-        if(serverTakeCaseInfoVO == null || StringUtils.isNotEmpty(serverTakeCaseInfoVO.getCaseId())){
+        if(serverTakeCaseInfoVO == null || StringUtils.isEmpty(serverTakeCaseInfoVO.getCaseId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
         ServerTakeCaseInfoVO takeCaseInfoVO = (ServerTakeCaseInfoVO) serverTakeCaseInfoMapper.selectByPrimaryKey(serverTakeCaseInfoVO.getCaseId());
@@ -85,8 +85,9 @@ public class TakeCaseService extends BaseService implements ITakeCaseService {
             }
         }else {
             //添加儿童服务状态表
+            String staId = UUIDKit.getUUID();
             ServerChildStatusInfo statusInfo = new ServerChildStatusInfo();
-            statusInfo.setStaId(UUIDKit.getUUID());
+            statusInfo.setStaId(staId);
             statusInfo.setChildId(serverTakeCaseInfoVO.getChildId());
             statusInfo.setChildName(serverTakeCaseInfoVO.getChildName());
             statusInfo.setCaseStatus(CommonConstants.ServerApprovalStatus.CASE_SAVE);
@@ -99,7 +100,8 @@ public class TakeCaseService extends BaseService implements ITakeCaseService {
             serverTakeCaseInfoVO.setCaseId(UUIDKit.getUUID());
             serverTakeCaseInfoVO.setCreator(secUser.getUserId());
             serverTakeCaseInfoVO.setCreateTime(new Date());
-            serverTakeCaseInfoVO.setArea(secUser.getArea());
+            serverTakeCaseInfoVO.setStaId(staId);
+//            serverTakeCaseInfoVO.setArea(secUser.getArea());
             serverTakeCaseInfoMapper.insert(serverTakeCaseInfoVO);
             //添加家庭成员
             if(serverTakeCaseInfoVO.getServerTakeCaseFamilyMemberList() != null && serverTakeCaseInfoVO.getServerTakeCaseFamilyMemberList().size() > 0){

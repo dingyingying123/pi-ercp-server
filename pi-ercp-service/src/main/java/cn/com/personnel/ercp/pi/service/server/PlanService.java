@@ -40,7 +40,7 @@ public class PlanService extends BaseService implements IPlanService {
 
     @Override
     public ReturnEntity queryPlanInfo(ServerPlanInfoVO serverPlanInfoVO) {
-        if(serverPlanInfoVO == null || StringUtils.isNotEmpty(serverPlanInfoVO.getPlanId())){
+        if(serverPlanInfoVO == null || StringUtils.isEmpty(serverPlanInfoVO.getPlanId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
         ServerPlanInfoVO planInfoVO = (ServerPlanInfoVO) serverPlanInfoMapper.selectByPrimaryKey(serverPlanInfoVO.getPlanId());

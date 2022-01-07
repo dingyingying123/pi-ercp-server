@@ -2,17 +2,27 @@ package cn.com.personnel.ercp.pi.service.child;
 
 import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
 import cn.com.personnel.ercp.common.constants.CommonConstants;
+import cn.com.personnel.ercp.common.persistence.entity.FileInfo;
 import cn.com.personnel.ercp.common.persistence.entity.ReturnEntity;
+import cn.com.personnel.ercp.common.persistence.mapper.FileInfoMapper;
 import cn.com.personnel.ercp.framework.kit.UUIDKit;
+import cn.com.personnel.ercp.pi.module.base.FileInfoVO;
+import cn.com.personnel.ercp.pi.module.child.PiChildrenBaseInfoVO;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenBaseInfo;
+import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenGuardianInfo;
+import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenLocationInfo;
 import cn.com.personnel.ercp.pi.persistence.mapper.child.PiChildrenBaseInfoMapper;
+import cn.com.personnel.ercp.pi.persistence.mapper.child.PiChildrenGuardianInfoMapper;
+import cn.com.personnel.ercp.pi.persistence.mapper.child.PiChildrenLocationInfoMapper;
 import cn.com.personnel.springboot.framework.core.page.PagenationQueryParameter;
 import cn.com.personnel.springboot.framework.service.BaseService;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +30,12 @@ import java.util.List;
 public class PiChildrenBaseInfoService extends BaseService implements IPiChildrenBaseInfoService {
     @Autowired
     PiChildrenBaseInfoMapper piChildrenBaseInfoMapper;
+    @Autowired
+    PiChildrenGuardianInfoMapper piChildrenGuardianInfoMapper;
+    @Autowired
+    PiChildrenLocationInfoMapper piChildrenLocationInfoMapper;
+    @Autowired
+    FileInfoMapper fileInfoMapper;
 
     @Override
     public ReturnEntity queryPiChildrenBaseInfoList(PiChildrenBaseInfo piChildrenBaseInfo, PagenationQueryParameter buildPagenation) {
@@ -28,30 +44,84 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
         //根据条件查询
         List<PiChildrenBaseInfo> childrenBaseInfoList = piChildrenBaseInfoMapper.queryPiChildrenBaseInfoList(piChildrenBaseInfo);
         //返回数据
-        return ReturnEntity.ok(new PageInfo<PiChildrenBaseInfo>(childrenBaseInfoList));
+        return ReturnEntity.ok(new PageInfo<>(childrenBaseInfoList));
     }
 
     @Override
-    public ReturnEntity savePiChildrenBaseInfo(PiChildrenBaseInfo piChildrenBaseInfo, SecUser secUser) {
+    public ReturnEntity savePiChildrenBaseInfo(PiChildrenBaseInfoVO piChildrenBaseInfo, SecUser secUser) {
+
+
+
         if(piChildrenBaseInfo != null && StringUtils.isNotEmpty(piChildrenBaseInfo.getChildId())){
             piChildrenBaseInfo.setUpdateTime(new Date());
             piChildrenBaseInfo.setUpdator(secUser.getUserId());
             piChildrenBaseInfo.setArea(secUser.getArea());
-            piChildrenBaseInfoMapper.updateByPrimaryKeySelective(piChildrenBaseInfo);
-        }else{
-            piChildrenBaseInfo.setChildId(UUIDKit.getUUID());
-            piChildrenBaseInfo.setCreateTime(new Date());
-            piChildrenBaseInfo.setCreator(secUser.getUserId());
-            piChildrenBaseInfo.setArea(secUser.getArea());
             piChildrenBaseInfo.setStatus(CommonConstants.ApprovalStatus.DRAFT);//进行中
-            piChildrenBaseInfoMapper.insert(piChildrenBaseInfo);
+            piChildrenBaseInfoMapper.updateByPrimaryKeySelective(piChildrenBaseInfo);
+            List<PiChildrenGuardianInfo> piChildrenGuardianInfoList = piChildrenBaseInfo.getPiChildrenGuardianInfoList();
+
+            if(piChildrenGuardianInfoList != null && piChildrenGuardianInfoList.size() > 0){
+                Example example = new Example(PiChildrenGuardianInfo.class);
+                example.createCriteria().andEqualTo("childId", piChildrenBaseInfo.getChildId());
+                List<PiChildrenGuardianInfo> piChildrenGuardianInfos = piChildrenGuardianInfoMapper.selectByExample(example);
+                if(piChildrenGuardianInfos.size() > 0){
+                    Boolean flag = true;
+                    for (int i = 0; i < piChildrenGuardianInfos.size(); i++){
+                        PiChildrenGuardianInfo piChildrenGuardianInfo = piChildrenGuardianInfos.get(i);
+                        for(PiChildrenGuardianInfo childrenGuardianInfo : piChildrenGuardianInfoList){
+                            if(piChildrenGuardianInfo.getRelationship() != null && piChildrenGuardianInfo.getRelationship().equals(childrenGuardianInfo.getRelationship())){
+                                flag = false;
+                            }
+                        }
+                        if(flag){
+                            piChildrenGuardianInfoMapper.deleteByPrimaryKey(piChildrenGuardianInfo.getGuardianId());
+                            i--;
+                        }
+                    }
+                }
+                for(PiChildrenGuardianInfo childrenGuardianInfo : piChildrenGuardianInfoList){
+                    if(StringUtils.isEmpty(childrenGuardianInfo.getGuardianId())){
+                        childrenGuardianInfo.setGuardianId(UUIDKit.getUUID());
+                        childrenGuardianInfo.setCreator(secUser.getUserId());
+                        childrenGuardianInfo.setCreateTime(new Date());
+                        piChildrenGuardianInfoMapper.insert(childrenGuardianInfo);
+                    }else{
+                        childrenGuardianInfo.setUpdator(secUser.getUserId());
+                        childrenGuardianInfo.setUpdateTime(new Date());
+                        piChildrenGuardianInfoMapper.updateByPrimaryKeySelective(childrenGuardianInfo);
+                    }
+                }
+            }else {
+                Example example = new Example(PiChildrenGuardianInfo.class);
+                example.createCriteria().andEqualTo("childId", piChildrenBaseInfo.getChildId());
+                piChildrenGuardianInfoMapper.deleteByExample(example);
+            }
+        }else{
+            try {
+                piChildrenBaseInfo.setChildId(UUIDKit.getUUID());
+                piChildrenBaseInfo.setCreateTime(new Date());
+                piChildrenBaseInfo.setCreator(secUser.getUserId());
+//                piChildrenBaseInfo.setArea(secUser.getArea());
+                piChildrenBaseInfo.setStatus(CommonConstants.ApprovalStatus.DRAFT);//进行中
+                piChildrenBaseInfoMapper.insert(piChildrenBaseInfo);
+                List<PiChildrenGuardianInfo> piChildrenGuardianInfoList = piChildrenBaseInfo.getPiChildrenGuardianInfoList();
+                for(PiChildrenGuardianInfo childrenGuardianInfo : piChildrenGuardianInfoList){
+                    childrenGuardianInfo.setGuardianId(UUIDKit.getUUID());
+                    childrenGuardianInfo.setCreator(secUser.getUserId());
+                    childrenGuardianInfo.setCreateTime(new Date());
+                    piChildrenGuardianInfoMapper.insert(childrenGuardianInfo);
+                }
+            }catch (Exception e){
+                return  ReturnEntity.errorMsg("儿童的身份证号重复！");
+            }
         }
         return ReturnEntity.ok(piChildrenBaseInfo);
+
     }
 
     @Override
     public ReturnEntity deletePiChildrenBaseInfo(PiChildrenBaseInfo piChildrenBaseInfo, SecUser secUser) {
-        if(piChildrenBaseInfo != null && StringUtils.isNotEmpty(piChildrenBaseInfo.getChildId())){
+        if(piChildrenBaseInfo != null && StringUtils.isEmpty(piChildrenBaseInfo.getChildId())){
             return ReturnEntity.errorMsg("数据不存在！");
         }
         piChildrenBaseInfoMapper.deleteByPrimaryKey(piChildrenBaseInfo.getChildId());
@@ -115,7 +185,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
      */
     @Override
     public ReturnEntity submitPiChildrenBaseInfo(PiChildrenBaseInfo piChildrenBaseInfo, SecUser secUser) {
-        if(piChildrenBaseInfo != null && StringUtils.isNotEmpty(piChildrenBaseInfo.getChildId())){
+        if(piChildrenBaseInfo != null && StringUtils.isEmpty(piChildrenBaseInfo.getChildId())){
             return ReturnEntity.errorMsg("数据不存在！");
         }
         PiChildrenBaseInfo info = piChildrenBaseInfoMapper.selectByPrimaryKey(piChildrenBaseInfo.getChildId());
@@ -187,15 +257,111 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
     }
 
     @Override
-    public ReturnEntity approvePiChildrenBaseInfo(PiChildrenBaseInfo piChildrenBaseInfo, SecUser secUser) {
-        if(piChildrenBaseInfo == null && StringUtils.isEmpty(piChildrenBaseInfo.getChildId())){
+    public ReturnEntity approvePiChildrenBaseInfo(SecUser secUser) {
+        piChildrenBaseInfoMapper.approvePiChildrenBaseInfo(secUser);
+        return ReturnEntity.ok();
+
+    }
+
+    @Override
+    public ReturnEntity queryPiChildrenGuardianInfoList(PiChildrenGuardianInfo piChildrenGuardianInfo) {
+        if(piChildrenGuardianInfo != null && StringUtils.isEmpty(piChildrenGuardianInfo.getChildId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
-//        piChildrenBaseInfo.setStatus(CommonConstants.ApprovalStatus.APPROVING);
-        piChildrenBaseInfo.setUpdateTime(new Date());
-        piChildrenBaseInfo.setUpdator(secUser.getUserId());
-        piChildrenBaseInfo.setArea(secUser.getArea());
-        piChildrenBaseInfoMapper.updateByPrimaryKeySelective(piChildrenBaseInfo);
-        return ReturnEntity.ok(piChildrenBaseInfo);
+        Example example = new Example(PiChildrenGuardianInfo.class);
+        example.createCriteria().andEqualTo("childId", piChildrenGuardianInfo.getChildId());
+        example.orderBy("relationship");
+        List<PiChildrenGuardianInfo> piChildrenGuardianInfos = piChildrenGuardianInfoMapper.selectByExample(example);
+        return ReturnEntity.ok(piChildrenGuardianInfos);
+    }
+
+    @Override
+    public ReturnEntity queryPiChildrenBaseInfo(PiChildrenBaseInfo piChildrenBaseInfo) {
+        if(piChildrenBaseInfo != null && StringUtils.isEmpty(piChildrenBaseInfo.getChildId())){
+            return ReturnEntity.errorMsg("参数错误！");
+        }
+        PiChildrenBaseInfoVO piChildrenBaseInfoVO = piChildrenBaseInfoMapper.queryPiChildrenBaseInfo(piChildrenBaseInfo);
+        Example example = new Example(PiChildrenGuardianInfo.class);
+        example.createCriteria().andEqualTo("childId", piChildrenBaseInfo.getChildId());
+        example.orderBy("relationship");
+        List<PiChildrenGuardianInfo> piChildrenGuardianInfos = piChildrenGuardianInfoMapper.selectByExample(example);
+        piChildrenBaseInfoVO.setPiChildrenGuardianInfoList(piChildrenGuardianInfos);
+        return ReturnEntity.ok(piChildrenBaseInfoVO);
+    }
+
+    @Override
+    public ReturnEntity savePiChildrenLocationInfo(PiChildrenLocationInfo piChildrenLocationInfo, SecUser secUser) {
+        if(piChildrenLocationInfo != null && StringUtils.isNotEmpty(piChildrenLocationInfo.getLocationId())){
+            piChildrenLocationInfo.setUpdateTime(new Date());
+            piChildrenLocationInfo.setUpdator(secUser.getUserId());
+            piChildrenLocationInfoMapper.updateByPrimaryKeySelective(piChildrenLocationInfo);
+        }else{
+            piChildrenLocationInfo.setLocationId(UUIDKit.getUUID());
+            piChildrenLocationInfo.setCreateTime(new Date());
+            piChildrenLocationInfo.setCreator(secUser.getUserId());
+            piChildrenLocationInfoMapper.insert(piChildrenLocationInfo);
+        }
+        return ReturnEntity.ok(piChildrenLocationInfo);
+    }
+
+    @Override
+    public ReturnEntity queryPiChildrenLocationInfo(PiChildrenLocationInfo piChildrenLocationInfo) {
+        if(piChildrenLocationInfo != null && StringUtils.isEmpty(piChildrenLocationInfo.getChildId())){
+            return ReturnEntity.errorMsg("参数错误！");
+        }
+        Example example = new Example(PiChildrenLocationInfo.class);
+        example.createCriteria().andEqualTo("childId", piChildrenLocationInfo.getChildId());
+        example.orderBy("createTime").desc();
+        List<PiChildrenLocationInfo> piChildrenLocationInfoList = piChildrenLocationInfoMapper.selectByExample(example);
+        if(piChildrenLocationInfoList.size() > 0){
+            return ReturnEntity.ok(piChildrenLocationInfoList.get(0));
+        }
+        return ReturnEntity.ok(new PiChildrenLocationInfo());
+    }
+
+    @Override
+    public ReturnEntity queryChildrenFileList(PiChildrenBaseInfo piChildrenBaseInfo) {
+        if(piChildrenBaseInfo != null && StringUtils.isEmpty(piChildrenBaseInfo.getChildId())){
+            return ReturnEntity.errorMsg("参数错误！");
+        }
+        FileInfo fileInfo = new FileInfo();
+        fileInfo.setFileFlag(piChildrenBaseInfo.getChildId());
+        List<FileInfo> fileInfoList = fileInfoMapper.queryFilesByCatByFlag(fileInfo);
+        List<FileInfoVO> fileInfoVOList = new ArrayList<>();
+        if(fileInfoList.size() > 0){
+            String str = "";
+            FileInfoVO fileInfoVO = null;
+            for(FileInfo fileInfo1 : fileInfoList){
+                if(str.equals(fileInfo1.getFileCat())){
+                    fileInfoVO.getFileInfoList().add(fileInfo1);
+                }else{
+                    str = fileInfo1.getFileCat();
+                    fileInfoVO = new FileInfoVO();
+                    fileInfoVO.getFileInfoList().add(fileInfo1);
+                    fileInfoVOList.add(fileInfoVO);
+                }
+            }
+        }
+        List<FileInfo> guardianList = piChildrenGuardianInfoMapper.queryGuardianFileList(piChildrenBaseInfo);
+        if(guardianList.size() > 0){
+            String str = "";
+            FileInfoVO fileInfoVO = null;
+            for(FileInfo fileInfo1 : guardianList){
+                if(str.equals(fileInfo1.getFileCat())){
+                    fileInfoVO.getFileInfoList().add(fileInfo1);
+                }else{
+                    str = fileInfo1.getFileCat();
+                    fileInfoVO = new FileInfoVO();
+                    fileInfoVO.getFileInfoList().add(fileInfo1);
+                    fileInfoVOList.add(fileInfoVO);
+                }
+            }
+        }
+        return ReturnEntity.ok(fileInfoVOList);
+    }
+
+    @Override
+    public ReturnEntity queryChildrenStatisticsList(PiChildrenBaseInfo piChildrenBaseInfo) {
+        return null;
     }
 }

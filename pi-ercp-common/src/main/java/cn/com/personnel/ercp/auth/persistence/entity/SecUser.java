@@ -108,6 +108,8 @@ public class SecUser implements Serializable {
 
     private String area;
 
+    private String authority;
+
     @Column(name = "pwd_times")
     private Integer pwdTimes;
 
@@ -392,5 +394,13 @@ public class SecUser implements Serializable {
 
     public void setPwdTimes(Integer pwdTimes) {
         this.pwdTimes = pwdTimes;
+    }
+
+    public String getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
 }

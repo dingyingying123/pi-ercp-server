@@ -39,7 +39,7 @@ public class EvaluateService extends BaseService implements IEvaluateService {
 
     @Override
     public ReturnEntity queryEvaluateInfo(ServerEvaluateInfoVO serverEvaluateInfoVO) {
-        if(serverEvaluateInfoVO == null || StringUtils.isNotEmpty(serverEvaluateInfoVO.getEvaluateId())){
+        if(serverEvaluateInfoVO == null || StringUtils.isEmpty(serverEvaluateInfoVO.getEvaluateId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
         ServerEvaluateInfoVO evaluateInfoVO = (ServerEvaluateInfoVO) serverEvaluateInfoMapper.selectByPrimaryKey(serverEvaluateInfoVO.getEvaluateId());

@@ -60,37 +60,6 @@
     <result column="child_other_cases" jdbcType="VARCHAR" property="childOtherCases" />
     <result column="child_poverty_alleviation_implementation" jdbcType="VARCHAR" property="childPovertyAlleviationImplementation" />
     <result column="child_violation_guardian" jdbcType="VARCHAR" property="childViolationGuardian" />
-    <result column="father_name" jdbcType="VARCHAR" property="fatherName" />
-    <result column="father_id_no" jdbcType="VARCHAR" property="fatherIdNo" />
-    <result column="father_tel_no" jdbcType="VARCHAR" property="fatherTelNo" />
-    <result column="father_account_address" jdbcType="VARCHAR" property="fatherAccountAddress" />
-    <result column="father_current_address" jdbcType="VARCHAR" property="fatherCurrentAddress" />
-    <result column="father_health_status" jdbcType="VARCHAR" property="fatherHealthStatus" />
-    <result column="father_disability_type" jdbcType="VARCHAR" property="fatherDisabilityType" />
-    <result column="father_disability_level" jdbcType="VARCHAR" property="fatherDisabilityLevel" />
-    <result column="father_disease_type" jdbcType="VARCHAR" property="fatherDiseaseType" />
-    <result column="father_family_income" jdbcType="VARCHAR" property="fatherFamilyIncome" />
-    <result column="father_other_cases" jdbcType="VARCHAR" property="fatherOtherCases" />
-    <result column="mother_name" jdbcType="VARCHAR" property="motherName" />
-    <result column="mother_id_no" jdbcType="VARCHAR" property="motherIdNo" />
-    <result column="mother_tel_no" jdbcType="VARCHAR" property="motherTelNo" />
-    <result column="mother_account_address" jdbcType="VARCHAR" property="motherAccountAddress" />
-    <result column="mother_current_address" jdbcType="VARCHAR" property="motherCurrentAddress" />
-    <result column="mother_health_status" jdbcType="VARCHAR" property="motherHealthStatus" />
-    <result column="mother_disability_type" jdbcType="VARCHAR" property="motherDisabilityType" />
-    <result column="mother_disability_level" jdbcType="VARCHAR" property="motherDisabilityLevel" />
-    <result column="mother_disease_type" jdbcType="VARCHAR" property="motherDiseaseType" />
-    <result column="mother_family_income" jdbcType="VARCHAR" property="motherFamilyIncome" />
-    <result column="mother_other_cases" jdbcType="VARCHAR" property="motherOtherCases" />
-    <result column="other_guardian_name" jdbcType="VARCHAR" property="otherGuardianName" />
-    <result column="other_guardian_id_no" jdbcType="VARCHAR" property="otherGuardianIdNo" />
-    <result column="other_guardian_tel_no" jdbcType="VARCHAR" property="otherGuardianTelNo" />
-    <result column="other_guardian_relationship_with_children" jdbcType="VARCHAR" property="otherGuardianRelationshipWithChildren" />
-    <result column="other_guardian_health_status" jdbcType="VARCHAR" property="otherGuardianHealthStatus" />
-    <result column="other_guardian_disability_type" jdbcType="VARCHAR" property="otherGuardianDisabilityType" />
-    <result column="other_guardian_disability_level" jdbcType="VARCHAR" property="otherGuardianDisabilityLevel" />
-    <result column="other_guardian_disease_type" jdbcType="VARCHAR" property="otherGuardianDiseaseType" />
-    <result column="other_guardian_reasons" jdbcType="VARCHAR" property="otherGuardianReasons" />
     <result column="organization_name" jdbcType="VARCHAR" property="organizationName" />
     <result column="organization_principal" jdbcType="VARCHAR" property="organizationPrincipal" />
     <result column="organization_tel_no" jdbcType="VARCHAR" property="organizationTelNo" />
@@ -113,7 +82,7 @@
     select * from server_estimate_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
     <where>
       <if test="childName != null and childName != '' ">
-        i.child_name like concat('%', #{childName}, '%')
+        (i.child_name like concat('%', #{childName}, '%') or b.child_id_no like concat('%', #{childName}, '%'))
       </if>
       <if test="childId != null and childId != '' ">
         and i.child_id = #{childId}

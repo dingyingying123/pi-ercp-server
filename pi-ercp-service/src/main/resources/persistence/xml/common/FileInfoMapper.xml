@@ -59,6 +59,7 @@
                  and file_flag = #{fileFlag}
             </if>
         </where>
+        order by file_cat
     </select>
     <insert id="insertBatch">
         INSERT INTO sec_file_info (file_key, appcode, file_cat,file_name,file_type,file_size,file_loc,file_path,uploader,upload_time,status,file_flag)

@@ -113,6 +113,7 @@ public class LoginService extends BaseLoginService implements ILoginService {
             updataLoginInfo.setUserName(user.getUserName());
         }
         updataLoginInfo.setArea(user.getArea());
+        updataLoginInfo.setAuthority(user.getAuthority());
         return updataLoginInfo;
     }
 

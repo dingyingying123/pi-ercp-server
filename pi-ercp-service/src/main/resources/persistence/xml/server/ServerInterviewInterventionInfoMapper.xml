@@ -28,6 +28,7 @@
   </resultMap>
 
   <resultMap id="BaseResultMapVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.server.ServerInterviewInterventionVO">
+    <result column="flag" jdbcType="VARCHAR" property="flag" />
     <result column="area" jdbcType="VARCHAR" property="area" />
     <result column="child_id_no" jdbcType="VARCHAR" property="childIdNo" />
     <result column="child_tel_no" jdbcType="VARCHAR" property="childTelNo" />
@@ -44,37 +45,6 @@
     <result column="child_other_cases" jdbcType="VARCHAR" property="childOtherCases" />
     <result column="child_poverty_alleviation_implementation" jdbcType="VARCHAR" property="childPovertyAlleviationImplementation" />
     <result column="child_violation_guardian" jdbcType="VARCHAR" property="childViolationGuardian" />
-    <result column="father_name" jdbcType="VARCHAR" property="fatherName" />
-    <result column="father_id_no" jdbcType="VARCHAR" property="fatherIdNo" />
-    <result column="father_tel_no" jdbcType="VARCHAR" property="fatherTelNo" />
-    <result column="father_account_address" jdbcType="VARCHAR" property="fatherAccountAddress" />
-    <result column="father_current_address" jdbcType="VARCHAR" property="fatherCurrentAddress" />
-    <result column="father_health_status" jdbcType="VARCHAR" property="fatherHealthStatus" />
-    <result column="father_disability_type" jdbcType="VARCHAR" property="fatherDisabilityType" />
-    <result column="father_disability_level" jdbcType="VARCHAR" property="fatherDisabilityLevel" />
-    <result column="father_disease_type" jdbcType="VARCHAR" property="fatherDiseaseType" />
-    <result column="father_family_income" jdbcType="VARCHAR" property="fatherFamilyIncome" />
-    <result column="father_other_cases" jdbcType="VARCHAR" property="fatherOtherCases" />
-    <result column="mother_name" jdbcType="VARCHAR" property="motherName" />
-    <result column="mother_id_no" jdbcType="VARCHAR" property="motherIdNo" />
-    <result column="mother_tel_no" jdbcType="VARCHAR" property="motherTelNo" />
-    <result column="mother_account_address" jdbcType="VARCHAR" property="motherAccountAddress" />
-    <result column="mother_current_address" jdbcType="VARCHAR" property="motherCurrentAddress" />
-    <result column="mother_health_status" jdbcType="VARCHAR" property="motherHealthStatus" />
-    <result column="mother_disability_type" jdbcType="VARCHAR" property="motherDisabilityType" />
-    <result column="mother_disability_level" jdbcType="VARCHAR" property="motherDisabilityLevel" />
-    <result column="mother_disease_type" jdbcType="VARCHAR" property="motherDiseaseType" />
-    <result column="mother_family_income" jdbcType="VARCHAR" property="motherFamilyIncome" />
-    <result column="mother_other_cases" jdbcType="VARCHAR" property="motherOtherCases" />
-    <result column="other_guardian_name" jdbcType="VARCHAR" property="otherGuardianName" />
-    <result column="other_guardian_id_no" jdbcType="VARCHAR" property="otherGuardianIdNo" />
-    <result column="other_guardian_tel_no" jdbcType="VARCHAR" property="otherGuardianTelNo" />
-    <result column="other_guardian_relationship_with_children" jdbcType="VARCHAR" property="otherGuardianRelationshipWithChildren" />
-    <result column="other_guardian_health_status" jdbcType="VARCHAR" property="otherGuardianHealthStatus" />
-    <result column="other_guardian_disability_type" jdbcType="VARCHAR" property="otherGuardianDisabilityType" />
-    <result column="other_guardian_disability_level" jdbcType="VARCHAR" property="otherGuardianDisabilityLevel" />
-    <result column="other_guardian_disease_type" jdbcType="VARCHAR" property="otherGuardianDiseaseType" />
-    <result column="other_guardian_reasons" jdbcType="VARCHAR" property="otherGuardianReasons" />
     <result column="organization_name" jdbcType="VARCHAR" property="organizationName" />
     <result column="organization_principal" jdbcType="VARCHAR" property="organizationPrincipal" />
     <result column="organization_tel_no" jdbcType="VARCHAR" property="organizationTelNo" />
@@ -94,11 +64,46 @@
   </resultMap>
 
 
+  <select id="queryInterventionList" resultMap="BaseResultMapVO">
+    select '直接介入' as flag,i.view_id,i.child_id,i.sta_id,i.child_name,i.view_no,i.view_date,b.area,b.child_id_no,s.intervention_status from server_interview_intervention_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
+    <where>
+      <if test="childName != null and childName != '' ">
+        (i.child_name like concat('%', #{childName}, '%') or b.child_id_no like concat('%', #{childName}, '%'))
+      </if>
+      <if test="childId != null and childId != '' ">
+        and i.child_id = #{childId}
+      </if>
+      <if test="area != null and area != '' ">
+        and b.area like concat('%', #{area}, '%')
+      </if>
+      <if test="interventionStatus != null and interventionStatus != ''">
+        and s.intervention_status = #{interventionStatus}
+      </if>
+    </where>
+    union
+    select '间接介入' as flag,i.ava_id as view_id,i.child_id,i.sta_id,i.child_name,i.available_no as view_no,i.available_date as view_date,b.area,b.child_id_no,s.intervention_status from server_available_resources_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
+    <where>
+      <if test="childName != null and childName != '' ">
+        (i.child_name like concat('%', #{childName}, '%') or b.child_id_no like concat('%', #{childName}, '%'))
+      </if>
+      <if test="childId != null and childId != '' ">
+        and i.child_id = #{childId}
+      </if>
+      <if test="area != null and area != '' ">
+        and b.area like concat('%', #{area}, '%')
+      </if>
+      <if test="interventionStatus != null and interventionStatus != ''">
+        and s.intervention_status = #{interventionStatus}
+      </if>
+    </where>
+    order by view_date desc
+  </select>
+
   <select id="queryInterviewInterventionList" resultMap="BaseResultMapVO">
     select * from server_interview_intervention_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
     <where>
       <if test="childName != null and childName != '' ">
-        i.child_name like concat('%', #{childName}, '%')
+        (i.child_name like concat('%', #{childName}, '%') or b.child_id_no like concat('%', #{childName}, '%'))
       </if>
       <if test="childId != null and childId != '' ">
         and i.child_id = #{childId}

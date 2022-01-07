@@ -24,6 +24,7 @@
     <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
     <result column="ischange" jdbcType="VARCHAR" property="ischange" />
     <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="authority" jdbcType="VARCHAR" property="authority" />
   </resultMap>
 
     <resultMap id="SecUserDepartment" type="cn.com.personnel.ercp.auth.module.SecUserDepartment">

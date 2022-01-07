@@ -41,7 +41,7 @@ public class EstimateService extends BaseService implements IEstimateService {
 
     @Override
     public ReturnEntity queryEstimateInfo(ServerEstimateInfoVO serverEstimateInfoVO) {
-        if(serverEstimateInfoVO == null || StringUtils.isNotEmpty(serverEstimateInfoVO.getEstId())){
+        if(serverEstimateInfoVO == null || StringUtils.isEmpty(serverEstimateInfoVO.getEstId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
         ServerEstimateInfoVO estimateInfoVO = (ServerEstimateInfoVO) serverEstimateInfoMapper.selectByPrimaryKey(serverEstimateInfoVO.getEstId());
