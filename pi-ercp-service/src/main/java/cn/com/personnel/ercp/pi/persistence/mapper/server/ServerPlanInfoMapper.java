@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ServerPlanInfoMapper extends BaseMapper<ServerPlanInfo> {
     List<ServerPlanInfoVO> queryPlanList(ServerPlanInfoVO serverPlanInfoVO);
+
+    ServerPlanInfoVO queryPlanInfo(ServerPlanInfoVO serverPlanInfoVO);
 }

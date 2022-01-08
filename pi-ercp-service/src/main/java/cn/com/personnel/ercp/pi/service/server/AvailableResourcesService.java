@@ -41,7 +41,7 @@ public class AvailableResourcesService extends BaseService implements IAvailable
         if(serverAvailableResourcesInfoVO == null || StringUtils.isEmpty(serverAvailableResourcesInfoVO.getAvaId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
-        ServerAvailableResourcesInfoVO interviewInterventionVO = (ServerAvailableResourcesInfoVO) serverAvailableResourcesInfoMapper.selectByPrimaryKey(serverAvailableResourcesInfoVO.getAvaId());
+        ServerAvailableResourcesInfoVO interviewInterventionVO = serverAvailableResourcesInfoMapper.queryAvailableResourcesInfo(serverAvailableResourcesInfoVO);
 
         ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(interviewInterventionVO.getStaId());
         interviewInterventionVO.setCaseStatus(serverChildStatusInfo.getCaseStatus());

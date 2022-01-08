@@ -80,4 +80,8 @@
     </where>
     order by plan_date desc
   </select>
+
+  <select id="queryPlanInfo" resultMap="BaseResultMapVO">
+    select * from server_plan_info where plan_id=#{planId}
+  </select>
 </mapper>

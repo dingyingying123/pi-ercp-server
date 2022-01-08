@@ -43,7 +43,7 @@ public class PlanService extends BaseService implements IPlanService {
         if(serverPlanInfoVO == null || StringUtils.isEmpty(serverPlanInfoVO.getPlanId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
-        ServerPlanInfoVO planInfoVO = (ServerPlanInfoVO) serverPlanInfoMapper.selectByPrimaryKey(serverPlanInfoVO.getPlanId());
+        ServerPlanInfoVO planInfoVO = serverPlanInfoMapper.queryPlanInfo(serverPlanInfoVO);
 
         ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(planInfoVO.getStaId());
         planInfoVO.setCaseStatus(serverChildStatusInfo.getCaseStatus());

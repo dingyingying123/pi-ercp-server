@@ -38,6 +38,7 @@
     <result column="organization_residential_province" jdbcType="VARCHAR" property="organizationResidentialProvince" />
     <result column="organization_residential_city" jdbcType="VARCHAR" property="organizationResidentialCity" />
     <result column="organization_residential_county" jdbcType="VARCHAR" property="organizationResidentialCounty" />
+    <result column="organization_residential_town" jdbcType="VARCHAR" property="organizationResidentialTown" />
     <result column="organization_residential_address" jdbcType="VARCHAR" property="organizationResidentialAddress" />
     <result column="help_suggestions" jdbcType="VARCHAR" property="helpSuggestions" />
     <result column="security_fee_collection_method" jdbcType="VARCHAR" property="securityFeeCollectionMethod" />
@@ -57,6 +58,21 @@
 
   <resultMap id="BaseResultMapVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.child.PiChildrenBaseInfoVO">
 
+  </resultMap>
+
+  <resultMap id="BaseResultMapVO1" type="cn.com.personnel.ercp.pi.module.child.ChildrenStatisticsInfoVO">
+    <result column="child_account_province" jdbcType="VARCHAR" property="childAccountProvince" />
+    <result column="child_account_city" jdbcType="VARCHAR" property="childAccountCity" />
+    <result column="child_account_county" jdbcType="VARCHAR" property="childAccountCounty" />
+    <result column="child_account_town" jdbcType="VARCHAR" property="childAccountTown" />
+    <result column="child_account_address" jdbcType="VARCHAR" property="childAccountAddress" />
+    <result column="caseCount" jdbcType="VARCHAR" property="caseCount" />
+    <result column="stayCount" jdbcType="VARCHAR" property="stayCount" />
+    <result column="dilemmaCount" jdbcType="VARCHAR" property="dilemmaCount" />
+    <result column="dibaoCount" jdbcType="VARCHAR" property="dibaoCount" />
+    <result column="disableCount" jdbcType="VARCHAR" property="disableCount" />
+    <result column="unsupportedCount" jdbcType="VARCHAR" property="unsupportedCount" />
+    <result column="orphanCount" jdbcType="VARCHAR" property="orphanCount" />
   </resultMap>
 
   <select id="queryPiChildrenBaseInfoList" resultMap="BaseResultMap">
@@ -106,9 +122,152 @@
     select * from pi_children_base_info i where i.child_id=#{childId}
   </select>
 
-  <update id="approvePiChildrenBaseInfo">
+  <update id="submitPiChildrenBaseInfoList">
     <if test="userId != null and userId != ''">
-      update pi_children_base_info set status='2' where creator = #{userId}
+      update pi_children_base_info set status='2',update_time=current_timestamp,updator=#{userId} where creator = #{userId} and status='1'
     </if>
   </update>
+
+  <select id="queryChildrenStatisticsList" resultMap="BaseResultMapVO1">
+      select p.child_account_province ,p.child_account_city ,p.child_account_county ,p.child_account_town ,p.child_account_address,p.caseCount,s1.stayCount,s2.dilemmaCount,s3.dibaoCount,s4.disableCount,s5.unsupportedCount,s6.orphanCount from
+  (select i.child_account_province ,i.child_account_city ,i.child_account_county ,i.child_account_town ,i.child_account_address,count(0) as caseCount from pi_children_base_info i
+  where i.area =#{area}
+    <if test="childAccountProvince != null and childAccountProvince !=''">
+        and i.child_account_province like concat('%',#{childAccountProvince},'%')
+    </if>
+      <if test="childAccountCity != null and childAccountCity !=''">
+        and i.child_account_city like concat('%',#{childAccountCity},'%')
+      </if>
+      <if test="childAccountCounty != null and childAccountCounty !=''">
+        and i.child_account_county like concat('%',#{childAccountCounty},'%')
+      </if>
+      <if test="childAccountTown != null and childAccountTown !=''">
+        and i.child_account_town like concat('%',#{childAccountTown},'%')
+      </if>
+      <if test="childAccountAddress != null and childAccountAddress !=''">
+        and i.child_account_address like concat('%',#{childAccountAddress},'%')
+      </if>
+      group by i.child_account_province ,i.child_account_city ,i.child_account_county ,i.child_account_town ,i.child_account_address) as p
+  left join
+  (select i.child_account_province ,i.child_account_city ,i.child_account_county ,i.child_account_town ,i.child_account_address,i.child_escalation_type,count(0) as stayCount from pi_children_base_info i
+      where i.area =#{area} and i.child_escalation_type ='留守'
+      <if test="childAccountProvince != null and childAccountProvince !=''">
+          and i.child_account_province like concat('%',#{childAccountProvince},'%')
+      </if>
+      <if test="childAccountCity != null and childAccountCity !=''">
+          and i.child_account_city like concat('%',#{childAccountCity},'%')
+      </if>
+      <if test="childAccountCounty != null and childAccountCounty !=''">
+          and i.child_account_county like concat('%',#{childAccountCounty},'%')
+      </if>
+      <if test="childAccountTown != null and childAccountTown !=''">
+          and i.child_account_town like concat('%',#{childAccountTown},'%')
+      </if>
+      <if test="childAccountAddress != null and childAccountAddress !=''">
+          and i.child_account_address like concat('%',#{childAccountAddress},'%')
+      </if>
+      group by i.child_account_province ,i.child_account_city ,i.child_account_county ,i.child_account_town ,i.child_account_address,i.child_escalation_type) as s1
+      on p.child_account_province=s1.child_account_province and p.child_account_city=s1.child_account_city and p.child_account_county=s1.child_account_county and p.child_account_town=s1.child_account_town and p.child_account_address=s1.child_account_address
+  left join
+  (select i.child_account_province ,i.child_account_city ,i.child_account_county ,i.child_account_town ,i.child_account_address,i.child_escalation_type,count(0) as dilemmaCount from pi_children_base_info i
+      where i.area =#{area} and i.child_escalation_type ='困境'
+      <if test="childAccountProvince != null and childAccountProvince !=''">
+          and i.child_account_province like concat('%',#{childAccountProvince},'%')
+      </if>
+      <if test="childAccountCity != null and childAccountCity !=''">
+          and i.child_account_city like concat('%',#{childAccountCity},'%')
+      </if>
+      <if test="childAccountCounty != null and childAccountCounty !=''">
+          and i.child_account_county like concat('%',#{childAccountCounty},'%')
+      </if>
+      <if test="childAccountTown != null and childAccountTown !=''">
+          and i.child_account_town like concat('%',#{childAccountTown},'%')
+      </if>
+      <if test="childAccountAddress != null and childAccountAddress !=''">
+          and i.child_account_address like concat('%',#{childAccountAddress},'%')
+      </if>
+      group by i.child_account_province ,i.child_account_city ,i.child_account_county ,i.child_account_town ,i.child_account_address,i.child_escalation_type) as s2
+      on p.child_account_province=s2.child_account_province and p.child_account_city=s2.child_account_city and p.child_account_county=s2.child_account_county and p.child_account_town=s2.child_account_town and p.child_account_address=s2.child_account_address
+  left join
+  (select i.child_account_province ,i.child_account_city ,i.child_account_county ,i.child_account_town ,i.child_account_address,i.child_escalation_type,count(0) as dibaoCount from pi_children_base_info i
+      where i.area =#{area} and i.child_escalation_type ='困境' and i.child_poverty_alleviation_implementation ='最低生活保障'
+      <if test="childAccountProvince != null and childAccountProvince !=''">
+          and i.child_account_province like concat('%',#{childAccountProvince},'%')
+      </if>
+      <if test="childAccountCity != null and childAccountCity !=''">
+          and i.child_account_city like concat('%',#{childAccountCity},'%')
+      </if>
+      <if test="childAccountCounty != null and childAccountCounty !=''">
+          and i.child_account_county like concat('%',#{childAccountCounty},'%')
+      </if>
+      <if test="childAccountTown != null and childAccountTown !=''">
+          and i.child_account_town like concat('%',#{childAccountTown},'%')
+      </if>
+      <if test="childAccountAddress != null and childAccountAddress !=''">
+          and i.child_account_address like concat('%',#{childAccountAddress},'%')
+      </if>
+      group by i.child_account_province ,i.child_account_city ,i.child_account_county ,i.child_account_town ,i.child_account_address,i.child_escalation_type) as s3
+      on p.child_account_province=s3.child_account_province and p.child_account_city=s3.child_account_city and p.child_account_county=s3.child_account_county and p.child_account_town=s3.child_account_town and p.child_account_address=s3.child_account_address
+  left join
+  (select i.child_account_province ,i.child_account_city ,i.child_account_county ,i.child_account_town ,i.child_account_address,i.child_escalation_type,count(0) as disableCount from pi_children_base_info i
+      where i.area =#{area} and i.child_escalation_type ='困境' and i.child_poverty_alleviation_implementation in ('困难残疾人生活补贴','重度残疾人生活补贴')
+      <if test="childAccountProvince != null and childAccountProvince !=''">
+          and i.child_account_province like concat('%',#{childAccountProvince},'%')
+      </if>
+      <if test="childAccountCity != null and childAccountCity !=''">
+          and i.child_account_city like concat('%',#{childAccountCity},'%')
+      </if>
+      <if test="childAccountCounty != null and childAccountCounty !=''">
+          and i.child_account_county like concat('%',#{childAccountCounty},'%')
+      </if>
+      <if test="childAccountTown != null and childAccountTown !=''">
+          and i.child_account_town like concat('%',#{childAccountTown},'%')
+      </if>
+      <if test="childAccountAddress != null and childAccountAddress !=''">
+          and i.child_account_address like concat('%',#{childAccountAddress},'%')
+      </if>
+      group by i.child_account_province ,i.child_account_city ,i.child_account_county ,i.child_account_town ,i.child_account_address,i.child_escalation_type) as s4
+      on p.child_account_province=s4.child_account_province and p.child_account_city=s4.child_account_city and p.child_account_county=s4.child_account_county and p.child_account_town=s4.child_account_town and p.child_account_address=s4.child_account_address
+  left join
+  (select i.child_account_province ,i.child_account_city ,i.child_account_county ,i.child_account_town ,i.child_account_address,i.child_escalation_type,count(0) as unsupportedCount from pi_children_base_info i
+      where i.area =#{area} and i.child_escalation_type ='困境' and i.child_poverty_alleviation_implementation in ('事实无人抚养津贴')
+      <if test="childAccountProvince != null and childAccountProvince !=''">
+          and i.child_account_province like concat('%',#{childAccountProvince},'%')
+      </if>
+      <if test="childAccountCity != null and childAccountCity !=''">
+          and i.child_account_city like concat('%',#{childAccountCity},'%')
+      </if>
+      <if test="childAccountCounty != null and childAccountCounty !=''">
+          and i.child_account_county like concat('%',#{childAccountCounty},'%')
+      </if>
+      <if test="childAccountTown != null and childAccountTown !=''">
+          and i.child_account_town like concat('%',#{childAccountTown},'%')
+      </if>
+      <if test="childAccountAddress != null and childAccountAddress !=''">
+          and i.child_account_address like concat('%',#{childAccountAddress},'%')
+      </if>
+      group by i.child_account_province ,i.child_account_city ,i.child_account_county ,i.child_account_town ,i.child_account_address,i.child_escalation_type) as s5
+      on p.child_account_province=s5.child_account_province and p.child_account_city=s5.child_account_city and p.child_account_county=s5.child_account_county and p.child_account_town=s5.child_account_town and p.child_account_address=s5.child_account_address
+  left join
+  (select i.child_account_province ,i.child_account_city ,i.child_account_county ,i.child_account_town ,i.child_account_address,i.child_escalation_type,count(0) as orphanCount from pi_children_base_info i
+      where i.area =#{area} and i.child_escalation_type ='困境' and i.child_poverty_alleviation_implementation in ('孤儿津贴')
+      <if test="childAccountProvince != null and childAccountProvince !=''">
+          and i.child_account_province like concat('%',#{childAccountProvince},'%')
+      </if>
+      <if test="childAccountCity != null and childAccountCity !=''">
+          and i.child_account_city like concat('%',#{childAccountCity},'%')
+      </if>
+      <if test="childAccountCounty != null and childAccountCounty !=''">
+          and i.child_account_county like concat('%',#{childAccountCounty},'%')
+      </if>
+      <if test="childAccountTown != null and childAccountTown !=''">
+          and i.child_account_town like concat('%',#{childAccountTown},'%')
+      </if>
+      <if test="childAccountAddress != null and childAccountAddress !=''">
+          and i.child_account_address like concat('%',#{childAccountAddress},'%')
+      </if>
+      group by i.child_account_province ,i.child_account_city ,i.child_account_county ,i.child_account_town ,i.child_account_address,i.child_escalation_type) as s6
+      on p.child_account_province=s6.child_account_province and p.child_account_city=s6.child_account_city and p.child_account_county=s6.child_account_county and p.child_account_town=s6.child_account_town and p.child_account_address=s6.child_account_address
+
+  </select>
 </mapper>

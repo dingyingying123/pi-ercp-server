@@ -86,4 +86,8 @@
     </where>
     order by i.close_date desc
   </select>
+
+  <select id="queryCaseClosedInfo" resultMap="BaseResultMapVO">
+    select * from server_case_closed_info where close_id=#{closeId}
+  </select>
 </mapper>

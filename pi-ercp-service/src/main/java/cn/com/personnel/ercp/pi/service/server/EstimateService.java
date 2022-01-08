@@ -44,7 +44,7 @@ public class EstimateService extends BaseService implements IEstimateService {
         if(serverEstimateInfoVO == null || StringUtils.isEmpty(serverEstimateInfoVO.getEstId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
-        ServerEstimateInfoVO estimateInfoVO = (ServerEstimateInfoVO) serverEstimateInfoMapper.selectByPrimaryKey(serverEstimateInfoVO.getEstId());
+        ServerEstimateInfoVO estimateInfoVO = serverEstimateInfoMapper.queryEstimateInfo(serverEstimateInfoVO);
         Example example = new Example(ServerHighRiskFamilyInfo.class);
         example.createCriteria().andEqualTo("estId", serverEstimateInfoVO.getEstId());
         List<ServerHighRiskFamilyInfo> serverHighRiskFamilyInfoList = serverHighRiskFamilyInfoMapper.selectByExample(example);

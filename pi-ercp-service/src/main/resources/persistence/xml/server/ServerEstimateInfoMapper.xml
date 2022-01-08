@@ -99,4 +99,8 @@
     </where>
     order by estimate_date desc
   </select>
+
+  <select id="queryEstimateInfo" resultMap="BaseResultMapVO">
+    select * from server_estimate_info where est_id=#{estId}
+  </select>
 </mapper>

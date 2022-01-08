@@ -83,14 +83,13 @@ public class PiChildrenBaseInfoController extends PageController {
 
     /**
      * 数据上传儿童基本信息
-     * @param piChildrenBaseInfoList
      * @return
      */
     @RequestMapping("/submitPiChildrenBaseInfoList")
     @ResponseBody
-    public ReturnEntity submitPiChildrenBaseInfoList(@RequestBody List<PiChildrenBaseInfo> piChildrenBaseInfoList){
+    public ReturnEntity submitPiChildrenBaseInfoList(){
         SecUser secUser = (SecUser) getLoginUser();
-        return piChildrenBaseInfoService.submitPiChildrenBaseInfoList(piChildrenBaseInfoList, secUser);
+        return piChildrenBaseInfoService.submitPiChildrenBaseInfoList(secUser);
     }
 
     /**
@@ -99,9 +98,9 @@ public class PiChildrenBaseInfoController extends PageController {
      */
     @RequestMapping("/approvePiChildrenBaseInfo")
     @ResponseBody
-    public ReturnEntity approvePiChildrenBaseInfo(){
+    public ReturnEntity approvePiChildrenBaseInfo(@RequestBody PiChildrenBaseInfo piChildrenBaseInfo){
         SecUser secUser = (SecUser) getLoginUser();
-        return piChildrenBaseInfoService.approvePiChildrenBaseInfo(secUser);
+        return piChildrenBaseInfoService.approvePiChildrenBaseInfo(piChildrenBaseInfo, secUser);
     }
 
     /**

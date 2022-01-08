@@ -7,6 +7,7 @@ import cn.com.personnel.ercp.common.persistence.entity.ReturnEntity;
 import cn.com.personnel.ercp.common.persistence.mapper.FileInfoMapper;
 import cn.com.personnel.ercp.framework.kit.UUIDKit;
 import cn.com.personnel.ercp.pi.module.base.FileInfoVO;
+import cn.com.personnel.ercp.pi.module.child.ChildrenStatisticsInfoVO;
 import cn.com.personnel.ercp.pi.module.child.PiChildrenBaseInfoVO;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenBaseInfo;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenGuardianInfo;
@@ -49,15 +50,16 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
 
     @Override
     public ReturnEntity savePiChildrenBaseInfo(PiChildrenBaseInfoVO piChildrenBaseInfo, SecUser secUser) {
-
-
-
         if(piChildrenBaseInfo != null && StringUtils.isNotEmpty(piChildrenBaseInfo.getChildId())){
-            piChildrenBaseInfo.setUpdateTime(new Date());
-            piChildrenBaseInfo.setUpdator(secUser.getUserId());
-            piChildrenBaseInfo.setArea(secUser.getArea());
-            piChildrenBaseInfo.setStatus(CommonConstants.ApprovalStatus.DRAFT);//进行中
-            piChildrenBaseInfoMapper.updateByPrimaryKeySelective(piChildrenBaseInfo);
+            try {
+                piChildrenBaseInfo.setUpdateTime(new Date());
+                piChildrenBaseInfo.setUpdator(secUser.getUserId());
+                piChildrenBaseInfo.setArea(secUser.getArea());
+                piChildrenBaseInfo.setStatus(CommonConstants.ApprovalStatus.DRAFT);//进行中
+                piChildrenBaseInfoMapper.updateByPrimaryKeySelective(piChildrenBaseInfo);
+            }catch (Exception e){
+                return  ReturnEntity.errorMsg("儿童的身份证号重复！");
+            }
             List<PiChildrenGuardianInfo> piChildrenGuardianInfoList = piChildrenBaseInfo.getPiChildrenGuardianInfoList();
 
             if(piChildrenGuardianInfoList != null && piChildrenGuardianInfoList.size() > 0){
@@ -82,6 +84,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
                 for(PiChildrenGuardianInfo childrenGuardianInfo : piChildrenGuardianInfoList){
                     if(StringUtils.isEmpty(childrenGuardianInfo.getGuardianId())){
                         childrenGuardianInfo.setGuardianId(UUIDKit.getUUID());
+                        childrenGuardianInfo.setChildId(piChildrenBaseInfo.getChildId());
                         childrenGuardianInfo.setCreator(secUser.getUserId());
                         childrenGuardianInfo.setCreateTime(new Date());
                         piChildrenGuardianInfoMapper.insert(childrenGuardianInfo);
@@ -98,7 +101,8 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
             }
         }else{
             try {
-                piChildrenBaseInfo.setChildId(UUIDKit.getUUID());
+                String childId = UUIDKit.getUUID();
+                piChildrenBaseInfo.setChildId(childId);
                 piChildrenBaseInfo.setCreateTime(new Date());
                 piChildrenBaseInfo.setCreator(secUser.getUserId());
 //                piChildrenBaseInfo.setArea(secUser.getArea());
@@ -107,6 +111,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
                 List<PiChildrenGuardianInfo> piChildrenGuardianInfoList = piChildrenBaseInfo.getPiChildrenGuardianInfoList();
                 for(PiChildrenGuardianInfo childrenGuardianInfo : piChildrenGuardianInfoList){
                     childrenGuardianInfo.setGuardianId(UUIDKit.getUUID());
+                    childrenGuardianInfo.setChildId(childId);
                     childrenGuardianInfo.setCreator(secUser.getUserId());
                     childrenGuardianInfo.setCreateTime(new Date());
                     piChildrenGuardianInfoMapper.insert(childrenGuardianInfo);
@@ -124,7 +129,12 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
         if(piChildrenBaseInfo != null && StringUtils.isEmpty(piChildrenBaseInfo.getChildId())){
             return ReturnEntity.errorMsg("数据不存在！");
         }
-        piChildrenBaseInfoMapper.deleteByPrimaryKey(piChildrenBaseInfo.getChildId());
+        PiChildrenBaseInfo info = piChildrenBaseInfoMapper.selectByPrimaryKey(piChildrenBaseInfo.getChildId());
+        if(CommonConstants.ApprovalStatus.DRAFT.equals(info.getStatus()) || CommonConstants.ApprovalStatus.NOTPASS.equals(info.getStatus())) {
+            piChildrenBaseInfoMapper.deleteByPrimaryKey(piChildrenBaseInfo.getChildId());
+        }else{
+            return ReturnEntity.errorMsg("数据已完成，不能删除！");
+        }
         return ReturnEntity.ok();
     }
 
@@ -193,74 +203,72 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
             return ReturnEntity.errorMsg("数据不存在！");
         }
 
-        if(StringUtils.isEmpty(piChildrenBaseInfo.getArea())){
+        if(StringUtils.isEmpty(info.getArea())){
             return ReturnEntity.errorMsg("区域为必填项！");
         }
-        if(StringUtils.isEmpty(piChildrenBaseInfo.getChildName())){
+        if(StringUtils.isEmpty(info.getChildName())){
             return ReturnEntity.errorMsg("儿童姓名为必填项，不能为空！");
         }
-        if(StringUtils.isEmpty(piChildrenBaseInfo.getChildIdNo())){
+        if(StringUtils.isEmpty(info.getChildIdNo())){
             return ReturnEntity.errorMsg("儿童身份证号为必填项，不能为空！");
         }
-        if(StringUtils.isEmpty(piChildrenBaseInfo.getChildTelNo())){
+        if(StringUtils.isEmpty(info.getChildTelNo())){
             return ReturnEntity.errorMsg("儿童联系电话为必填项，不能为空！");
         }
-        if(StringUtils.isEmpty(piChildrenBaseInfo.getChildNationality())){
+        if(StringUtils.isEmpty(info.getChildNationality())){
             return ReturnEntity.errorMsg("儿童民族为必填项，不能为空！");
         }
-        if(StringUtils.isEmpty(piChildrenBaseInfo.getChildMale())){
+        if(StringUtils.isEmpty(info.getChildMale())){
             return ReturnEntity.errorMsg("儿童性别为必填项，不能为空！");
         }
-        if(StringUtils.isEmpty(piChildrenBaseInfo.getChildAccountAddress())){
+        if(StringUtils.isEmpty(info.getChildAccountAddress())){
             return ReturnEntity.errorMsg("儿童户口地址为必填项，不能为空！");
         }
-        if(StringUtils.isEmpty(piChildrenBaseInfo.getChildCurrentAddress())){
+        if(StringUtils.isEmpty(info.getChildCurrentAddress())){
             return ReturnEntity.errorMsg("儿童现住址为必填项，不能为空！");
         }
-        if(StringUtils.isEmpty(piChildrenBaseInfo.getChildHealthStatus())){
+        if(StringUtils.isEmpty(info.getChildHealthStatus())){
             return ReturnEntity.errorMsg("儿童健康状况为必填项，不能为空！");
         }
 
-        if(StringUtils.isEmpty(piChildrenBaseInfo.getChildEscalationType())){
+        if(StringUtils.isEmpty(info.getChildEscalationType())){
             return ReturnEntity.errorMsg("儿童上报类型为必填项，不能为空！");
         }
-        if(StringUtils.isEmpty(piChildrenBaseInfo.getChildDisabilityLevel())){
+        if(StringUtils.isEmpty(info.getChildDisabilityLevel())){
             return ReturnEntity.errorMsg("儿童户口地址为必填项，不能为空！");
         }
-        if(StringUtils.isEmpty(piChildrenBaseInfo.getChildDiseaseType())){
+        if(StringUtils.isEmpty(info.getChildDiseaseType())){
             return ReturnEntity.errorMsg("儿童患病病种为必填项，不能为空！");
         }
-        if(StringUtils.isEmpty(piChildrenBaseInfo.getChildSchoolAttendance())){
+        if(StringUtils.isEmpty(info.getChildSchoolAttendance())){
             return ReturnEntity.errorMsg("儿童就学情况为必填项，不能为空！");
         }
 
-        piChildrenBaseInfo.setStatus(CommonConstants.ApprovalStatus.COMPLETED);//已完成
+        info.setStatus(CommonConstants.ApprovalStatus.COMPLETED);//已完成
+        info.setUpdateTime(new Date());
+        info.setUpdator(secUser.getUserId());
+        info.setArea(secUser.getArea());
+        piChildrenBaseInfoMapper.updateByPrimaryKeySelective(info);
+        return ReturnEntity.ok(piChildrenBaseInfo);
+    }
+
+    @Override
+    public ReturnEntity submitPiChildrenBaseInfoList(SecUser secUser) {
+        piChildrenBaseInfoMapper.submitPiChildrenBaseInfoList(secUser);
+        return ReturnEntity.ok();
+    }
+
+    @Override
+    public ReturnEntity approvePiChildrenBaseInfo(PiChildrenBaseInfo piChildrenBaseInfo, SecUser secUser) {
+        if(piChildrenBaseInfo == null && StringUtils.isEmpty(piChildrenBaseInfo.getChildId())){
+            return ReturnEntity.errorMsg("参数错误！");
+        }
+//        piChildrenBaseInfo.setStatus(CommonConstants.ApprovalStatus.APPROVING);
         piChildrenBaseInfo.setUpdateTime(new Date());
         piChildrenBaseInfo.setUpdator(secUser.getUserId());
         piChildrenBaseInfo.setArea(secUser.getArea());
         piChildrenBaseInfoMapper.updateByPrimaryKeySelective(piChildrenBaseInfo);
         return ReturnEntity.ok(piChildrenBaseInfo);
-    }
-
-    @Override
-    public ReturnEntity submitPiChildrenBaseInfoList(List<PiChildrenBaseInfo> piChildrenBaseInfoList, SecUser secUser) {
-        if(piChildrenBaseInfoList != null && piChildrenBaseInfoList.size() > 0){
-            for(PiChildrenBaseInfo piChildrenBaseInfo : piChildrenBaseInfoList){
-                piChildrenBaseInfo.setStatus(CommonConstants.ApprovalStatus.APPROVING);
-                piChildrenBaseInfo.setUpdateTime(new Date());
-                piChildrenBaseInfo.setUpdator(secUser.getUserId());
-                piChildrenBaseInfo.setArea(secUser.getArea());
-                piChildrenBaseInfoMapper.updateByPrimaryKeySelective(piChildrenBaseInfo);
-            }
-        }
-        return ReturnEntity.ok(piChildrenBaseInfoList);
-    }
-
-    @Override
-    public ReturnEntity approvePiChildrenBaseInfo(SecUser secUser) {
-        piChildrenBaseInfoMapper.approvePiChildrenBaseInfo(secUser);
-        return ReturnEntity.ok();
-
     }
 
     @Override
@@ -362,6 +370,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
 
     @Override
     public ReturnEntity queryChildrenStatisticsList(PiChildrenBaseInfo piChildrenBaseInfo) {
-        return null;
+        List<ChildrenStatisticsInfoVO> childrenStatisticsInfoVOList = piChildrenBaseInfoMapper.queryChildrenStatisticsList(piChildrenBaseInfo);
+        return ReturnEntity.ok(childrenStatisticsInfoVOList);
     }
 }

@@ -136,4 +136,8 @@
     </where>
     order by i.available_date desc
   </select>
+
+  <select id="queryAvailableResourcesInfo" resultMap="BaseResultMapVO">
+    select * from server_available_resources_info where ava_id=#{avaId}
+  </select>
 </mapper>

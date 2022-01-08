@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ServerTakeCaseInfoMapper extends BaseMapper<ServerTakeCaseInfo> {
     List<ServerTakeCaseInfoVO> queryTakeCaseList(ServerTakeCaseInfoVO serverTakeCaseInfoVO);
+
+    ServerTakeCaseInfoVO queryTakeCaseInfo(ServerTakeCaseInfoVO serverTakeCaseInfoVO);
 }

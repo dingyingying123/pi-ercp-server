@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ServerAvailableResourcesInfoMapper extends BaseMapper<ServerAvailableResourcesInfo> {
     List<ServerAvailableResourcesInfoVO> queryAvailableResourcesList(ServerAvailableResourcesInfoVO serverAvailableResourcesInfoVO);
+
+    ServerAvailableResourcesInfoVO queryAvailableResourcesInfo(ServerAvailableResourcesInfoVO serverAvailableResourcesInfoVO);
 }

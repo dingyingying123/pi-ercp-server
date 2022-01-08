@@ -44,7 +44,7 @@ public class InterviewInterventionService extends BaseService implements IInterv
         if(serverInterviewInterventionVO == null || StringUtils.isEmpty(serverInterviewInterventionVO.getViewId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
-        ServerInterviewInterventionVO interviewInterventionVO = (ServerInterviewInterventionVO) serverInterviewInterventionInfoMapper.selectByPrimaryKey(serverInterviewInterventionVO.getViewId());
+        ServerInterviewInterventionVO interviewInterventionVO = serverInterviewInterventionInfoMapper.queryInterviewInterventionInfo(serverInterviewInterventionVO);
 
         ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(interviewInterventionVO.getStaId());
         interviewInterventionVO.setCaseStatus(serverChildStatusInfo.getCaseStatus());

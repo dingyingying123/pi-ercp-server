@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ServerInterviewInterventionInfoMapper extends BaseMapper<ServerInterviewInterventionInfo> {
     List<ServerInterviewInterventionVO> queryInterviewInterventionList(ServerInterviewInterventionVO serverInterviewInterventionVO);
+
+    ServerInterviewInterventionVO queryInterviewInterventionInfo(ServerInterviewInterventionVO serverInterviewInterventionVO);
 }

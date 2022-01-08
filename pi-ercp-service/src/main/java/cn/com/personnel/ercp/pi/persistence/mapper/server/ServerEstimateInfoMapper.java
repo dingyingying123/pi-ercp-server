@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ServerEstimateInfoMapper extends BaseMapper<ServerEstimateInfo> {
     List<ServerEstimateInfoVO> queryEstimateList(ServerEstimateInfoVO serverEstimateInfoVO);
+
+    ServerEstimateInfoVO queryEstimateInfo(ServerEstimateInfoVO serverEstimateInfoVO);
 }

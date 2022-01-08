@@ -42,7 +42,7 @@ public class EvaluateService extends BaseService implements IEvaluateService {
         if(serverEvaluateInfoVO == null || StringUtils.isEmpty(serverEvaluateInfoVO.getEvaluateId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
-        ServerEvaluateInfoVO evaluateInfoVO = (ServerEvaluateInfoVO) serverEvaluateInfoMapper.selectByPrimaryKey(serverEvaluateInfoVO.getEvaluateId());
+        ServerEvaluateInfoVO evaluateInfoVO = serverEvaluateInfoMapper.queryEvaluateInfo(serverEvaluateInfoVO);
 
         ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(evaluateInfoVO.getStaId());
         evaluateInfoVO.setCaseStatus(serverChildStatusInfo.getCaseStatus());

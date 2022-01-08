@@ -42,7 +42,7 @@ public class CaseCloseService extends BaseService implements ICaseCloseService {
         if(serverCaseClosedInfoVO == null || StringUtils.isEmpty(serverCaseClosedInfoVO.getCloseId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
-        ServerEvaluateInfoVO evaluateInfoVO = (ServerEvaluateInfoVO) serverEvaluateInfoMapper.selectByPrimaryKey(serverCaseClosedInfoVO.getCloseId());
+        ServerEvaluateInfoVO evaluateInfoVO = serverEvaluateInfoMapper.queryCaseClosedInfo(serverCaseClosedInfoVO);
 
         ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(evaluateInfoVO.getStaId());
         evaluateInfoVO.setCaseStatus(serverChildStatusInfo.getCaseStatus());

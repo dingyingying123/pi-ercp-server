@@ -90,4 +90,8 @@
     </where>
     order by i.evaluate_date desc
   </select>
+
+  <select id="queryEvaluateInfo" resultMap="BaseResultMapVO">
+    select * from server_evaluate_info where evaluate_id=#{evaluateId}
+  </select>
 </mapper>

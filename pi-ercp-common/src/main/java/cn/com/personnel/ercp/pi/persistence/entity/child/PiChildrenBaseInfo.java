@@ -105,6 +105,9 @@ public class PiChildrenBaseInfo {
     @Column(name = "organization_residential_county")
     private String organizationResidentialCounty;
 
+    @Column(name = "organization_residential_town")
+    private String organizationResidentialTown;
+
     @Column(name = "organization_residential_address")
     private String organizationResidentialAddress;
 
@@ -791,5 +794,13 @@ public class PiChildrenBaseInfo {
 
     public void setApproveOpinion(String approveOpinion) {
         this.approveOpinion = approveOpinion;
+    }
+
+    public String getOrganizationResidentialTown() {
+        return organizationResidentialTown;
+    }
+
+    public void setOrganizationResidentialTown(String organizationResidentialTown) {
+        this.organizationResidentialTown = organizationResidentialTown;
     }
 }

@@ -117,4 +117,8 @@
     </where>
     order by i.view_date desc
   </select>
+
+  <select id="queryInterviewInterventionInfo" resultMap="BaseResultMapVO">
+    select * from server_interview_intervention_info where view_id=#{viewId}
+  </select>
 </mapper>

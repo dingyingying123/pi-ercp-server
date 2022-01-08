@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -47,12 +48,12 @@ public class TakeCaseService extends BaseService implements ITakeCaseService {
         if(serverTakeCaseInfoVO == null || StringUtils.isEmpty(serverTakeCaseInfoVO.getCaseId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
-        ServerTakeCaseInfoVO takeCaseInfoVO = (ServerTakeCaseInfoVO) serverTakeCaseInfoMapper.selectByPrimaryKey(serverTakeCaseInfoVO.getCaseId());
+        ServerTakeCaseInfoVO takeCaseInfoVO = serverTakeCaseInfoMapper.queryTakeCaseInfo(serverTakeCaseInfoVO);
         Example example = new Example(ServerTakeCaseFamilyMember.class);
         example.createCriteria().andEqualTo("caseId", serverTakeCaseInfoVO.getCaseId());
         List<ServerTakeCaseFamilyMember> familyMemberList = serverTakeCaseFamilyMemberMapper.selectByExample(example);
         takeCaseInfoVO.setServerTakeCaseFamilyMemberList(familyMemberList);
-        ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(serverTakeCaseInfoVO.getStaId());
+        ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(takeCaseInfoVO.getStaId());
         takeCaseInfoVO.setCaseStatus(serverChildStatusInfo.getCaseStatus());
         takeCaseInfoVO.setEstimateStatus(serverChildStatusInfo.getEstimateStatus());
         takeCaseInfoVO.setPlanStatus(serverChildStatusInfo.getPlanStatus());
@@ -138,26 +139,30 @@ public class TakeCaseService extends BaseService implements ITakeCaseService {
         if(StringUtils.isEmpty(serverTakeCaseInfoVO.getCaseId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
+        ServerTakeCaseInfo serverTakeCaseInfo = serverTakeCaseInfoMapper.selectByPrimaryKey(serverTakeCaseInfoVO.getCaseId());
+        if(serverTakeCaseInfo == null){
+            return ReturnEntity.errorMsg("数据不存在！");
+        }
         serverTakeCaseInfoVO.setStatus(CommonConstants.ServerApprovalStatus.CASE_SUBMITED);
         serverTakeCaseInfoVO.setUpdateTime(new Date());
         serverTakeCaseInfoVO.setUpdator(secUser.getUserId());
         serverTakeCaseInfoVO.setArea(secUser.getArea());
         serverTakeCaseInfoMapper.updateByPrimaryKeySelective(serverTakeCaseInfoVO);
 
-        Example example = new Example(ServerTakeCaseFamilyMember.class);
-        example.createCriteria().andEqualTo("caseId", serverTakeCaseInfoVO.getCaseId());
-        serverTakeCaseFamilyMemberMapper.deleteByExample(example);
-        if(serverTakeCaseInfoVO.getServerTakeCaseFamilyMemberList() != null && serverTakeCaseInfoVO.getServerTakeCaseFamilyMemberList().size() > 0){
-            for(ServerTakeCaseFamilyMember serverTakeCaseFamilyMember : serverTakeCaseInfoVO.getServerTakeCaseFamilyMemberList()){
-                serverTakeCaseFamilyMember.setCreator(secUser.getUserId());
-                serverTakeCaseFamilyMember.setCreateTime(new Date());
-                serverTakeCaseFamilyMember.setMemId(UUIDKit.getUUID());
-                serverTakeCaseFamilyMemberMapper.insert(serverTakeCaseFamilyMember);
-            }
-        }
+//        Example example = new Example(ServerTakeCaseFamilyMember.class);
+//        example.createCriteria().andEqualTo("caseId", serverTakeCaseInfoVO.getCaseId());
+//        serverTakeCaseFamilyMemberMapper.deleteByExample(example);
+//        if(serverTakeCaseInfoVO.getServerTakeCaseFamilyMemberList() != null && serverTakeCaseInfoVO.getServerTakeCaseFamilyMemberList().size() > 0){
+//            for(ServerTakeCaseFamilyMember serverTakeCaseFamilyMember : serverTakeCaseInfoVO.getServerTakeCaseFamilyMemberList()){
+//                serverTakeCaseFamilyMember.setCreator(secUser.getUserId());
+//                serverTakeCaseFamilyMember.setCreateTime(new Date());
+//                serverTakeCaseFamilyMember.setMemId(UUIDKit.getUUID());
+//                serverTakeCaseFamilyMemberMapper.insert(serverTakeCaseFamilyMember);
+//            }
+//        }
 
         ServerChildStatusInfo statusInfo = new ServerChildStatusInfo();
-        statusInfo.setStaId(serverTakeCaseInfoVO.getStaId());
+        statusInfo.setStaId(serverTakeCaseInfo.getStaId());
         statusInfo.setCaseStatus(CommonConstants.ServerApprovalStatus.CASE_SUBMITED);
         statusInfo.setUpdator(secUser.getUserId());
         statusInfo.setCreateTime(new Date());

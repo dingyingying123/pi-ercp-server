@@ -79,4 +79,8 @@
     </where>
     order by case_date desc
   </select>
+
+  <select id="queryTakeCaseInfo" resultMap="BaseResultMapVO">
+    select * from server_take_case_info where case_id=#{caseId}
+  </select>
 </mapper>
