@@ -7,6 +7,7 @@ import cn.com.personnel.ercp.pi.module.server.ServerInterviewInterventionVO;
 import cn.com.personnel.ercp.pi.module.server.ServerPlanInfoVO;
 import cn.com.personnel.ercp.pi.service.server.IEvaluateService;
 import cn.com.personnel.springboot.framework.core.controller.PageController;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +29,10 @@ public class EvaluateController extends PageController {
     @RequestMapping("/queryEvaluateList")
     @ResponseBody
     public ReturnEntity queryEvaluateList(@RequestBody ServerEvaluateInfoVO serverEvaluateInfoVO){
+        SecUser secUser = getTokenLoginUser();
+        if(StringUtils.isNotEmpty(secUser.getArea())){
+            serverEvaluateInfoVO.setArea(secUser.getArea());
+        }
         return evaluateService.queryEvaluateList(serverEvaluateInfoVO, buildPagenation());
     }
 
@@ -50,6 +55,10 @@ public class EvaluateController extends PageController {
     @RequestMapping("/querySubmitInterviewInterventionList")
     @ResponseBody
     public ReturnEntity querySubmitInterviewInterventionList(@RequestBody ServerInterviewInterventionVO serverInterviewInterventionVO){
+        SecUser secUser = getTokenLoginUser();
+        if(StringUtils.isNotEmpty(secUser.getArea())){
+            serverInterviewInterventionVO.setArea(secUser.getArea());
+        }
         return evaluateService.querySubmitInterviewInterventionList(serverInterviewInterventionVO, buildPagenation());
     }
 
@@ -61,7 +70,7 @@ public class EvaluateController extends PageController {
     @RequestMapping("/saveEvaluateInfo")
     @ResponseBody
     public ReturnEntity saveEvaluateInfo(@RequestBody ServerEvaluateInfoVO serverEvaluateInfoVO){
-        SecUser secUser = (SecUser) getLoginUser();
+        SecUser secUser = getTokenLoginUser();
         return evaluateService.saveEvaluateInfo(serverEvaluateInfoVO, secUser);
     }
 
@@ -73,7 +82,7 @@ public class EvaluateController extends PageController {
     @RequestMapping("/submitEvaluateInfo")
     @ResponseBody
     public ReturnEntity submitEvaluateInfo(@RequestBody ServerEvaluateInfoVO serverEvaluateInfoVO){
-        SecUser secUser = (SecUser) getLoginUser();
+        SecUser secUser = getTokenLoginUser();
         return evaluateService.submitEvaluateInfo(serverEvaluateInfoVO, secUser);
     }
 

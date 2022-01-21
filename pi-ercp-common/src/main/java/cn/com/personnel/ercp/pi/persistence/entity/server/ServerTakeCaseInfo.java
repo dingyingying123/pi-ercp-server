@@ -59,6 +59,31 @@ public class ServerTakeCaseInfo {
     @Column(name = "sta_id")
     private String staId;
 
+    @Override
+    public String toString() {
+        return "ServerTakeCaseInfo{" +
+                "caseId='" + caseId + '\'' +
+                ", childId='" + childId + '\'' +
+                ", caseNo='" + caseNo + '\'' +
+                ", childName='" + childName + '\'' +
+                ", childMale='" + childMale + '\'' +
+                ", childAge='" + childAge + '\'' +
+                ", caseSource='" + caseSource + '\'' +
+                ", referralSource='" + referralSource + '\'' +
+                ", referralReason='" + referralReason + '\'' +
+                ", problemsAndNeedsFaced='" + problemsAndNeedsFaced + '\'' +
+                ", caseDate='" + caseDate + '\'' +
+                ", receiver='" + receiver + '\'' +
+                ", isdelete='" + isdelete + '\'' +
+                ", status='" + status + '\'' +
+                ", creator='" + creator + '\'' +
+                ", createTime=" + createTime +
+                ", updator='" + updator + '\'' +
+                ", updateTime=" + updateTime +
+                ", staId='" + staId + '\'' +
+                '}';
+    }
+
     /**
      * @return case_id
      */

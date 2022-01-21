@@ -64,16 +64,25 @@ public class CaseCloseService extends BaseService implements ICaseCloseService {
 
     @Override
     public ReturnEntity saveCaseClosedInfo(ServerCaseClosedInfoVO serverCaseClosedInfoVO, SecUser secUser) {
-        if(StringUtils.isNotEmpty(serverCaseClosedInfoVO.getCloseId())){
+        if(StringUtils.isEmpty(serverCaseClosedInfoVO.getCloseId())){
+            if(StringUtils.isEmpty(serverCaseClosedInfoVO.getChildId())){
+                return ReturnEntity.errorMsg("参数错误！");
+            }
+            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.queryOneStatusByChildId(serverCaseClosedInfoVO.getChildId());
+            if(serverChildStatusInfo == null){
+                return ReturnEntity.errorMsg("儿童信息不存在！");
+            }
+            serverCaseClosedInfoVO.setStaId(serverChildStatusInfo.getStaId());
             String planId = UUIDKit.getUUID();
             serverCaseClosedInfoVO.setCloseId(planId);
+            serverCaseClosedInfoVO.setReceiver(secUser.getUserName());
             serverCaseClosedInfoVO.setStatus(CommonConstants.ServerApprovalStatus.CLOSE_CASE_SAVE);
             serverCaseClosedInfoVO.setCreator(secUser.getUserId());
             serverCaseClosedInfoVO.setCreateTime(new Date());
             serverCaseClosedInfoVO.setArea(secUser.getArea());
             serverCaseClosedInfoMapper.insert(serverCaseClosedInfoVO);
 
-            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(serverCaseClosedInfoVO.getStaId());
+//            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(serverCaseClosedInfoVO.getStaId());
             serverChildStatusInfo.setEstimateStatus(CommonConstants.ServerApprovalStatus.CLOSE_CASE_SAVE);
             serverChildStatusInfo.setUpdator(secUser.getUserId());
             serverChildStatusInfo.setUpdateTime(new Date());
@@ -112,6 +121,7 @@ public class CaseCloseService extends BaseService implements ICaseCloseService {
 
     @Override
     public ReturnEntity deleteCaseClosedInfo(ServerCaseClosedInfoVO serverCaseClosedInfoVO) {
+        logger.info("=============保存结案参数：" + serverCaseClosedInfoVO);
         if(StringUtils.isEmpty(serverCaseClosedInfoVO.getCloseId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
@@ -121,7 +131,10 @@ public class CaseCloseService extends BaseService implements ICaseCloseService {
         }
 
         serverEvaluateInfoMapper.deleteByPrimaryKey(serverCaseClosedInfoVO.getCloseId());
-        serverChildStatusInfoMapper.deleteByPrimaryKey(serverCaseClosedInfo.getStaId());
+        ServerChildStatusInfo serverChildStatusInfo = new ServerChildStatusInfo();
+        serverChildStatusInfo.setStaId(serverCaseClosedInfo.getStaId());
+        serverChildStatusInfo.setCaseClosedStatus("");
+        serverChildStatusInfoMapper.updateByPrimaryKeySelective(serverChildStatusInfo);
         return ReturnEntity.ok(serverCaseClosedInfoVO);
     }
 }

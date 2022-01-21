@@ -6,6 +6,7 @@ import cn.com.personnel.ercp.pi.module.server.ServerAvailableResourcesInfoVO;
 import cn.com.personnel.ercp.pi.module.server.ServerPlanInfoVO;
 import cn.com.personnel.ercp.pi.service.server.IAvailableResourcesService;
 import cn.com.personnel.springboot.framework.core.controller.PageController;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +27,10 @@ public class AvailableResourcesController extends PageController {
     @RequestMapping("/queryAvailableResourcesList")
     @ResponseBody
     public ReturnEntity queryAvailableResourcesList(@RequestBody ServerAvailableResourcesInfoVO serverAvailableResourcesInfoVO){
+        SecUser secUser = getTokenLoginUser();
+        if(StringUtils.isNotEmpty(secUser.getArea())){
+            serverAvailableResourcesInfoVO.setArea(secUser.getArea());
+        }
         return availableResourcesService.queryAvailableResourcesList(serverAvailableResourcesInfoVO, buildPagenation());
     }
 
@@ -48,7 +53,7 @@ public class AvailableResourcesController extends PageController {
     @RequestMapping("/saveAvailableResourcesInfo")
     @ResponseBody
     public ReturnEntity saveAvailableResourcesInfo(@RequestBody ServerAvailableResourcesInfoVO serverAvailableResourcesInfoVO){
-        SecUser secUser = (SecUser) getLoginUser();
+        SecUser secUser = getTokenLoginUser();
         return availableResourcesService.saveAvailableResourcesInfo(serverAvailableResourcesInfoVO, secUser);
     }
 
@@ -60,7 +65,7 @@ public class AvailableResourcesController extends PageController {
     @RequestMapping("/submitAvailableResourcesInfo")
     @ResponseBody
     public ReturnEntity submitAvailableResourcesInfo(@RequestBody ServerAvailableResourcesInfoVO serverAvailableResourcesInfoVO){
-        SecUser secUser = (SecUser) getLoginUser();
+        SecUser secUser = getTokenLoginUser();
         return availableResourcesService.submitAvailableResourcesInfo(serverAvailableResourcesInfoVO, secUser);
     }
 

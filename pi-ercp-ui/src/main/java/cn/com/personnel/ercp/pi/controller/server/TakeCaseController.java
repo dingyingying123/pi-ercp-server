@@ -6,6 +6,7 @@ import cn.com.personnel.ercp.pi.module.server.ServerTakeCaseInfoVO;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenBaseInfo;
 import cn.com.personnel.ercp.pi.service.server.ITakeCaseService;
 import cn.com.personnel.springboot.framework.core.controller.PageController;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +30,10 @@ public class TakeCaseController extends PageController {
     @RequestMapping("/queryTakeCaseList")
     @ResponseBody
     public ReturnEntity queryTakeCaseList(@RequestBody ServerTakeCaseInfoVO serverTakeCaseInfoVO){
+        SecUser secUser = getTokenLoginUser();
+        if(StringUtils.isNotEmpty(secUser.getArea())){
+            serverTakeCaseInfoVO.setArea(secUser.getArea());
+        }
         return takeCaseService.queryTakeCaseList(serverTakeCaseInfoVO, buildPagenation());
     }
 
@@ -51,6 +56,10 @@ public class TakeCaseController extends PageController {
     @RequestMapping("/queryChildApprovedList")
     @ResponseBody
     public ReturnEntity queryChildApprovedList(@RequestBody PiChildrenBaseInfo piChildrenBaseInfo){
+        SecUser secUser = getTokenLoginUser();
+        if(StringUtils.isNotEmpty(secUser.getArea())){
+            piChildrenBaseInfo.setArea(secUser.getArea());
+        }
         return takeCaseService.queryChildApprovedList(piChildrenBaseInfo, buildPagenation());
     }
 
@@ -62,7 +71,7 @@ public class TakeCaseController extends PageController {
     @RequestMapping("/saveTakeCaseInfo")
     @ResponseBody
     public ReturnEntity saveTakeCaseInfo(@RequestBody ServerTakeCaseInfoVO serverTakeCaseInfoVO){
-        SecUser secUser = (SecUser) getLoginUser();
+        SecUser secUser = getTokenLoginUser();
         return takeCaseService.saveTakeCaseInfo(serverTakeCaseInfoVO, secUser);
     }
 
@@ -85,7 +94,7 @@ public class TakeCaseController extends PageController {
     @RequestMapping("/submitTakeCaseInfo")
     @ResponseBody
     public ReturnEntity submitTakeCaseInfo(@RequestBody ServerTakeCaseInfoVO serverTakeCaseInfoVO){
-        SecUser secUser = (SecUser) getLoginUser();
+        SecUser secUser = getTokenLoginUser();
         return takeCaseService.submitTakeCaseInfo(serverTakeCaseInfoVO, secUser);
     }
 }

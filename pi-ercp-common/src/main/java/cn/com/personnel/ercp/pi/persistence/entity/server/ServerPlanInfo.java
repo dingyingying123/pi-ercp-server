@@ -60,6 +60,32 @@ public class ServerPlanInfo {
     @Column(name = "update_time")
     private Date updateTime;
 
+    @Override
+    public String toString() {
+        return "ServerPlanInfo{" +
+                "planId='" + planId + '\'' +
+                ", staId='" + staId + '\'' +
+                ", childId='" + childId + '\'' +
+                ", planNo='" + planNo + '\'' +
+                ", childName='" + childName + '\'' +
+                ", problemEscription='" + problemEscription + '\'' +
+                ", expectedGoal='" + expectedGoal + '\'' +
+                ", specificStrategiesAndMethods='" + specificStrategiesAndMethods + '\'' +
+                ", executor='" + executor + '\'' +
+                ", expectedExecution='" + expectedExecution + '\'' +
+                ", implementationStatus='" + implementationStatus + '\'' +
+                ", remark='" + remark + '\'' +
+                ", planDate='" + planDate + '\'' +
+                ", receiver='" + receiver + '\'' +
+                ", isdelete='" + isdelete + '\'' +
+                ", status='" + status + '\'' +
+                ", creator='" + creator + '\'' +
+                ", createTime=" + createTime +
+                ", updator='" + updator + '\'' +
+                ", updateTime=" + updateTime +
+                '}';
+    }
+
     /**
      * @return plan_id
      */

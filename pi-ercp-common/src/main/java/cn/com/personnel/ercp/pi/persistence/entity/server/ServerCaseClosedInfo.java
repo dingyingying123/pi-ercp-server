@@ -77,6 +77,37 @@ public class ServerCaseClosedInfo {
     @Column(name = "update_time")
     private Date updateTime;
 
+    @Override
+    public String toString() {
+        return "ServerCaseClosedInfo{" +
+                "closeId='" + closeId + '\'' +
+                ", childId='" + childId + '\'' +
+                ", staId='" + staId + '\'' +
+                ", closeNo='" + closeNo + '\'' +
+                ", closeDate='" + closeDate + '\'' +
+                ", childName='" + childName + '\'' +
+                ", childMale='" + childMale + '\'' +
+                ", childAge='" + childAge + '\'' +
+                ", referralApplicationDate='" + referralApplicationDate + '\'' +
+                ", filingDate='" + filingDate + '\'' +
+                ", caseClosedDate='" + caseClosedDate + '\'' +
+                ", caseNatureAndBriefDescription='" + caseNatureAndBriefDescription + '\'' +
+                ", coachingGoals='" + coachingGoals + '\'' +
+                ", servicesProvidedAndCaseProgress='" + servicesProvidedAndCaseProgress + '\'' +
+                ", currentStatusServiceObjects='" + currentStatusServiceObjects + '\'' +
+                ", reasonForClosing='" + reasonForClosing + '\'' +
+                ", reasonForClosingDirections='" + reasonForClosingDirections + '\'' +
+                ", doYouKnowEnd='" + doYouKnowEnd + '\'' +
+                ", receiver='" + receiver + '\'' +
+                ", isdelete='" + isdelete + '\'' +
+                ", status='" + status + '\'' +
+                ", creator='" + creator + '\'' +
+                ", createTime=" + createTime +
+                ", updator='" + updator + '\'' +
+                ", updateTime=" + updateTime +
+                '}';
+    }
+
     /**
      * @return close_id
      */

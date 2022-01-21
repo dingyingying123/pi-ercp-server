@@ -64,16 +64,26 @@ public class EvaluateService extends BaseService implements IEvaluateService {
 
     @Override
     public ReturnEntity saveEvaluateInfo(ServerEvaluateInfoVO serverEvaluateInfoVO, SecUser secUser) {
-        if(StringUtils.isNotEmpty(serverEvaluateInfoVO.getEvaluateId())){
+        logger.info("=============保存评价参数：" + serverEvaluateInfoVO);
+        if(StringUtils.isEmpty(serverEvaluateInfoVO.getEvaluateId())){
+            if(StringUtils.isEmpty(serverEvaluateInfoVO.getChildId())){
+                return ReturnEntity.errorMsg("参数错误！");
+            }
+            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.queryOneStatusByChildId(serverEvaluateInfoVO.getChildId());
+            if(serverChildStatusInfo == null){
+                return ReturnEntity.errorMsg("儿童信息不存在！");
+            }
+            serverEvaluateInfoVO.setStaId(serverChildStatusInfo.getStaId());
             String planId = UUIDKit.getUUID();
             serverEvaluateInfoVO.setEvaluateId(planId);
+            serverEvaluateInfoVO.setReceiver(secUser.getUserName());
             serverEvaluateInfoVO.setStatus(CommonConstants.ServerApprovalStatus.EVALUATE_SAVE);
             serverEvaluateInfoVO.setCreator(secUser.getUserId());
             serverEvaluateInfoVO.setCreateTime(new Date());
             serverEvaluateInfoVO.setArea(secUser.getArea());
             serverEvaluateInfoMapper.insert(serverEvaluateInfoVO);
 
-            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(serverEvaluateInfoVO.getStaId());
+//            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(serverEvaluateInfoVO.getStaId());
             serverChildStatusInfo.setEstimateStatus(CommonConstants.ServerApprovalStatus.EVALUATE_SAVE);
             serverChildStatusInfo.setUpdator(secUser.getUserId());
             serverChildStatusInfo.setUpdateTime(new Date());
@@ -121,7 +131,10 @@ public class EvaluateService extends BaseService implements IEvaluateService {
         }
 
         serverEvaluateInfoMapper.deleteByPrimaryKey(serverEvaluateInfoVO.getEvaluateId());
-        serverChildStatusInfoMapper.deleteByPrimaryKey(serverEvaluateInfo.getStaId());
+        ServerChildStatusInfo serverChildStatusInfo = new ServerChildStatusInfo();
+        serverChildStatusInfo.setStaId(serverEvaluateInfo.getStaId());
+        serverChildStatusInfo.setEvaluateStatus("");
+        serverChildStatusInfoMapper.updateByPrimaryKeySelective(serverChildStatusInfo);
         return ReturnEntity.ok(serverEvaluateInfoVO);
     }
 }

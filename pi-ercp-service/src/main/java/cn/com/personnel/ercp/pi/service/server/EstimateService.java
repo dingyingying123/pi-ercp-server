@@ -77,9 +77,19 @@ public class EstimateService extends BaseService implements IEstimateService {
 
     @Override
     public ReturnEntity saveEstimateInfo(ServerEstimateInfoVO serverEstimateInfoVO, SecUser secUser) {
-        if(StringUtils.isNotEmpty(serverEstimateInfoVO.getEstId())){
+        logger.info("=============保存预估参数：" + serverEstimateInfoVO);
+        if(StringUtils.isEmpty(serverEstimateInfoVO.getEstId())){
+            if(StringUtils.isEmpty(serverEstimateInfoVO.getChildId())){
+                return ReturnEntity.errorMsg("参数错误！");
+            }
+            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.queryOneStatusByChildId(serverEstimateInfoVO.getChildId());
+            if(serverChildStatusInfo == null){
+                return ReturnEntity.errorMsg("儿童信息不存在！");
+            }
+            serverEstimateInfoVO.setStaId(serverChildStatusInfo.getStaId());
             String estId = UUIDKit.getUUID();
             serverEstimateInfoVO.setEstId(estId);
+            serverEstimateInfoVO.setReceiver(secUser.getUserName());
             serverEstimateInfoVO.setStatus(CommonConstants.ServerApprovalStatus.ESTIMATE_SAVE);
             serverEstimateInfoVO.setCreator(secUser.getUserId());
             serverEstimateInfoVO.setCreateTime(new Date());
@@ -90,6 +100,9 @@ public class EstimateService extends BaseService implements IEstimateService {
                 String riskId = UUIDKit.getUUID();
                 serverHighRiskFamilyInfo.setRiskId(riskId);
                 serverHighRiskFamilyInfo.setEstId(estId);
+                serverHighRiskFamilyInfo.setChildId(serverEstimateInfoVO.getChildId());
+                serverHighRiskFamilyInfo.setStaId(serverChildStatusInfo.getStaId());
+                serverHighRiskFamilyInfo.setReceiver(secUser.getUserName());
                 serverHighRiskFamilyInfo.setCreator(secUser.getUserId());
                 serverHighRiskFamilyInfo.setCreateTime(new Date());
                 serverHighRiskFamilyInfoMapper.insert(serverHighRiskFamilyInfo);
@@ -105,7 +118,8 @@ public class EstimateService extends BaseService implements IEstimateService {
                 }
             }
 
-            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(serverEstimateInfoVO.getStaId());
+
+//            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(serverEstimateInfoVO.getStaId());
             serverChildStatusInfo.setEstimateStatus(CommonConstants.ServerApprovalStatus.ESTIMATE_SAVE);
             serverChildStatusInfo.setUpdator(secUser.getUserId());
             serverChildStatusInfo.setUpdateTime(new Date());
@@ -155,8 +169,8 @@ public class EstimateService extends BaseService implements IEstimateService {
         if(StringUtils.isEmpty(serverEstimateInfoVO.getEstId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
-        ServerEstimateInfo serverTakeCaseInfo = serverEstimateInfoMapper.selectByPrimaryKey(serverEstimateInfoVO.getEstId());
-        if(CommonConstants.ServerApprovalStatus.ESTIMATE_SUBMITED.equals(serverTakeCaseInfo.getStatus())){
+        ServerEstimateInfo serverEstimateInfo = serverEstimateInfoMapper.selectByPrimaryKey(serverEstimateInfoVO.getEstId());
+        if(CommonConstants.ServerApprovalStatus.ESTIMATE_SUBMITED.equals(serverEstimateInfo.getStatus())){
             return ReturnEntity.errorMsg("预估已提交，不能删除！");
         }
         Example example = new Example(ServerHighRiskFamilyInfo.class);
@@ -166,7 +180,10 @@ public class EstimateService extends BaseService implements IEstimateService {
         example1.createCriteria().andEqualTo("estId", serverEstimateInfoVO.getEstId());
         serverAssesseeChildMapper.deleteByExample(example1);
         serverEstimateInfoMapper.deleteByPrimaryKey(serverEstimateInfoVO.getEstId());
-        serverChildStatusInfoMapper.deleteByPrimaryKey(serverTakeCaseInfo.getStaId());
+        ServerChildStatusInfo serverChildStatusInfo = new ServerChildStatusInfo();
+        serverChildStatusInfo.setStaId(serverEstimateInfo.getStaId());
+        serverChildStatusInfo.setEstimateStatus("");
+        serverChildStatusInfoMapper.updateByPrimaryKeySelective(serverChildStatusInfo);
         return ReturnEntity.ok(serverEstimateInfoVO);
     }
 

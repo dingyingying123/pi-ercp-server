@@ -46,6 +46,53 @@ public class ServerEvaluateInfoVO extends ServerEvaluateInfo {
     private String evaluateStatus;
     private String caseClosedStatus;
 
+    @Override
+    public String toString() {
+        return "ServerEvaluateInfoVO{" +
+                "area='" + area + '\'' +
+                ", childIdNo='" + childIdNo + '\'' +
+                ", childTelNo='" + childTelNo + '\'' +
+                ", childNationality='" + childNationality + '\'' +
+                ", childMale='" + childMale + '\'' +
+                ", childAccountProvince='" + childAccountProvince + '\'' +
+                ", childAccountCity='" + childAccountCity + '\'' +
+                ", childAccountCounty='" + childAccountCounty + '\'' +
+                ", childAccountAddress='" + childAccountAddress + '\'' +
+                ", childCurrentProvince='" + childCurrentProvince + '\'' +
+                ", childCurrentCity='" + childCurrentCity + '\'' +
+                ", childCurrentCounty='" + childCurrentCounty + '\'' +
+                ", childCurrentAddress='" + childCurrentAddress + '\'' +
+                ", childHealthStatus='" + childHealthStatus + '\'' +
+                ", childEscalationType='" + childEscalationType + '\'' +
+                ", childDisabilityType='" + childDisabilityType + '\'' +
+                ", childDisabilityLevel='" + childDisabilityLevel + '\'' +
+                ", childDiseaseType='" + childDiseaseType + '\'' +
+                ", childSchoolAttendance='" + childSchoolAttendance + '\'' +
+                ", childOtherCases='" + childOtherCases + '\'' +
+                ", childPovertyAlleviationImplementation='" + childPovertyAlleviationImplementation + '\'' +
+                ", childViolationGuardian='" + childViolationGuardian + '\'' +
+                ", organizationName='" + organizationName + '\'' +
+                ", organizationPrincipal='" + organizationPrincipal + '\'' +
+                ", organizationTelNo='" + organizationTelNo + '\'' +
+                ", organizationNature='" + organizationNature + '\'' +
+                ", organizationResidentialProvince='" + organizationResidentialProvince + '\'' +
+                ", organizationResidentialCity='" + organizationResidentialCity + '\'' +
+                ", organizationResidentialCounty='" + organizationResidentialCounty + '\'' +
+                ", organizationResidentialAddress='" + organizationResidentialAddress + '\'' +
+                ", helpSuggestions='" + helpSuggestions + '\'' +
+                ", securityFeeCollectionMethod='" + securityFeeCollectionMethod + '\'' +
+                ", securityFeeCollector='" + securityFeeCollector + '\'' +
+                ", securityFeeRecipientRelationship='" + securityFeeRecipientRelationship + '\'' +
+                ", securityFeeGuaranteeStandard='" + securityFeeGuaranteeStandard + '\'' +
+                ", caseStatus='" + caseStatus + '\'' +
+                ", estimateStatus='" + estimateStatus + '\'' +
+                ", planStatus='" + planStatus + '\'' +
+                ", interventionStatus='" + interventionStatus + '\'' +
+                ", evaluateStatus='" + evaluateStatus + '\'' +
+                ", caseClosedStatus='" + caseClosedStatus + '\'' +
+                '}';
+    }
+
     public String getArea() {
         return area;
     }

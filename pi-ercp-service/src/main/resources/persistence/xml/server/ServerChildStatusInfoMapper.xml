@@ -22,4 +22,8 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="area" jdbcType="VARCHAR" property="area" />
   </resultMap>
+
+  <select id="queryOneStatusByChildId" resultMap="BaseResultMap">
+    select * from server_child_status_info scsi where child_id = #{childId} order by create_time desc limit 1
+  </select>
 </mapper>

@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
+import cn.com.personnel.ercp.common.kit.JwtUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -754,6 +757,23 @@ public abstract class BaseController {
         } catch (Exception e) {
             throw new ActionException("Can not parse the parameter \"" + value + "\" to Long value.");
         }
+    }
+
+    public SecUser getTokenLoginUser() {
+        SecUser secUser = new SecUser();
+        String token = request.getHeader("token");
+        if(StringUtils.isNotEmpty(token)) {
+            String uid = JwtUtil.getUID(token);
+            String userName = JwtUtil.getUsername(token);
+            String area = JwtUtil.getArea(token);
+            logger.info("token参数：uid:" + uid + ",username:" + userName + ",area:" + area);
+            secUser.setUserId(uid);
+            secUser.setUserName(userName);
+            secUser.setArea(area);
+        }else{
+            throw new ActionException("token不能为空！");
+        }
+        return secUser;
     }
 
     public Object getLoginUser() {

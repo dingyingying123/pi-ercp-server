@@ -230,6 +230,88 @@ public class ServerAvailableResourcesInfo {
     @Column(name = "update_time")
     private Date updateTime;
 
+    @Override
+    public String toString() {
+        return "ServerAvailableResourcesInfo{" +
+                "avaId='" + avaId + '\'' +
+                ", staId='" + staId + '\'' +
+                ", childId='" + childId + '\'' +
+                ", availableNo='" + availableNo + '\'' +
+                ", childName='" + childName + '\'' +
+                ", availableDate='" + availableDate + '\'' +
+                ", childrenServiceAgencyTel='" + childrenServiceAgencyTel + '\'' +
+                ", childrenServiceAgencyAddress='" + childrenServiceAgencyAddress + '\'' +
+                ", childrenServiceAgencyCanHelp='" + childrenServiceAgencyCanHelp + '\'' +
+                ", childrenHospitalTel='" + childrenHospitalTel + '\'' +
+                ", childrenHospitalAddress='" + childrenHospitalAddress + '\'' +
+                ", childrenHospitalCanHelp='" + childrenHospitalCanHelp + '\'' +
+                ", privateServiceOrganizationTel='" + privateServiceOrganizationTel + '\'' +
+                ", privateServiceOrganizationAddress='" + privateServiceOrganizationAddress + '\'' +
+                ", privateServiceOrganizationCanHelp='" + privateServiceOrganizationCanHelp + '\'' +
+                ", variousFoundationsTel='" + variousFoundationsTel + '\'' +
+                ", variousFoundationsAddress='" + variousFoundationsAddress + '\'' +
+                ", variousFoundationsCanHelp='" + variousFoundationsCanHelp + '\'' +
+                ", communityCommitteesTel='" + communityCommitteesTel + '\'' +
+                ", communityCommitteesAddress='" + communityCommitteesAddress + '\'' +
+                ", communityCommitteesCanHelp='" + communityCommitteesCanHelp + '\'' +
+                ", communityHospitalTel='" + communityHospitalTel + '\'' +
+                ", communityHospitalAddress='" + communityHospitalAddress + '\'' +
+                ", communityHospitalCanHelp='" + communityHospitalCanHelp + '\'' +
+                ", communityVolunteersTel='" + communityVolunteersTel + '\'' +
+                ", communityVolunteersAddress='" + communityVolunteersAddress + '\'' +
+                ", communityVolunteersCanHelp='" + communityVolunteersCanHelp + '\'' +
+                ", communityOrganizationCommunityHospitalTel='" + communityOrganizationCommunityHospitalTel + '\'' +
+                ", communityOrganizationCommunityHospitalAddress='" + communityOrganizationCommunityHospitalAddress + '\'' +
+                ", communityOrganizationCommunityHospitalCanHelp='" + communityOrganizationCommunityHospitalCanHelp + '\'' +
+                ", communityUnitTel='" + communityUnitTel + '\'' +
+                ", communityUnitAddress='" + communityUnitAddress + '\'' +
+                ", communityUnitCanHelp='" + communityUnitCanHelp + '\'' +
+                ", nearbyPoliceStationTel='" + nearbyPoliceStationTel + '\'' +
+                ", nearbyPoliceStationAddress='" + nearbyPoliceStationAddress + '\'' +
+                ", nearbyPoliceStationCanHelp='" + nearbyPoliceStationCanHelp + '\'' +
+                ", schoolPrincipalTel='" + schoolPrincipalTel + '\'' +
+                ", schoolPrincipalAddress='" + schoolPrincipalAddress + '\'' +
+                ", schoolPrincipalCanHelp='" + schoolPrincipalCanHelp + '\'' +
+                ", schoolCounselorTel='" + schoolCounselorTel + '\'' +
+                ", schoolCounselorAddress='" + schoolCounselorAddress + '\'' +
+                ", schoolCounselorCanHelp='" + schoolCounselorCanHelp + '\'' +
+                ", headTeacherTel='" + headTeacherTel + '\'' +
+                ", headTeacherAddress='" + headTeacherAddress + '\'' +
+                ", headTeacherCanHelp='" + headTeacherCanHelp + '\'' +
+                ", schoolCounselingTeacherTel='" + schoolCounselingTeacherTel + '\'' +
+                ", schoolCounselingTeacherAddress='" + schoolCounselingTeacherAddress + '\'' +
+                ", schoolCounselingTeacherCanHelp='" + schoolCounselingTeacherCanHelp + '\'' +
+                ", variousRelatedPoliciesTel='" + variousRelatedPoliciesTel + '\'' +
+                ", variousRelatedPoliciesAddress='" + variousRelatedPoliciesAddress + '\'' +
+                ", variousRelatedPoliciesCanHelp='" + variousRelatedPoliciesCanHelp + '\'' +
+                ", careNextGenerationCommitteeTel='" + careNextGenerationCommitteeTel + '\'' +
+                ", careNextGenerationCommitteeAddress='" + careNextGenerationCommitteeAddress + '\'' +
+                ", careNextGenerationCommitteeCanHelp='" + careNextGenerationCommitteeCanHelp + '\'' +
+                ", localCivilAffairsDepartmentTel='" + localCivilAffairsDepartmentTel + '\'' +
+                ", localCivilAffairsDepartmentAddress='" + localCivilAffairsDepartmentAddress + '\'' +
+                ", localCivilAffairsDepartmentCanHelp='" + localCivilAffairsDepartmentCanHelp + '\'' +
+                ", localWomenFederationTel='" + localWomenFederationTel + '\'' +
+                ", localWomenFederationAddress='" + localWomenFederationAddress + '\'' +
+                ", localWomenFederationCanHelp='" + localWomenFederationCanHelp + '\'' +
+                ", localEducationExpertTel='" + localEducationExpertTel + '\'' +
+                ", localEducationExpertAddress='" + localEducationExpertAddress + '\'' +
+                ", localEducationExpertCanHelp='" + localEducationExpertCanHelp + '\'' +
+                ", localChildcareExpertTel='" + localChildcareExpertTel + '\'' +
+                ", localChildcareExpertAddress='" + localChildcareExpertAddress + '\'' +
+                ", localChildcareExpertCanHelp='" + localChildcareExpertCanHelp + '\'' +
+                ", policyResourcesOtherTel='" + policyResourcesOtherTel + '\'' +
+                ", policyResourcesOtherAddress='" + policyResourcesOtherAddress + '\'' +
+                ", policyResourcesOtherCanHelp='" + policyResourcesOtherCanHelp + '\'' +
+                ", receiver='" + receiver + '\'' +
+                ", isdelete='" + isdelete + '\'' +
+                ", status='" + status + '\'' +
+                ", creator='" + creator + '\'' +
+                ", createTime=" + createTime +
+                ", updator='" + updator + '\'' +
+                ", updateTime=" + updateTime +
+                '}';
+    }
+
     /**
      * @return ava_id
      */

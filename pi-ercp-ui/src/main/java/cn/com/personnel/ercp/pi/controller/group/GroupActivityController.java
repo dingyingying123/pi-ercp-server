@@ -51,7 +51,7 @@ public class GroupActivityController extends PageController {
     @RequestMapping("/saveGroupActivityInfo")
     @ResponseBody
     public ReturnEntity saveGroupActivityInfo(@RequestBody ServerGroupActivityInfo serverGroupActivityInfo){
-        SecUser secUser = (SecUser) getLoginUser();
+        SecUser secUser = getTokenLoginUser();
         return groupActivityService.saveGroupActivityInfo(serverGroupActivityInfo, secUser);
     }
 
@@ -74,7 +74,7 @@ public class GroupActivityController extends PageController {
     @RequestMapping("/submitGroupActivityInfo")
     @ResponseBody
     public ReturnEntity submitGroupActivityInfo(@RequestBody ServerGroupActivityInfo serverGroupActivityInfo){
-        SecUser secUser = (SecUser) getLoginUser();
+        SecUser secUser = getTokenLoginUser();
         return groupActivityService.submitGroupActivityInfo(serverGroupActivityInfo, secUser);
     }
 }

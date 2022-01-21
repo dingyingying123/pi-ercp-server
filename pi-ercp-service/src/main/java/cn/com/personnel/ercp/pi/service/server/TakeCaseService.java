@@ -65,10 +65,8 @@ public class TakeCaseService extends BaseService implements ITakeCaseService {
 
     @Override
     public ReturnEntity saveTakeCaseInfo(ServerTakeCaseInfoVO serverTakeCaseInfoVO, SecUser secUser) {
-        if(serverTakeCaseInfoVO == null || StringUtils.isEmpty(serverTakeCaseInfoVO.getChildId())){
-            return ReturnEntity.errorMsg("参数错误！");
-        }
-        if(StringUtils.isNotEmpty(serverTakeCaseInfoVO.getCaseId()) && StringUtils.isNotEmpty(serverTakeCaseInfoVO.getStaId())){
+        logger.info("============保存接案信息参数：" + serverTakeCaseInfoVO);
+        if(StringUtils.isNotEmpty(serverTakeCaseInfoVO.getCaseId())){
             serverTakeCaseInfoVO.setUpdateTime(new Date());
             serverTakeCaseInfoVO.setUpdator(secUser.getUserId());
             serverTakeCaseInfoVO.setArea(secUser.getArea());
@@ -78,6 +76,8 @@ public class TakeCaseService extends BaseService implements ITakeCaseService {
             serverTakeCaseFamilyMemberMapper.deleteByExample(example);
             if(serverTakeCaseInfoVO.getServerTakeCaseFamilyMemberList() != null && serverTakeCaseInfoVO.getServerTakeCaseFamilyMemberList().size() > 0){
                 for(ServerTakeCaseFamilyMember serverTakeCaseFamilyMember : serverTakeCaseInfoVO.getServerTakeCaseFamilyMemberList()){
+                    serverTakeCaseFamilyMember.setChildId(serverTakeCaseInfoVO.getChildId());
+                    serverTakeCaseFamilyMember.setCaseId(serverTakeCaseInfoVO.getCaseId());
                     serverTakeCaseFamilyMember.setCreator(secUser.getUserId());
                     serverTakeCaseFamilyMember.setCreateTime(new Date());
                     serverTakeCaseFamilyMember.setMemId(UUIDKit.getUUID());
@@ -98,15 +98,18 @@ public class TakeCaseService extends BaseService implements ITakeCaseService {
             serverChildStatusInfoMapper.insert(statusInfo);
             //添加接案信息
             serverTakeCaseInfoVO.setStatus(CommonConstants.ServerApprovalStatus.CASE_SAVE);
+            serverTakeCaseInfoVO.setReceiver(secUser.getUserName());
             serverTakeCaseInfoVO.setCaseId(UUIDKit.getUUID());
             serverTakeCaseInfoVO.setCreator(secUser.getUserId());
             serverTakeCaseInfoVO.setCreateTime(new Date());
             serverTakeCaseInfoVO.setStaId(staId);
-//            serverTakeCaseInfoVO.setArea(secUser.getArea());
+            serverTakeCaseInfoVO.setArea(secUser.getArea());
             serverTakeCaseInfoMapper.insert(serverTakeCaseInfoVO);
             //添加家庭成员
             if(serverTakeCaseInfoVO.getServerTakeCaseFamilyMemberList() != null && serverTakeCaseInfoVO.getServerTakeCaseFamilyMemberList().size() > 0){
                 for(ServerTakeCaseFamilyMember serverTakeCaseFamilyMember : serverTakeCaseInfoVO.getServerTakeCaseFamilyMemberList()){
+                    serverTakeCaseFamilyMember.setChildId(serverTakeCaseInfoVO.getChildId());
+                    serverTakeCaseFamilyMember.setCaseId(serverTakeCaseInfoVO.getCaseId());
                     serverTakeCaseFamilyMember.setCreator(secUser.getUserId());
                     serverTakeCaseFamilyMember.setCreateTime(new Date());
                     serverTakeCaseFamilyMember.setMemId(UUIDKit.getUUID());

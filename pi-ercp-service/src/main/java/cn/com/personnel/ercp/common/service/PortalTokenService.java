@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,8 +65,8 @@ public class PortalTokenService extends BaseService implements IPortalTokenServi
     }
 
     @Override
-    public Map<String, Object> sign(String uid, String username, String deviceCode) {
-        return JwtUtil.sign(uid, username, deviceCode);
+    public Map<String, Object> sign(String uid, String username, String area, String deviceCode) {
+        return JwtUtil.sign(uid, username, area, deviceCode);
     }
 
     @Override

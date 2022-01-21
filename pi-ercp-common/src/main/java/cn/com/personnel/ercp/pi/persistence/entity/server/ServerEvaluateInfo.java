@@ -89,6 +89,41 @@ public class ServerEvaluateInfo {
     @Column(name = "update_time")
     private Date updateTime;
 
+    @Override
+    public String toString() {
+        return "ServerEvaluateInfo{" +
+                "evaluateId='" + evaluateId + '\'' +
+                ", childId='" + childId + '\'' +
+                ", staId='" + staId + '\'' +
+                ", evaluateNo='" + evaluateNo + '\'' +
+                ", evaluateDate='" + evaluateDate + '\'' +
+                ", childName='" + childName + '\'' +
+                ", childMale='" + childMale + '\'' +
+                ", childAge='" + childAge + '\'' +
+                ", caseDescription='" + caseDescription + '\'' +
+                ", serviceGoal='" + serviceGoal + '\'' +
+                ", serviceStartDate='" + serviceStartDate + '\'' +
+                ", serviceEndDate='" + serviceEndDate + '\'' +
+                ", servicesProvidedAndProgress='" + servicesProvidedAndProgress + '\'' +
+                ", currentStatusChildren='" + currentStatusChildren + '\'' +
+                ", caseClosedSituation='" + caseClosedSituation + '\'' +
+                ", caseClosedSituationOther='" + caseClosedSituationOther + '\'' +
+                ", interventionWorkReflection='" + interventionWorkReflection + '\'' +
+                ", trackServicePlan='" + trackServicePlan + '\'' +
+                ", helpReceived='" + helpReceived + '\'' +
+                ", helpReceivedOther='" + helpReceivedOther + '\'' +
+                ", isMeetsExpectations='" + isMeetsExpectations + '\'' +
+                ", supervisoryOpinion='" + supervisoryOpinion + '\'' +
+                ", receiver='" + receiver + '\'' +
+                ", isdelete='" + isdelete + '\'' +
+                ", status='" + status + '\'' +
+                ", creator='" + creator + '\'' +
+                ", createTime=" + createTime +
+                ", updator='" + updator + '\'' +
+                ", updateTime=" + updateTime +
+                '}';
+    }
+
     /**
      * @return evaluate_id
      */

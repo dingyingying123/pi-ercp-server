@@ -2,7 +2,6 @@ package cn.com.personnel.ercp.common.service;
 
 
 import cn.com.personnel.ercp.auth.persistence.entity.PortalToken;
-import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
 import cn.com.personnel.springboot.framework.core.service.IService;
 
 import java.util.Map;
@@ -108,10 +107,11 @@ public interface IPortalTokenService extends IService {
      *
      * @param uid
      * @param username
+     * @param area
      * @param deviceCode
      * @return
      */
-    public Map<String, Object> sign(String uid, String username, String deviceCode);
+    public Map<String, Object> sign(String uid, String username, String area, String deviceCode);
 
     /**
      * 获取accesstoken

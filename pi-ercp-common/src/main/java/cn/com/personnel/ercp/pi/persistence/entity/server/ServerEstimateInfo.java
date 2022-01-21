@@ -108,6 +108,48 @@ public class ServerEstimateInfo {
     @Column(name = "update_time")
     private Date updateTime;
 
+    @Override
+    public String toString() {
+        return "ServerEstimateInfo{" +
+                "estId='" + estId + '\'' +
+                ", childId='" + childId + '\'' +
+                ", staId='" + staId + '\'' +
+                ", estimateNo='" + estimateNo + '\'' +
+                ", childName='" + childName + '\'' +
+                ", childMale='" + childMale + '\'' +
+                ", childAge='" + childAge + '\'' +
+                ", acceptanceReason='" + acceptanceReason + '\'' +
+                ", familyBackground='" + familyBackground + '\'' +
+                ", familyBackgroundInstructions='" + familyBackgroundInstructions + '\'' +
+                ", academicPerformance='" + academicPerformance + '\'' +
+                ", classmateRelationship='" + classmateRelationship + '\'' +
+                ", teacherStudentRelationship='" + teacherStudentRelationship + '\'' +
+                ", adaptability='" + adaptability + '\'' +
+                ", schoolPerformanceInstructions='" + schoolPerformanceInstructions + '\'' +
+                ", peerRelationshipGoodOrBad='" + peerRelationshipGoodOrBad + '\'' +
+                ", peerTime='" + peerTime + '\'' +
+                ", peerToPeerRelationship='" + peerToPeerRelationship + '\'' +
+                ", peerRelationshipInstructions='" + peerRelationshipInstructions + '\'' +
+                ", importantGrowthExperience='" + importantGrowthExperience + '\'' +
+                ", other='" + other + '\'' +
+                ", behaviorObservationInterview='" + behaviorObservationInterview + '\'' +
+                ", initialEvaluation='" + initialEvaluation + '\'' +
+                ", problemDiagnosis='" + problemDiagnosis + '\'' +
+                ", determineServiceMethod='" + determineServiceMethod + '\'' +
+                ", determineServiceMethodInstruction='" + determineServiceMethodInstruction + '\'' +
+                ", suggestReferralResources='" + suggestReferralResources + '\'' +
+                ", suggestReferralResourcesInstruction='" + suggestReferralResourcesInstruction + '\'' +
+                ", estimateDate='" + estimateDate + '\'' +
+                ", receiver='" + receiver + '\'' +
+                ", isdelete='" + isdelete + '\'' +
+                ", status='" + status + '\'' +
+                ", creator='" + creator + '\'' +
+                ", createTime=" + createTime +
+                ", updator='" + updator + '\'' +
+                ", updateTime=" + updateTime +
+                '}';
+    }
+
     /**
      * @return est_id
      */

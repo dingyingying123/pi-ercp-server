@@ -168,6 +168,20 @@ public class JwtUtil {
     }
 
     /**
+     * 获得token中的信息无需key解密也能获得
+     *
+     * @return token中包含的用户ID
+     */
+    public static String getArea(String token) {
+        try {
+            DecodedJWT jwt = JWT.decode(token);
+            return jwt.getClaim("area").asString();
+        } catch (JWTDecodeException e) {
+            return null;
+        }
+    }
+
+    /**
      * 生成签名,指定时间后过期
      *
      * @param uid        用户ID
@@ -175,10 +189,10 @@ public class JwtUtil {
      * @param deviceCode 设备编码
      * @return 加密的token
      */
-    public static Map<String, Object> sign(String uid, String username, String deviceCode) {
+    public static Map<String, Object> sign(String uid, String username, String area, String deviceCode) {
         Date date = new Date(System.currentTimeMillis() + expire_time);
         String key = username + uid + ApplicationConfig.APP_CODE + deviceCode;
-        return generateToken(key, uid, username, date, "refresh_token");
+        return generateToken(key, uid, username, area, date, "refresh_token");
     }
 
     /**
@@ -194,11 +208,11 @@ public class JwtUtil {
         return generateToken(key, uid, username, date, "access_token");
     }
 
-    public static Map<String, Object> sign(String userId, String userName, String appCode, String deviceCode) {
-        Date date = new Date(System.currentTimeMillis() + expire_time);
-        String key = userName + userId + appCode + deviceCode;
-        return generateToken(key, userId, userName, date, "access_token");
-    }
+//    public static Map<String, Object> sign(String userId, String userName, String appCode, String deviceCode) {
+//        Date date = new Date(System.currentTimeMillis() + expire_time);
+//        String key = userName + userId + appCode + deviceCode;
+//        return generateToken(key, userId, userName, date, "access_token");
+//    }
 
     /**
      * 根据refresh_token生成access_token
@@ -209,9 +223,10 @@ public class JwtUtil {
     public static Map<String, Object> accessSign(String token, String deviceCode) {
         String uid = getUID(token);
         String username = getUsername(token);
+        String area = getArea(token);
         Date date = new Date(System.currentTimeMillis() + 120 * 60 * 1000);
         String key = username + uid + ApplicationConfig.APP_CODE + deviceCode + "2021";
-        return generateToken(key, uid, username, date, "access_token");
+        return generateToken(key, uid, username, area, date, "access_token");
     }
 
     /**
@@ -227,6 +242,31 @@ public class JwtUtil {
         try {
             Algorithm algorithm = Algorithm.HMAC256(key);
             String token = JWT.create().withClaim("uid", uid).withClaim("username", username).withExpiresAt(date)
+                    .sign(algorithm);
+            // 附带userinfo信息
+            Map<String, Object> resultMap = new HashMap<>();
+            resultMap.put(tokenName, token);
+            resultMap.put(tokenName + "_exipre_time", sdf.format(date));
+            return resultMap;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 生成token的方法
+     *
+     * @param key      生成秘钥
+     * @param uid      用户编号
+     * @param username 用户名
+     * @param date     过期时间
+     * @return
+     */
+    private static Map generateToken(String key, String uid, String username, String area, Date date, String tokenName) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(key);
+            String token = JWT.create().withClaim("uid", uid).withClaim("username", username).withClaim("area", area).withExpiresAt(date)
                     .sign(algorithm);
             // 附带userinfo信息
             Map<String, Object> resultMap = new HashMap<>();

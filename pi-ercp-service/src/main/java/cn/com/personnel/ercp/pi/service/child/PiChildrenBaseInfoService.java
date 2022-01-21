@@ -77,6 +77,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
                         }
                         if(flag){
                             piChildrenGuardianInfoMapper.deleteByPrimaryKey(piChildrenGuardianInfo.getGuardianId());
+                            piChildrenGuardianInfos.remove(piChildrenGuardianInfo);
                             i--;
                         }
                     }
@@ -105,7 +106,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
                 piChildrenBaseInfo.setChildId(childId);
                 piChildrenBaseInfo.setCreateTime(new Date());
                 piChildrenBaseInfo.setCreator(secUser.getUserId());
-//                piChildrenBaseInfo.setArea(secUser.getArea());
+                piChildrenBaseInfo.setArea(secUser.getArea());
                 piChildrenBaseInfo.setStatus(CommonConstants.ApprovalStatus.DRAFT);//进行中
                 piChildrenBaseInfoMapper.insert(piChildrenBaseInfo);
                 List<PiChildrenGuardianInfo> piChildrenGuardianInfoList = piChildrenBaseInfo.getPiChildrenGuardianInfoList();
@@ -131,6 +132,9 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
         }
         PiChildrenBaseInfo info = piChildrenBaseInfoMapper.selectByPrimaryKey(piChildrenBaseInfo.getChildId());
         if(CommonConstants.ApprovalStatus.DRAFT.equals(info.getStatus()) || CommonConstants.ApprovalStatus.NOTPASS.equals(info.getStatus())) {
+            Example example = new Example(PiChildrenGuardianInfo.class);
+            example.createCriteria().andEqualTo("childId", piChildrenBaseInfo.getChildId());
+            piChildrenGuardianInfoMapper.deleteByExample(example);
             piChildrenBaseInfoMapper.deleteByPrimaryKey(piChildrenBaseInfo.getChildId());
         }else{
             return ReturnEntity.errorMsg("数据已完成，不能删除！");

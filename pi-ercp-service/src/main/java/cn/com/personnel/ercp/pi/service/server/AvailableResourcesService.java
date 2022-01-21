@@ -7,8 +7,10 @@ import cn.com.personnel.ercp.framework.kit.UUIDKit;
 import cn.com.personnel.ercp.pi.module.server.ServerAvailableResourcesInfoVO;
 import cn.com.personnel.ercp.pi.persistence.entity.server.ServerAvailableResourcesInfo;
 import cn.com.personnel.ercp.pi.persistence.entity.server.ServerChildStatusInfo;
+import cn.com.personnel.ercp.pi.persistence.entity.server.ServerInterviewInterventionInfo;
 import cn.com.personnel.ercp.pi.persistence.mapper.server.ServerAvailableResourcesInfoMapper;
 import cn.com.personnel.ercp.pi.persistence.mapper.server.ServerChildStatusInfoMapper;
+import cn.com.personnel.ercp.pi.persistence.mapper.server.ServerInterviewInterventionInfoMapper;
 import cn.com.personnel.ercp.pi.persistence.mapper.server.ServerPlanInfoMapper;
 import cn.com.personnel.springboot.framework.core.page.PagenationQueryParameter;
 import cn.com.personnel.springboot.framework.service.BaseService;
@@ -16,6 +18,7 @@ import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
 import java.util.List;
@@ -28,6 +31,8 @@ public class AvailableResourcesService extends BaseService implements IAvailable
     ServerChildStatusInfoMapper serverChildStatusInfoMapper;
     @Autowired
     ServerPlanInfoMapper serverPlanInfoMapper;
+    @Autowired
+    ServerInterviewInterventionInfoMapper serverInterviewInterventionInfoMapper;
 
     @Override
     public ReturnEntity queryAvailableResourcesList(ServerAvailableResourcesInfoVO serverAvailableResourcesInfoVO, PagenationQueryParameter buildPagenation) {
@@ -55,16 +60,26 @@ public class AvailableResourcesService extends BaseService implements IAvailable
 
     @Override
     public ReturnEntity saveAvailableResourcesInfo(ServerAvailableResourcesInfoVO serverAvailableResourcesInfoVO, SecUser secUser) {
-        if(StringUtils.isNotEmpty(serverAvailableResourcesInfoVO.getAvaId())){
+        logger.info("=========间接介入参数：" + serverAvailableResourcesInfoVO);
+        if(StringUtils.isEmpty(serverAvailableResourcesInfoVO.getAvaId())){
+            if(StringUtils.isEmpty(serverAvailableResourcesInfoVO.getChildId())){
+                return ReturnEntity.errorMsg("参数错误！");
+            }
+            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.queryOneStatusByChildId(serverAvailableResourcesInfoVO.getChildId());
+            if(serverChildStatusInfo == null){
+                return ReturnEntity.errorMsg("儿童信息不存在！");
+            }
+            serverAvailableResourcesInfoVO.setStaId(serverChildStatusInfo.getStaId());
             String planId = UUIDKit.getUUID();
             serverAvailableResourcesInfoVO.setAvaId(planId);
+            serverAvailableResourcesInfoVO.setReceiver(secUser.getUserName());
             serverAvailableResourcesInfoVO.setStatus(CommonConstants.ServerApprovalStatus.INTERVENTIONING_SAVE);
             serverAvailableResourcesInfoVO.setCreator(secUser.getUserId());
             serverAvailableResourcesInfoVO.setCreateTime(new Date());
             serverAvailableResourcesInfoVO.setArea(secUser.getArea());
             serverAvailableResourcesInfoMapper.insert(serverAvailableResourcesInfoVO);
 
-            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(serverAvailableResourcesInfoVO.getStaId());
+//            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(serverAvailableResourcesInfoVO.getStaId());
             serverChildStatusInfo.setInterventionStatus(CommonConstants.ServerApprovalStatus.INTERVENTIONING);
             serverChildStatusInfo.setUpdator(secUser.getUserId());
             serverChildStatusInfo.setUpdateTime(new Date());
@@ -116,7 +131,18 @@ public class AvailableResourcesService extends BaseService implements IAvailable
         }
 
         serverAvailableResourcesInfoMapper.deleteByPrimaryKey(serverAvailableResourcesInfoVO.getAvaId());
-        serverChildStatusInfoMapper.deleteByPrimaryKey(serverInterviewInterventionInfo.getStaId());
+        Example example = new Example(ServerInterviewInterventionInfo.class);
+        example.createCriteria().andEqualTo("staId", serverInterviewInterventionInfo.getStaId());
+        List<ServerInterviewInterventionInfo> serverInterviewInterventionInfoList = serverInterviewInterventionInfoMapper.selectByExample(example);
+        Example example1 = new Example(ServerAvailableResourcesInfo.class);
+        example1.createCriteria().andEqualTo("staId", serverInterviewInterventionInfo.getStaId());
+        List<ServerAvailableResourcesInfo> serverAvailableResourcesInfoList = serverAvailableResourcesInfoMapper.selectByExample(example1);
+        if(serverInterviewInterventionInfoList.size() == 0 && serverAvailableResourcesInfoList.size() == 0) {
+            ServerChildStatusInfo serverChildStatusInfo = new ServerChildStatusInfo();
+            serverChildStatusInfo.setStaId(serverInterviewInterventionInfo.getStaId());
+            serverChildStatusInfo.setInterventionStatus("");
+            serverChildStatusInfoMapper.updateByPrimaryKeySelective(serverChildStatusInfo);
+        }
         return ReturnEntity.ok(serverAvailableResourcesInfoVO);
     }
 }

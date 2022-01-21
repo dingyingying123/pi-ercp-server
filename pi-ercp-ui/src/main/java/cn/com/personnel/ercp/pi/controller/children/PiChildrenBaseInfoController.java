@@ -53,7 +53,7 @@ public class PiChildrenBaseInfoController extends PageController {
     @RequestMapping("/savePiChildrenBaseInfo")
     @ResponseBody
     public ReturnEntity savePiChildrenBaseInfo(@RequestBody PiChildrenBaseInfoVO piChildrenBaseInfo){
-        SecUser secUser = (SecUser) getLoginUser();
+        SecUser secUser = getTokenLoginUser();
         return piChildrenBaseInfoService.savePiChildrenBaseInfo(piChildrenBaseInfo, secUser);
     }
 
@@ -65,7 +65,7 @@ public class PiChildrenBaseInfoController extends PageController {
     @RequestMapping("/submitPiChildrenBaseInfo")
     @ResponseBody
     public ReturnEntity submitPiChildrenBaseInfo(@RequestBody PiChildrenBaseInfo piChildrenBaseInfo){
-        SecUser secUser = (SecUser) getLoginUser();
+        SecUser secUser = getTokenLoginUser();
         return piChildrenBaseInfoService.submitPiChildrenBaseInfo(piChildrenBaseInfo, secUser);
     }
 
@@ -77,7 +77,7 @@ public class PiChildrenBaseInfoController extends PageController {
     @RequestMapping("/deletePiChildrenBaseInfo")
     @ResponseBody
     public ReturnEntity deletePiChildrenBaseInfo(@RequestBody PiChildrenBaseInfo piChildrenBaseInfo){
-        SecUser secUser = (SecUser) getLoginUser();
+        SecUser secUser = getTokenLoginUser();
         return piChildrenBaseInfoService.deletePiChildrenBaseInfo(piChildrenBaseInfo, secUser);
     }
 
@@ -88,7 +88,7 @@ public class PiChildrenBaseInfoController extends PageController {
     @RequestMapping("/submitPiChildrenBaseInfoList")
     @ResponseBody
     public ReturnEntity submitPiChildrenBaseInfoList(){
-        SecUser secUser = (SecUser) getLoginUser();
+        SecUser secUser = getTokenLoginUser();
         return piChildrenBaseInfoService.submitPiChildrenBaseInfoList(secUser);
     }
 
@@ -99,7 +99,7 @@ public class PiChildrenBaseInfoController extends PageController {
     @RequestMapping("/approvePiChildrenBaseInfo")
     @ResponseBody
     public ReturnEntity approvePiChildrenBaseInfo(@RequestBody PiChildrenBaseInfo piChildrenBaseInfo){
-        SecUser secUser = (SecUser) getLoginUser();
+        SecUser secUser = getTokenLoginUser();
         return piChildrenBaseInfoService.approvePiChildrenBaseInfo(piChildrenBaseInfo, secUser);
     }
 
@@ -110,7 +110,7 @@ public class PiChildrenBaseInfoController extends PageController {
     @RequestMapping("/queryPiChildrenGuardianInfoList")
     @ResponseBody
     public ReturnEntity queryPiChildrenGuardianInfoList(@RequestBody PiChildrenGuardianInfo piChildrenGuardianInfo){
-        SecUser secUser = (SecUser) getLoginUser();
+        SecUser secUser = getTokenLoginUser();
         return piChildrenBaseInfoService.queryPiChildrenGuardianInfoList(piChildrenGuardianInfo);
     }
 
@@ -122,7 +122,7 @@ public class PiChildrenBaseInfoController extends PageController {
     @RequestMapping("/savePiChildrenLocationInfo")
     @ResponseBody
     public ReturnEntity savePiChildrenLocationInfo(@RequestBody PiChildrenLocationInfo piChildrenLocationInfo){
-        SecUser secUser = (SecUser) getLoginUser();
+        SecUser secUser = getTokenLoginUser();
         return piChildrenBaseInfoService.savePiChildrenLocationInfo(piChildrenLocationInfo, secUser);
     }
 

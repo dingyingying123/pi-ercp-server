@@ -9,6 +9,7 @@ import cn.com.personnel.ercp.pi.persistence.entity.server.ServerEstimateInfo;
 import cn.com.personnel.ercp.pi.service.server.IEstimateService;
 import cn.com.personnel.ercp.pi.service.server.ITakeCaseService;
 import cn.com.personnel.springboot.framework.core.controller.PageController;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,6 +33,10 @@ public class EstimateController extends PageController {
     @RequestMapping("/queryEstimateList")
     @ResponseBody
     public ReturnEntity queryEstimateList(@RequestBody ServerEstimateInfoVO serverEstimateInfoVO){
+        SecUser secUser = getTokenLoginUser();
+        if(StringUtils.isNotEmpty(secUser.getArea())){
+            serverEstimateInfoVO.setArea(secUser.getArea());
+        }
         return estimateService.queryEstimateList(serverEstimateInfoVO, buildPagenation());
     }
 
@@ -54,6 +59,10 @@ public class EstimateController extends PageController {
     @RequestMapping("/querySubmitTaskCaseList")
     @ResponseBody
     public ReturnEntity querySubmitTaskCaseList(@RequestBody ServerTakeCaseInfoVO serverTakeCaseInfoVO){
+        SecUser secUser = getTokenLoginUser();
+        if(StringUtils.isNotEmpty(secUser.getArea())){
+            serverTakeCaseInfoVO.setArea(secUser.getArea());
+        }
         return estimateService.querySubmitTaskCaseList(serverTakeCaseInfoVO, buildPagenation());
     }
 
@@ -65,7 +74,7 @@ public class EstimateController extends PageController {
     @RequestMapping("/saveEstimateInfo")
     @ResponseBody
     public ReturnEntity saveEstimateInfo(@RequestBody ServerEstimateInfoVO serverEstimateInfoVO){
-        SecUser secUser = (SecUser) getLoginUser();
+        SecUser secUser = getTokenLoginUser();
         return estimateService.saveEstimateInfo(serverEstimateInfoVO, secUser);
     }
 
@@ -88,7 +97,7 @@ public class EstimateController extends PageController {
     @RequestMapping("/submitEstimateInfo")
     @ResponseBody
     public ReturnEntity submitEstimateInfo(@RequestBody ServerEstimateInfoVO serverEstimateInfoVO){
-        SecUser secUser = (SecUser) getLoginUser();
+        SecUser secUser = getTokenLoginUser();
         return estimateService.submitEstimateInfo(serverEstimateInfoVO, secUser);
     }
 }

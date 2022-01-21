@@ -60,6 +60,32 @@ public class ServerInterviewInterventionInfo {
     @Column(name = "update_time")
     private Date updateTime;
 
+    @Override
+    public String toString() {
+        return "ServerInterviewInterventionInfo{" +
+                "viewId='" + viewId + '\'' +
+                ", staId='" + staId + '\'' +
+                ", childId='" + childId + '\'' +
+                ", viewNo='" + viewNo + '\'' +
+                ", childName='" + childName + '\'' +
+                ", viewDate='" + viewDate + '\'' +
+                ", dateTime='" + dateTime + '\'' +
+                ", place='" + place + '\'' +
+                ", target='" + target + '\'' +
+                ", mainContent='" + mainContent + '\'' +
+                ", evaluationAndReflection='" + evaluationAndReflection + '\'' +
+                ", followUpPlan='" + followUpPlan + '\'' +
+                ", supervisorOpinion='" + supervisorOpinion + '\'' +
+                ", receiver='" + receiver + '\'' +
+                ", isdelete='" + isdelete + '\'' +
+                ", status='" + status + '\'' +
+                ", creator='" + creator + '\'' +
+                ", createTime=" + createTime +
+                ", updator='" + updator + '\'' +
+                ", updateTime=" + updateTime +
+                '}';
+    }
+
     /**
      * @return view_id
      */

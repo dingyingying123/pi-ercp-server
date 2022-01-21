@@ -20,21 +20,21 @@ public class SignInController extends PageController {
     @RequestMapping("/queryLastSignIn")
     @ResponseBody
     public ReturnEntity queryLastSignIn(){
-        SecUser secUser = (SecUser) getLoginUser();
+        SecUser secUser = getTokenLoginUser();
         return signInService.queryLastSignIn(secUser);
     }
 
     @RequestMapping("/saveLastSignIn")
     @ResponseBody
     public ReturnEntity saveLastSignIn(@RequestBody PiSignInInfo piSignInInfo){
-        SecUser secUser = (SecUser) getLoginUser();
+        SecUser secUser = getTokenLoginUser();
         return signInService.saveLastSignIn(piSignInInfo, secUser);
     }
 
     @RequestMapping("/queryTodaySignIn")
     @ResponseBody
     public ReturnEntity queryTodaySignIn(){
-        SecUser secUser = (SecUser) getLoginUser();
+        SecUser secUser = getTokenLoginUser();
         return signInService.queryTodaySignIn(secUser);
     }
 }

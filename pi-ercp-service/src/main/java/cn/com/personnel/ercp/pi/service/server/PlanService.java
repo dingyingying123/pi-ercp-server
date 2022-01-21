@@ -65,16 +65,26 @@ public class PlanService extends BaseService implements IPlanService {
 
     @Override
     public ReturnEntity savePlanInfo(ServerPlanInfoVO serverPlanInfoVO, SecUser secUser) {
-        if(StringUtils.isNotEmpty(serverPlanInfoVO.getPlanId())){
+        logger.info("=============保存计划参数：" + serverPlanInfoVO);
+        if(StringUtils.isEmpty(serverPlanInfoVO.getPlanId())){
+            if(StringUtils.isEmpty(serverPlanInfoVO.getChildId())){
+                return ReturnEntity.errorMsg("参数错误！");
+            }
+            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.queryOneStatusByChildId(serverPlanInfoVO.getChildId());
+            if(serverChildStatusInfo == null){
+                return ReturnEntity.errorMsg("儿童信息不存在！");
+            }
+            serverPlanInfoVO.setStaId(serverChildStatusInfo.getStaId());
             String planId = UUIDKit.getUUID();
             serverPlanInfoVO.setPlanId(planId);
+            serverPlanInfoVO.setReceiver(secUser.getUserName());
             serverPlanInfoVO.setStatus(CommonConstants.ServerApprovalStatus.PLAN_SAVE);
             serverPlanInfoVO.setCreator(secUser.getUserId());
             serverPlanInfoVO.setCreateTime(new Date());
             serverPlanInfoVO.setArea(secUser.getArea());
             serverPlanInfoMapper.insert(serverPlanInfoVO);
 
-            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(serverPlanInfoVO.getStaId());
+//            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(serverPlanInfoVO.getStaId());
             serverChildStatusInfo.setPlanStatus(CommonConstants.ServerApprovalStatus.PLANING);
             serverChildStatusInfo.setUpdator(secUser.getUserId());
             serverChildStatusInfo.setUpdateTime(new Date());
@@ -100,7 +110,15 @@ public class PlanService extends BaseService implements IPlanService {
         }
 
         serverPlanInfoMapper.deleteByPrimaryKey(serverPlanInfoVO.getPlanId());
-        serverChildStatusInfoMapper.deleteByPrimaryKey(serverPlanInfo.getStaId());
+        Example example = new Example(ServerPlanInfo.class);
+        example.createCriteria().andEqualTo("staId", serverPlanInfo.getStaId());
+        List<ServerPlanInfo> serverPlanInfoList = serverPlanInfoMapper.selectByExample(example);
+        if(serverPlanInfoList.size() == 0) {
+            ServerChildStatusInfo serverChildStatusInfo = new ServerChildStatusInfo();
+            serverChildStatusInfo.setStaId(serverPlanInfo.getStaId());
+            serverChildStatusInfo.setPlanStatus("");
+            serverChildStatusInfoMapper.updateByPrimaryKeySelective(serverChildStatusInfo);
+        }
         return ReturnEntity.ok(serverPlanInfoVO);
     }
 

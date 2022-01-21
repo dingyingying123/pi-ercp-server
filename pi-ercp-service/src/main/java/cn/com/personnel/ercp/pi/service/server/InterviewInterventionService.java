@@ -6,6 +6,7 @@ import cn.com.personnel.ercp.common.persistence.entity.ReturnEntity;
 import cn.com.personnel.ercp.framework.kit.UUIDKit;
 import cn.com.personnel.ercp.pi.module.server.ServerInterviewInterventionVO;
 import cn.com.personnel.ercp.pi.module.server.ServerPlanInfoVO;
+import cn.com.personnel.ercp.pi.persistence.entity.server.ServerAvailableResourcesInfo;
 import cn.com.personnel.ercp.pi.persistence.entity.server.ServerChildStatusInfo;
 import cn.com.personnel.ercp.pi.persistence.entity.server.ServerInterviewInterventionInfo;
 import cn.com.personnel.ercp.pi.persistence.mapper.server.ServerAvailableResourcesInfoMapper;
@@ -18,6 +19,7 @@ import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
 import java.util.List;
@@ -30,7 +32,8 @@ public class InterviewInterventionService extends BaseService implements IInterv
     ServerChildStatusInfoMapper serverChildStatusInfoMapper;
     @Autowired
     ServerPlanInfoMapper serverPlanInfoMapper;
-
+    @Autowired
+    ServerAvailableResourcesInfoMapper serverAvailableResourcesInfoMapper;
 
     @Override
     public ReturnEntity queryInterviewInterventionList(ServerInterviewInterventionVO serverInterviewInterventionVO, PagenationQueryParameter buildPagenation) {
@@ -66,16 +69,26 @@ public class InterviewInterventionService extends BaseService implements IInterv
 
     @Override
     public ReturnEntity saveInterviewInterventionInfo(ServerInterviewInterventionVO serverInterviewInterventionVO, SecUser secUser) {
-        if(StringUtils.isNotEmpty(serverInterviewInterventionVO.getViewId())){
+        logger.info("=============保存直接介入参数：" + serverInterviewInterventionVO);
+        if(StringUtils.isEmpty(serverInterviewInterventionVO.getViewId())){
+            if(StringUtils.isEmpty(serverInterviewInterventionVO.getChildId())){
+                return ReturnEntity.errorMsg("参数错误！");
+            }
+            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.queryOneStatusByChildId(serverInterviewInterventionVO.getChildId());
+            if(serverChildStatusInfo == null){
+                return ReturnEntity.errorMsg("儿童信息不存在！");
+            }
+            serverInterviewInterventionVO.setStaId(serverChildStatusInfo.getStaId());
             String planId = UUIDKit.getUUID();
             serverInterviewInterventionVO.setViewId(planId);
+            serverInterviewInterventionVO.setReceiver(secUser.getUserName());
             serverInterviewInterventionVO.setStatus(CommonConstants.ServerApprovalStatus.INTERVENTIONING_SAVE);
             serverInterviewInterventionVO.setCreator(secUser.getUserId());
             serverInterviewInterventionVO.setCreateTime(new Date());
             serverInterviewInterventionVO.setArea(secUser.getArea());
             serverInterviewInterventionInfoMapper.insert(serverInterviewInterventionVO);
 
-            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(serverInterviewInterventionVO.getStaId());
+//            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(serverInterviewInterventionVO.getStaId());
             serverChildStatusInfo.setInterventionStatus(CommonConstants.ServerApprovalStatus.INTERVENTIONING);
             serverChildStatusInfo.setUpdator(secUser.getUserId());
             serverChildStatusInfo.setUpdateTime(new Date());
@@ -127,7 +140,18 @@ public class InterviewInterventionService extends BaseService implements IInterv
         }
 
         serverInterviewInterventionInfoMapper.deleteByPrimaryKey(serverInterviewInterventionVO.getViewId());
-        serverChildStatusInfoMapper.deleteByPrimaryKey(serverInterviewInterventionInfo.getStaId());
+        Example example = new Example(ServerAvailableResourcesInfo.class);
+        example.createCriteria().andEqualTo("staId", serverInterviewInterventionInfo.getStaId());
+        List<ServerAvailableResourcesInfo> serverAvailableResourcesInfoList = serverAvailableResourcesInfoMapper.selectByExample(example);
+        Example example1 = new Example(ServerInterviewInterventionInfo.class);
+        example1.createCriteria().andEqualTo("staId", serverInterviewInterventionInfo.getStaId());
+        List<ServerInterviewInterventionInfo> serverInterviewInterventionInfoList = serverInterviewInterventionInfoMapper.selectByExample(example1);
+        if(serverAvailableResourcesInfoList.size() == 0 && serverInterviewInterventionInfoList.size() == 0) {
+            ServerChildStatusInfo serverChildStatusInfo = new ServerChildStatusInfo();
+            serverChildStatusInfo.setStaId(serverInterviewInterventionInfo.getStaId());
+            serverChildStatusInfo.setInterventionStatus("");
+            serverChildStatusInfoMapper.updateByPrimaryKeySelective(serverChildStatusInfo);
+        }
         return ReturnEntity.ok(serverInterviewInterventionVO);
     }
 }

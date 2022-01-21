@@ -7,6 +7,7 @@ import cn.com.personnel.ercp.pi.module.server.ServerEvaluateInfoVO;
 import cn.com.personnel.ercp.pi.module.server.ServerInterviewInterventionVO;
 import cn.com.personnel.ercp.pi.service.server.ICaseCloseService;
 import cn.com.personnel.springboot.framework.core.controller.PageController;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +29,10 @@ public class CaseCloseController extends PageController {
     @RequestMapping("/queryCaseClosedList")
     @ResponseBody
     public ReturnEntity queryCaseClosedList(@RequestBody ServerCaseClosedInfoVO serverCaseClosedInfoVO){
+        SecUser secUser = getTokenLoginUser();
+        if(StringUtils.isNotEmpty(secUser.getArea())){
+            serverCaseClosedInfoVO.setArea(secUser.getArea());
+        }
         return caseCloseService.queryCaseClosedList(serverCaseClosedInfoVO, buildPagenation());
     }
 
@@ -50,6 +55,10 @@ public class CaseCloseController extends PageController {
     @RequestMapping("/querySubmitEvaluateList")
     @ResponseBody
     public ReturnEntity querySubmitEvaluateList(@RequestBody ServerEvaluateInfoVO serverEvaluateInfoVO){
+        SecUser secUser = getTokenLoginUser();
+        if(StringUtils.isNotEmpty(secUser.getArea())){
+            serverEvaluateInfoVO.setArea(secUser.getArea());
+        }
         return caseCloseService.querySubmitEvaluateList(serverEvaluateInfoVO, buildPagenation());
     }
 
@@ -61,7 +70,7 @@ public class CaseCloseController extends PageController {
     @RequestMapping("/saveCaseClosedInfo")
     @ResponseBody
     public ReturnEntity saveCaseClosedInfo(@RequestBody ServerCaseClosedInfoVO serverCaseClosedInfoVO){
-        SecUser secUser = (SecUser) getLoginUser();
+        SecUser secUser = getTokenLoginUser();
         return caseCloseService.saveCaseClosedInfo(serverCaseClosedInfoVO, secUser);
     }
 
@@ -73,7 +82,7 @@ public class CaseCloseController extends PageController {
     @RequestMapping("/submitCaseClosedInfo")
     @ResponseBody
     public ReturnEntity submitCaseClosedInfo(@RequestBody ServerCaseClosedInfoVO serverCaseClosedInfoVO){
-        SecUser secUser = (SecUser) getLoginUser();
+        SecUser secUser = getTokenLoginUser();
         return caseCloseService.submitCaseClosedInfo(serverCaseClosedInfoVO, secUser);
     }
 

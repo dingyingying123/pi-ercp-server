@@ -225,7 +225,7 @@ public class LoginController extends PageController {
             userMap.put("user", secUser);
             userMap.put("roleIds", userRoles);
             // 生成token并返回前端
-            Map<String, Object> refreshTokenMap = portalTokenService.sign(secUser.getUserId(), secUser.getUserName(), deviceCode);
+            Map<String, Object> refreshTokenMap = portalTokenService.sign(secUser.getUserId(), secUser.getUserName(), secUser.getArea(), deviceCode);
             Map<String, Object> accessTokenMap = portalTokenService.accessSign(String.valueOf(refreshTokenMap.get("refresh_token")), deviceCode);
             insertOrUpdateToken(secUser.getUserId(), String.valueOf(refreshTokenMap.get("refresh_token")), deviceCode, "refresh_token", sdf.parse(String.valueOf(refreshTokenMap.get("refresh_token_exipre_time"))));
             insertOrUpdateToken(secUser.getUserId(), String.valueOf(accessTokenMap.get("access_token")), deviceCode, "access_token", sdf.parse(String.valueOf(accessTokenMap.get("access_token_exipre_time"))));
