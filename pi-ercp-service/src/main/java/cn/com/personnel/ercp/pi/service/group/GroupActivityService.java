@@ -39,9 +39,6 @@ public class GroupActivityService extends BaseService implements IGroupActivityS
 
     @Override
     public ReturnEntity saveGroupActivityInfo(ServerGroupActivityInfo serverGroupActivityInfo, SecUser secUser) {
-        if(serverGroupActivityInfo == null || StringUtils.isEmpty(serverGroupActivityInfo.getGroupId())){
-            return ReturnEntity.errorMsg("参数错误！");
-        }
         if(StringUtils.isNotEmpty(serverGroupActivityInfo.getGroupId())){
             serverGroupActivityInfo.setUpdateTime(new Date());
             serverGroupActivityInfo.setUpdator(secUser.getUserId());

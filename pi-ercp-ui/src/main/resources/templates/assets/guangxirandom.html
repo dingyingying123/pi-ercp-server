@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>广西社会救助双随机排查入户核查表</title>
+    <link rel="stylesheet" href="../../static/css/difficulttable.css"/>
+    <script type="text/javascript" src="../../static/js/jquery-1.2.6.min.js"></script>
+    <style>
+			.image_list li {
+				float: left;
+			}
+
+			.image_list  img {
+				height: 120px;
+			}
+
+			.mbt {
+				margin-right: 20px;
+				margin-top: 20px;
+				margin-left: 20px;
+				float: right;
+				height: 40px;
+				width: 80px;
+				border-radius: 6px;
+				border: 1px cornflowerblue solid;
+				background-color: dodgerblue;
+				color: white;
+			}
+
+    </style>
+</head>
+
+<body>
+<div class="main_body">
+    <div style="height: 30px;"></div>
+    <h1 class="main_tit" id="tablename">广西社会救助双随机排查入户核查表</h1>
+    <div class="main_head">
+
+        <div class="pull_left" id="gx">广西壮族自治区
+            <span class="main_info" id="city_name"></span>市
+            <span class="main_info" id="gxcounty"></span>县
+            <span class="main_info" id="gxtowns"></span>镇
+            <span class="main_info" id="gxvillage"></span>村（社区）
+        </div>
+
+        <div class="pull_right">
+            <span>核查时间：</span>
+            <span class="main_info wid50" id="year"></span>年
+            <span class="main_info wid50" id="month"></span>月
+            <span class="main_info wid50" id="day"></span>日
+        </div>
+    </div>
+    <table class="main_table">
+        <tbody class="main_body">
+        <tr>
+            <th width="90">*户主姓名</th>
+            <td width="7.5%" id="name"></td>
+            <th width="7.5%">*民族</th>
+            <td id="nationname" width="7.5%"></td>
+            <th width="7.5%">*联系方式</th>
+            <td width="15%" id="phone" colspan="2"></td>
+            <th width="7.5%">*家庭人数</th>
+            <td width="7.5%" id="homemembercount"></td>
+            <th width="7.5%">*救助人数</th>
+            <td width="7.5%" id="xbrs"></td>
+            <th width="7.5%">家庭经济<br/>状况较半<br/>年前变化</th>
+            <td width="7.5%">
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_haozhuan"/>好转</span><br/>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_ehua"/>恶化</span><br/>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_wubianhua"/>无变化</span>
+            </td>
+
+        </tr>
+        <tr>
+            <th>*户籍地址</th>
+            <td colspan="5" id="haddr"></td>
+            <th>*现居住地</th>
+            <td colspan="6" id="addr"></td>
+        </tr>
+        <tr>
+            <th>*救助对象类别</th>
+            <td colspan="5" style="text-align: left;">
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_csdb"/>城市低保</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_ncdb"/>农村低保</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_jdlkpkh"/>建档立卡贫困户</span><br/>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_cstk"/>城市特困</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_nctk"/>农村特困</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled" id="cb_ge"/>孤儿或事实无人抚养儿童</span><br/>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_zdcjr"/>重度残疾人</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_kncjr"/>困难残疾人</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_ytpjdlk"/>易地搬迁已脱贫建档立卡</span><br/>
+            </td>
+            </td>
+            <th>是否有<br/>一票否决项</th>
+            <td colspan="6" id="isVetoPower">
+                <span class="check_box" style="margin: 2px;"><input type="checkbox" disabled="disabled" id="cb_yjdc" />有机动车辆</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox" disabled="disabled" id="cb_yfjzlxfw" />有非居住类型房屋</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox" disabled="disabled" id="cb_snnkjsf" />一年内扩建私房</span><br/>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox" disabled="disabled" id="cb_y2tysfc" />有两套以上房产</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox" disabled="disabled" id="cb_ygdxfxw" />有高消费行为</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox" disabled="disabled" id="cb_gytrcsjyhd" />雇佣他人从事经营活动</span><br/>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox" disabled="disabled" id="cb_gszcjt" />是工商注册家庭</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox" disabled="disabled" id="cb_znygjjdxw" />子女有高价就读行为</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox" disabled="disabled" id="cb_cjsfzgmfw" />出借身份证购买房屋或车辆等</span><br/>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox" disabled="disabled" id="cb_yc" />有船舶（超6万元）</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox" disabled="disabled" id="cb_jjygbmjsgz" />拒绝有关部门介绍的相适应的工作3次（含）以上</span><br />
+                <span class="check_box" style="margin: 2px;"><input type="checkbox" disabled="disabled" id="cb_ckg" />人均存款高于当地生活保障3倍</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox" disabled="disabled" id="cb_decczyjt" />申请前6个月有大额财产转移家庭</span><br/>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox" disabled="disabled" id="cb_qtbfhqx" />县级以上民政部门认定的其他不符合情形</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox" disabled="disabled" id="cb_ypfjqt" />其他</span>
+            </td>
+        </tr>
+
+
+        <tbody id="memBeans">
+        <tr>
+            <th rowspan="11">家庭成员信息</th>
+            <td>姓名</td>
+            <td width="7.5%">性别</td>
+            <td width="7.5%">与户主<br/>关系</td>
+            <td width="7.5%">婚姻状态</td>
+            <td width="7.5%">身份证号</td>
+            <td width="7.5%">身体状况</td>
+            <td width="7.5%">工作单位或学校</td>
+            <td width="7.5%">是否死亡</td>
+            <td width="7.5%">是否外嫁</td>
+            <td width="7.5%">是否与户主共同生活</td>
+            <td width="15%" colspan="2">家庭人均月/年收入（城市/农村）</td>
+        </tr>
+        </tbody>
+        </tbody>
+
+        <tbody>
+        <tr>
+            <th width="90" rowspan="3">*财产状况</th>
+            <td width="7.5%">*房屋结构</td>
+            <td colspan="3" id="buildingStructure"></td>
+            <td width="7.5%">装修情况</td>
+            <td colspan="2" id="decorateSituation"></td>
+            <td width="7.5%">商铺<br/><span id="sp_count"></span> 套</td>
+            <td width="7.5%">住房<br/><span id="zf_count"></span> 套</td>
+            <td width="7.5%">房屋层数<br/><span id="fwcs"></span> 层</td>
+            <td width="7.5%">住房面积 <br/><span id="zfmj"></span> m²</td>
+            <td width="7.5%">建设时间 <br/><span id="jssj"></span> 年</td>
+        </tr>
+        <tr>
+            <td width="7.5%">电视<br/><span id="tv_count"></span> 台</td>
+            <td width="7.5%">电脑<br/><span id="computer"></span> 台</td>
+            <td width="7.5%">冰箱<br/><span id="icebox"></span> 台</td>
+            <td width="7.5%">空调 <br/><span id="aircondition"></span> 台</td>
+            <td width="7.5%">热水器 <br/><span id="rsq"></span> 台</td>
+            <td width="7.5%">洗衣机<br/><span id="xyj"></span> 台</td>
+            <td width="7.5%">水田<br/><span id="st"></span> 亩</td>
+            <td width="7.5%">旱地<br/><span id="hd"></span> 亩</td>
+            <td width="7.5%">甘蔗 <br/><span id="gz"></span> 亩</td>
+            <td width="7.5%">果园 <br/><span id="gy"></span> 亩</td>
+            <td width="7.5%">林地 <br/><span id="ld"></span> 亩</td>
+            <td width="7.5%">桑园 <br/><span id="sy"></span> 亩</td>
+        </tr>
+        <tr>
+            <td width="7.5%">农机车辆（量）</td>
+            <td colspan="6">
+                <span style="margin: 2px;">船舶（</span>
+                <span style="margin: 2px;" id="cb"></span>
+                <span style="margin: 2px;">）大中型农机（</span>
+                <span style="margin: 2px;" id="dzxnj"></span>
+                <span style="margin: 2px;">）大型机械（</span>
+                <span style="margin: 2px;" id="dxjx"></span>
+                <span style="margin: 2px;">）<br/>三轮摩托车（</span>
+                <span style="margin: 2px;" id="slc"></span>
+                <span style="margin: 2px;">）摩托车（</span>
+                <span style="margin: 2px;" id="mtc"></span>
+                <span style="margin: 2px;">）小车（</span>
+                <span style="margin: 2px;" id="jc"></span>
+                <span style="margin: 2px;">）货车（</span>
+                <span style="margin: 2px;" id="hc"></span>
+                <span style="margin: 2px;">）</span>
+            </td>
+            <td width="15%" colspan="2">养殖：<span id="yz"></span></td>
+            <td width="22.5%" colspan="3">其他:<span id="qt"></span></td>
+        </tr>
+        <tr>
+            <th width="90">*收入状况</th>
+            <td width="7.5%">工资性收入</td>
+            <td width="7.5%"><span id="gzsr"></span>元/年</td>
+            <td width="7.5%">经营性收入</td>
+            <td width="7.5%"><span id="jysr"></span>元/年</td>
+            <td width="7.5%">财产性收入</td>
+            <td width="7.5%"><span id="ccsr"></span>元/年</td>
+            <td width="7.5%">转移性收入</td>
+            <td width="7.5%"><span id="zyxsr"></span>元/年</td>
+            <td width="7.5%" colSpan="4">本行小计:<span id="hjsr"></span>元/年</td>
+        </tr>
+        <tr>
+            <th width="90" id="hzname">*刚性支出</th>
+            <td width="7.5%">因病支出</td>
+            <td width="7.5%"><span id="ybzc"></span>元/年</td>
+            <td width="7.5%">子女教育费</td>
+            <td width="7.5%"><span id="znjyf"></span>元/年</td>
+            <td width="7.5%">因残支出</td>
+            <td width="7.5%"><span id="yczc"></span>元/年</td>
+            <td width="7.5%">其他</td>
+            <td width="7.5%"><span id="qtzc"></span>元/年</td>
+            <td width="7.5%" colSpan="4">本行小计:<span id="hjzc"></span>元/年</td>
+        </tr>
+        <tr>
+            <td colSpan="2">目前家庭生活困难主要原因</td>
+            <td colSpan="7">
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled" id="cb_yinbing"/>因病</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled" id="cb_yinzai"/>灾害</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled" id="cb_canji"/>残疾</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled" id="cb_quelaoli"/>缺乏劳动力</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled" id="cb_yinshiye"/>失业</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_yinqita"/>其他</span><br/>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_yinshidi"/>失地</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_nianlao"/>年老，无劳动力，无收入</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled" id="cb_yinxue"/>因学</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_kjet"/>困境儿童</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_dqjt201"/>单亲家庭</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_sctjel202"/>生存条件恶劣</span>
+
+            </td>
+
+            <td width="7.5%" colSpan="4">家庭人均可支配收入:<span id="jtrjkzpsr"></span>元/年</td>
+        </tr>
+        <tr>
+            <td>是否经办人员近亲属</td>
+            <td colSpan="2">
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_sjqs"/>是</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_bsjqs"/>否</span>
+
+            </td>
+            <td>经办人职务</td>
+            <td colSpan="2" id="jbrzw"></td>
+            <td colSpan="2">是否按时发放到位</td>
+            <td colSpan="2">
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled" id="cb_as"/>按时</span><br/>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_cgsgy"/>超过三个月未发放</span><br/>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_cgbn"/>超过半年未发放</span>
+            </td>
+            <td>救助金是否<br/>本户使用</td>
+            <td colSpan="2">
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_sbhsy"/>是</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_bsbhsy"/>否</span>
+            </td>
+        </tr>
+
+        <tr style="text-align: -webkit-center; padding: 10px;">
+            <td colSpan="13"> 请 根 据 实 际 调 查 结 果 填 写 以 上 内 容 ，确 认无 误 后 签 字 或 按 手 印</td>
+        </tr>
+        <tr style="height: 120px; ">
+            <th>*申请人意见及<br/>签字或按手印</th>
+            <td colspan="12" class="text_left">
+                <ul class="image_list" id="memberimage">
+                    <img id="image_member_s" onclick="setmembersignature()"/>
+                    <img id="image_member_f" onclick="setmemberfingerprint()"/>
+                    <button class="mbt" onclick="setmembersignature()">签 字</button>
+                    <button class="mbt" onclick="setmemberfingerprint()">指纹</button>
+                </ul>
+            </td>
+        </tr>
+        <tr style="height: 120px;">
+            <th>*核查人员签字</th>
+            <td colspan="12" class="text_left">
+                <ul class="image_list" id="workerimages">
+                    <img id="image_worker_s" onclick="setworksignature()"/>
+                    <button class="mbt" onclick="setworksignature()">签字</button>
+                </ul>
+            </td>
+
+        </tr>
+        <tr>
+            <th>*入户意见</th>
+            <td colspan="12">
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_fhjztj"/>符合救助条件</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_czysljqk"/>存在疑似漏就情况</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_czktcwtcqk"/>存在按规定可以退出低保未退出的情况</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_jzjejsff"/>救助金额及时发放到位</span>
+                <span class="check_box" style="margin: 2px;"><input type="checkbox"
+                                                                    disabled="disabled"
+                                                                    id="cb_qtrh"/>其他：</span>
+                <span id="in_home_msg"></span>
+            </td>
+        </tr>
+        <tr>
+            <th>*其他需<br/>说明情况</th>
+            <td colspan="12" id="rhdetail">
+
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+
+
+    <p>
+
+    </p>
+    <div><br/><br/></div>
+</div>
+<p>
+    说明：带"*"号项的内容必须填写
+</p>
+<div><br/><br/><br/><br/><br/><br/></div>
+</div>
+<script type="text/javascript">
+			function initData(data) {
+				setMemberSignatureData(data.dbsign);
+				setMemberFingerprintData(data.dbfingerprint);
+				setWorksignData(data.worksign);
+
+				$("#city_name").html(data.city_name);
+				$("#gxcounty").html(data.county_name);
+				$("#gxtowns").html(data.towns_name);
+				$("#gxvillage").html(data.unitName);
+
+				var time=data.inHomeDate;
+				var date = formatDate(time).split("-");
+				$("#year").html(date[0]);
+				$("#month").html(date[1]);
+				$("#day").html(date[2]);
+
+				$("#name").html(data.hhName);
+				$("#nationname").html(data.nation_name)
+				$("#phone").html(data.contacePhone);
+				$("#homemembercount").html(data.memCount);
+				$("#xbrs").html(data.surePopulation);
+				var home_changes = ["",$("#cb_haozhuan"), $("#cb_ehua"), $("#cb_wubianhua")];
+				if (data.homeChange != "") {
+					home_changes[data.homeChange].attr("checked", true);
+				}
+				$("#haddr").html(data.hhAddress);
+				$("#addr").html(data.homeAddress);
+
+				var help_types = ["",$("#cb_csdb"), $("#cb_ncdb"), $("#cb_jdlkpkh"), $("#cb_cstk"), $("#cb_nctk"), $("#cb_ge"), $("#cb_zdcjr"), $("#cb_kncjr"), $("#cb_ytpjdlk")];
+				if (data.helpType != "") {
+				var helpTypes=data.helpType.split(',');
+				for(var i in helpTypes){
+					if(helpTypes[i]!=null && helpTypes[i]!=""){
+                     help_types[helpTypes[i]].attr("checked", true);
+					 }
+                    }
+
+				}
+	            var houseStructures = ["", "简易棚坯", "土木结构","砖木结构","砖混结构","钢筋混凝土结构","其他结构"];
+				$("#buildingStructure").html(houseStructures[data.propertyInfo.buildingStructure]==undefined ?"":houseStructures[data.propertyInfo.buildingStructure]);
+
+				$("#decorateSituation").html(data.propertyInfo.decorateSituation==undefined ?"":data.propertyInfo.decorateSituation=="9"?"精装修（贴有瓷砖、琉璃瓦、高档家具）":data.propertyInfo.decorateSituation=="10"?"简易装修":data.propertyInfo.decorateSituation=="11"?"无装修":"");
+
+				var veto_types = ["",$("#cb_yjdc"), $("#cb_yfjzlxfw"), $("#cb_snnkjsf"), $("#cb_y2tysfc"), $("#cb_ygdxfxw"),
+				 $("#cb_gytrcsjyhd"), $("#cb_gszcjt"), $("#cb_znygjjdxw"), $("#cb_cjsfzgmfw"), $("#cb_decczyjt"),
+				 $("#cb_jjygbmjsgz"), $("#cb_qtbfhqx"), $("#cb_ckg"), $("#cb_yc"), $("#cb_ypfjqt")];
+				 var veto =data.vetoType.split(',');
+                    for(var i in veto){
+						if(veto[i]!=null && veto[i]!=""){
+							if ( veto[i]== "99") {
+								veto_types[veto_types.length-1].attr("checked", true);
+							} else{
+							veto_types[veto[i]].attr("checked", true);
+							}
+
+					 }
+                    }
+
+
+					$("#sp_count").html(data.propertyInfo.storeNum);
+					$("#zf_count").html(data.propertyInfo.housingNum);
+					$("#fwcs").html(data.propertyInfo.housingTier);
+					$("#zfmj").html(data.propertyInfo.housingArea);
+					$("#jssj").html(data.propertyInfo.constructionTime);
+					$("#tv_count").html(data.propertyInfo.tvNum);
+					$("#computer").html(data.propertyInfo.pcNum);
+					$("#icebox").html(data.propertyInfo.fridgeNum);
+					$("#aircondition").html(data.propertyInfo.airConditionerNum);
+					$("#rsq").html(data.propertyInfo.waterHeaterNum);
+					$("#xyj").html(data.propertyInfo.washingMachineNum);
+					$("#st").html(data.propertyInfo.paddyFieldNum);
+					$("#hd").html(data.propertyInfo.dryFarmNum);
+					$("#gz").html(data.propertyInfo.sugarcaneNum);
+					$("#gy").html(data.propertyInfo.gardenNum);
+					$("#ld").html(data.propertyInfo.forestNum);
+					$("#sy").html(data.propertyInfo.mulberryFieldNum);
+					$("#cb").html(data.propertyInfo.shipNum);
+					$("#dzxnj").html(data.propertyInfo.bigAgriculturalMachineryNum);
+					$("#dxjx").html(data.propertyInfo.bigMachinery);
+					$("#slc").html(data.propertyInfo.tricycleNum);
+					$("#mtc").html(data.propertyInfo.motorbikeNum);
+					$("#jc").html(data.propertyInfo.carNum);
+					$("#hc").html(data.propertyInfo.trucksNum);
+					$("#yz").html(data.propertyInfo.cultivationNum);
+					$("#qt").html(data.propertyInfo.otherNum);
+					$("#gzsr").html(data.incomeInfo.salary);
+					$("#jysr").html(data.incomeInfo.manage);
+					$("#ccsr").html(data.incomeInfo.property);
+					$("#zyxsr").html(data.incomeInfo.transfer);
+					$("#hjsr").html(data.incomeInfo.incomeCount);
+					$("#ybzc").html(data.payoutInfo.disease);
+					$("#znjyf").html(data.payoutInfo.children);
+					$("#yczc").html(data.payoutInfo.disabled);
+					$("#qtzc").html(data.payoutInfo.other);
+					$("#hjzc").html(data.payoutInfo.expenditureCount);
+
+
+
+				$("#jtrjkzpsr").html(data.income);
+
+				var JQS = ["",$("#cb_sjqs"), $("#cb_bsjqs")];
+				if (data.isRelatives != "") {
+					JQS[data.isRelatives].attr("checked", true);
+				}
+				$("#jbrzw").html(data.userJob);
+
+				var sfff = ["",$("#cb_as"), $("#cb_cgsgy"),$("#cb_cgbn")];
+				if (data.isOnTimeOut != "") {
+					sfff[data.isOnTimeOut].attr("checked", true);
+				}
+				var jzjbhsy = ["",$("#cb_sbhsy"), $("#cb_bsbhsy")];
+				if (data.isThisUseHelpFunds != "") {
+					jzjbhsy[data.isThisUseHelpFunds].attr("checked", true);
+				}
+				var rhyj = ["",$("#cb_fhjztj"), $("#cb_czysljqk"), $("#cb_czktcwtcqk"), $("#cb_jzjejsff"), $("#cb_qtrh")];
+				if (data.inHomeOpinion != "") {
+				 var rhyjs =data.inHomeOpinion.split(',');
+				   for(var i in rhyjs){
+
+					if(rhyjs[i]!=null && rhyjs[i]!=""){
+						rhyj[rhyjs[i]].attr("checked", true);
+					}
+				   }
+
+				}
+				$("#in_home_msg").html(data.inHomeMsg);
+				$("#rhdetail").html(data.remark);
+
+
+
+				var marraystate = ["", "未婚", "已婚", "离异", "丧偶","初婚","再婚","复婚","已婚分户"];
+				var bodystyte = ["", "有劳动能力", "部分丧失劳动能力", "无劳动力","完全丧失劳动能力"];
+				var yesorno =["","是","否"];
+				var sex =["","男","女"];
+            var relationshipCodeNameList =["","本人","配偶","子/婿","女/媳","孙子、孙女或外孙子、外孙女","父母","祖父母或外祖父母","","婿","","媳","孙子","孙女","外孙子","外孙女","父亲","母亲","祖父","祖母","外祖父","外祖母","兄","弟","姐","妹","子","女","侄子","侄女","姐夫","妹夫","嫂","叔父","婶娘","公公","婆婆","弟媳","岳父","岳母"];
+
+			if(data.appdbInHomeMemberInfoList.length>0){
+				var memname, memsex, memrelation, memwedding, memidcard, memdisease, corporation, is_die, is_again_married,is_live_together,home_avg_income;
+				for (var i = 0; i < data.appdbInHomeMemberInfoList.length; i++) {
+
+					if (data.appdbInHomeMemberInfoList[i].memName == undefined) {
+						memname = '';
+					} else {
+						memname = data.appdbInHomeMemberInfoList[i].memName;
+					}
+
+					if (data.appdbInHomeMemberInfoList[i].sex == undefined) {
+						memsex = '';
+					} else {
+						memsex = sex[data.appdbInHomeMemberInfoList[i].sex];
+					}
+					if (relationshipCodeNameList[data.appdbInHomeMemberInfoList[i].relationid] == undefined) {
+						memrelation = '';
+					} else {
+						memrelation =relationshipCodeNameList[data.appdbInHomeMemberInfoList[i].relationid];
+					}
+
+					if (data.appdbInHomeMemberInfoList[i].marriageState == undefined||data.appdbInHomeMemberInfoList[i].marriageState=='') {
+						memwedding = '';
+					} else {
+						if(data.appdbInHomeMemberInfoList[i].marriageState==99){
+							memwedding="未说明的婚姻状态"
+						}else{
+						memwedding = marraystate[data.appdbInHomeMemberInfoList[i].marriageState];
+						}
+					}
+
+					if (data.appdbInHomeMemberInfoList[i].memIdentity == undefined) {
+						memidcard = '';
+					} else {
+						memidcard = data.appdbInHomeMemberInfoList[i].memIdentity;
+					}
+					if (data.appdbInHomeMemberInfoList[i].laborAbility == undefined ||data.appdbInHomeMemberInfoList[i].laborAbility=='') {
+						memdisease = '';
+					} else {
+						memdisease = bodystyte[data.appdbInHomeMemberInfoList[i].laborAbility];
+					}
+					if (data.appdbInHomeMemberInfoList[i].corporation == undefined) {
+						corporation = '';
+					} else {
+						corporation = data.appdbInHomeMemberInfoList[i].corporation;
+					}
+
+					if (data.appdbInHomeMemberInfoList[i].isDie == undefined  ||data.appdbInHomeMemberInfoList[i].isDie=='') {
+						is_die = '';
+					} else {
+						is_die = yesorno[data.appdbInHomeMemberInfoList[i].isDie];
+					}
+
+					if (data.appdbInHomeMemberInfoList[i].isAgainMarried == undefined  ||data.appdbInHomeMemberInfoList[i].isAgainMarried=='') {
+						is_again_married = '';
+					} else {
+						is_again_married = yesorno[data.appdbInHomeMemberInfoList[i].isAgainMarried];
+					}
+					if (data.appdbInHomeMemberInfoList[i].isLiveTogether == undefined ||data.appdbInHomeMemberInfoList[i].isLiveTogether=='') {
+						is_live_together = '';
+					} else {
+						is_live_together = yesorno[data.appdbInHomeMemberInfoList[i].isLiveTogether];
+					}
+					if (data.appdbInHomeMemberInfoList[i].totalMoney == undefined) {
+						home_avg_income = '';
+					} else {
+						home_avg_income = data.appdbInHomeMemberInfoList[i].totalMoney;
+					}
+
+
+					var smember = '<tr><td>' +
+						memname +
+						'</td><td width="7.5%">' +
+						memsex +
+						' </td><td width="7.5%">' +
+						memrelation +
+						'</td><td width="7.5%">' +
+						memwedding +
+						'</td><td width="7.5%">' +
+						memidcard +
+						'</td><td width="7.5%">' +
+						memdisease +
+						'</td><td width="7.5%">' +
+						corporation +
+						'</td><td width="7.5%">' +
+						is_die +
+						'</td><td width="7.5%">' +
+						is_again_married +
+						'</td><td width="7.5%">' +
+						is_live_together +
+						'</td><td width="15%" colspan="2">' +
+						home_avg_income +
+						'</td></tr>';
+
+					$("#memBeans").append(smember)
+				}
+				}else{
+					var smember = '<tr><td>' +
+
+						'</td><td width="7.5%">' +
+
+						' </td><td width="7.5%">' +
+
+						'</td><td width="7.5%">' +
+
+						'</td><td width="7.5%">' +
+
+						'</td><td width="7.5%">' +
+
+						'</td><td width="7.5%">' +
+
+						'</td><td width="7.5%">' +
+
+						'</td><td width="7.5%">' +
+
+						'</td><td width="7.5%">' +
+
+						'</td><td width="15%" colspan="2">' +
+
+						'</td></tr>';
+
+					$("#memBeans").append(smember)
+				}
+
+	var nowHomeDifficultCause = ["",$("#cb_yinbing"), $("#cb_yinzai"), $("#cb_canji"), $("#cb_quelaoli"), $("#cb_yinshiye"), $("#cb_yinqita"), $("#cb_yinshidi"), $("#cb_nianlao"), $("#cb_yinxue"), $("#cb_kjet"),$("#cb_dqjt201"),$("#cb_sctjel202")];
+
+				 var difficultCause =data.nowHomeDifficultCause.split(',');
+				   for(var i in difficultCause){
+					if(difficultCause[i]!=null && difficultCause[i]!=""){
+						if(difficultCause[i]=="201"){
+						nowHomeDifficultCause[11].attr("checked", true);
+						}else if(difficultCause[i]=="202"){
+							nowHomeDifficultCause[12].attr("checked", true);
+						}else {
+							nowHomeDifficultCause[difficultCause[i]].attr("checked", true);
+						}
+
+					}
+				   }
+
+			}
+
+			//申请人签字
+			function setmembersignature() {
+				android.memberSingature();
+
+			}
+			//申请人指纹
+			function setmemberfingerprint() {
+				android.memberFingerprint();
+			}
+
+			//核查人员签字
+			function setworksignature() {
+				android.workSingature();
+
+			}
+
+			//设置申请人签字
+			function setMemberSignatureData(imgpath) {
+				$('#image_member_s').attr("src", imgpath);
+
+			}
+			//设置申请人指紋
+			function setMemberFingerprintData(imgpath) {
+				$('#image_member_f').attr("src", imgpath);
+			}
+
+
+			//设置核查人员签字
+			function setWorksignData(imgpath) {
+				$('#image_worker_s').attr("src", imgpath);
+			}
+
+			function formatDate(now) {
+				var d = new Date(now);
+				var year = d.getFullYear();
+				var month = d.getMonth() + 1;
+				var date = d.getDate();
+				var hour = d.getHours();
+				var minute = d.getMinutes();
+				var second = d.getSeconds();
+				return year + "-" + month + "-" + date;
+			}
+
+
+</script>
+
+</body>
+
+</html>

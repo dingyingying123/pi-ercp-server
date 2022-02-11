@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -66,17 +67,18 @@ public class PlanService extends BaseService implements IPlanService {
     @Override
     public ReturnEntity savePlanInfo(ServerPlanInfoVO serverPlanInfoVO, SecUser secUser) {
         logger.info("=============保存计划参数：" + serverPlanInfoVO);
+        if(StringUtils.isEmpty(serverPlanInfoVO.getChildId())){
+            return ReturnEntity.errorMsg("参数错误！");
+        }
+        ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.queryOneStatusByChildId(serverPlanInfoVO.getChildId());
+        if(serverChildStatusInfo == null){
+            return ReturnEntity.errorMsg("儿童信息不存在！");
+        }
         if(StringUtils.isEmpty(serverPlanInfoVO.getPlanId())){
-            if(StringUtils.isEmpty(serverPlanInfoVO.getChildId())){
-                return ReturnEntity.errorMsg("参数错误！");
-            }
-            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.queryOneStatusByChildId(serverPlanInfoVO.getChildId());
-            if(serverChildStatusInfo == null){
-                return ReturnEntity.errorMsg("儿童信息不存在！");
-            }
             serverPlanInfoVO.setStaId(serverChildStatusInfo.getStaId());
             String planId = UUIDKit.getUUID();
             serverPlanInfoVO.setPlanId(planId);
+            serverPlanInfoVO.setPlanNo(getNumber());
             serverPlanInfoVO.setReceiver(secUser.getUserName());
             serverPlanInfoVO.setStatus(CommonConstants.ServerApprovalStatus.PLAN_SAVE);
             serverPlanInfoVO.setCreator(secUser.getUserId());
@@ -91,6 +93,7 @@ public class PlanService extends BaseService implements IPlanService {
             serverChildStatusInfo.setArea(secUser.getArea());
             serverChildStatusInfoMapper.updateByPrimaryKeySelective(serverChildStatusInfo);
         }else{
+            serverPlanInfoVO.setStaId(serverChildStatusInfo.getStaId());
             serverPlanInfoVO.setUpdator(secUser.getUserId());
             serverPlanInfoVO.setUpdateTime(new Date());
             serverPlanInfoVO.setArea(secUser.getArea());
@@ -127,14 +130,18 @@ public class PlanService extends BaseService implements IPlanService {
         if(StringUtils.isEmpty(serverPlanInfoVO.getPlanId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
-        serverPlanInfoVO.setStatus(CommonConstants.ServerApprovalStatus.PLANPARTSUBMIT);
-        serverPlanInfoVO.setUpdateTime(new Date());
-        serverPlanInfoVO.setUpdator(secUser.getUserId());
-        serverPlanInfoVO.setArea(secUser.getArea());
-        serverPlanInfoMapper.updateByPrimaryKeySelective(serverPlanInfoVO);
+        ServerPlanInfo serverPlanInfo = serverPlanInfoMapper.selectByPrimaryKey(serverPlanInfoVO.getPlanId());
+        if(serverPlanInfo == null){
+            return ReturnEntity.errorMsg("数据不存在！");
+        }
+        serverPlanInfo.setStatus(CommonConstants.ServerApprovalStatus.PLANPARTSUBMIT);
+        serverPlanInfo.setUpdateTime(new Date());
+        serverPlanInfo.setUpdator(secUser.getUserId());
+//        serverPlanInfo.setArea(secUser.getArea());
+        serverPlanInfoMapper.updateByPrimaryKeySelective(serverPlanInfo);
 
         ServerChildStatusInfo statusInfo = new ServerChildStatusInfo();
-        statusInfo.setStaId(serverPlanInfoVO.getStaId());
+        statusInfo.setStaId(serverPlanInfo.getStaId());
         if("是".equals(serverPlanInfoVO.getAllSubmit())){
             statusInfo.setPlanStatus(CommonConstants.ServerApprovalStatus.PLANSUBMITED);
         }else {
@@ -146,5 +153,19 @@ public class PlanService extends BaseService implements IPlanService {
         serverChildStatusInfoMapper.updateByPrimaryKeySelective(statusInfo);
 
         return ReturnEntity.ok(serverPlanInfoVO);
+    }
+
+    public String getNumber() {
+        Date date = new Date();
+        String prefix = new SimpleDateFormat("yyyy").format(date) + new SimpleDateFormat("MM").format(date);
+        logger.info("=========前缀：" + prefix);
+        return prefix + serverPlanInfoMapper.getLetterNumber(prefix);
+    }
+
+    @Override
+    public ReturnEntity getLetterNumber() {
+        ReturnEntity returnEntity = new ReturnEntity(CommonConstants.SUCCESS_CODE, CommonConstants.SUCCESS_MESSAGE, null);
+        returnEntity.setData(getNumber());
+        return returnEntity;
     }
 }

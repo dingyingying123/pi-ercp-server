@@ -18,4 +18,6 @@ public interface IEstimateService {
     ReturnEntity deleteEstimateInfo(ServerEstimateInfoVO serverEstimateInfoVO);
 
     ReturnEntity submitEstimateInfo(ServerEstimateInfoVO serverEstimateInfoVO, SecUser secUser);
+
+    ReturnEntity getLetterNumber();
 }

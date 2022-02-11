@@ -170,4 +170,10 @@ public class AdminSecEnumController extends PageController{
 		secEnum.setUpdateTime(new Date());
 		return secEnumService.updateEnum(secEnum);
 	}
+
+	@RequestMapping("selectNameByKeyByEnlName")
+	@ResponseBody
+	public ReturnEntity selectNameByKeyByEnlName(@RequestBody SecEnumType enumType ){
+		return secEnumService.selectNameByKeyByEnlName(enumType);
+	}
 }

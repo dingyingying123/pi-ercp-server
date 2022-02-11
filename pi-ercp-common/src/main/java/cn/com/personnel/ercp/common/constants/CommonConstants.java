@@ -47,6 +47,7 @@ public class CommonConstants {
         public static final String APPROVING = "2";//已发送审批
         public static final String APPROVED = "3";//审批通过
         public static final String NOTPASS = "4";//审批不通过
+        public static final String NOTDRAFT = "-1";//审批不通过
     }
 
     /**

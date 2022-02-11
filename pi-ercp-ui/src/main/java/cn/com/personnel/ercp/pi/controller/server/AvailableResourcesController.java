@@ -79,4 +79,14 @@ public class AvailableResourcesController extends PageController {
     public ReturnEntity deleteAvailableResourcesInfo(@RequestBody ServerAvailableResourcesInfoVO serverAvailableResourcesInfoVO){
         return availableResourcesService.deleteAvailableResourcesInfo(serverAvailableResourcesInfoVO);
     }
+
+    /**
+     * 获取编号
+     * @return
+     */
+    @RequestMapping("/getLetterNumber")
+    @ResponseBody
+    public ReturnEntity getLetterNumber(){
+        return availableResourcesService.getLetterNumber();
+    }
 }

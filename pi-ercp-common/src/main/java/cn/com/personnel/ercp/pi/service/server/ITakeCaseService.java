@@ -18,4 +18,8 @@ public interface ITakeCaseService {
     ReturnEntity submitTakeCaseInfo(ServerTakeCaseInfoVO serverTakeCaseInfoVO, SecUser secUser);
 
     ReturnEntity queryChildApprovedList(PiChildrenBaseInfo piChildrenBaseInfo, PagenationQueryParameter buildPagenation);
+
+    ReturnEntity getLetterNumber();
+
+    ReturnEntity getLetterNumber(String type);
 }

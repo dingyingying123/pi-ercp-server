@@ -96,4 +96,13 @@ public class InterviewInterventionController extends PageController {
         return interviewInterventionService.deleteInterviewInterventionInfo(serverInterviewInterventionVO);
     }
 
+    /**
+     * 获取编号
+     * @return
+     */
+    @RequestMapping("/getLetterNumber")
+    @ResponseBody
+    public ReturnEntity getLetterNumber(){
+        return interviewInterventionService.getLetterNumber();
+    }
 }

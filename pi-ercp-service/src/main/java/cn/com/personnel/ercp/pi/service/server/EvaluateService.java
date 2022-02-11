@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -65,17 +66,18 @@ public class EvaluateService extends BaseService implements IEvaluateService {
     @Override
     public ReturnEntity saveEvaluateInfo(ServerEvaluateInfoVO serverEvaluateInfoVO, SecUser secUser) {
         logger.info("=============保存评价参数：" + serverEvaluateInfoVO);
+        if(StringUtils.isEmpty(serverEvaluateInfoVO.getChildId())){
+            return ReturnEntity.errorMsg("参数错误！");
+        }
+        ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.queryOneStatusByChildId(serverEvaluateInfoVO.getChildId());
+        if(serverChildStatusInfo == null){
+            return ReturnEntity.errorMsg("儿童信息不存在！");
+        }
         if(StringUtils.isEmpty(serverEvaluateInfoVO.getEvaluateId())){
-            if(StringUtils.isEmpty(serverEvaluateInfoVO.getChildId())){
-                return ReturnEntity.errorMsg("参数错误！");
-            }
-            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.queryOneStatusByChildId(serverEvaluateInfoVO.getChildId());
-            if(serverChildStatusInfo == null){
-                return ReturnEntity.errorMsg("儿童信息不存在！");
-            }
             serverEvaluateInfoVO.setStaId(serverChildStatusInfo.getStaId());
             String planId = UUIDKit.getUUID();
             serverEvaluateInfoVO.setEvaluateId(planId);
+            serverEvaluateInfoVO.setEvaluateNo(getNumber());
             serverEvaluateInfoVO.setReceiver(secUser.getUserName());
             serverEvaluateInfoVO.setStatus(CommonConstants.ServerApprovalStatus.EVALUATE_SAVE);
             serverEvaluateInfoVO.setCreator(secUser.getUserId());
@@ -90,6 +92,7 @@ public class EvaluateService extends BaseService implements IEvaluateService {
             serverChildStatusInfo.setArea(secUser.getArea());
             serverChildStatusInfoMapper.updateByPrimaryKeySelective(serverChildStatusInfo);
         }else{
+            serverEvaluateInfoVO.setStaId(serverChildStatusInfo.getStaId());
             serverEvaluateInfoVO.setUpdator(secUser.getUserId());
             serverEvaluateInfoVO.setUpdateTime(new Date());
             serverEvaluateInfoVO.setArea(secUser.getArea());
@@ -103,14 +106,18 @@ public class EvaluateService extends BaseService implements IEvaluateService {
         if(StringUtils.isEmpty(serverEvaluateInfoVO.getEvaluateId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
-        serverEvaluateInfoVO.setStatus(CommonConstants.ServerApprovalStatus.EVALUATE_SUBMIT);
-        serverEvaluateInfoVO.setUpdateTime(new Date());
-        serverEvaluateInfoVO.setUpdator(secUser.getUserId());
-        serverEvaluateInfoVO.setArea(secUser.getArea());
-        serverEvaluateInfoMapper.updateByPrimaryKeySelective(serverEvaluateInfoVO);
+        ServerEvaluateInfo serverEvaluateInfo = serverEvaluateInfoMapper.selectByPrimaryKey(serverEvaluateInfoVO.getEvaluateId());
+        if(serverEvaluateInfo == null){
+            return ReturnEntity.errorMsg("数据不存在！");
+        }
+        serverEvaluateInfo.setStatus(CommonConstants.ServerApprovalStatus.EVALUATE_SUBMIT);
+        serverEvaluateInfo.setUpdateTime(new Date());
+        serverEvaluateInfo.setUpdator(secUser.getUserId());
+//        serverEvaluateInfo.setArea(secUser.getArea());
+        serverEvaluateInfoMapper.updateByPrimaryKeySelective(serverEvaluateInfo);
 
         ServerChildStatusInfo statusInfo = new ServerChildStatusInfo();
-        statusInfo.setStaId(serverEvaluateInfoVO.getStaId());
+        statusInfo.setStaId(serverEvaluateInfo.getStaId());
         statusInfo.setEvaluateStatus(CommonConstants.ServerApprovalStatus.EVALUATE_SUBMIT);
         statusInfo.setUpdator(secUser.getUserId());
         statusInfo.setUpdateTime(new Date());
@@ -136,5 +143,19 @@ public class EvaluateService extends BaseService implements IEvaluateService {
         serverChildStatusInfo.setEvaluateStatus("");
         serverChildStatusInfoMapper.updateByPrimaryKeySelective(serverChildStatusInfo);
         return ReturnEntity.ok(serverEvaluateInfoVO);
+    }
+
+    public String getNumber() {
+        Date date = new Date();
+        String prefix = new SimpleDateFormat("yyyy").format(date) + new SimpleDateFormat("MM").format(date);
+        logger.info("=========前缀：" + prefix);
+        return prefix + serverEvaluateInfoMapper.getLetterNumber(prefix);
+    }
+
+    @Override
+    public ReturnEntity getLetterNumber() {
+        ReturnEntity returnEntity = new ReturnEntity(CommonConstants.SUCCESS_CODE, CommonConstants.SUCCESS_MESSAGE, null);
+        returnEntity.setData(getNumber());
+        return returnEntity;
     }
 }

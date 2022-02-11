@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+    <link rel="stylesheet" type="text/css" href="../../static/css/application150621Form.css"/>
+    <script type="text/javascript" src="../../static/js/jquery-1.8.3.min.js"></script>
+    <script language="javascript" type="text/javascript" src="../../static/js/calculate150621NewAppLs.js"></script>
+
+    <title>鄂尔多斯市达拉特旗临时救助家庭综合认定表</title>
+</head>
+<body><!--  onload="getInfo()"	 -->
+<div class="bigContent">
+    <!--<div class="titleImg" id="titleImg"></div>-->
+    <div class="content" id="content">
+        <div class="contentW">
+            <br>
+            <p class="titleS" id="titleS">鄂尔多斯市达拉特旗临时救助家庭综合认定表</p>
+            <br><br>
+            <div class="fs20h20lh20">苏木镇（街道办事处）
+                <input type="text" class="w200h20hs20h20lh20bb1s" value="" readonly="readonly"
+                       id="XJName"/>嘎查村（居委会）
+                <input type="text" class="w200h20hs20h20lh20bb1s" value="" readonly="readonly"
+                       id="XZName"/>
+                &nbsp;&nbsp;&nbsp;&nbsp;入户时间：
+                <input type="text" class="w80h20fs20lh20bb1s" id="years" readonly="readonly"/>年
+                <input type="text" class="w50h20fs20lh20bb1s" id="month" readonly="readonly"/>月
+                <input type="text" class="w50h20fs20lh20bb1s" id="day" readonly="readonly"/>日
+            </div>
+            <br>
+            <!-- 申请类型 -->
+            <p class="w100Bh20lh20fs20">
+                申请救助类型：<input type="checkbox" class="h15w15" id="CZDB" disabled="disabled"/>&nbsp;急难型家庭&nbsp;&nbsp;&nbsp;&nbsp;<input
+                    type="checkbox" id="NCDB" class="h15w15" disabled="disabled"/>&nbsp;支出型家庭
+            </p>
+            <br>
+            <table class="sheet">
+                <tr>
+                    <td colspan="1" class="w80  fs20lh30tac">户主</td>
+                    <td colspan="2" class="w160"><input type="text" class="w160  fs20lh30tac"
+                                                        id="hhName" readonly="readonly"></td>
+                    <td colspan="2" class="w160  fs20lh30tac">救助地址</td>
+                    <td colspan="2" class="w160"><input type="text" class="w160  fs20lh30tac"
+                                                        id="memberHomeAddr" readonly="readonly">
+                    </td>
+                    <td colspan="2" cla0ss="w160  fs20lh30tac">现住址</td>
+                    <td colspan="3" class="w240"><input type="text" class="w240  fs20lh30tac"
+                                                        id="homeHomeAddress" readonly="readonly">
+                    </td>
+                    <td colspan="1" class="w80  fs20lh30tac">联系方式</td>
+                    <td colspan="2" class="w160">
+                        <input class="w160  fs20lh30tac" id="ensurecall"/>
+                    </td>
+                </tr>
+                <tbody id="memberInfoTbody">
+                <tr>
+                    <td colspan="1" id="memberTRLength" class="w80  fs20lh30tac fw600">
+                        共同生活的家庭成员基本情况
+                    </td>
+                    <td colspan="2" class="w160  fs20lh30tac" rowspan="1">姓名</td>
+                    <td colspan="1" class="w80  fs20lh30tac" rowspan="1">与户主<br>关系</td>
+                    <td colspan="1" class="w80  fs20lh30tac" rowspan="1">婚姻状况</td>
+                    <td colspan="2" class="w160  fs20lh30tac" rowspan="1">身份证号码</td>
+                    <td colspan="1" class="w80  fs20lh30tac" rowspan="1">年龄周岁</td>
+                    <td colspan="4" class="w320  fs20lh30tac" rowspan="1">人员类别</td>
+                    <td colspan="1" class="w80  fs20lh30tac" rowspan="1">劳动力<br>系数</td>
+                    <td colspan="1" class="w80  fs20lh30tac" rowspan="1">从事职业</td>
+                    <td colspan="1" class="w80  fs20lh30tac" rowspan="1">年收入</td>
+                </tr>
+                <!--<tr>-->
+                <!--<td colspan="1"  class="w80  fs20lh30tac" >重病病种</td>-->
+                <!--<td colspan="1"  class="w80  fs20lh30tac" >健康状况</td>-->
+                <!--<td colspan="1"  class="w80  fs20lh30tac" >残疾类型</td>-->
+                <!--<td colspan="1"  class="w80  fs20lh30tac" >残疾等级</td>-->
+                <!--</tr>-->
+                </tbody>
+                <tr style="display: none;">
+                    <form id="memerNewForm">
+                        <td colspan="2" class="w160">
+                            <input type="hidden" name="memberId">
+                            <input type="hidden" name="nation">
+                            <input type="text" class="w160  fs20lh30tac" name="memberName"
+                                   readonly="readonly"></td>
+                        <td colspan="1" class="w80">
+                            <input type="hidden" name="relationshipCode"/>
+                        </td>
+                        <td colspan="1" class="w80">
+                            <input type="hidden" name="marriagestate"/>
+                        </td>
+                        <td colspan="2" class="w160"><input type="text" class="w160  fs16lh30tac"
+                                                            name="identifcardId"
+                                                            readonly="readonly"></td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="age" readonly="readonly"></td>
+                        <td colspan="4" class="w320"><input type="text" class="w320  fs20lh30tac"
+                                                            name="disease" readonly="readonly"></td>
+                        <!--<td colspan="1"  class="w80" >-->
+                        <!--<input type="hidden"  name ="disease"/>-->
+                        <!--</td>-->
+                        <!--<td colspan="1"  class="w80" >-->
+                        <!--<input type="hidden"  name ="healthstate"  />-->
+                        <!--</td>-->
+                        <!--<td colspan="1"  class="w80" >-->
+                        <!--<input type="hidden"  name ="handicaped"  />-->
+                        <!--</td>-->
+                        <!--<td colspan="1"  class="w80" >-->
+                        <!--<input type="hidden"  name ="disablityCase" />-->
+                        <!--</td>-->
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="laborCode" readonly="readonly">
+                        </td>
+                        <td colspan="1" class="w80">
+                            <select class="w80" style="width: 100%;height: 100%;font-size: 20px;"
+                                    name="engageJob">
+                                <option value=""></option>
+                                <option value="1" onclick="WGJSBZ(0)">务工</option>
+                                <option value="2" onclick="WNJSBZ(0)">务农</option>
+                            </select>
+                        </td>
+                        <td colspan="1" class="w80">
+                            <input type="hidden" class="w80  fs20lh30tac" name="yzsr">
+                            <input type="hidden" class="w80  fs20lh30tac" name="tdjysr">
+                            <input type="text" class="w80  fs20lh30tac" name="annualMoney"
+                                   readonly="readonly"></td>
+                    </form>
+                </tr>
+                <tbody id="trValue">
+                <tr>
+                    <td colspan="1" id="tdLength" class="w80  fs20lh30tac fw600" rowspan="2">赡抚（扶）养及监护人基本情况</td>
+                    <td colspan="2" class="w160 fs20lh30tac" rowspan="2">姓名</td>
+                    <td colspan="2" class="w160 fs20lh30tac" rowspan="2">身份证号码</td>
+                    <td colspan="2" class="w160 fs20lh30tac" rowspan="2">不计赡养</td>
+                    <td colspan="7" class="w560 fs20lh30tac">赡（抚）养人工作情况及赡（抚）养费测算</td>
+                    <td colspan="1" class="w80 fs20lh30tac" rowspan="2">年赡养费</td>
+                </tr>
+                <tr>
+                    <td colspan="1" class="w80 fs20lh30tac cur">务农</td>
+                    <td colspan="1" class="w80 fs20lh30tac cur">有车辆</td>
+                    <td colspan="1" class="w80 fs20lh30tac">财政供养</td>
+                    <td colspan="1" class="w80 fs20lh30tac">养殖业</td>
+                    <td colspan="1" class="w80 fs20lh30tac cur">个体经营</td>
+                    <td colspan="1" class="w80 fs20lh30tac cur">无固定<br>工作</td>
+                    <td colspan="1" class="w80 fs20lh30tac cur">有固定<br>工作</td>
+                </tr>
+                </tbody>
+                <tr style="display: none;">
+                    <form id="supportFNewForm">
+                        <td colspan="2" class="w160">
+                            <input type="hidden" name="supportId">
+                            <input type="text" class="w160  fs20lh30tac" name="peopleName"
+                                   readonly="readonly"></td>
+                        <td colspan="2" class="w160"><input type="text" class="w160  fs16lh30tac"
+                                                            name="peopleIdNum"></td>
+                        <td colspan="2" class="w160"><input class="w160  fs20lh30tac"
+                                                            name="supportType"></td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="farming"></td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="haveCar"></td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="financial"></td><!-- 财政供养 -->
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="aquaculture"></td><!-- 从事养殖业经营 -->
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="individual"></td><!-- 从事个体经营 -->
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="noFixedWork"></td><!-- 务工无固定工作 -->
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="fixedWork"></td><!-- 务工有固定工作 -->
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="supportMoney" id="AllAlimony0"
+                                                           readonly="readonly"></td>
+                    </form>
+                </tr>
+                <form id="homeInfo">
+                    <tr>
+                        <td colspan="1" rowspan="7" class="w80  fs20lh30tac fw600">家庭财产认定</td>
+                        <td colspan="1" class="w80 fs20lh30tac">银行存款</td>
+                        <td colspan="1" class="w80 fs20lh30tac">商业保险</td>
+                        <td colspan="2" class="w160 fs20lh30tac" rowspan="2">车辆</td>
+                        <td colspan="2" class="w160 fs20lh30tac">车（船）主姓名</td>
+                        <td colspan="2" class="w160 fs20lh30tac">车（船）型</td>
+                        <td colspan="2" class="w160 fs20lh30tac">车（船）牌号</td>
+                        <td colspan="2" class="w160 fs20lh30tac">购买时间</td>
+                        <td colspan="2" class="w160 fs20lh30tac">购买金额</td>
+
+                    </tr>
+                    <tr>
+                        <td colspan="1" class="w80">
+                            <input type="hidden" name="iscity" id="iscity">
+                            <input type="hidden" name="hhId" id="hhId">
+                            <input type="hidden" name="isApply" id="isApply">
+                            <input type="hidden" name="applyHid" id="applyHid">
+                            <input type="hidden" name="ensureTypeN" id="ensureTypeNdata">
+                            <!-- 享受类型 -->
+                            <input type="hidden" name="hhName" id="hhNameBC">
+                            <input type="hidden" name="memberHomeAddr" id="memberHomeAddrBC">
+                            <input type="hidden" name="homeHomeAddress" id="homeHomeAddressBC">
+                            <input type="hidden" name="registerNature" id="registerNature">
+                            <input type="hidden" name="contacePhone" id="contacePhoneBC">
+                            <input type="text" class="w80  fs20lh30tac" name="bankDeposit"
+                                   id="bankDeposit"></td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="commercial" id="commercial"></td>
+                        <td colspan="2" class="w160"><input type="text" class="w160  fs20lh30tac"
+                                                            name="carName" id="carName"></td>
+                        <td colspan="2" class="w160"><input type="text" class="w160  fs20lh30tac"
+                                                            name="carType" id="carType"></td>
+                        <td colspan="2" class="w160"><input type="text" class="w160  fs20lh30tac"
+                                                            name="carNum" id="carNum"></td>
+                        <td colspan="2" class="w160"><input type="text" class="w160  fs20lh30tac"
+                                                            name="purchaseTime" id="purchaseTime">
+                        </td>
+                        <td colspan="2" class="w160"><input type="text" class="w160 fs20lh30tac"
+                                                            name="purchaseNum" id="purchaseNum">
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td colspan="1" class="w80 fs20lh30tac">有价证券</td>
+                        <td colspan="1" class="w80 fs20lh30tac">债券</td>
+                        <td colspan="2" class="w160 fs20lh30tac" rowspan="2">工商户注册信息</td>
+                        <td colspan="2" class="w160 fs20lh30tac">注册人姓名</td>
+                        <td colspan="2" class="w160 fs20lh30tac">注册单位名称</td>
+                        <td colspan="1" class="w80 fs20lh30tac">注册时间</td>
+                        <td colspan="1" class="w80 fs20lh30tac">注册金额（万）</td>
+                        <td colspan="4" class="w320 fs20lh30tac">注册地址</td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="money_securities"
+                                                           id="money_securities"></td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="money_bond" id="money_bond"></td>
+                        <td colspan="2" class="w160"><input type="text" class="w160  fs20lh30tac"
+                                                            name="registrantName"
+                                                            id="registrantName"></td>
+                        <td colspan="2" class="w160"><input type="text" class="w160  fs20lh30tac"
+                                                            name="registrantUnitName"
+                                                            id="registrantUnitName"></td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs16lh30tac"
+                                                           name="registrantTime"
+                                                           id="registrantTime"></td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="registrantMoney"
+                                                           id="registrantMoney"></td>
+                        <td colspan="4" class="w320"><input type="text" class="w320  fs20lh30tac"
+                                                            name="registrantAddress"
+                                                            id="registrantAddress"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" class="w80 fs20lh30tac" rowspan="2">高档艺术品</td>
+                        <td colspan="1" class="w80 fs20lh30tac" rowspan="2">收藏品</td>
+                        <td colspan="2" class="w160 fs20lh30tac" rowspan="3">商品/住宅车用房</td>
+                        <td colspan="2" class="w160 fs20lh30tac">产权人姓名</td>
+                        <td colspan="1" class="w80 fs20lh30tac">建筑面积</td>
+                        <td colspan="1" class="w80 fs20lh30tac">房屋性质</td>
+                        <td colspan="1" class="w80 fs20lh30tac">楼房/<br>平房</td>
+                        <td colspan="1" class="w80 fs20lh30tac">购建时间</td>
+                        <td colspan="4" class="w320 fs20lh30tac">房屋地址</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="w160"><input type="text" class="w160  fs20lh30tac"
+                                                            name="houseMemberId" id="houseMemberId">
+                        </td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="homeBuiltupArea"
+                                                           id="homeBuiltupArea"></td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="houseType" id="houseType"/></td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="houseNature" id="houseNature"/>
+                        </td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs16lh30tac"
+                                                           name="purchaseHouseTime"
+                                                           id="purchaseHouseTime"></td>
+                        <td colspan="4" class="w320"><input type="text" class="w320  fs20lh30tac"
+                                                            name="houseAddress" id="houseAddress">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="dlt_money_art" id="dlt_money_art">
+                        </td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="money_collection"
+                                                           id="money_collection"></td>
+                        <td colspan="2" class="w160"><input type="text" class="w160  fs20lh30tac">
+                        </td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac">
+                        </td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac">
+                        </td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac">
+                        </td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac">
+                        </td>
+                        <td colspan="4" class="w320"><input type="text" class="w320  fs20lh30tac">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" rowspan="7" class="w80  fs20lh30tac fw600">家庭收入认定</td>
+                        <td colspan="3" class="w240 fs20lh30tac">经营性收入</td>
+                        <td colspan="3" class="w240 fs20lh30tac">工资性收入</td>
+                        <td colspan="3" class="w240 fs20lh30tac">财产性收入</td>
+                        <td colspan="3" class="w240 fs20lh30tac">转移性收入</td>
+                        <td colspan="2" class="w160 fs20lh30tac" rowspan="2">家庭年/月总收入合计</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="w160 fs20lh30tac">项目</td>
+                        <td colspan="1" class="w80 fs20lh30tac">年/月收入（元）</td>
+                        <td colspan="2" class="w160 fs20lh30tac">项目</td>
+                        <td colspan="1" class="w80 fs20lh30tac">年月收入（元）</td>
+                        <td colspan="2" class="w160 fs20lh30tac">项目</td>
+                        <td colspan="1" class="w80 fs20lh30tac">年月收入（元）</td>
+                        <td colspan="2" class="w160 fs20lh30tac">项目</td>
+                        <td colspan="1" class="w80 fs20lh30tac">年月收入（元）</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="w160 fs20lh30tac" rowspan="2">土地经营</td>
+                        <td colspan="1" class="w80" rowspan="2"><input type="text"
+                                                                       class="w80  fs20lh30tac"
+                                                                       id="landOperat"
+                                                                       name="landOperat"></td>
+                        <td colspan="2" class="w160 fs20lh30tac">务工收入</td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="workWage" id="workWage"></td>
+                        <td colspan="2" class="w160 fs20lh30tac">房屋出租、出售收入</td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="houseProperty" id="houseProperty">
+                        </td>
+                        <td colspan="2" class="w160 fs20lh30tac">年赡（扶、抚）养费</td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="supportTransfer"
+                                                           id="supportTransfer"></td>
+                        <td colspan="2" class="w160" rowspan="5"><input type="text"
+                                                                        class="w80  fs16lh30tac bb1s"
+                                                                        id="familyTotal">（元）
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="w160 fs20lh30tac">养老险金收入</td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="pensionWage" id="pensionWage"></td>
+                        <td colspan="2" class="w160 fs20lh30tac">转租土地、草牧场收入</td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="landProperty" id="landProperty">
+                        </td>
+                        <td colspan="2" class="w160 fs20lh30tac">粮食补贴、燃煤补贴</td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="foodTransfer" id="foodTransfer">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="w160 fs20lh30tac">养殖业经营</td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="breedOperat" id="breedOperat"></td>
+                        <td colspan="2" class="w160 fs20lh30tac">退职生活费</td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="retiredWage" id="retiredWage"></td>
+                        <td colspan="2" class="w160 fs20lh30tac">储蓄投资利息</td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="storageproperty"
+                                                           id="storageproperty"></td>
+                        <td colspan="2" class="w160 fs20lh30tac">退耕还林还草及粮种补贴</td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="returntransfer"
+                                                           id="returntransfer"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="w160 fs20lh30tac">其它经营收入</td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="otherOperat" id="otherOperat"></td>
+                        <td colspan="2" class="w160 fs20lh30tac">其它工资收入</td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="otherWage" id="otherWage"></td>
+                        <td colspan="2" class="w160 fs20lh30tac">其它财产收入</td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="otherPoperty" id="otherPoperty">
+                        </td>
+                        <td colspan="2" class="w160 fs20lh30tac">其它转移性收入</td>
+                        <td colspan="1" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           name="otherTransfer" id="otherTransfer">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="w240 fs20lh30tac">合计1：<input type="text"
+                                                                            class="w80  fs20lh30tac bb1s"
+                                                                            id="All0">（元）
+                        </td>
+                        <td colspan="3" class="w240 fs20lh30tac">合计2：<input type="text"
+                                                                            class="w80  fs20lh30tac bb1s"
+                                                                            id="All1">（元）
+                        </td>
+                        <td colspan="3" class="w240 fs20lh30tac">合计3：<input type="text"
+                                                                            class="w80  fs20lh30tac bb1s"
+                                                                            id="All2">（元）
+                        </td>
+                        <td colspan="3" class="w240 fs20lh30tac">合计4：<input type="text"
+                                                                            class="w80  fs20lh30tac bb1s"
+                                                                            id="All3">（元）
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" rowspan="2" class="w80  fs20lh30tac fw600">各类社会保险支出</td>
+                        <td colspan="3" class="w240 fs20lh30tac">社会保险费</td>
+                        <td colspan="3" class="w240 fs20lh30tac">医疗保险</td>
+                        <td colspan="3" class="w240 fs20lh30tac">养老保险</td>
+                        <td colspan="3" class="w240 fs20lh30tac">住房公积金</td>
+                        <td colspan="2" class="w160 fs20lh30tac">交纳总金额</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="w240"><input type="text" class="w240  fs20lh30tac"
+                                                            name="social" id="social"></td>
+                        <td colspan="3" class="w240"><input type="text" class="w240  fs20lh30tac"
+                                                            name="medical" id="medical"></td>
+                        <td colspan="3" class="w240"><input type="text" class="w240  fs20lh30tac"
+                                                            name="endowment" id="endowment"></td>
+                        <td colspan="3" class="w240"><input type="text" class="w240  fs20lh30tac"
+                                                            name="houseEfund" id="houseEfund"></td>
+                        <td colspan="2" class="w160"><input type="text" class="w160  fs20lh30tac"
+                                                            id="payTaxes" readonly="readonly"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" rowspan="2" class="w80  fs20lh30tac fw600">困难家庭核减金额情况</td>
+                        <td colspan="12" class="w480 fs20lh30tac">
+                            家庭成员中有完全丧失劳动能力的重病、重残或瘫痪的需要单独照顾，致使家庭成员无法外出务工的人数
+                        </td>
+                        <td colspan="2" class="w160 fs20lh30tac">核减金额(元)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="12" class="w480"><input type="text" class="w480  fs20lh30tac"
+                                                             name="familyDisability"
+                                                             id="familyDisabilitylsjz"></td>
+
+                        <td colspan="2" class="w160"><input type="text" class="w160  fs20lh30tac"
+                                                            name="downMoney" id="downMoneylsjz">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" rowspan="3" class="w80  fs20lh30tac fw600">支出型家庭支出情况</td>
+                        <td colspan="3" rowspan="2" class="w320 fs20lh30tac">家庭看病支出（个人自付费用）</td>
+                        <td colspan="6" class="w320 fs20lh30tac">家庭成员接受教育学杂费支出情况</td>
+                        <td colspan="2" rowspan="2" class="w320 fs20lh30tac">生活必须品支出(包含：水、电、燃煤）</td>
+                        <td colspan="2" rowspan="2" class="w320 fs20lh30tac">其它支出情况</td>
+                        <td colspan="1" class="w160 fs20lh30tac" rowspan="2">支出合计（元）</td>
+                    </tr>
+                    <tr>
+
+                        <td colspan="2" class="w160 fs20lh30tac">学前教育</td>
+                        <td colspan="2" class="w160 fs20lh30tac">高中</td>
+                        <td colspan="2" class="w160 fs20lh30tac">大学</td>
+
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="w160">
+							<span type="text" class="w160  fs20lh30tac"
+                                  id="multipledidabilitylsjz"
+                                  name="multipledidability"/>
+                        </td>
+                        <td colspan="2" class="w160">
+							<span type="text" class="w160  fs20lh30tac"
+                                  id="milddisabilitylsjz"
+                                  name="milddisability"/>
+                        </td>
+                        <td colspan="2" class="w160">
+							<span type="text" class="w160  fs20lh30tac"
+                                  id="undergraduatelsjz"
+                                  name="undergraduate"/>
+                        </td>
+                        <td colspan="2" class="w160">
+							<span type="text" class="w160  fs20lh30tac"
+                                  id="specialtylsjz" name="specialty"/>
+                        </td>
+                        <td colspan="2" class="w160">
+							<span type="text" class="w160  fs20lh30tac"
+                                  id="shbxplsjz" name="shbxp"/>
+                        </td>
+                        <td colspan="2" class="w160">
+							<span type="text" class="w160  fs20lh30tac"
+                                  id="necessitylsjz" name="necessity"/>
+                        </td>
+
+                        <td colspan="1" class="w160"><span type="text" class="w160  fs20lh30tac"
+                                                           id="homeIncomelsjz" readonly="readonly"/>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td colspan="1" rowspan="2" class="w80  fs20lh30tac fw600">急难型家庭支出情况</td>
+                        <td colspan="4" class="w320 fs20lh30tac ">因自然灾害、火灾造<br>成损失金额</td>
+                        <td colspan="4" class="w320 fs20lh30tac ">因交通事故、溺水等<br>意外伤害造成损失金额</td>
+                        <td colspan="4" class="w320 fs20lh30tac ">因突发重特大疾病<br>造成家庭困难情况</td>
+                        <td colspan="2" class="w160 fs20lh30tac ">损失总计</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="w320 fs20lh30tac "><input type="text"
+                                                                         class="w320 fs20lh30tac"
+                                                                         name="patientDisability"
+                                                                         id="succour_difficult_naturaldisaster">
+                        </td>
+                        <td colspan="4" class="w320 fs20lh30tac "><input type="text"
+                                                                         class="w320 fs20lh30tac"
+                                                                         name="multipleDis"
+                                                                         id="succour_difficult_accident">
+                        </td>
+                        <td colspan="4" class="w320 fs20lh30tac "><input type="text"
+                                                                         class="w320 fs20lh30tac"
+                                                                         name="oldAndUnder"
+                                                                         id="succour_difficult_tdjb">
+                        </td>
+                        <td colspan="2" class="w160 fs20lh30tac "><input type="text"
+                                                                         class="w160 fs20lh30tac"
+                                                                         name="increaseMoney"
+                                                                         id="succour_difficult_total">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" class="w80 fs20lh30tac fw600">总收入</td>
+                        <td colspan="3" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           id="succour_total_income"
+                                                           name="domination"></td>
+                        <td colspan="2" class="w80 fs20lh30tac fw600">总支出</td>
+                        <td colspan="3" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           id="succour_total_housespending"
+                                                           name="expenditure"></td>
+                        <td colspan="2" class="w80 fs20lh30tac fw600" id="city">人均年/月可支配收入</td>
+                        <td colspan="4" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           id="succour_total_peoincome"
+                                                           name="pepNum"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1" rowspan="2" class="w80  fs20lh30tac fw600">救助金额</td>
+                        <td colspan="3" class="w80 fs20lh30tac fw600">支出型家庭</td>
+                        <td colspan="2" class="w80 fs20lh30tac fw600">救助人数</td>
+                        <!--								<td colspan="3"  class="w80 fs20lh30tac fw600" ><span id="zcxjtjzrs"></span> <span class="unit">(人)</span></td>-->
+                        <td colspan="3" class="w80 fs20lh30tac fw600"><input type="text"
+                                                                             class="w80  fs20lh30tac"
+                                                                             id="zcxjtjzrs"
+                                                                             name="jzrs"></td>
+                        <td colspan="2" class="w80 fs20lh30tac fw600">救助金额</td>
+                        <td colspan="4" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           id="succour_spending_money"
+                                                           name="pepNum"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="w80 fs20lh30tac fw600">急难型家庭</td>
+                        <td colspan="2" class="w80 fs20lh30tac fw600">救助人数</td>
+                        <!--								<td colspan="3"  class="w80 fs20lh30tac fw600" ><span id="jnxjtjzrs"></span> <span class="unit">(人)</span></td>-->
+                        <td colspan="3" class="w80 fs20lh30tac fw600"><input type="text"
+                                                                             class="w80  fs20lh30tac"
+                                                                             id="jnxjtjzrs"
+                                                                             name="jzrs"></td>
+
+                        <td colspan="2" class="w80 fs20lh30tac fw600">救助金额</td>
+                        <td colspan="4" class="w80"><input type="text" class="w80  fs20lh30tac"
+                                                           id="succour_difficult_money"
+                                                           name="pepNum"></td>
+
+                    </tr>
+                    <tr style="height: 100px;">
+                        <td colspan="1" class="w80  fs20lh30tac fw600">调查人签字</td>
+                        <td colspan="14" class="w80">
+
+                            <ul class="image_list" id="image_worker_s">
+                            </ul>
+                            <button class="mbt" onclick="setworksignature()">签 字</button>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 100px;">
+                        <td colspan="1" class="w80  fs20lh30tac fw600">认定人签字</td>
+                        <td colspan="14" class="w80">
+                            <ul class="image_list" id="memberimager">
+                                <img id="image_member_r" onclick="setrdrsignature()"/>
+                                <button class="mbt" onclick="setrdrsignature()">签 字</button>
+
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr style="height: 100px;">
+                        <td colspan="1" class="w80  fs20lh30tac fw600">被认定人签字</td>
+                        <td colspan="14" class="w80">
+                            <ul class="image_list" id="memberimageb">
+                                <img id="image_member_b" onclick="setBrdrsignature()"/>
+                                <button class="mbt" onclick="setBrdrsignature()">签 字</button>
+
+                            </ul>
+                        </td>
+                    </tr>
+                </form>
+                <!--<tr>-->
+                <!--<td colspan="2"  class="w80 fs20lh30tac fw600" >入户核查人员签字（俩人以上）</td>-->
+                <!--<td colspan="3"  class="w80" ><input type="text" class="w80  fs20lh30tac" id="succour_qianzi_rhhc" name="domination" ></td>-->
+                <!--<td colspan="2"  class="w80 fs20lh30tac fw600" >被核查人员签字</td>-->
+                <!--<td colspan="3"  class="w80" ><input type="text" class="w80  fs20lh30tac" id="succour_qianzi_bhc"  name="expenditure" ></td>-->
+                <!--<td colspan="2"  class="w80 fs20lh30tac fw600" >认定人签字</td>-->
+                <!--<td colspan="3"  class="w80" ><input type="text" class="w80  fs20lh30tac" id="succour_qianzi_rdr"  name="pepNum" ></td>-->
+                <!--</tr>-->
+
+                </tr>
+            </table>
+            <br>
+            <!--<p class="pStyle"> 备注：</p>-->
+            <!--<p class="pStyle"> 家庭财产信息只是录入基本情况，不计入测算</p>-->
+            <!--<p class="pStyle"> 家庭年可支配总收入=（合计1+合计2+合计3+合计4）—交纳各类社会保险</p>-->
+            <!--<p class="pStyle"> 家庭年总支出=特殊困难家庭核减+家庭刚性支出</p>-->
+            <!--<p class="pStyle"> 人均月可支配收入=（家庭总收入-家庭总支出）/12/共同生活家庭人数</p>-->
+            <br>
+            <br>
+        </div>
+    </div>
+</div>
+<!-- 盖章隐藏域 -->
+<!--<form id="imgId">
+    <input id="imgGZVal0" name="imgTestVal0" type="hidden">
+    <input id="imgGZVal1" name="imgTestVal1" type="hidden">
+</form>-->
+<!-- 盖章隐藏域 -->
+<!--<object id="printWB" style="dispaly:none" classid="clsid:8856F961-340A-11D0-A96B-00C04FD705A2" height="0"></object>--%>
+<script type="text/javascript"  src="${basePath}/pages/paperlessHtml/js/finger.js"></script> --%>
+   -->
+<script>
+	
+		function initData(data){
+				
+			getInfo(data);
+		
+		}
+		 //修改核查人员签字
+		function editworksignature(imgpath1) {
+			android.deletePic(imgpath1);
+		}
+		//设置调查人员签字 进入form时加载用
+		function setSignLsDcrData(imgpathstring) {
+			var imgpaths=imgpathstring.split(",");
+			$("#image_worker_s").html("");
+			for (var i = 0; i < imgpaths.length; i++) {
+				$("#image_worker_s").append("<img style=\"float: left; margin - right: 5 px;\" src='" + imgpaths[i] + "' onclick= editworksignature(\'"+ imgpaths[i]+"') />");
+			}
+		}
+        //设置调查人员签字 新加签字或者删除时用
+		function setSignLsDcrDataString(imgpathstring) {
+		        $("#image_worker_s").html('');
+				var imgpaths=imgpathstring.split(",");
+				for (var i = 0; i < imgpaths.length; i++) {
+					$("#image_worker_s").append("<img style=\"float: left; margin - right: 5 px;\" src='" + imgpaths[i] + "' onclick= editworksignature(\'"+ imgpaths[i]+"') />");
+				}
+		}
+		//调查人员签字
+		function setworksignature() {
+			android.lsdcrSign();
+		}
+
+		//被认定人签字
+		function setBrdrsignature() {
+			android.lsbrdrSign();
+		}
+		//设置被认定人签字
+		function setSignLsBrdrData(imgpath) {
+			$('#image_member_b').attr("src", imgpath);
+		}
+		//认定人签字
+		function setrdrsignature() {
+			android.lsrdrSign();
+		}
+		//设置认定人签字
+		function setSignLsRdrData(imgpath) {
+			$('#image_member_r').attr("src", imgpath);
+		}
+//	  var homeData = '{"apply_hid":"402886f666be51260166bf432817002e","business_address":"","business_company_name":"","business_farming":0,"business_land":0,"business_money":"","business_name":"","business_other":0,"business_time":"","business_total":0,"car_money":0,"car_name":"","car_number":"","car_time":"","car_type":"","createTime":"2018-10-29 17:59:01.0","createtime":"2018-10-29 17:59:01.0","dbType":"B","dbtype":"B","dependencyType":"dcb_dalate_examinetable_dependency","difficult_minor":0,"difficult_paralysis":0,"difficult_subtract":0,"dltEconomicMemberInfos":[{"apply_hid":"402886f666be51260166bf432817002e","coefficient":"","disabilityGrade":"","disabilityType":"","disabilitygrade":"","disabilitytype":"","disease":"","farming":"","hh_id":"d6ad106f449a41d0bb8194b275fa8a8f","idCard":"610601199609236106","idcard":"610601199609236106","income":"","iscity":"","land":"","marriage":"未婚","member_id":"31115a470ba9483a9603008afdd7aa13","member_name":"表格","occupation":"","relationship":"本人","seriously":"","unit_id":"150621001001"}],"dltEconomicSupportMemberInfos":[{"apply_hid":"","hh_id":"d6ad106f449a41d0bb8194b275fa8a8f","idCard":"44172319560830508X","idcard":"44172319560830508X","member_id":"402886f666be51260166bf432837002f","member_name":"抚养一","noSupport":"无","nosupport":"无","suppermoneylist":["706.27","2112.00","55.00","0.00","1689.60","792.00","0.00"],"suppernamelist":["务农","有车辆","财政供养","养殖业","个体经营","无固定工作","有固定工作"],"supportMoney":"5354.87","supportmoney":"5354.87","unit_id":"150621001001","workingType":"","workingtype":""}],"dlt_money_art":0,"family_total":5354.87,"hhType":"0","hh_address":"tt","hh_id":"d6ad106f449a41d0bb8194b275fa8a8f","hh_name":"表格","hhtype":"0","house_address":"","house_area":"","house_name":"","house_nature":"","house_time":"","house_type":"","improve_disability":0,"improve_old":0,"improve_small":0,"improve_total":0,"insurance":0,"insurance_house":0,"insurance_medical":0,"insurance_old":0,"insurance_total":0,"isnew":true,"memberType":"dcb_dalate_examinetable_member","money_bank":0,"money_bond":0,"money_collection":0,"money_insurance":0,"money_securities":0,"now_address":"fr","property_house":0,"property_land":0,"property_other":0,"property_storage":0,"property_total":0,"signature_identified_house_list":[],"signature_identified_list":[],"spending_benke":0,"spending_disability":0,"spending_disease":0,"spending_life":0,"spending_other":0,"spending_total":0,"spending_zhuanke":0,"total_houseincome":5354.87,"total_housepeople":0,"total_housespending":0,"total_improve_money":0,"total_month":0,"total_monthaverage":0,"total_securitypeople":0,"transfer_food":0,"transfer_grass":0,"transfer_other":0,"transfer_raising":5354.87,"transfer_total":5354.87,"type":"dcb_dalate_examinetable","unitID":"150621001001","unitName":"展旦召苏木","unitName2":"黄木独村","unitid":"150621001001","unitname":"展旦召苏木","unitname2":"黄木独村","wage":0,"wage_old":0,"wage_other":0,"wage_retired":0,"wage_total":0}'
+//     getInfo(homeData);
+
+
+
+</script>
+</body>
+
+
+</html>

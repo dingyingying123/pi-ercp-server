@@ -9,7 +9,7 @@ import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenLocationInfo;
 import cn.com.personnel.springboot.framework.core.page.PagenationQueryParameter;
 
 public interface IPiChildrenBaseInfoService {
-    ReturnEntity queryPiChildrenBaseInfoList(PiChildrenBaseInfo piChildrenBaseInfo, PagenationQueryParameter buildPagenation);
+    ReturnEntity queryPiChildrenBaseInfoList(PiChildrenBaseInfoVO piChildrenBaseInfo, PagenationQueryParameter buildPagenation);
 
     ReturnEntity savePiChildrenBaseInfo(PiChildrenBaseInfoVO piChildrenBaseInfo, SecUser secUser);
 
@@ -32,4 +32,6 @@ public interface IPiChildrenBaseInfoService {
     ReturnEntity queryChildrenFileList(PiChildrenBaseInfo piChildrenBaseInfo);
 
     ReturnEntity queryChildrenStatisticsList(PiChildrenBaseInfo piChildrenBaseInfo);
+
+    PiChildrenBaseInfoVO queryH5PiChildrenBaseInfo(PiChildrenBaseInfo piChildrenBaseInfo);
 }

@@ -18,4 +18,6 @@ public interface ICaseCloseService {
     ReturnEntity submitCaseClosedInfo(ServerCaseClosedInfoVO serverCaseClosedInfoVO, SecUser secUser);
 
     ReturnEntity deleteCaseClosedInfo(ServerCaseClosedInfoVO serverCaseClosedInfoVO);
+
+    ReturnEntity getLetterNumber();
 }

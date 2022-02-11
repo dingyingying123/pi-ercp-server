@@ -90,6 +90,22 @@ FROM
       where user_id = #{userId}
   </select>
 
+    <select id="queryUserByArea" resultMap="BaseResultMap">
+      select * from sec_user
+      <where>
+          <if test="userId != null and userId != ''">
+              user_id = #{userId}
+          </if>
+          <if test="area != null and area != ''">
+              and area like concat('%', #{area}, '%')
+          </if>
+          <if test="authority != null and authority != ''">
+              and authority like concat('%',  #{authority}, '%')
+          </if>
+      </where>
+       order by create_time desc
+  </select>
+
     <update id="updatePwdTimes">
         update sec_user
         set pwd_times = pwd_times + 1

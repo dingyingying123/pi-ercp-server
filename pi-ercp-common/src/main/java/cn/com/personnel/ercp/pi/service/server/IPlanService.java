@@ -18,4 +18,6 @@ public interface IPlanService {
     ReturnEntity deletePlanInfo(ServerPlanInfoVO serverPlanInfoVO);
 
     ReturnEntity submitPlanInfo(ServerPlanInfoVO serverPlanInfoVO, SecUser secUser);
+
+    ReturnEntity getLetterNumber();
 }

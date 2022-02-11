@@ -96,4 +96,15 @@
         order by se.create_time desc limit 1
     </select>
 
+  <select id="selectNameByKeyByEnlName" resultType="string" >
+    select e.name from sec_enum e join sec_enum_type t on e.type_id=t.type_id
+    where t.isdelete='0'  and t.key=#{secEnumType.key}
+    <if test="secEnumType.name != null and secEnumType.name != ''">
+      and e.name=#{secEnumType.name}
+    </if>
+    <if test="secEnumType.typeId != null and secEnumType.typeId != ''">
+      and e.type_id=#{secEnumType.typeId}
+    </if>
+    order by e.create_time desc
+  </select>
 </mapper>

@@ -97,4 +97,13 @@ public class PlanController extends PageController {
         SecUser secUser = getTokenLoginUser();
         return planService.submitPlanInfo(serverPlanInfoVO, secUser);
     }
+    /**
+     * 获取编号
+     * @return
+     */
+    @RequestMapping("/getLetterNumber")
+    @ResponseBody
+    public ReturnEntity getLetterNumber(){
+        return planService.getLetterNumber();
+    }
 }

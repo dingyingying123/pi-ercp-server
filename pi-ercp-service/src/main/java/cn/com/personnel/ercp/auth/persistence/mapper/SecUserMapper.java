@@ -71,4 +71,6 @@ public interface SecUserMapper extends BaseMapper<SecUser> {
      * @param userId
      */
     void resetPwdTimes(@Param("userId") String userId);
+
+    List<SecUser> queryUserByArea(SecUser secUser);
 }

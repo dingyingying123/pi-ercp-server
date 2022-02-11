@@ -17,4 +17,14 @@ public interface PiChildrenBaseInfoMapper extends BaseMapper<PiChildrenBaseInfo>
     PiChildrenBaseInfoVO queryPiChildrenBaseInfo(PiChildrenBaseInfo piChildrenBaseInfo);
 
     List<ChildrenStatisticsInfoVO> queryChildrenStatisticsList(PiChildrenBaseInfo piChildrenBaseInfo);
+
+    List<PiChildrenBaseInfo> queryTakeCaseList(PiChildrenBaseInfoVO piChildrenBaseInfo);
+
+    List<PiChildrenBaseInfo> queryEstimateList(PiChildrenBaseInfoVO piChildrenBaseInfo);
+
+    List<PiChildrenBaseInfo> queryPlanList(PiChildrenBaseInfoVO piChildrenBaseInfo);
+
+    List<PiChildrenBaseInfo> queryInterventionList(PiChildrenBaseInfoVO piChildrenBaseInfo);
+
+    List<PiChildrenBaseInfo> queryEvaluateList(PiChildrenBaseInfoVO piChildrenBaseInfo);
 }

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>特困人员救助定期复核表</title>
+	<link rel="stylesheet" href="../../static/css/difficulttable.css" />
+	<script type="text/javascript" src="../../static/js/jquery-1.2.6.min.js"></script>
+	<style>
+			.image_list li {
+				float: left;
+			}
+
+			.image_list  img {
+				height: 60px;
+			}
+
+			.mbt {
+				margin-right: 10px;
+				margin-top: 10px;
+				margin-left: 10px;
+				float: right;
+				height: 50px;
+				width: 120px;
+				border-radius: 6px;
+				border: 1px cornflowerblue solid;
+				background-color: dodgerblue;
+				color: white;
+			}
+
+
+    </style>
+</head>
+
+<body>
+<div class="main_body">
+	<div style="height: 30px;"></div>
+	<h1 class="main_tit" id="tablename">特困人员救助定期复核表</h1>
+	<div class="main_head">
+		<div class="pull_left">
+			苏木镇（街道办事处）<span class="main_info" id="towns"></span>
+			嘎查村（居委会）<span class="main_info" id="village"></span>
+
+		</div>
+
+		<div class="pull_right">
+			<span>入户时间：</span>
+			<span class="main_info wid50" id="year"></span>年
+			<span class="main_info wid50" id="month"></span>月
+			<span class="main_info wid50" id="day"></span>日
+		</div>
+		<br />
+	</div>
+	<div class="pull_left">
+
+		<span>类型：</span>
+		<span class="check_box" style="margin: 2px;float: center;">
+					<input type="checkbox" disabled="disabled" id="ncdb" />农村</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<span class="check_box" style="margin: 2px;float: center;">
+					<input type="checkbox" disabled="disabled" id="czdb" />城镇</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+	</div>
+	<table class="main_table">
+		<tbody>
+		<tr>
+			<td width="60px" >姓名</td>
+			<td colspan="2" id="name"></td>
+			<td colspan="2">身份证号码</td>
+			<td colspan="3" id="idcard"></td>
+			<td colspan="2">性别</td>
+			<td id="sex"></td>
+			<td>民族</td>
+			<td id="nation"></td>
+			<td>年龄</td>
+			<td id="age"></td>
+		</tr>
+		<tr>
+			<td colspan="3">详细地址</td>
+			<td colspan="5" id="addr"></td>
+			<td colspan="2">残疾类别</td>
+			<td colspan="2" id="disease"></td>
+			<td colspan="2">残疾等级</td>
+			<td  id="disease_level"></td>
+		</tr>
+		<tr>
+			<td colspan="3">供养方式</td>
+			<td colspan="12" id="gytype"></td>
+		</tr>
+		<tr>
+			<td colspan="15">调查情况</td>
+		</tr>
+		<tr>
+			<td rowspan="2" colspan="3">享受养老保险</td>
+			<td rowspan="2" colspan="2">银行存款</td>
+			<td rowspan="2" colspan="3">有价证券</td>
+			<td  colspan="4">房屋</td>
+			<td rowspan="2" colspan="3">其他资产</td>
+		</tr>
+		<tr>
+			<td colspan="2">性质</td>
+			<td colspan="2">面积</td>
+		</tr>
+		<tr>
+			<td colspan="3" id="ylbxjsr"></td>
+			<td  colspan="2" id="cxtzlx"></td>
+			<td  colspan="3" id="value_bond"></td>
+			<td colspan="2" id="zflx"></td>
+			<td colspan="2" id="homearea"></td>
+			<td colspan="3" id="fl_other_asset"></td>
+		</tr>
+		<tr>
+			<td colspan="3" >入户详情</td>
+			<td  colspan="12" id="rhdetail"></td>
+		</tr>
+		<tr  style="height: 80px;">
+			<td colspan="3">本人签字/指纹</td>
+			<td colspan="5" >
+				<ul  id="memberimage" class="image_list">
+					<img id="image_member_s" style="width: 50px;"/>
+					<img id="image_member_f" style="width: 50px;"/>
+				</ul>
+			</td>
+			<td colspan="2">调查人签字</td>
+			<td colspan="5">
+				<ul  id="workerimages" class="image_list">
+					<img id="image_worker_s" style="width: 50px;"/>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td rowspan="2" colspan="2">苏木乡镇<br/>（街道办事处）<br/>审核意见</td>
+			<td  colspan="13" >
+				<div class="pull_left"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;经调查核实，
+					<span class="check_box" style="margin: 2px;float: center;">
+								<input type="checkbox" disabled="disabled" id="jixu" />继续享受特困人员救助;</span>
+					<span class="check_box" style="margin: 2px;float: center;">
+								<input type="checkbox" disabled="disabled" id="end" />建议终止救助</span>
+					，原因如下：
+				</div>
+				<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+				<span style="float: right; padding-right: 60px;"> 盖&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;章<br/><span  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>年
+							<span >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>月
+							<span  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/><br/>
+							</span>
+				<br/><br/><br/>
+			</td>
+		</tr>
+		<tr style="height: 80px;">
+			<td colspan="2">经办人签字</td>
+			<td colspan="4"></td>
+			<td colspan="2">领导签字</td>
+			<td colspan="45"></td>
+		</tr>
+		<tr>
+			<td rowspan="2" colspan="2">旗区民政<br/>部门审批<br/>意见</td>
+			<td  colspan="13" >
+				<span class="pull_left"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;同意审核部门意见。
+				</span>
+				<br/><br/><br/><br/><br/><br/>
+				<span style="float: right; padding-right: 60px;"> 盖&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;章
+					<br/><span  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>年
+							<span >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>月
+							<span  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/><br/>
+				</span>
+
+				<br/><br/><br/>
+			</td>
+		</tr>
+		<tr style="height: 80px;">
+			<td colspan="2">经办人签字</td>
+			<td colspan="4"></td>
+			<td colspan="2">审核人签字</td>
+			<td colspan="45"></td>
+		</tr>
+		</tbody>
+
+
+
+	</table>
+
+
+	<div><br /><br /><br /><br /><br /><br /></div></div>
+
+<table>
+	<div style="float: left; height: 60px; text-align: center;margin-top: 100px;">
+		<button class="mbt" onclick="setmembersignature()">申请人签字</button>
+		<button class="mbt" onclick="setmemberfingerprint()">申请人指纹</button>
+		<button class="mbt" onclick="setworksignature()">调查人签字</button>
+
+	</div>
+</table>
+<script type="text/javascript">
+
+				function initData(data) {
+					setMemberSignatureData(data.dbsign);
+					setMemberFingerprintData(data.dbfingerprint);
+					setWorksignData(data.worksign);
+					$("#towns").html(data.towns);
+					$("#village").html(data.village_name);
+
+					if (data.iscity == "6") {
+						$("#ncdb").attr("checked", true);
+					} else if (data.iscity == "31") {
+						$("#czdb").attr("checked", true);
+					}
+					var date = formatDate(data.timestamp).split("-");
+					$("#year").html(date[0]);
+					$("#month").html(date[1]);
+					$("#day").html(date[2]);
+					$("#name").html(data.name);
+					$("#idcard").html(data.idcard); //救助对象类别
+					var sexs=["","男","女"];
+					$("#sex").html(sexs[data.gender]);
+					$("#nation").html(data.nation_name);
+					$("#age").html(data.age);
+					$("#addr").html(data.addr);
+	
+					var disease_dictionary=["","视力残疾","听力残疾","言语残疾","肢体残疾","智力残疾","精神残疾","多重残疾","其他残疾"];
+					$("#disease").html(disease_dictionary[data.disease]);
+					var disease_level_dictionary=["","一级残废","二级残废","三级残废","四级残废"];
+					$("#disease_level").html(disease_level_dictionary[data.disease_level]);
+					$("#gytype").html(data.provide_way_name);
+					$("#ylbxjsr").html(data.aged_income == 1 ? "是" : "否");
+					$("#cxtzlx").html(data.save_money == 1 ? "有" : "无");
+					$("#value_bond").html(data.value_bond == 1 ? "有" : "无");
+					$("#zflx").html(data.house_type_name);
+					$("#homearea").html(data.homearea);
+					$("#fl_other_asset").html(data.fl_other_asset ==1 ?"有" : "无");
+					$("#rhdetail").html(data.rhdetail);
+
+				}
+
+				//申请人签字
+				function setmembersignature() {
+					android.memberSingature();
+				}
+				//申请人指纹
+				function setmemberfingerprint() {
+					android.memberFingerprint();
+				}
+
+				//核查人员签字
+				function setworksignature() {
+			
+					android.workSingature();
+				}
+				//核查人员签字
+				function editworksignature(imgpath) {
+							alert('11111');
+					android.editworkSingature(imgpath);
+				}
+				//设置申请人签字
+				function setMemberSignatureData(imgpath) {
+					$('#image_member_s').attr("src", imgpath);
+				}
+				//设置申请人指紋
+				function setMemberFingerprintData(imgpath) {
+					$('#image_member_f').attr("src", imgpath);
+				}
+
+
+				
+				//设置核查人员签字
+				function setWorksignData(imgpath) {
+					$('#image_worker_s').attr("src", imgpath);
+				}
+				
+
+
+				function formatDate(now) {
+					var d = new Date(now);
+					var year = d.getFullYear();
+					var month = d.getMonth() + 1;
+					var date = d.getDate();
+					var hour = d.getHours();
+					var minute = d.getMinutes();
+					var second = d.getSeconds();
+					return year + "-" + month + "-" + date;
+				}
+			</script>
+</div>
+</div>
+</body>
+
+</html>

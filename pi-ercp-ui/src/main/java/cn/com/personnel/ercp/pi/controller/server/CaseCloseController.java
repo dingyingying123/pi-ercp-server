@@ -97,4 +97,13 @@ public class CaseCloseController extends PageController {
         return caseCloseService.deleteCaseClosedInfo(serverCaseClosedInfoVO);
     }
 
+    /**
+     * 获取编号
+     * @return
+     */
+    @RequestMapping("/getLetterNumber")
+    @ResponseBody
+    public ReturnEntity getLetterNumber(){
+        return caseCloseService.getLetterNumber();
+    }
 }

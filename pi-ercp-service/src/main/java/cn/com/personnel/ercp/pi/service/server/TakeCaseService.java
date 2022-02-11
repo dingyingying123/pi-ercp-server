@@ -10,9 +10,7 @@ import cn.com.personnel.ercp.pi.persistence.entity.server.ServerChildStatusInfo;
 import cn.com.personnel.ercp.pi.persistence.entity.server.ServerTakeCaseFamilyMember;
 import cn.com.personnel.ercp.pi.persistence.entity.server.ServerTakeCaseInfo;
 import cn.com.personnel.ercp.pi.persistence.mapper.child.PiChildrenBaseInfoMapper;
-import cn.com.personnel.ercp.pi.persistence.mapper.server.ServerChildStatusInfoMapper;
-import cn.com.personnel.ercp.pi.persistence.mapper.server.ServerTakeCaseFamilyMemberMapper;
-import cn.com.personnel.ercp.pi.persistence.mapper.server.ServerTakeCaseInfoMapper;
+import cn.com.personnel.ercp.pi.persistence.mapper.server.*;
 import cn.com.personnel.springboot.framework.core.page.PagenationQueryParameter;
 import cn.com.personnel.springboot.framework.service.BaseService;
 import com.github.pagehelper.PageInfo;
@@ -21,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -67,6 +66,14 @@ public class TakeCaseService extends BaseService implements ITakeCaseService {
     public ReturnEntity saveTakeCaseInfo(ServerTakeCaseInfoVO serverTakeCaseInfoVO, SecUser secUser) {
         logger.info("============保存接案信息参数：" + serverTakeCaseInfoVO);
         if(StringUtils.isNotEmpty(serverTakeCaseInfoVO.getCaseId())){
+            if(StringUtils.isEmpty(serverTakeCaseInfoVO.getChildId())){
+                return ReturnEntity.errorMsg("参数错误！");
+            }
+            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.queryOneStatusByChildId(serverTakeCaseInfoVO.getChildId());
+            if(serverChildStatusInfo == null){
+                return ReturnEntity.errorMsg("儿童信息不存在！");
+            }
+            serverTakeCaseInfoVO.setStaId(serverChildStatusInfo.getStaId());
             serverTakeCaseInfoVO.setUpdateTime(new Date());
             serverTakeCaseInfoVO.setUpdator(secUser.getUserId());
             serverTakeCaseInfoVO.setArea(secUser.getArea());
@@ -103,6 +110,7 @@ public class TakeCaseService extends BaseService implements ITakeCaseService {
             serverTakeCaseInfoVO.setCreator(secUser.getUserId());
             serverTakeCaseInfoVO.setCreateTime(new Date());
             serverTakeCaseInfoVO.setStaId(staId);
+            serverTakeCaseInfoVO.setCaseNo(getNumber());
             serverTakeCaseInfoVO.setArea(secUser.getArea());
             serverTakeCaseInfoMapper.insert(serverTakeCaseInfoVO);
             //添加家庭成员
@@ -183,5 +191,59 @@ public class TakeCaseService extends BaseService implements ITakeCaseService {
         List<PiChildrenBaseInfo> childrenBaseInfoList = piChildrenBaseInfoMapper.queryPiChildrenBaseInfoList(piChildrenBaseInfo);
         //返回数据
         return ReturnEntity.ok(new PageInfo<PiChildrenBaseInfo>(childrenBaseInfoList));
+    }
+
+    public String getNumber() {
+        Date date = new Date();
+        String prefix = new SimpleDateFormat("yyyy").format(date) + new SimpleDateFormat("MM").format(date);
+        logger.info("=========前缀：" + prefix);
+        return prefix + serverTakeCaseInfoMapper.getLetterNumber(prefix);
+    }
+
+    @Override
+    public ReturnEntity getLetterNumber() {
+        ReturnEntity returnEntity = new ReturnEntity(CommonConstants.SUCCESS_CODE, CommonConstants.SUCCESS_MESSAGE, null);
+        returnEntity.setData(getNumber());
+        return returnEntity;
+    }
+
+    @Autowired
+    ServerEvaluateInfoMapper serverEvaluateInfoMapper;
+    @Autowired
+    ServerPlanInfoMapper serverPlanInfoMapper;
+    @Autowired
+    ServerEstimateInfoMapper serverEstimateInfoMapper;
+    @Autowired
+    ServerInterviewInterventionInfoMapper serverInterviewInterventionInfoMapper;
+    @Autowired
+    ServerAvailableResourcesInfoMapper serverAvailableResourcesInfoMapper;
+    @Autowired
+    ServerCaseClosedInfoMapper serverCaseClosedInfoMapper;
+
+    @Override
+    public ReturnEntity getLetterNumber(String type) {
+        if(StringUtils.isEmpty(type)){
+            return ReturnEntity.errorMsg("参数错误！");
+        }
+        ReturnEntity returnEntity = new ReturnEntity(CommonConstants.SUCCESS_CODE, CommonConstants.SUCCESS_MESSAGE, null);
+        Date date = new Date();
+        String prefix = new SimpleDateFormat("yyyy").format(date) + new SimpleDateFormat("MM").format(date);
+        logger.info("=========前缀：" + prefix);
+        if("0".equals(type)){
+            returnEntity.setData(prefix + serverTakeCaseInfoMapper.getLetterNumber(prefix));
+        }else if("1".equals(type)){
+            returnEntity.setData(prefix + serverEstimateInfoMapper.getLetterNumber(prefix));
+        }else if("2".equals(type)){
+            returnEntity.setData(prefix + serverPlanInfoMapper.getLetterNumber(prefix));
+        }else if("3".equals(type)){
+            returnEntity.setData(prefix + serverInterviewInterventionInfoMapper.getLetterNumber(prefix));
+        }else if("4".equals(type)){
+            returnEntity.setData(prefix + serverAvailableResourcesInfoMapper.getLetterNumber(prefix));
+        }else if("5".equals(type)){
+            returnEntity.setData(prefix + serverEvaluateInfoMapper.getLetterNumber(prefix));
+        }else if("6".equals(type)){
+            returnEntity.setData(prefix + serverCaseClosedInfoMapper.getLetterNumber(prefix));
+        }
+        return returnEntity;
     }
 }

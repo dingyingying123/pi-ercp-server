@@ -100,4 +100,14 @@ public class EstimateController extends PageController {
         SecUser secUser = getTokenLoginUser();
         return estimateService.submitEstimateInfo(serverEstimateInfoVO, secUser);
     }
+
+    /**
+     * 获取编号
+     * @return
+     */
+    @RequestMapping("/getLetterNumber")
+    @ResponseBody
+    public ReturnEntity getLetterNumber(){
+        return estimateService.getLetterNumber();
+    }
 }

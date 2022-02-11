@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>广西助力社会救助服务中心家庭经济状况入户核查表</title>
+		<link rel="stylesheet" href="../../static/css/difficulttable.css" />
+		<script type="text/javascript" src="../../static/js/jquery-1.2.6.min.js"></script>
+		<style>
+			.image_list li {
+				float: left;
+			}
+
+			.image_list  img {
+				height: 120px;
+			}
+
+			.mbt {
+				margin-right: 20px;
+				margin-top: 20px;
+				margin-left: 20px;
+				float: right;
+				height: 40px;
+				width: 80px;
+				border-radius: 6px;
+				border: 1px cornflowerblue solid;
+				background-color: dodgerblue;
+				color: white;
+			}
+		
+
+    </style>
+	</head>
+
+	<body>
+		<!--广西低保入户核查表20210531 -->
+		<div class="main_body">
+
+			<h1 class="main_tit" id="tablename">广西助力社会救助服务中心家庭经济状况低保入户核查表</h1>
+
+			<div class="main_head">
+
+				<div class="pull_left" id="gx">
+					<span class="main_info" id="county"></span>区
+					<span class="main_info" id="towns"></span>乡（镇）
+					<span class="main_info" id="qxunit_name"></span>村（居、街）委会
+
+
+				</div>
+
+				<div class="pull_right">
+					<span>核查时间：</span>
+					<span class="main_info wid50" id="year"></span>
+				</div>
+				<br />
+
+			</div>
+
+			<table class="main_table">
+				<tr>
+					<th colspan="1">户主姓名</th>
+					<td colspan="2" id="hhName"></td>
+					<th colspan="1">民族</th>
+					<td colspan="2" id="nation"></td>
+					<th colspan="1">出生年月</th>
+					<td colspan="2" id="birthday"></td>
+					<th colspan="1">联系方式</th>
+					<td colspan="3" id="contacePhone"></td>
+					<th colspan="1" class="db">人员类型</th>
+					<td colspan="3" id="iscity"></td>
+				</tr>
+				<tr>
+					<th colspan="1">家庭人口数</th>
+					<td colspan="2" id="homemembercount"></td>
+					<th colspan="4">享保人数</th>
+					<td colspan="3" id="homeProtectFamilyPopulation"></td>
+					<th colspan="1">是否人户分离</th>
+					<td colspan="2" id="isHomeSeparate"></td>
+					<th colspan="1">救助类别</th>
+					<td colspan="3" id="ensureTypeN"></td>
+				</tr>
+				<tr>
+					<th>居住地址</th>
+					<td colspan="8" id="homeAddr"></td>
+					<th colspan="1">目前家庭困难原因</th>
+					<td colspan="6" id="homeCausesPoverty"></td>
+				</tr>
+				<tr>
+					<th>是否有一票否决项</th>
+					<td colspan="15" id="isVetoPower">
+						<span class="check_box"><input type="checkbox" disabled="disabled" id="cb_yjdc" />有机动车辆</span>
+						<span class="check_box" style="margin: 2px;"><input type="checkbox" disabled="disabled" id="cb_yfjzlxfw" />有非居住类型房屋</span>
+						<span class="check_box" style="margin: 2px;"><input type="checkbox" disabled="disabled" id="cb_snnkjsf" />一年内扩建私房</span>
+						<span class="check_box"><input type="checkbox" disabled="disabled" id="cb_y2tysfc" />有两套以上房产</span>
+						<span class="check_box" style="margin: 2px;"><input type="checkbox" disabled="disabled" id="cb_ygdxfxw" />有高消费行为</span>
+						<span class="check_box" style="margin: 2px;"><input type="checkbox" disabled="disabled" id="cb_gytrcsjyhd" />雇佣他人从事经营活动</span>
+						<span class="check_box"><input type="checkbox" disabled="disabled" id="cb_gszcjt" />是工商注册家庭</span><br />
+						<span class="check_box" style="margin: 2px;"><input type="checkbox" disabled="disabled" id="cb_znygjjdxw" />子女有高价就读行为</span>
+						<span class="check_box" style="margin: 2px;"><input type="checkbox" disabled="disabled" id="cb_cjsfzgmfw" />出借身份证购买房屋或车辆等</span>
+						<span class="check_box"><input type="checkbox" disabled="disabled" id="cb_decczyjt" />申请前6个月有大额财产转移家庭</span>
+						<span class="check_box"><input type="checkbox" disabled="disabled" id="cb_jjygbmjsgz" />拒绝有关部门介绍的相适应的工作3次（含）以上</span><br />
+						<span class="check_box"><input type="checkbox" disabled="disabled" id="cb_ckg" />人均存款高于当地生活保障3倍</span>
+						<span class="check_box"><input type="checkbox" disabled="disabled" id="cb_yc" />有船舶（超6万元）</span>
+						<span class="check_box"><input type="checkbox" disabled="disabled" id="cb_qtbfhqx" />县级以上民政部门认定的其他不符合情形</span>
+						<span class="check_box"><input type="checkbox" disabled="disabled" id="cb_ypfjqt" />其他</span>
+					</td>
+				</tr>
+				<tr>
+					<th>目前家庭困难原因描述</th>
+					<td colspan="7" id="homeCausesPovertyMark"></td>
+					<th>家庭经济状况变化</th>
+					<td colspan="7" id="homeChange"></td>
+				</tr>
+				<table class="main_table" id="memBeans">
+					<tr id="memberList">
+						<th rowspan="20">共同生活<br />家庭<br />成员情况</th>
+						<td>姓名</td>
+						<td>与申请<br />人关系</td>
+						<td>性别</td>
+						<td>身份证号</td>
+						<td>年龄</td>
+						<td>婚姻状况</td>
+						<td>健康状况</td>
+						<td>残疾类型</td>
+						<td>残疾等级</td>
+						<td>重病病种</td>
+						<td>有无劳动能力</td>
+						<td>学校名称</td>
+						<td>务工单位</td>
+						<td>务工地点</td>
+						<td>务工工种</td>
+						<td>务工时间</td>
+						<td>是否享受</td>
+						<td><span name="isCityType"></span>收入</td>
+						<td>备注</td>
+					</tr>
+				</table>
+
+				<table class="main_table" id="notmembers">
+					<tr id="supportList">
+						<th rowspan="20">非共同<br />家庭生<br />活成员<br />/赡、抚（<br />扶）养人<br />情况</th>
+						<td>姓名</td>
+						<td>与申请<br />人关系</td>
+						<td>性别</td>
+						<td>身份证号</td>
+						<td>年龄</td>
+						<td>婚姻状况</td>
+						<td>健康状况</td>
+						<td>残疾类型</td>
+						<td>残疾等级</td>
+						<td>重病病种</td>
+						<td>有无劳动能力</td>
+						<td>学校名称</td>
+						<td>务工单位</td>
+						<td>务工地点</td>
+						<td>务工工种</td>
+						<td>务工时间</td>
+						<td><span name="isCityType"></span>收入</td>
+						<td>备注</td>
+					</tr>
+				</table>
+
+				<table class="main_table">
+
+					<tr>
+						<th rowspan="8">家庭经<br />济状况</th>
+						<td colspan="2">住房结构</td>
+						<td colspan="4" id="houseStructure"></td>
+						<td>房屋装修</td>
+						<td colspan="7" id="decorateSituation"></td>
+					</tr>
+					<tr>
+						<td rowspan="2">房屋性质</td>
+						<td>商品房（套）</td>
+						<td>自建房（栋）</td>
+						<td>租赁（套）</td>
+						<td>公有（套）</td>
+						<td rowspan="2">房屋层数（层）</td>
+						<td rowspan="2"> <span id="fwcs"></span></td>
+						<td rowspan="2">房屋面积（㎡）</td>
+						<td rowspan="2"> <span id="fwmj"></span></td>
+						<td rowspan="2">建设时间（年）</td>
+						<td rowspan="2"> <span id="jssj"></span></td>
+						<td rowspan="2">房屋其他</td>
+						<td rowspan="2" id="tdqt"></td>
+					</tr>
+					<tr>
+						<td id="spf"></td>
+						<td id="zjf"></td>
+						<td id="zl"></td>
+						<td id="gy"></td>
+					</tr>
+					<tr>
+						<td colspan="2">电视（台）</td>
+						<td>电脑（台）</td>
+						<td>冰箱（台）</td>
+						<td>空调（台）</td>
+						<td>热水器（台）</td>
+						<td>洗衣机（台）</td>
+						<td colspan="2">较大音响设备（台）</td>
+						<td colspan="2">手机（台）</td>
+						<td colspan="2">其他家庭财产</td>
+					</tr>
+					<tr>
+						<td colspan="2"><span id="tv"></span></td>
+						<td><span id="dn"></span></td>
+						<td><span id="bx"></span></td>
+						<td><span id="kt"></span></td>
+						<td><span id="rsq"></span></td>
+						<td><span id="xyj"></span></td>
+						<td colspan="2"><span id="jdyxsb"></span></td>
+						<td colspan="2"><span id="sj"></span></td>
+						<td colspan="2"><span id="qtjd"></span></td>
+					</tr>
+					<tr>
+						<td colspan="2">水田（亩）</td>
+						<td>旱地（亩）</td>
+						<td>甘蔗（亩）</td>
+						<td>果园（亩）</td>
+						<td>林地（亩）</td>
+						<td>桑园（亩）</td>
+						<td colspan="4">家禽家畜(只)</td>
+						<td colspan="2">其他家庭经营</td>
+					</tr>
+					<tr>
+						<td colspan="2"><span id="st"></span></td>
+						<td><span id="hd"></span></td>
+						<td><span id="gz"></span></td>
+						<td><span id="guoyuan"></span></td>
+						<td><span id="ld"></span></td>
+						<td><span id="sy"></span></td>
+						<td colspan="4"><span id="jqjc"></span></td>
+						<td colspan="2"><span id="zzqt"></span></td>
+					</tr>
+					<tr>
+						<td colspan="2">家庭成员车辆情况</td>
+						<td colspan="11">
+							<span style="margin: 2px;">货车（</span>
+							<span style="margin: 2px;" id="hyc"></span>
+							<span style="margin: 2px;">）辆 小车（</span>
+							<span style="margin: 2px;" id="jc"></span>
+							<span style="margin: 2px;">）辆 船舶（</span>
+							<span style="margin: 2px;" id="cb"></span>
+							<span style="margin: 2px;">）艘 农用车（</span>
+							<span style="margin: 2px;" id="nyc"></span>
+							<span style="margin: 2px;">）辆 摩托车（</span>
+							<span style="margin: 2px;" id="mtc"></span>
+							<span style="margin: 2px;">）辆 三轮摩托车（</span>
+							<span style="margin: 2px;" id="slmtc"></span>
+							<span style="margin: 2px;">）辆 工程机械、车床（</span>
+							<span style="margin: 2px;" id="gcjx"></span>
+							<span style="margin: 2px;">）台 其他（</span>
+							<span style="margin: 2px;" id="qt"></span>
+							<span style="margin: 2px;">）</span>
+						</td>
+					</tr>
+					<tr>
+						<th>收入状况</th>
+						<td><span name="isCityType"></span>工资性<br/>收入</td>
+						<td colspan="2"><span id="gzsr"></span>元</td>
+						<td><span name="isCityType"></span>经营性<br/>收入</td>
+						<td colspan="2"><span id="jysr"></span>元</td>
+						<td><span name="isCityType"></span>财产性<br/>收入</td>
+						<td colspan="2"><span id="ccxsr"></span>元</td>
+						<td><span name="isCityType"></span>转移性<br/>收入</td>
+						<td colspan="2"><span id="zyxsr"></span>元</td>
+						<td colspan="2">合计：<span id="hjsr"></span>元</td>
+					</tr>
+					<tr>
+						<th>刚性支出</th>
+						<td>年因病<br />支出</td>
+						<td colspan="2"><span id="ybzc"></span>元</td>
+						<td>年子女<br />教育费</td>
+						<td colspan="2"><span id="znjyf"></span>元</td>
+						<td>年因残<br />支出</td>
+						<td colspan="2"><span id="yczc"></span>元</td>
+						<td>其他</td>
+						<td colspan="2"><span id="qtzc"></span>元</td>
+						<td colspan="2">合计：<span id="hjzc"></span>元</td>
+					</tr>
+					<tr>
+						<th>是否是<br />干部职工<br />近亲属</th>
+						<td colspan="3" id="sfgbzgjqs"></td>
+						<td>低保资金<br />领取情况</td>
+						<td colspan="3" id="dbzjlqqk"></td>
+						<td colspan="3">低保资金是否本户口使用</td>
+						<td colspan="4" id="dbzjsfbhsy"></td>
+
+					</tr>
+					<tr>
+						<th colspan="15">请 根 据 实 际 调 查 结 果 填 写 以 上 内 容 ，确 认 无 误 后 签 字 或 按 手 印</th>
+					</tr>
+					<tr style="height: 120px; ">
+						<th width="114px">*申请人意见及<br />签字或按手印</th>
+						<td colspan="14" class="text_left">
+							<ul class="image_list" id="memberimage">
+								<img id="image_member_s" onclick="setmembersignature()" />
+								<img id="image_member_f" onclick="setmemberfingerprint()" />
+								<button class="mbt" onclick="setmembersignature()">签 字</button>
+								<button class="mbt" onclick="setmemberfingerprint()">指纹</button>
+							</ul>
+						</td>
+					</tr>
+					<tr style="height: 120px;">
+						<th>*核查人员签字</th>
+						<td colspan="14" class="text_left">
+							<ul class="image_list" id="workerimages">
+								<img id="image_worker_s" onclick="setworksignature()" />
+								<button class="mbt" onclick="setworksignature()">签字</button>
+							</ul>
+						</td>
+
+					</tr>
+					<th>入户意见</th>
+					<td colspan="14" style="text-align:center;" id="enterdetail">
+
+					</td>
+
+					</tr>
+				</table>
+
+
+			</table>
+			<!-- <p>
+    说明：带"*"号项的内容必须填写
+</p> -->
+			<div><br /><br /><br /><br /><br /><br /></div>
+		</div>
+		<p>
+
+		</p>
+		<div><br /><br /><br /><br /><br /><br /></div>
+		</div>
+		<script type="text/javascript">
+			
+			function initData(data) {
+				// setMemberSignatureData(data.dbsign);
+				// setMemberFingerprintData(data.dbfingerprint);
+				// setWorksignData(data.worksign);
+				$("#qxunit_name").html(data.unitName);
+				$("#county").html(data.countyName);
+				$("#towns").html(data.townsName);
+				$("#year").html(data.enterHomeTime);
+				$("span[name='isCityType']").each(function() {
+					if (data.iscity=="1" || data.iscity=="31"||data.iscity=="11") {
+						$(this).text("季");
+						}else  {
+						$(this).text("年");
+					}
+				});
+				$("#enterdetail").html(data.enterDetail);
+				$("#hhName").html(data.hhName);
+				$("#iscity").html(data.iscity == "0" ? "农村低保" : "城市低保");
+				$("#contacePhone").html(data.contacePhone);
+				$("#homemembercount").html(data.memCount);
+				$("#homeProtectFamilyPopulation").html(data.surePopulation+"人");
+				$("#isHomeSeparate").html(data.isHomeSeparate == "1" ? "是" : "否");
+				$("#ensureTypeN").html(data.ensureTypen);
+				$("#homeAddr").html(data.homeAddress);
+
+				var veto_types = ["",$("#cb_yjdc"), $("#cb_yfjzlxfw"), $("#cb_snnkjsf"), $("#cb_y2tysfc"), $("#cb_ygdxfxw"), $("#cb_gytrcsjyhd"), $("#cb_gszcjt"), $("#cb_znygjjdxw"), $("#cb_cjsfzgmfw"), $("#cb_decczyjt"), $("#cb_jjygbmjsgz"), $("#cb_qtbfhqx"), $("#cb_ckg"),$("#cb_yc"), $("#cb_ypfjqt") ];
+				 var veto =data.isVetoPower.split(',');
+                    for(var i in veto){
+						if(veto[i]!=null && veto[i]!=""){
+							if ( veto[i]== "99") {
+								veto_types[veto_types.length-1].attr("checked", true);
+							} else{
+							veto_types[veto[i]].attr("checked", true);	
+							}
+						
+					 }
+                    }
+
+				var homeChanges=["","好转","恶化","无变化"];
+				$("#homeChange").html(homeChanges[data.homeChange]==undefined ?"":homeChanges[data.homeChange]);
+
+				var houseStructures = ["", "简易棚坯", "土木结构","砖木结构","砖混结构","钢筋混凝土结构","其他结构"];
+				$("#houseStructure").html(houseStructures[data.houseStructure]==undefined ?"":houseStructures[data.houseStructure]);
+
+				$("#decorateSituation").html(data.decorateSituation==undefined ?"":data.decorateSituation=="9"?"精装修（贴有瓷砖、琉璃瓦、高档家具）":data.decorateSituation=="10"?"简易装修":data.decorateSituation=="11"?"无装修":"");
+				
+				$("#spf").html(data.commodityHousing);
+				$("#zjf").html(data.selfBuiltHouse);
+				$("#zl").html(data.leaseHouse);
+				$("#gy").html(data.publicHouse);
+				$("#fwcs").html(data.houseTier);
+				$("#fwmj").html(data.houseArea3);
+				$("#jssj").html(data.buildTime);
+				$("#tdqt").html(data.houseOther);
+				
+				$("#tv").html(data.tvQuantity);
+				$("#dn").html(data.comQuantity);
+				$("#bx").html(data.iceboxQuantity);
+				$("#kt").html(data.airQuantity);
+				$("#rsq").html(data.hotBox);
+				$("#xyj").html(data.washer);
+				$("#jdyxsb").html(data.stereoEquipmentBig);
+				$("#sj").html(data.phoneQuantity);
+				$("#qtjd").html(data.familyProperty);
+				
+				$("#st").html(data.paddyfield);
+				$("#hd").html(data.dryLand);
+				$("#gz").html(data.sugarcane);
+				$("#guoyuan").html(data.orchard);
+				$("#ld").html(data.forest);
+				$("#sy").html(data.mulberryField);
+				$("#jqjc").html(data.livestockPoultry);
+				$("#zzqt").html(data.householdProducts);
+				
+				$("#hyc").html(data.trucks);
+				$("#jc").html(data.smallcarQuantity);
+				$("#cb").html(data.ship);
+				$("#nyc").html(data.farmvehicleQuantity);
+				$("#mtc").html(data.motorcycleQuantity);
+				$("#slmtc").html(data.motorTricycle);
+				$("#gcjx").html(data.machineCar);
+				$("#qt").html(data.otherCar);
+				
+				var relativesList=["","村干部","机关企事业单位干部、职工","非干部职工近亲属"];
+				$("#sfgbzgjqs").html(relativesList[data.relatives]==undefined?"":relativesList[data.relatives]);
+
+				var getSituationList=["","自己领取","亲属代领"];
+				$("#dbzjlqqk").html(getSituationList[data.getSituation]==undefined?"":getSituationList[data.getSituation]);
+
+				var isUseOneselfList=["","是","否"];
+				$("#dbzjsfbhsy").html(isUseOneselfList[data.isUseOneself]==undefined?"":isUseOneselfList[data.isUseOneself]);
+
+
+				var relationshipCodeNameList = ["", "本人", "配偶", "子/婿", "女/媳", "孙子、孙女或外孙子、外孙女", "父母", "祖父母或外祖父母", "", "婿", "", "媳",
+					"孙子", "孙女", "外孙子", "外孙女", "父亲", "母亲", "祖父", "祖母", "外祖父", "外祖母", "兄", "弟", "姐", "妹", "子", "女", "侄子", "侄女", "姐夫",
+					"妹夫", "嫂", "叔父", "婶娘", "公公", "婆婆", "弟媳", "岳父", "岳母"
+				];
+				var registerNatureNameList = ["", "非农业户口", "农业户口"];
+				var marriageStateNameList = ["", "未婚", "已婚", "离异", "丧偶","初婚","再婚","复婚","已婚分户"];
+				var healthStateNameList = ["", "健康或良好", "一般或较弱", "重病", "残疾"];
+				var handicapedNameList = ["", "视力残疾", "听力残疾", "言语残疾", "肢体残疾", "智力残疾", "精神残疾", "多重残疾", "其他残疾"];
+				var handicapedLevelList = ["", "一级残疾", "二级残疾", "三级残疾", "四级残疾"];
+				var diseaseNameList = ["", "急性白血病(再生障碍性贫血)", "恶性肿瘤", "严重传染性肝炎(并发症)", "系统性红斑狼疮晚期", "孕产妇高危重症抢救", "严重精神病",
+					"急性传染性肺结核及国家规定的特种传染病", "严重心脑血管疾病/中风(有明显后遗症)", "严重肾病综合症慢性肾衰竭(尿毒症)", "急性心律衰竭/心肌梗塞/风湿性心脏病", "", "", "民政部门认定的其他病种",
+					"急性胰腺炎", "重症艾滋病", "晚期血吸虫病", "重症慢性病"
+				];
+				var laborAbilityNameList = ["", "有劳动能力", "部分丧失劳动能力", "无劳动能力","完全丧失劳动能力"];
+				var wthers = ["", "是", "否"];
+				var lifeableList = ["", "有生活自理能力", "部分生活自理能力", "无生活自理能力", "待评估"];
+				var gzincome = 0,
+					jyincome = 0,
+					zyincome = 0,
+					ccincome = 0,
+					fwzlincome = 0,
+					yljincome = 0,
+					sffinocme = 0,
+					syjincome = 0,
+					otnerincome = 0,
+					lpincome = 0,
+					totalincome = 0;
+
+				var careRelationShipList = ["", "父母", "兄弟姐妹", "侄子/侄女", "孙子/孙女", "其他"];
+				var careApplyTypeList = ["", "全护理", "半护理"];
+				var careTypeList = ["", "亲属", "邻居", "村（居）民委员会", "供养服务机构", "社会组织"];
+				var sexList = ["", "男", "女"];
+				var jobDateList = ["", "1个月", "2个月","3个月","4个月","5个月","6个月","7个月","8个月","9个月","10个月","11个月","12个月"];
+				var birthdayDate='',nationName='',reasions='',reasionRemark='';
+				if ( data.listApplyMemberAllInfo.length== 0) {
+					var member_name = '',
+						identifcard_id = '',
+						sexName='',
+						relationshipCodeName = '',
+						age='';
+						marriageStateName = '',
+						healthStateName = '',
+						handicapedName = '',
+						disablityCaseName = '',
+						diseaseName = '',
+						laborAbilityName = '',
+						school = '',
+						workStation = '',
+						workAddr='',
+						jobType='';
+						jobDate='',
+						isApply = '',
+						money = '',
+						remarks = '';
+						var smember;
+										
+							smember = '<tr><td>' +
+								member_name +
+								' </td><td>' +
+								relationshipCodeName +
+								' </td><td>' +
+								sexName +
+								'</td><td>' +
+								identifcard_id +
+								' </td><td>' +
+								age +
+								'</td><td>' +
+								marriageStateName +
+								'</td><td>' +
+								healthStateName +
+								'</td><td>' +
+								handicapedName +
+								'</td><td >' +
+								disablityCaseName +
+								'</td> <td>' +
+								diseaseName +
+								'</td><td>' +
+								laborAbilityName +
+								'</td><td>' +
+								school +
+								'</td><td>' +
+								 workStation+
+								'</td><td>' +
+								workAddr +
+								'</td><td>' +
+								jobType +
+								'</td><td>' +
+								jobDate +
+								'</td><td>' +
+								isApply +
+								'</td><td>' +
+								money +
+								'</td><td>' +
+								remarks +
+								'</td></tr>';
+						
+						$("#memBeans").append(smember);
+				} else{
+				for (var i = 0; i < data.listApplyMemberAllInfo.length; i++) {
+
+					var member_name = '',
+						identifcard_id = '',
+						sexName='',
+						relationshipCodeName = '',
+						age='';
+						marriageStateName = '',
+						healthStateName = '',
+						handicapedName = '',
+						disablityCaseName = '',
+						diseaseName = '',
+						laborAbilityName = '',
+						school = '',
+						workStation = '',
+						workAddr='',
+						jobType='';
+						jobDate='',
+						isApply = '',
+						money = '',
+						remarks = '';
+						if ( data.listApplyMemberAllInfo[i].isMaster== "1") {
+							birthdayDate=data.listApplyMemberAllInfo[i].birthdayDate;
+							if(data.listApplyMemberAllInfo[i].relationshipCode ==1){
+								if(data.listApplyMemberAllInfo[i].nation==1){
+									nationName="汉族";
+								}else if(data.listApplyMemberAllInfo[i].nation==6){
+									nationName="苗族";
+								}else if(data.listApplyMemberAllInfo[i].nation==7){
+									nationName="彝族";
+								}else if(data.listApplyMemberAllInfo[i].nation==8){
+									nationName="壮族";
+								}else if(data.listApplyMemberAllInfo[i].nation==9){
+									nationName="布依族";
+								}else if(data.listApplyMemberAllInfo[i].nation==12){
+									nationName="侗族";
+								}else if(data.listApplyMemberAllInfo[i].nation==13){
+									nationName="瑶族";
+								}else if(data.listApplyMemberAllInfo[i].nation==25){
+									nationName="水族";
+								}else if(data.listApplyMemberAllInfo[i].nation==32){
+									nationName="仫佬族";
+								}else if(data.listApplyMemberAllInfo[i].nation==36){
+									nationName="毛难族";
+								}else if(data.listApplyMemberAllInfo[i].nation==37){
+									nationName="仡佬族";
+								}else if(data.listApplyMemberAllInfo[i].nation==49){
+									nationName="京族";
+								}else if(data.listApplyMemberAllInfo[i].nation==57){
+									nationName="回族";
+								}else if(data.listApplyMemberAllInfo[i].nation==58){
+									nationName="其他";
+								}else if(data.listApplyMemberAllInfo[i].nation==59){
+									nationName="土家族";
+								}else if(data.listApplyMemberAllInfo[i].nation==60){
+									nationName="普米族";
+								}else if(data.listApplyMemberAllInfo[i].nation==61){
+									nationName="满族";
+								}
+							}
+							
+							reasions=data.listApplyMemberAllInfo[i].memberCausesPoverty;
+							reasionRemark=data.listApplyMemberAllInfo[i].memberCausesPovertyRemark;
+						} 
+					member_name = data.listApplyMemberAllInfo[i].memberName;
+					if (member_name == undefined) {
+					member_name='';
+					}			
+					identifcard_id = data.listApplyMemberAllInfo[i].identifcardId;
+					if (identifcard_id == undefined) {
+						identifcard_id = '';
+					} 
+					sexName=sexList[data.listApplyMemberAllInfo[i].sex];
+						if ( sexName== undefined) {
+						sexName='';	
+						}
+						
+					if (data.listApplyMemberAllInfo[i].relationshipCode == '') {
+						relationshipCodeName = '';
+					} else if (data.listApplyMemberAllInfo[i].relationshipCode == 99) {
+						relationshipCodeName = "其他";
+					} else {
+						relationshipCodeName = relationshipCodeNameList[data.listApplyMemberAllInfo[i].relationshipCode];
+					}
+
+
+					if (data.listApplyMemberAllInfo[i].marriageState == '') {
+						marriageStateName = '';
+					} else if (data.listApplyMemberAllInfo[i].marriageState == 99) {
+						marriageStateName = "未说明的婚姻状态";
+					} else if (data.listApplyMemberAllInfo[i].marriageState == 100) {
+						marriageStateName = "已婚分户";
+					} else {
+						marriageStateName = marriageStateNameList[data.listApplyMemberAllInfo[i].marriageState];
+					}
+
+					if (data.listApplyMemberAllInfo[i].healthState == '') {
+						healthStateName = '';
+					} else {
+						healthStateName = healthStateNameList[data.listApplyMemberAllInfo[i].healthState];
+					}
+
+					if (data.listApplyMemberAllInfo[i].handicaped == '') {
+						handicapedName = '';
+					} else {
+						handicapedName = handicapedNameList[data.listApplyMemberAllInfo[i].handicaped];
+					}
+
+					if (data.listApplyMemberAllInfo[i].disablityCase == '') {
+						disablityCaseName = '';
+					} else {
+						disablityCaseName = handicapedLevelList[data.listApplyMemberAllInfo[i].disablityCase];
+					}
+					laborAbilityName = laborAbilityNameList[data.listApplyMemberAllInfo[i].laborAbility];
+					if (laborAbilityName == undefined) {
+						laborAbilityName = '';
+					}
+					school = data.listApplyMemberAllInfo[i].school;
+					if (school == undefined) {
+						school = '';
+					}
+					workStation = data.listApplyMemberAllInfo[i].workStation;
+					if (workStation == undefined) {
+						workStation = '';
+					} 
+					workAddr = data.listApplyMemberAllInfo[i].employmentPlace;
+					if (workAddr == undefined) {
+						workAddr = '';
+					} 
+					jobType = data.listApplyMemberAllInfo[i].jobType;
+					if (jobType == undefined) {
+						jobType = '';
+					} 
+					jobDate = jobDateList[data.listApplyMemberAllInfo[i].jobDate];
+					if (jobDate == undefined) {
+						jobDate = '';
+					}
+					isApply=data.listApplyMemberAllInfo[i].isApply=="1"?"<font color=\"#FF0000\">是</font> ":"否";
+					
+					if (data.listApplyMemberAllInfo[i].employmentPlace == '') {
+						jydd = '';
+					} else {
+						jydd = data.listApplyMemberAllInfo[i].employmentPlace;
+					}
+					if (data.listApplyMemberAllInfo[i].poor == '') {
+						poorName = '';
+					} else {
+						poorName = wthers[data.listApplyMemberAllInfo[i].poor];
+					}
+
+					if (data.listApplyMemberAllInfo[i].disease == '') {
+						diseaseName = '';
+					} else {
+						var s = data.listApplyMemberAllInfo[i].disease;
+						var dis = s.split(',');
+
+						for (var j = 0; j < dis.length; j++) {
+							if (j == (dis.length - 1)) {
+								diseaseName += diseaseNameList[dis[j]];
+							} else {
+								diseaseName += diseaseNameList[dis[j]] + ",";
+							}
+						}
+					}
+					var incomes = data.listApplyMemberAllInfo[i].enbaseIncomeHisList;
+
+					var yearIncome = 0;
+					for (var j = 0; j < incomes.length; j++) {
+
+						if (incomes[j].amount != undefined) {
+							if (incomes[j].incomeType == 1) {
+								gzincome = gzincome + parseFloat(incomes[j].amount);
+							} else if (incomes[j].incomeType == 2) {
+								jyincome = jyincome + parseFloat(incomes[j].amount);
+							} else if (incomes[j].incomeType == 3) {
+								zyincome = zyincome + parseFloat(incomes[j].amount);
+							} else if (incomes[j].incomeType == 4) {
+								ccincome = ccincome + parseFloat(incomes[j].amount);
+							} else if (incomes[j].incomeType == 5) {
+								fwzlincome = fwzlincome + parseFloat(incomes[j].amount);
+							} else if (incomes[j].incomeType == 6) {
+								yljincome = yljincome + parseFloat(incomes[j].amount);
+							} else if (incomes[j].incomeType == 7) {
+								sffinocme = sffinocme + parseFloat(incomes[j].amount);
+							} else if (incomes[j].incomeType == 8) {
+								syjincome = syjincome + parseFloat(incomes[j].amount);
+							}  else if (incomes[j].incomeType == 9) {
+								lpincome = lpincome + parseFloat(incomes[j].amount);
+							} else if (incomes[j].incomeType == 99) {
+								otnerincome = otnerincome + parseFloat(incomes[j].amount);
+							}
+							yearIncome = yearIncome + parseFloat(incomes[j].amount);
+						}
+					}
+					money = yearIncome;
+					remarks=data.listApplyMemberAllInfo[i].remarks;
+					if (remarks == undefined) {
+						remarks='';
+					}
+					age=data.listApplyMemberAllInfo[i].age;
+					if (age == undefined) {
+						age='';
+					}
+					var smember;
+				
+						smember = '<tr><td>' +
+							member_name +
+							' </td><td>' +
+							relationshipCodeName +
+							' </td><td>' +
+							sexName +
+							'</td><td>' +
+							identifcard_id +
+							' </td><td>' +
+							age +
+							'</td><td>' +
+							marriageStateName +
+							'</td><td>' +
+							healthStateName +
+							'</td><td>' +
+							handicapedName +
+							'</td><td >' +
+							disablityCaseName +
+							'</td> <td>' +
+							diseaseName +
+							'</td><td>' +
+							laborAbilityName +
+							'</td><td>' +
+							school +
+							'</td><td>' +
+							 workStation+
+							'</td><td>' +
+							workAddr +
+							'</td><td>' +
+							jobType +
+							'</td><td>' +
+							jobDate +
+							'</td><td>' +
+							isApply +
+							'</td><td>' +
+							money +
+							'</td><td>' +
+							remarks +
+							'</td></tr>';
+					
+					$("#memBeans").append(smember);
+				}
+			
+			}	
+				
+					<!-- 需要从户主中获取的信息  开始 -->
+					
+				var reasionsName='';	
+				var reasionList= ["","因病", "灾害","残疾", "缺乏劳动力", "失业", "其他", "失地", "年老，无劳动力，无收入","因学","困境儿童"];
+				 var reaCode =reasions.split(',');
+				    for(var i in reaCode){
+						if(reaCode[i]!=null && reaCode[i]!=""){
+							if ( reaCode[i]== "201") {
+								reasionsName+="单亲家庭,";
+							} else if ( reaCode[i]== "202") {
+								reasionsName+="生存条件恶劣,";
+							}else if ( reaCode[i]== "203") {
+								reasionsName+="家庭目前暂无困难,";
+							}else{
+							reasionsName+=reasionList[reaCode[i]]+",";
+							}
+						
+					 }
+				    }
+				
+				$("#homeCausesPoverty").html(reasionsName);
+				$("#nation").html(nationName);
+				$("#birthday").html(birthdayDate);
+				$("#homeCausesPovertyMark").html(reasionRemark);
+
+				$("#gzsr").html(gzincome);
+				$("#jysr").html(jyincome);
+				$("#zyxsr").html(zyincome);
+				$("#ccxsr").html(ccincome);
+
+				$("#ybzc").html(data.yearIllnessOutlay);
+				$("#znjyf").html(data.childrenOutlay);
+				$("#yczc").html(data.yearDisabilityOutlay);
+				$("#qtzc").html(data.outlayOther);
+				$("#hjzc").html(parseFloat(data.yearIllnessOutlay) + parseFloat(data.childrenOutlay) + parseFloat(data.yearDisabilityOutlay) + parseFloat(data.outlayOther));
+
+				$("#hjsr").html(parseFloat(gzincome) + parseFloat(jyincome) + parseFloat(zyincome) + parseFloat(ccincome) +
+					parseFloat(fwzlincome) + parseFloat(yljincome) + parseFloat(sffinocme) + parseFloat(syjincome)+ parseFloat(lpincome) + parseFloat(
+						otnerincome));
+				<!-- 需要从户主中获取的信息  结尾 -->
+
+
+				if ( data.listApplyNoMemberInfo.length== 0) {
+						var member_name = '',
+							identifcard_id = '',
+							sexName='',
+							relationshipCodeName = '',
+							age='';
+							marriageStateName = '',
+							healthStateName = '',
+							handicapedName = '',
+							disablityCaseName = '',
+							diseaseName = '',
+							laborAbilityName = '',
+							school = '',
+							workStation = '',
+							workAddr='',
+							jobType='';
+							jobDate='',
+
+							money = '',
+							remarks = '';
+							var smember;		
+								smember = '<tr><td>' +
+									member_name +
+									' </td><td>' +
+									relationshipCodeName +
+									' </td><td>' +
+									sexName +
+									'</td><td>' +
+									identifcard_id +
+									' </td><td>' +
+									age +
+									'</td><td>' +
+									marriageStateName +
+									'</td><td>' +
+									healthStateName +
+									'</td><td>' +
+									handicapedName +
+									'</td><td >' +
+									disablityCaseName +
+									'</td> <td>' +
+									diseaseName +
+									'</td><td>' +
+									laborAbilityName +
+									'</td><td>' +
+									school +
+									'</td><td>' +
+									 workStation+
+									'</td><td>' +
+									workAddr +
+									'</td><td>' +
+									jobType +
+									'</td><td>' +
+									jobDate +
+									'</td><td>' +
+									money +
+									'</td><td>' +
+									remarks +
+									'</td></tr>';
+							
+							$("#notmembers").append(smember);
+					} else{
+					for (var i = 0; i < data.listApplyNoMemberInfo.length; i++) {
+				
+						var member_name = '',
+							identifcard_id = '',
+							sexName='',
+							relationshipCodeName = '',
+							age='';
+							marriageStateName = '',
+							healthStateName = '',
+							handicapedName = '',
+							disablityCaseName = '',
+							diseaseName = '',
+							laborAbilityName = '',
+							school = '',
+							workStation = '',
+							workAddr='',
+							jobType='';
+							jobDate='',
+							money = '',
+							remarks = '';
+						member_name = data.listApplyNoMemberInfo[i].memberName;
+						if (member_name == undefined) {
+						member_name='';
+						}			
+						identifcard_id = data.listApplyNoMemberInfo[i].identifcardId;
+						if (identifcard_id == undefined) {
+							identifcard_id = '';
+						} 
+						sexName=sexList[data.listApplyNoMemberInfo[i].sex];
+							if ( sexName== undefined) {
+							sexName='';	
+							}
+							
+						if (data.listApplyNoMemberInfo[i].relationshipCode == '') {
+							relationshipCodeName = '';
+						} else if (data.listApplyNoMemberInfo[i].relationshipCode == 99) {
+							relationshipCodeName = "其他";
+						} else {
+							relationshipCodeName = relationshipCodeNameList[data.listApplyNoMemberInfo[i].relationshipCode];
+						}
+				
+				
+						if (data.listApplyNoMemberInfo[i].marriageState == '') {
+							marriageStateName = '';
+						} else if (data.listApplyNoMemberInfo[i].marriageState == 99) {
+							marriageStateName = "未说明的婚姻状态";
+						} else if (data.listApplyNoMemberInfo[i].marriageState == 100) {
+							marriageStateName = "已婚分户";
+						} else {
+							marriageStateName = marriageStateNameList[data.listApplyNoMemberInfo[i].marriageState];
+						}
+				
+						if (data.listApplyNoMemberInfo[i].healthState == '') {
+							healthStateName = '';
+						} else {
+							healthStateName = healthStateNameList[data.listApplyNoMemberInfo[i].healthState];
+						}
+				
+						if (data.listApplyNoMemberInfo[i].handicaped == '') {
+							handicapedName = '';
+						} else {
+							handicapedName = handicapedNameList[data.listApplyNoMemberInfo[i].handicaped];
+						}
+				
+						if (data.listApplyNoMemberInfo[i].disablityCase == '') {
+							disablityCaseName = '';
+						} else {
+							disablityCaseName = handicapedLevelList[data.listApplyNoMemberInfo[i].disablityCase];
+						}
+						laborAbilityName = laborAbilityNameList[data.listApplyNoMemberInfo[i].laborAbility];
+						if (laborAbilityName == undefined) {
+							laborAbilityName = '';
+						}
+						school = data.listApplyNoMemberInfo[i].school;
+						if (school == undefined) {
+							school = '';
+						}
+						workStation = data.listApplyNoMemberInfo[i].workStation;
+						if (workStation == undefined) {
+							workStation = '';
+						} 
+						workAddr = data.listApplyNoMemberInfo[i].employmentPlace;
+						if (workAddr == undefined) {
+							workAddr = '';
+						} 
+						jobType = data.listApplyNoMemberInfo[i].jobType;
+						if (jobType == undefined) {
+							jobType = '';
+						} 
+						jobDate = jobDateList[data.listApplyNoMemberInfo[i].jobDate];
+						if (jobDate == undefined) {
+							jobDate = '';
+						}
+
+						if (data.listApplyNoMemberInfo[i].disease == '') {
+							diseaseName = '';
+						} else {
+							var s = data.listApplyNoMemberInfo[i].disease;
+							var dis = s.split(',');
+				
+							for (var j = 0; j < dis.length; j++) {
+								if (j == (dis.length - 1)) {
+									diseaseName += diseaseNameList[dis[j]];
+								} else {
+									diseaseName += diseaseNameList[dis[j]] + ",";
+								}
+							}
+						}
+						var incomes = data.listApplyNoMemberInfo[i].enbaseNonmemberIncomeList;
+				
+						var yearIncome = 0;
+						for (var j = 0; j < incomes.length; j++) {
+				
+							if (incomes[j].amount != undefined) {
+								if (incomes[j].incomeType == 1) {
+									gzincome = gzincome + parseFloat(incomes[j].amount);
+								} else if (incomes[j].incomeType == 2) {
+									jyincome = jyincome + parseFloat(incomes[j].amount);
+								} else if (incomes[j].incomeType == 3) {
+									zyincome = zyincome + parseFloat(incomes[j].amount);
+								} else if (incomes[j].incomeType == 4) {
+									ccincome = ccincome + parseFloat(incomes[j].amount);
+								} else if (incomes[j].incomeType == 5) {
+									fwzlincome = fwzlincome + parseFloat(incomes[j].amount);
+								} else if (incomes[j].incomeType == 6) {
+									yljincome = yljincome + parseFloat(incomes[j].amount);
+								} else if (incomes[j].incomeType == 7) {
+									sffinocme = sffinocme + parseFloat(incomes[j].amount);
+								} else if (incomes[j].incomeType == 8) {
+									syjincome = syjincome + parseFloat(incomes[j].amount);
+								} else if (incomes[j].incomeType == 99) {
+									otnerincome = otnerincome + parseFloat(incomes[j].amount);
+								}
+								yearIncome = yearIncome + parseFloat(incomes[j].amount);
+							}
+						}
+						money = yearIncome;
+						remarks=data.listApplyNoMemberInfo[i].remarks;
+						if (remarks == undefined) {
+							remarks='';
+						}
+						age=data.listApplyNoMemberInfo[i].age;
+					if (age == undefined) {
+						age='';
+					}
+						var smember;
+					
+							smember = '<tr><td>' +
+								member_name +
+								' </td><td>' +
+								relationshipCodeName +
+								' </td><td>' +
+								sexName +
+								'</td><td>' +
+								identifcard_id +
+								' </td><td>' +
+								age +
+								'</td><td>' +
+								marriageStateName +
+								'</td><td>' +
+								healthStateName +
+								'</td><td>' +
+								handicapedName +
+								'</td><td >' +
+								disablityCaseName +
+								'</td> <td>' +
+								diseaseName +
+								'</td><td>' +
+								laborAbilityName +
+								'</td><td>' +
+								school +
+								'</td><td>' +
+								 workStation+
+								'</td><td>' +
+								workAddr +
+								'</td><td>' +
+								jobType +
+								'</td><td>' +
+								jobDate +
+								'</td><td>' +
+								money +
+								'</td><td>' +
+								remarks +
+								'</td></tr>';
+						
+						$("#notmembers").append(smember);
+					}
+				
+				}	
+
+			}
+
+			//申请人签字
+			function setmembersignature() {
+				android.memberSingature();
+
+			}
+			//申请人指纹
+			function setmemberfingerprint() {
+				android.memberFingerprint();
+			}
+
+			//核查人员签字
+			function setworksignature() {
+				android.workSingature();
+
+			}
+
+			//设置申请人签字
+			function setMemberSignatureData(imgpath) {
+				$('#image_member_s').attr("src", imgpath);
+
+			}
+			//设置申请人指紋
+			function setMemberFingerprintData(imgpath) {
+				$('#image_member_f').attr("src", imgpath);
+			}
+
+
+			//设置核查人员签字
+			function setWorksignData(imgpath) {
+				$('#image_worker_s').attr("src", imgpath);
+			}
+
+			function formatDate(now) {
+				var d = new Date(now);
+				var year = d.getFullYear();
+				var month = d.getMonth() + 1;
+				var date = d.getDate();
+				var hour = d.getHours();
+				var minute = d.getMinutes();
+				var second = d.getSeconds();
+				return year + "-" + month + "-" + date;
+			}
+		</script>
+
+	</body>
+
+</html>

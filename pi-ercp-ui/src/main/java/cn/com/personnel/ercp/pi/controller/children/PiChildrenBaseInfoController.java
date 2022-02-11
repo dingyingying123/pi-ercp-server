@@ -8,6 +8,7 @@ import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenGuardianInfo;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenLocationInfo;
 import cn.com.personnel.ercp.pi.service.child.IPiChildrenBaseInfoService;
 import cn.com.personnel.springboot.framework.core.controller.PageController;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +31,11 @@ public class PiChildrenBaseInfoController extends PageController {
      */
     @RequestMapping("/queryPiChildrenBaseInfoList")
     @ResponseBody
-    public ReturnEntity queryPiChildrenBaseInfoList(@RequestBody PiChildrenBaseInfo piChildrenBaseInfo){
+    public ReturnEntity queryPiChildrenBaseInfoList(@RequestBody PiChildrenBaseInfoVO piChildrenBaseInfo){
+        SecUser secUser = getTokenLoginUser();
+        if(StringUtils.isNotEmpty(secUser.getArea())){
+            piChildrenBaseInfo.setArea(secUser.getArea());
+        }
         return piChildrenBaseInfoService.queryPiChildrenBaseInfoList(piChildrenBaseInfo, buildPagenation());
     }
 

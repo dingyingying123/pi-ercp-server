@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -61,17 +62,19 @@ public class AvailableResourcesService extends BaseService implements IAvailable
     @Override
     public ReturnEntity saveAvailableResourcesInfo(ServerAvailableResourcesInfoVO serverAvailableResourcesInfoVO, SecUser secUser) {
         logger.info("=========间接介入参数：" + serverAvailableResourcesInfoVO);
+        if(StringUtils.isEmpty(serverAvailableResourcesInfoVO.getChildId())){
+            return ReturnEntity.errorMsg("参数错误！");
+        }
+        ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.queryOneStatusByChildId(serverAvailableResourcesInfoVO.getChildId());
+        if(serverChildStatusInfo == null){
+            return ReturnEntity.errorMsg("儿童信息不存在！");
+        }
         if(StringUtils.isEmpty(serverAvailableResourcesInfoVO.getAvaId())){
-            if(StringUtils.isEmpty(serverAvailableResourcesInfoVO.getChildId())){
-                return ReturnEntity.errorMsg("参数错误！");
-            }
-            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.queryOneStatusByChildId(serverAvailableResourcesInfoVO.getChildId());
-            if(serverChildStatusInfo == null){
-                return ReturnEntity.errorMsg("儿童信息不存在！");
-            }
             serverAvailableResourcesInfoVO.setStaId(serverChildStatusInfo.getStaId());
             String planId = UUIDKit.getUUID();
             serverAvailableResourcesInfoVO.setAvaId(planId);
+            serverAvailableResourcesInfoVO.setAvailableNo(getNumber());
+
             serverAvailableResourcesInfoVO.setReceiver(secUser.getUserName());
             serverAvailableResourcesInfoVO.setStatus(CommonConstants.ServerApprovalStatus.INTERVENTIONING_SAVE);
             serverAvailableResourcesInfoVO.setCreator(secUser.getUserId());
@@ -86,6 +89,7 @@ public class AvailableResourcesService extends BaseService implements IAvailable
             serverChildStatusInfo.setArea(secUser.getArea());
             serverChildStatusInfoMapper.updateByPrimaryKeySelective(serverChildStatusInfo);
         }else{
+            serverAvailableResourcesInfoVO.setStaId(serverChildStatusInfo.getStaId());
             serverAvailableResourcesInfoVO.setUpdator(secUser.getUserId());
             serverAvailableResourcesInfoVO.setUpdateTime(new Date());
             serverAvailableResourcesInfoVO.setArea(secUser.getArea());
@@ -99,14 +103,18 @@ public class AvailableResourcesService extends BaseService implements IAvailable
         if(StringUtils.isEmpty(serverAvailableResourcesInfoVO.getAvaId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
-        serverAvailableResourcesInfoVO.setStatus(CommonConstants.ServerApprovalStatus.INTERVENTIONSUBMITED);
-        serverAvailableResourcesInfoVO.setUpdateTime(new Date());
-        serverAvailableResourcesInfoVO.setUpdator(secUser.getUserId());
-        serverAvailableResourcesInfoVO.setArea(secUser.getArea());
-        serverAvailableResourcesInfoMapper.updateByPrimaryKeySelective(serverAvailableResourcesInfoVO);
+        ServerAvailableResourcesInfo serverAvailableResourcesInfo = serverAvailableResourcesInfoMapper.selectByPrimaryKey(serverAvailableResourcesInfoVO.getAvaId());
+        if(serverAvailableResourcesInfo == null){
+            return ReturnEntity.errorMsg("数据不存在！");
+        }
+        serverAvailableResourcesInfo.setStatus(CommonConstants.ServerApprovalStatus.INTERVENTIONSUBMITED);
+        serverAvailableResourcesInfo.setUpdateTime(new Date());
+        serverAvailableResourcesInfo.setUpdator(secUser.getUserId());
+//        serverAvailableResourcesInfo.setArea(secUser.getArea());
+        serverAvailableResourcesInfoMapper.updateByPrimaryKeySelective(serverAvailableResourcesInfo);
 
         ServerChildStatusInfo statusInfo = new ServerChildStatusInfo();
-        statusInfo.setStaId(serverAvailableResourcesInfoVO.getStaId());
+        statusInfo.setStaId(serverAvailableResourcesInfo.getStaId());
         if("是".equals(serverAvailableResourcesInfoVO.getAllSubmit())){
             statusInfo.setInterventionStatus(CommonConstants.ServerApprovalStatus.INTERVENTIONSUBMITED);
         }else {
@@ -144,5 +152,19 @@ public class AvailableResourcesService extends BaseService implements IAvailable
             serverChildStatusInfoMapper.updateByPrimaryKeySelective(serverChildStatusInfo);
         }
         return ReturnEntity.ok(serverAvailableResourcesInfoVO);
+    }
+
+    public String getNumber() {
+        Date date = new Date();
+        String prefix = new SimpleDateFormat("yyyy").format(date) + new SimpleDateFormat("MM").format(date);
+        logger.info("=========前缀：" + prefix);
+        return prefix + serverAvailableResourcesInfoMapper.getLetterNumber(prefix);
+    }
+
+    @Override
+    public ReturnEntity getLetterNumber() {
+        ReturnEntity returnEntity = new ReturnEntity(CommonConstants.SUCCESS_CODE, CommonConstants.SUCCESS_MESSAGE, null);
+        returnEntity.setData(getNumber());
+        return returnEntity;
     }
 }

@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Evernote Export</title>
+    <basefont face="微软雅黑" size="2"/>
+    <link rel="stylesheet" href="../../static/css/new_file.css"/>
+    <script type="text/javascript" src="../../static/js/jquery-1.2.6.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta name="exporter-version"
+          content="YXBJ Windows/601392 (zh-CN, DDL); Windows/10.0.0 (Win64); EDAMVersion=V2;"/>
+    <style>
+			.mbt {
+				margin-right: 20px;
+				margin-top: 20px;
+				margin-left: 20px;
+				float: left;
+				height: 40px;
+				padding: 8px;
+				border-radius: 6px;
+				border: 1px cornflowerblue solid;
+				background-color: dodgerblue;
+				color: white;
+			}
+
+    </style>
+</head>
+
+<body>
+
+<div style="height: 10px;"></div>
+<h1 class="main_tit">内蒙古弘德益民政务科技信息服务中心家庭经济状况入户核查表</h1>
+<div class="main_head">
+    <div class="pull_left">
+        <span class="main_info" id="county"> </span>旗（县）
+        <span class="main_info" id="towns"></span>乡（镇）
+        <span class="main_info" id="village"></span> 村（居）委会
+    </div>
+    <div class="pull_right">
+        <span>核查时间：</span>
+        <span class="main_info wid50" id="year"></span>年
+        <span class="main_info wid50" id="month"></span>月
+        <span class="main_info wid50" id="day"></span>日
+    </div>
+    <br/>
+</div>
+<div class="main_head">
+    <div class="pull_left">
+        <span>户口类别：</span>
+        <span class="check_box" style="margin: 2px;float: center;"><input type="checkbox"
+                                                                          disabled="disabled"
+                                                                          id="nottp"/>农村低保</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="check_box" style="margin: 2px;"><input type="checkbox" disabled="disabled"
+                                                            id="wdtp"/>城镇低保</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+</div>
+<table>
+
+    <tbody>
+    <tr>
+        <th rowspan="4" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">家庭基本信息</span></div>
+        </th>
+        <td colspan="3" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">户主姓名</span></div>
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="hzname"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="3" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">共同生活家庭人口</span></div>
+        </td>
+        <td colspan="4" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="hcount"
+                                                                                        style="font-size: 10.5pt;  -en-paragraph:true;"></span>
+            </div>
+        </td>
+        <td colspan="3" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">保障人口</span></div>
+        </td>
+        <td colspan="6" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="bzcount"
+                                                                                        style="font-size: 10.5pt;  -en-paragraph:true;"></span>
+            </div>
+        </td>
+        <td colspan="4" style="padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">是否建档立卡贫困户</span></div>
+        </td>
+        <td colspan="4" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="sfjdlk"
+                                                                                        style="font-size: 10.5pt;  -en-paragraph:true;"></span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3" style="border: 1px solid;  padding: 8px;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">计划生育户</span></div>
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="jhsyh"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="3" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">致贫原因</span></div>
+        </td>
+        <td colspan="4" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="zpyy"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="3" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">联系电话</span></div>
+        </td>
+        <td colspan="6" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="call"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+
+        </td>
+        <td colspan="4" style="padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">是否人户分离</span></div>
+        </td>
+        <td colspan="4" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="sfrhfl"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3" style="border: 1px solid;  padding: 8px;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">居住地址</span></div>
+        </td>
+        <td colspan="9" style=" padding: 8px; border: 1px solid;">
+            <div style="margin-top: 1em; margin-bottom: 1em;"><span id="addr"
+                                                                    style="font-size: 10.5pt;  -en-paragraph:true;"></span>
+            </div>
+        </td>
+        <td colspan="3" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">户籍地址</span></div>
+        </td>
+        <td colspan="14" style="padding: 8px; border: 1px solid;">
+            <div style="margin-top: 1em; margin-bottom: 1em;"><span id="haddr"
+                                                                    style="font-size: 10.5pt;  -en-paragraph:true;"></span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3" style="border: 1px solid;  padding: 8px;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">申请原因</span></div>
+        </td>
+        <td colspan="26" style=" padding: 8px; border: 1px solid;">
+            <div style="margin-top: 1em; margin-bottom: 1em;"><span id="sqyy"
+                                                                    style="font-size: 10.5pt;  -en-paragraph:true;"></span>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+
+    <tbody id="memberData">
+    <tr>
+        <th rowspan="10" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">家庭成员及收入情况</span></div>
+        </th>
+        <td colspan="2" class="srtd">
+            姓名
+        </td>
+        <td class="srtd">
+            性别
+        </td>
+        <td colspan="3" class="srtd">
+            与户主关系
+        </td>
+        <td class="srtd">
+            年龄
+        </td>
+        <td class="srtd">
+            婚姻状况
+        </td>
+        <td class="srtd">
+            是否享受
+        </td>
+        <td colspan="4" class="srtd" style="padding: 8px; border: 1px solid;">
+            身份证号
+        </td>
+        <td colspan="5" class="srtd">
+            健康状况
+        </td>
+        <td colspan="2" class="srtd">
+            类别/等级/病种
+        </td>
+        <td colspan="3" class="srtd">
+            劳动力系数
+        </td>
+        <td class="srtd">
+            就业状况
+        </td>
+        <td colspan="3" class="srtd">
+            工作单位
+        </td>
+        <td class="srtd">
+            年收入
+        </td>
+        <td class="srtd">
+            是否按50%计算
+        </td>
+    </tr>
+
+    </tbody>
+    <tbody id="sfyData">
+    <tr>
+        <th rowspan="10" style=" padding: 8px; border: 1px solid;">
+            赡、抚（扶）养情况
+        </th>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;" class="srtd">
+            姓名
+        </td>
+        <td style=" padding: 8px; border: 1px solid;" class="srtd">
+            性别
+        </td>
+        <td colspan="3" style=" padding: 8px; border: 1px solid;" class="srtd">
+            与户主关系
+        </td>
+        <td style=" padding: 8px; border: 1px solid;" class="srtd">
+            年龄
+        </td>
+        <td colspan="5" style="padding: 8px; border: 1px solid;" class="srtd">
+            身份证号
+        </td>
+        <td colspan="5" style=" padding: 8px; border: 1px solid;" class="srtd">
+            无赡抚养能力原因
+        </td>
+        <td colspan="5" style=" padding: 8px; border: 1px solid;" class="srtd">
+            就业状况
+        </td>
+        <td style=" padding: 8px; border: 1px solid;" class="srtd">
+            年收入
+        </td>
+        <td style=" padding: 8px; border: 1px solid;" class="srtd">
+            是否按50%计算
+        </td>
+        <td colspan="5" style=" padding: 8px; border: 1px solid;" class="srtd">
+            年赡（抚扶）养费
+        </td>
+
+    </tr>
+    <tr>
+
+    </tr>
+    </tbody>
+    <tbody id="houseData">
+    <tr>
+        <th rowspan="10" style=" padding: 8px; border: 1px solid;">
+            家庭房产信息
+        </th>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;" class="srtd">
+            房产数量
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;" class="srtd">
+            住房类型
+        </td>
+        <td colspan="3" style=" padding: 8px; border: 1px solid;" class="srtd">
+            房屋类型
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;" class="srtd">
+            住房结构
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;" class="srtd">
+            房产证号
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;" class="srtd">
+            建筑面积
+        </td>
+        <td colspan="4" style=" padding: 8px; border: 1px solid;" class="srtd">
+            使用面积
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;" class="srtd">
+            产权人姓名
+        </td>
+        <td colspan="4" style=" padding: 8px; border: 1px solid;" class="srtd">
+            房屋所在区域
+        </td>
+        <td colspan="6" style=" padding: 8px; border: 1px solid;" class="srtd">
+            住房地址
+        </td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr style="font-size: 10.5pt; -en-paragraph:true;height: 35px;text-align: center; visibility: collapse">
+        <th rowspan="2" style=" padding: 8px; border: 1px solid;">
+            *家庭生活基本设施
+        </th>
+        <td colspan="3" style=" padding: 8px; border: 1px solid;">
+            电视
+        </td>
+        <td colspan="4" style=" padding: 8px; border: 1px solid;">
+            冰箱
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            洗衣机
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            电脑
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            空调
+        </td>
+        <td colspan="4" style=" padding: 8px; border: 1px solid;">
+            手机
+        </td>
+        <td colspan="6" style=" padding: 8px; border: 1px solid;">
+            热水器
+        </td>
+        <td style=" padding: 8px; border: 1px solid;">
+            卫生间
+        </td>
+        <td colspan="5" style=" padding: 8px; border: 1px solid;">
+            微波炉
+        </td>
+    </tr>
+    <tr style="font-size: 10.5pt; -en-paragraph:true;height: 35px;text-align: center; visibility: collapse">
+        <td colspan="3" style="border: 1px solid;  padding: 8px;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="dsName"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="4" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="bxName"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="xyjName"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="dnName"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="ktName"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="4" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="sjName"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="6" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="rsqName"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="wsjName"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="5" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="wblName"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th rowspan="6" style=" padding: 8px; border: 1px solid;">
+            <div style="margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">*</span><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">家庭财产信息</span></div>
+        </th>
+        <td colspan="9" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">储蓄存款（元）</span></div>
+        </td>
+        <td colspan="4" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="cxck"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="11" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">其他有价证券（元）</span></div>
+        </td>
+        <td colspan="5" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="qtyjzq"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="9" style="border: 1px solid;  padding: 8px;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">国债（元）</span></div>
+        </td>
+        <td colspan="4" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="gz"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="11" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">储蓄性保险（元）</span></div>
+        </td>
+        <td colspan="5" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="cxxbx"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="9" style="border: 1px solid;  padding: 8px;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">股票（元）</span></div>
+        </td>
+        <td colspan="4" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="gp"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="11" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">其他家庭金融（元）</span></div>
+        </td>
+        <td colspan="5" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="qtjtjr"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+    </tr>
+    <tr style="font-size: 10.5pt; -en-paragraph:true;height: 35px;text-align: center;">
+        <td colspan="9" style="border: 1px solid;  padding: 8px;">
+            轿车
+        </td>
+        <td colspan="4" style=" padding: 8px; border: 1px solid;">
+            营运车辆
+        </td>
+        <td colspan="11" style=" padding: 8px; border: 1px solid;">
+            大型农机具
+        </td>
+        <td colspan="5" style=" padding: 8px; border: 1px solid;">
+            普通低速货车
+        </td>
+    </tr>
+    <tr style="font-size: 10.5pt; -en-paragraph:true;height: 35px;text-align: center;">
+        <td colspan="9" style="border: 1px solid;  padding: 8px;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="jcName"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="4" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    id="yyclName" style="font-size: 10.5pt; -en-paragraph:true;"> </span></div>
+        </td>
+        <td colspan="11" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    id="dxnjjName" style="font-size: 10.5pt; -en-paragraph:true;"> </span></div>
+        </td>
+        <td colspan="5" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    id="ptdshcName" style="font-size: 10.5pt; -en-paragraph:true;"> </span></div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="7" style="border: 1px solid;  padding: 8px;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">其他情形</span></div>
+        </td>
+        <td colspan="22" style=" padding: 8px; border: 1px solid;">
+            <div style="margin-top: 1em; margin-bottom: 1em;"><span id="qtqx"
+                                                                    style="font-size: 10.5pt;  -en-paragraph:true;"></span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th rowspan="11" style=" padding: 8px; border: 1px solid;">
+            <div style="margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">*家庭收入信息</span></div>
+        </th>
+        <td colspan="7" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">经营性收入</span></div>
+        </td>
+        <td colspan="7" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">工资性收入</span></div>
+        </td>
+        <td colspan="8" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">财产性收入</span></div>
+        </td>
+        <td colspan="7" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">转移性收入</span></div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="5" style="border: 1px solid;  padding: 8px;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">项目</span></div>
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">年收入（元）</span></div>
+        </td>
+        <td colspan="3" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">项目</span></div>
+        </td>
+        <td colspan="4" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">年收入（元）</span></div>
+        </td>
+        <td colspan="4" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">项目</span></div>
+        </td>
+        <td colspan="4" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">年收入（元）</span></div>
+        </td>
+        <td colspan="5" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">项目</span></div>
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">年收入（元）</span></div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="5" style="border: 1px solid;  padding: 8px;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">土地经营</span></div>
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="tdjy"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="3" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">务工收入</span></div>
+        </td>
+        <td colspan="4" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="wgsr"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="4" rowspan="5" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">房屋出租、出售</span></div>
+        </td>
+        <td colspan="4" rowspan="5" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="fwczcs"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="5" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">年赡（扶、抚）养费</span></div>
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="nsfyf"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3" rowspan="4" style="border: 1px solid;  padding: 8px;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">养殖业经营</span></div>
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">牛</span></div>
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="niu"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="3" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">养老保险金</span></div>
+        </td>
+        <td colspan="4"  style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="ylbxj"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="5" rowspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">其他转移性收入</span></div>
+        </td>
+        <td colspan="2" rowspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="zyOther"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" style="border: 1px solid;  padding: 8px;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">羊</span></div>
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="yang"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="3"  style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">家庭实际领取金额</span></div>
+        </td>
+        <td colspan="4"  style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="ysbzsjlqje"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" style="border: 1px solid;  padding: 8px;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">猪</span></div>
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="zhu"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="3" rowspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">遗属补助</span></div>
+        </td>
+        <td colspan="4" rowspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="ysbz"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="1" rowspan="5" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">土地收入</span></div>
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">项目</span></div>
+        </td>
+        <td colspan="1" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">亩数</span></div>
+        </td>
+        <td colspan="1" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">金额/亩</span></div>
+        </td>
+
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    id="lbtgzcxbt" style="font-size: 10.5pt; -en-paragraph:true;"> </span></div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" style="border: 1px solid;  padding: 8px;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">禽</span></div>
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="qin"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="2" style="border: 1px solid;  padding: 8px;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">土地征用</span></div>
+        </td>
+        <td colspan="1" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="tdzyms"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="1" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    id="tdzymoney" style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    id="tdzyzmoney" style="font-size: 10.5pt; -en-paragraph:true;"> </span></div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="5" rowspan="3" style="border: 1px solid;  padding: 8px;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">其他经营收入</span></div>
+        </td>
+        <td colspan="2" rowspan="3" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="jyOther"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="3" rowspan="3" rstyle=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">其他工资收入</span></div>
+        </td>
+        <td colspan="4" rowspan="3" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="qtgzsr"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="4" rowspan="3" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">其他财产收入</span></div>
+        </td>
+        <td colspan="4" rowspan="3" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="ccOther"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">流转补贴</span></div>
+        </td>
+        <td colspan="1" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="lzbtms"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="1" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    id="lzbtmoney" style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    id="lzbtzmoney" style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">粮食补贴</span></div>
+        </td>
+        <td colspan="1" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="lsbtms"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="1" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    id="lsbtmoney" style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    id="lsbtzmoney" style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">土地出租</span></div>
+        </td>
+        <td colspan="1" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="tdczms"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="1" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    id="tdczmoney" style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    id="tdczzmoney" style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="7" style="border: 1px solid;  padding: 8px;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">合计：<span
+                    id="jyhj"> </span>
+								          元</span></div>
+        </td>
+        <td colspan="7" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">合计：<span
+                    id="gzhj"> </span>
+								          元</span></div>
+        </td>
+        <td colspan="8" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">合计：<span
+                    id="cchj"> </span>
+								          元</span></div>
+        </td>
+        <td colspan="7" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">合计：<span
+                    id="zyhj"> </span>
+								          元</span></div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="8" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">月人均收入A</span></div>
+        </td>
+
+        <td colspan="22" style="padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="nrjsr"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="8" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">降低家庭核算收入原因（从特殊家庭选择）</span></div>
+        </td>
+        <td colspan="3" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: right; margin-top: 1em; margin-bottom: 1em;"><span
+                    id="jdjthssryyName" style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="6" style="padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">月降低收入金额</span><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">B</span><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">（元）</span></div>
+        </td>
+
+        <td colspan="13" style="padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="jdsrjeb"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">家庭月可支配收入（元）</span></div>
+        </td>
+        <td colspan="4" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    id="jtnkzpsr" style="font-size: 10.5pt; -en-paragraph:true;"> </span></div>
+        </td>
+        <td colspan="3" style=" padding: 8px; border: 1px solid;">
+            <div style="margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">共同生活家庭人口（人）</span></div>
+        </td>
+        <td colspan="6" style="padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    id="gtshjtrk" style="font-size: 10.5pt; -en-paragraph:true;"> </span></div>
+        </td>
+        <td colspan="10" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: right; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">月人均可支配收入（元）</span></div>
+        </td>
+        <td colspan="3" style="padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    id="nrjkzpsr" style="font-size: 10.5pt; -en-paragraph:true;"> </span></div>
+        </td>
+    </tr>
+    <tr>
+        <td style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">月人均补差（元）</span></div>
+        </td>
+        <td colspan="3" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="yrjbc"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;">              </span>
+            </div>
+        </td>
+        <td colspan="4" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">保障人口（人）</span></div>
+        </td>
+        <td colspan="3" style=" padding: 8px; border: 1px solid;">
+            <div style="margin-top: 1em; margin-bottom: 1em;"><span id="bzrk"
+                                                                    style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="6" style="padding: 8px; border: 1px solid;">
+            <div style="margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">家庭月总补差（元）</span></div>
+        </td>
+        <td colspan="3" style=" padding: 8px; border: 1px solid;">
+            <div style="margin-top: 1em; margin-bottom: 1em;"><span id="jtyzbc"
+                                                                    style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+        <td colspan="7" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">享受类别</span></div>
+        </td>
+        <td colspan="3" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    id="xslbName" style="font-size: 10.5pt; -en-paragraph:true;"> </span></div>
+        </td>
+    </tr>
+    <tr>
+        <th style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">入户情况异常</span></div>
+        </th>
+        <td colspan="29" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="rhqkyc"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th rowspan="2" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">入户核查建议</span></div>
+        </th>
+        <td colspan="7" style=" padding: 8px; border: 1px solid;text-align: center;">
+            <span class="check_box" id="check_box_zc"><input type="checkbox" disabled="disabled"
+                                                             id="zc" style="text-align:center;"/>正常</span>
+        </td>
+        <td colspan="7" style=" padding: 8px; border: 1px solid;text-align: center;">
+            <span class="check_box" id="check_box_tz"><input type="checkbox" disabled="disabled"
+                                                             id="tz"/>调增</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </td>
+        <td colspan="8" style=" padding: 8px; border: 1px solid;text-align: center;">
+            <span class="check_box" style="margin: 2px;float: center;" id="check_box_tj"><input
+                    type="checkbox" disabled="disabled" id="tj"/>调减</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </td>
+        <td colspan="7" style=" padding: 8px; border: 1px solid;text-align: center;">
+            <span class="check_box" style="margin: 2px;float: center;"><input type="checkbox"
+                                                                              disabled="disabled"
+                                                                              id="cb"/>超标</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </td>
+    </tr>
+    <tr>
+        <td colspan="29" style=" padding: 8px; border: 1px solid;text-align: center;">
+            <span class="check_box" style="margin: 2px;float: center;"><input type="checkbox"
+                                                                              disabled="disabled"
+                                                                              id="rhyc"/>入户情况异常，不予认定</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </td>
+
+    </tr>
+    </tr>
+    <tr>
+        <td colspan="30" style=" padding: 8px; border: 1px solid;height: 40px;text-align: center;">
+            请根据实际调查结果填写以上内容，确认无误后签字或按手印
+        </td>
+    </tr>
+    <tr>
+        <th colspan="2" style="padding: 8px; border: 1px solid; height: 80px;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">*</span><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">申请人意见</span></div>
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">及签字按手印</span></div>
+        </th>
+        <td colspan="28" style=" padding: 8px; border: 1px solid; height: 80px;">
+            <ul class="image_list" id="memberimage">
+                <img id="image_member_s" style="width: 80px;" onclick="setmembersignature()"/>
+                <img id="image_member_f" style="width: 80px;" onclick="setmemberfingerprint()"/>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <th colspan="2" style="padding: 8px; border: 1px solid; height: 80px;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">*</span><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">核查人员签字</span></div>
+        </th>
+        <td colspan="8" style=" padding: 8px; border: 1px solid; height: 80px">
+            <ul class="image_list" id="workerimages">
+                <img id="image_worker_s" style="width: 80px;" onclick="setworksignature()"/>
+            </ul>
+        </td>
+        <th colspan="2" style="padding: 8px; border: 1px solid; height: 80px;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">*</span><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">村委会审核人签字</span></div>
+        </th>
+        <td colspan="8" style=" padding: 8px; border: 1px solid;">
+            <ul class="image_list" id="cunimages">
+                <img id="image_cun_s" style="width: 80px;" onclick="setworksignature()"/>
+            </ul>
+        </td>
+        <th colspan="2" style="padding: 8px; border: 1px solid; height: 80px;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">*</span><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">乡镇审核人签字</span></div>
+        </th>
+        <td colspan="8" style=" padding: 8px; border: 1px solid;">
+            <ul class="image_list" id="xiangimages">
+                <img id="image_xiang_s" style="width: 80px;" onclick="setworksignature()"/>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <th colspan="2" style="padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span
+                    style="font-size: 10.5pt; -en-paragraph:true;">入户情况</span></div>
+        </th>
+        <td colspan="28" style=" padding: 8px; border: 1px solid;">
+            <div style="text-align: center; margin-top: 1em; margin-bottom: 1em;"><span id="wfrhyy"
+                                                                                        style="font-size: 10.5pt; -en-paragraph:true;"> </span>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<table>
+    <div style="float: left; height: 80px; text-align: center;margin-top: 100px;">
+        <button class="mbt" onclick="setmembersignature()">申请人签字</button>
+        <button class="mbt"  onclick="setmemberfingerprint()">申请人指纹</button>
+        <button class="mbt"  onclick="setworksignature()">核查人签字</button>
+        <button class="mbt"  onclick="setcunsign()">村委会审核人签字</button>
+        <button class="mbt"  onclick="setxiangsign()">乡镇审核人签字</button>
+    </div>
+</table>
+
+<div><br/></div>
+
+</body>
+<script type="text/javascript">
+		function initData(data) {
+
+			setMemberSignatureData(data.dbsign);
+			setMemberFingerprintData(data.dbfingerprint);
+			setWorksignData(data.worksign);
+			setcunsignData(data.cunsign);
+			setxiangsignData(data.xiangsign);
+			$("#county").html(data.county);
+			$("#towns").html(data.towns);
+			$("#village").html(data.village_name);
+			var date = formatDate(data.timestamp).split("-");
+
+			$("#year").html(date[0]);
+			$("#month").html(date[1]);
+			$("#day").html(date[2]);
+			$("#hzname").html(data.name);
+			$("#hcount").html(data.family_count);
+			$("#bzcount").html(data.safe_mem_count);
+			$("#sfjdlk").html(data.create_card_name);
+			var jhsyh=["","独生子女", "双子女", "多子女", "其他"];
+			$("#jhsyh").html(jhsyh[data.is_plan_house]);
+
+			var zpyy=["","疾病", "灾害", "残疾", "缺乏劳动力","失业","失地","其他","因学"];
+			$("#zpyy").html(zpyy[data.jtkyzyyy]);
+			$("#call").html(data.phone);
+			$("#sfrhfl").html(data.home_separate_name);
+			$("#addr").html(data.addr);
+			$("#haddr").html(data.haddr);
+			$("#sqyy").html(data.help_reason);
+
+			$("#cxck").html(data.fp_savings_accountmoney);
+			$("#qtyjzq").html(data.fp_other_securitiesmoney);
+			$("#gz").html(data.fp_national_debtmoney);
+			$("#cxxbx").html(data.fp_savings_insurancemoney);
+			$("#gp").html(data.fp_sharesmoney);
+			$("#qtjtjr").html(data.fp_other_financemoney);
+			$("#jcName").html(data.fp_sedan == 1 ? "是" : "否");
+			$("#yyclName").html(data.fp_operating_vehicle == 1 ? "是" : "否");
+			$("#dxnjjName").html(data.fp_large_agricultural_machine == 1 ? "是" : "否");
+			$("#ptdshcName").html(data.fp_com_lowspeed_car == 1 ? "是" : "否");
+			$("#qtqx").html(data.fp_other_cases);
+			$("#tdjy").html(data.farm_income);
+			$("#wgsr").html(data.worker_income);
+			$("#fwczcs").html(data.house_sell);
+			$("#nsfyf").html(data.dependency_income);
+			$("#niu").html(data.fl_aquaculture_cattle);
+			$("#ylbxj").html(data.aged_income);
+			$("#tdzybt").html(data.land_income);
+			$("#yang").html(data.fl_aquaculture_sheep);
+			$("#zhu").html(data.fl_aquaculture_pig);
+			$("#ysbz").html(data.retire_income);
+			$("#ysbzsjlqje").html(data.ylbxj_income);
+			$("#lbtgzcxbt").html(data.lbtgzcxbt);
+			$("#qin").html(data.fl_aquaculture_birds);
+			$("#tdzyms").html(data.plowland_num);
+			$("#tdzymoney").html(data.land_subsidy);
+			$("#tdzyzmoney").html(data.land_income);
+			$("#lzbtms").html(data.flow_num);
+			$("#lzbtmoney").html(data.flow_income);
+			$("#lzbtzmoney").html(data.flow_subsidy);
+			$("#lsbtms").html(data.food_sup_num);
+			$("#lsbtmoney").html(data.policy_income);
+			$("#lsbtzmoney").html(data.policy_yincome);
+			$("#tdczms").html(data.land_lease_num);
+			$("#tdczmoney").html(data.land_lease_income);
+			$("#tdczzmoney").html(data.land_lease_subsidy);
+			$("#jyOther").html(data.other_income);
+			$("#qtgzsr").html(data.salary_hjincome);
+			$("#ccOther").html(data.other_asset);
+			$("#zyOther").html(data.trans_income);
+			$("#jyhj").html(data.manage_income);
+			$("#gzhj").html(data.salary_qtincome);
+			$("#cchj").html(data.total_asset);
+			$("#zyhj").html(data.total_trans_income);
+			$("#nrjsr").html(data.fl_family_percapita_money);
+			var reason="";
+			if(data.fl_nowork_disability!=undefined && data.fl_nowork_disability!=0){
+			reason="有完全丧失劳动能力的重病或重残;";
+			}
+			if(data.fl_underage_singlefamily!=undefined && data.fl_underage_singlefamily==1){
+			reason+="有未成年的丧偶单亲家庭;";
+			}
+			if(data.fl_elderly_family!=undefined && data.fl_elderly_family==1){
+			reason+="60周岁以上老年人家庭;";
+			}
+
+			$("#jdjthssryyName").html(reason);
+			$("#jdsrjeb").html(data.decrease_income_reason);
+			$("#jtnkzpsr").html(data.year_home_income);
+			$("#gtshjtrk").html(data.family_count);
+			$("#nrjkzpsr").html(data.year_per_income);
+			$("#yrjbc").html(data.fl_monthpeo_compen_money);
+			$("#bzrk").html(data.safe_mem_count);
+			$("#jtyzbc").html(data.fl_family_compen_money);
+			$("#xslbName").html(data.obj_type);
+			$("#rhqkyc").html(data.rh_exc);
+			$("#yearsfymoney").html(data.nsfyf);
+			$("#wfrhyy").html(data.rhdetail);
+
+			var hkType = [$("#nottp"), $("#wdtp")];
+
+			if (data.iscity != "") {
+				hkType[data.iscity].attr("checked", true);
+			}
+			if(data.fromtype != "2"){
+			   $('#check_box_zc').hide();
+			   $('#check_box_tz').hide();
+			   $('#check_box_tj').hide();
+			}
+		       $("#zc").attr("checked",data.hcresult.indexOf("1")>=0);
+			   $("#tz").attr("checked",data.hcresult.indexOf("2")>=0);
+			   $("#tj").attr("checked",data.hcresult.indexOf("3")>=0);
+			   $("#cb").attr("checked",data.hcresult.indexOf("4")>=0);
+			   var isyc;
+			       if (data.rhqkyc== undefined ||data.rhqkyc == "") {
+                       isyc=false;
+                    }else{
+                       isyc=true;
+                    }
+			   $("#rhyc").attr("checked",isyc);
+
+			        var sexs = ["","男","女"];
+					var relations=["","本人","配偶","养子女","儿子","女儿","父母","祖父母","兄弟姐妹","孙子女","（外）祖父母","儿媳","女婿","侄儿（女）","外甥子（女）","其他"];
+					var marrys=["","未婚","已婚","离异","丧偶"];
+					var works=["务工","务农","固定工作","无工作","离退休人员","在职人员","在读小学","在读初中","在读高中","在读大学","其他"];
+					var jkzk=["","健康或良好","重病","残疾","重病及重残","一般","较弱","其他"];
+					var jyzk=["","务工","务农","固定工作","未成年","在校学生","开办企业","个体工商"];
+					var bjsy=["","低保在享人员","现役义务兵","家庭成员重病重残","在校学生","宗教人士","服刑人员","有两名以上在校大学生子女","18周岁以下无固定收入人员","60周岁以上无固定收入人员"];
+
+			if (data.memBeans.length > 0) {
+
+				for (var i = 0; i < data.memBeans.length; i++) {
+
+					var mem_name, mem_sexName, mem_relationshipCodeName, mem_age, mem_marryName, mem_isApplyName, mem_identity,
+						mem_healthStateName, mem_typeAndLevelName, mem_ldl_num, mem_jyzkName, mem_work_addr, mem_work_money, isHalfName;
+
+					if (data.memBeans[i].name == '') {
+						mem_name = '';
+					} else {
+						mem_name = data.memBeans[i].name;
+					}
+
+					if (data.memBeans[i].gender_id == '') {
+						mem_sexName = '';
+					} else {
+						mem_sexName = sexs[data.memBeans[i].gender_id];
+					}
+					if (data.memBeans[i].relationid == '') {
+						mem_relationshipCodeName = '';
+					} else {
+						mem_relationshipCodeName =relations [data.memBeans[i].relationid];
+					}
+					if (data.memBeans[i].age == '') {
+						mem_age = '';
+					} else {
+						mem_age = data.memBeans[i].age;
+					}
+					if (data.memBeans[i].marriage_id == '') {
+						mem_marryName = '';
+					} else if (data.memBeans[i].marriage_id == 99) {
+						mem_marryName = '未说明的婚姻状态';
+					}else {
+						mem_marryName = marrys[data.memBeans[i].marriage_id];
+					}
+					if (data.memBeans[i].is_apply == '') {
+						mem_isApplyName = '';
+					} else {
+						mem_isApplyName = data.memBeans[i].is_apply=="1" ? "是" : data.memBeans[i].is_apply== "2"?"否":"";
+					}
+
+					if (data.memBeans[i].idcard == '') {
+						mem_identity = '';
+					} else {
+						mem_identity =data.memBeans[i].idcard;
+					}
+
+					if (data.memBeans[i].health_state == '') {
+						mem_healthStateName = '';
+					} else {
+						mem_healthStateName = data.memBeans[i].health_stateName;
+					}
+					if (data.memBeans[i].mem_typeAndLevelName == '') {
+						mem_typeAndLevelName = '';
+					} else {
+						mem_typeAndLevelName = data.memBeans[i].serious_illnessName+data.memBeans[i].chronic_disease_illnessName+data.memBeans[i].mem_ensure_typeName+data.memBeans[i].mem_ensure_levelName;
+					}
+					if (data.memBeans[i].memldlxs == '') {
+						mem_ldl_num = '';
+					} else {
+						mem_ldl_num = data.memBeans[i].memldlxs;
+					}
+
+					if (data.memBeans[i].employment_status == '') {
+						mem_jyzkName = '';
+					} else {
+						mem_jyzkName = data.memBeans[i].employment_statusName;
+					}
+					if (data.memBeans[i].work == '') {
+						mem_work_addr = '';
+					} else {
+						mem_work_addr = data.memBeans[i].work;
+					}
+					if (data.memBeans[i].memmoney == '') {
+						mem_work_money = '';
+					} else {
+						mem_work_money = data.memBeans[i].memmoney;
+					}
+					if (data.memBeans[i].is_fiftypercent_calcu == '1') {
+						isHalfName = '是';
+					} else {
+						isHalfName = '否';
+					}
+
+					var smember = '<tr><td colspan="2" class="srtd" >' +
+						mem_name +
+						'</td > <td class="srtd">' +
+
+						mem_sexName +
+						'</td><td colspan="3" class="srtd">' +
+						mem_relationshipCodeName +
+						' </td><td class="srtd">' +
+						mem_age +
+						' </td ><td class="srtd">' +
+						mem_marryName +
+						' </td><td class="srtd">' +
+						mem_isApplyName +
+						'</td><td colspan="4" class="srtd">' +
+						mem_identity +
+						' </td><td  colspan="5" class="srtd">' +
+						mem_healthStateName +
+						' </td ><td colspan="2" class="srtd">' +
+						mem_typeAndLevelName +
+						'</td ><td  colspan="3" class="srtd">' +
+						mem_ldl_num +
+						'</td ><td   class="srtd">' +
+						mem_jyzkName +
+						' </td ><td colspan="3" class="srtd">' +
+						mem_work_addr +
+						'</td ><td   class="srtd">' +
+						mem_work_money +
+						'</td ><td   class="srtd">' +
+						isHalfName +
+						'</td></tr>'
+					$("#memberData").append(smember)
+
+				}
+
+			}
+			if (data.memJhrBeans.length > 0) {
+				for (var i = 0; i < data.memJhrBeans.length; i++) {
+					var name, age, sexName, relationshipCodeName, identity, wsfynlyyName, jyzkName, year_money, isHalfName;
+					if (data.memJhrBeans[i].name == undefined) {
+						name = '';
+					} else {
+						name = data.memJhrBeans[i].name;
+					}
+					if (data.memJhrBeans[i].age == undefined) {
+						age = '';
+					} else {
+						age = data.memJhrBeans[i].age;
+					}
+					if (data.memJhrBeans[i].gender_id == '') {
+						sexName = '';
+					} else {
+						sexName = sexs[data.memJhrBeans[i].gender_id];
+					}
+					if (data.memJhrBeans[i].relationid == '') {
+						relationshipCodeName = '';
+					} else {
+						relationshipCodeName = relations [data.memJhrBeans[i].relationid];
+					}
+					if (data.memJhrBeans[i].idcard == '') {
+						identity = '';
+					} else {
+						identity = data.memJhrBeans[i].idcard;
+					}
+					if (data.memJhrBeans[i].no_raise_reson == '') {
+						wsfynlyyName = '';
+					} else {
+					if(data.memJhrBeans[i].no_raise_reson==101){
+					wsfynlyyName="低保在享人员";
+					}else if(data.memJhrBeans[i].no_raise_reson==102){
+					wsfynlyyName="现役义务兵";
+					}else if(data.memJhrBeans[i].no_raise_reson==108){
+					wsfynlyyName="家庭成员重病重残";
+					}else if(data.memJhrBeans[i].no_raise_reson==103){
+					wsfynlyyName="宗教人士";
+					}else if(data.memJhrBeans[i].no_raise_reson==104){
+					wsfynlyyName="服刑人员";
+					}else if(data.memJhrBeans[i].no_raise_reson==111){
+					wsfynlyyName="有两名以上在校大学生子女";
+					}else if(data.memJhrBeans[i].no_raise_reson==109){
+					wsfynlyyName="18周岁以下无固定收入人员";
+					}else if(data.memJhrBeans[i].no_raise_reson==110){
+					wsfynlyyName="60周岁以上无固定收入人员";
+					}else if(data.memJhrBeans[i].no_raise_reson==114){
+					wsfynlyyName="在校学生";
+					}
+
+					}
+
+					if (data.memJhrBeans[i].employment_status == '') {
+						jyzkName = '';
+					} else {
+						jyzkName = data.memJhrBeans[i].employment_statusName;
+					}
+					if (data.memJhrBeans[i].memmoney == '') {
+						year_money = '';
+					} else {
+						year_money = data.memJhrBeans[i].memmoney;
+					}
+					if (data.memJhrBeans[i].is_fiftypercent_calcu == '1') {
+						isHalfName = '是';
+					} else {
+						isHalfName ='否';
+					}
+					var sfyData;
+					if (i == 0) {
+						sfyData = '<tr><td colspan="2" class="srtd" >' +
+							name +
+							'</td > <td class="srtd">' +
+							sexName +
+							'</td><td colspan="3" class="srtd">' +
+							relationshipCodeName +
+							' </td><td class="srtd">' +
+							age +
+							' </td><td colspan="5" class="srtd">' +
+							identity +
+							' </td><td colspan="5" class="srtd">' +
+							wsfynlyyName +
+							' </td><td colspan="5" class="srtd">' +
+							jyzkName +
+							' </td><td  class="srtd">' +
+							year_money +
+							' </td><td  class="srtd">' +
+							isHalfName +
+							' </td><td  rowspan="100"  colspan="5"  class="srtd">' +
+							data.dependency_income +
+							'</td></tr>'
+					} else {
+						sfyData = '<tr><td colspan="2" class="srtd" >' +
+							name +
+							'</td > <td class="srtd">' +
+							sexName +
+							'</td><td colspan="3" class="srtd">' +
+							relationshipCodeName +
+							' </td><td class="srtd">' +
+							age +
+							' </td><td colspan="5" class="srtd">' +
+							identity +
+							' </td><td colspan="5" class="srtd">' +
+							wsfynlyyName +
+							' </td><td colspan="5" class="srtd">' +
+							jyzkName +
+							' </td><td  class="srtd">' +
+							year_money +
+							' </td><td  class="srtd">' +
+							isHalfName +
+							'</td></tr>'
+					}
+					$("#sfyData").append(sfyData)
+				}
+			}
+
+			if (data.house_real_info.length > 0) {
+				for (var i = 0; i < data.house_real_info.length; i++) {
+					var fcsl, zflxName, fwlxName, zfjgName, fczh, jzmj, symj, cqrxm, fwszqyName, zfdz;
+					if (data.house_real_info[i].houseNum == undefined) {
+						fcsl = '';
+					} else {
+						fcsl = data.house_real_info[i].houseNum;
+					}
+					if (data.house_real_info[i].houseing_type_name == undefined) {
+						zflxName = '';
+					} else {
+						zflxName = data.house_real_info[i].houseing_type_name;
+					}
+					if (data.house_real_info[i].house_type_name == undefined) {
+						fwlxName = '';
+					} else {
+						fwlxName = data.house_real_info[i].house_type_name;
+					}
+					if (data.house_real_info[i].housing_structure_name == undefined) {
+						zfjgName = '';
+					} else {
+						zfjgName = data.house_real_info[i].housing_structure_name;
+					}
+					if (data.house_real_info[i].house_cardnum == undefined) {
+						fczh = '';
+					} else {
+						fczh = data.house_real_info[i].house_cardnum;
+					}
+					if (data.house_real_info[i].house_builtuparea == undefined) {
+						jzmj = '';
+					} else {
+						jzmj = data.house_real_info[i].house_builtuparea;
+					}
+					if (data.house_real_info[i].house_usearea == undefined) {
+						symj = '';
+					} else {
+						symj = data.house_real_info[i].house_usearea;
+					}
+					if (data.house_real_info[i].house_ownername == undefined) {
+						cqrxm = '';
+					} else {
+						cqrxm = data.house_real_info[i].house_ownername;
+					}
+					if (data.house_real_info[i].house_area_name == undefined) {
+						fwszqyName = '';
+					} else {
+						fwszqyName = data.house_real_info[i].house_area_name;
+					}
+					if (data.house_real_info[i].house_address == undefined) {
+						zfdz = '';
+					} else {
+						zfdz = data.house_real_info[i].house_address;
+					}
+					var houseData;
+					if (i == 0) {
+						houseData = '<tr><td rowspan="100" colspan="2" class="srtd" >' +
+							data.houseNum +
+							'</td > <td colspan="2" class="srtd">' +
+							zflxName +
+							'</td><td colspan="3" class="srtd">' +
+							fwlxName +
+							' </td><td colspan="2" class="srtd">' +
+							zfjgName +
+							' </td><td colspan="2" class="srtd">' +
+							fczh +
+							' </td><td colspan="2" class="srtd">' +
+							jzmj +
+							' </td><td colspan="4" class="srtd">' +
+							symj +
+							' </td><td colspan="2" class="srtd">' +
+							cqrxm +
+							' </td><td colspan="4" class="srtd">' +
+							fwszqyName +
+							' </td><td colspan="6" class="srtd">' +
+							zfdz +
+							'</td></tr>'
+					} else {
+						houseData = '<tr> <td colspan="2" class="srtd">' +
+							zflxName +
+							'</td><td colspan="3" class="srtd">' +
+							fwlxName +
+							' </td><td colspan="2" class="srtd">' +
+							zfjgName +
+							' </td><td colspan="2" class="srtd">' +
+							fczh +
+							' </td><td colspan="2" class="srtd">' +
+							jzmj +
+							' </td><td colspan="4" class="srtd">' +
+							symj +
+							' </td><td colspan="2" class="srtd">' +
+							cqrxm +
+							' </td><td colspan="4" class="srtd">' +
+							fwszqyName +
+							' </td><td colspan="6" class="srtd">' +
+							zfdz +
+							'</td></tr>'
+					}
+
+					$("#houseData").append(houseData)
+				}
+			}
+
+		}
+		//设置申请人签字
+		function setMemberSignatureData(imgpath) {
+			$('#image_member_s').attr("src", imgpath);
+
+		}
+		//设置申请人指紋
+		function setMemberFingerprintData(imgpath) {
+			$('#image_member_f').attr("src", imgpath);
+		}
+
+
+		//设置核查人员签字
+		function setWorksignData(imgpath) {
+			$('#image_worker_s').attr("src", imgpath);
+		}
+        //设置村委会审批人签字
+		function setcunsignData(imgpath) {
+			$('#image_cun_s').attr("src", imgpath);
+		}
+		//设置村委会审批人签字
+		function setxiangsignData(imgpath) {
+			$('#image_xiang_s').attr("src", imgpath);
+		}
+
+		//申请人签字
+		function setmembersignature() {
+			android.memberSingature();
+		}
+		//申请人指纹
+		function setmemberfingerprint() {
+		    android.memberFingerprint();
+		}
+		//核查人员签字
+		function setworksignature() {
+			android.workSingature();
+		}
+		//村委会审核人签字
+		function setcunsign() {
+			android.cunsign();
+		}
+		//乡镇审核人签字
+		function setxiangsign() {
+			android.xiangsign();
+		}
+
+		function formatDate(now) {
+			var d = new Date(now);
+			var year = d.getFullYear();
+			var month = d.getMonth() + 1;
+			var date = d.getDate();
+			var hour = d.getHours();
+			var minute = d.getMinutes();
+			var second = d.getSeconds();
+			return year + "-" + month + "-" + date;
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>

@@ -64,10 +64,10 @@ public class SecUserController extends PageController {
      */
     @RequestMapping("add")
     @ResponseBody
-    public SecUser insertUser(@RequestBody SecUser secUser) {
-        SecUser ispUser = (SecUser) getLoginUser();
+    public ReturnEntity insertUser(@RequestBody SecUser secUser) {
+        SecUser ispUser = getTokenLoginUser();
         secUser.setCreator(ispUser.getUserId());
-        return secUserService.addUser(secUser);
+        return ReturnEntity.ok(secUserService.addUser(secUser));
     }
 
     /**
@@ -87,13 +87,12 @@ public class SecUserController extends PageController {
     /**
      * 作废用户
      * 
-     * @param userId
      * @return
      */
     @RequestMapping("delete")
     @ResponseBody
-    public int deleteUser(@RequestBody SecUser secUser) {
-        return secUserService.deleteUser(secUser);
+    public ReturnEntity deleteUser(@RequestBody SecUser secUser) {
+        return ReturnEntity.ok(secUserService.deleteUser(secUser));
     }
 
 }

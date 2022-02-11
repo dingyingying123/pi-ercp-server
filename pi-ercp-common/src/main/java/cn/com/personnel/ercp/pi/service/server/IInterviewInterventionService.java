@@ -19,4 +19,5 @@ public interface IInterviewInterventionService {
 
     ReturnEntity deleteInterviewInterventionInfo(ServerInterviewInterventionVO serverInterviewInterventionVO);
 
+    ReturnEntity getLetterNumber();
 }

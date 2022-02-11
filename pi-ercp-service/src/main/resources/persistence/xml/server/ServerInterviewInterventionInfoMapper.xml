@@ -121,4 +121,16 @@
   <select id="queryInterviewInterventionInfo" resultMap="BaseResultMapVO">
     select * from server_interview_intervention_info where view_id=#{viewId}
   </select>
+
+  <select id="getLetterNumber" parameterType="java.lang.String" resultType="java.lang.String">
+      SELECT
+        #{ prefix } || CASE WHEN res.str ISNULL THEN '0001' ELSE res.str END
+      FROM (
+        SELECT
+          to_char(MAX(regexp_replace(view_no,'('|| #{ prefix } ||')(\d{4})','\2','g')::int + 1), 'FM0000') as str
+        FROM
+          server_interview_intervention_info
+        WHERE view_no ~ ('^'|| #{ prefix } ||'\d{4}$')
+      ) res
+  </select>
 </mapper>

@@ -1,0 +1,233 @@
+﻿@charset "utf-8";
+* {
+    padding: 0px;
+    margin: 0px;
+}
+body{
+	background: #ddd;
+}
+input{
+	/*height: 20px;*/
+	border:none;
+    text-align: center;
+    font-size: 14px;
+    }
+select{
+	border:none;
+}
+a{
+	text-decoration:none;
+}
+textarea{
+	border:none;
+	overflow-y:hidden;
+}
+li{list-style:none;}
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "仿宋_GB2312";
+}
+.bigContent{
+	width: 1280px;
+	height: 1200px;
+	margin: 0 auto;
+}
+.titleImg{
+	width:1280px;
+	height:40px;
+	margin: 0 auto;
+	background:url(jztop.jpg) repeat-x top left; 
+	border-radius:6px 6px 0px 0px;
+}
+.btnList{
+	width: 1278px;
+	height: 40px;
+	display: block;
+	border:1px solid #2E81CD;
+	margin: 0 auto;
+	background: #fff;
+}
+.btnLi{
+	width: 100px;
+	height: 40px;
+	display: block;
+	float: left;
+	cursor: pointer;
+}
+
+.btnLiSpan{
+	width: 80px;
+	height: 25px;
+	background: #eee; 
+	display: block;
+	margin: 7px  auto 0 auto;
+	color: #2E81CD;
+	line-height: 25px;
+	text-align: center;
+	font-size: 14px;
+}
+.btnLiSpan:hover{
+    background-color:#2E81CD;
+    color:#fff;
+}
+.content{
+	width:1280px;
+	margin: 0 auto 50px auto;
+	background: #fff;
+	font-size:14px;
+}
+.contentW{
+	width: 1200px;
+	margin: 0 auto;
+}
+.sheet td {
+    border: 1px solid black;
+    height:30px;
+}
+.sheet{
+	width:100%;
+	text-align: center;
+	border-collapse: collapse;
+}
+.titleS{
+	text-align:center;
+	font-size: 30px;
+	font-weight: 600;
+}
+.fs20h20lh20{
+	font-size: 16px;height: 20px;line-height: 20px;
+}
+.w200h20hs20h20lh20bb1s{
+	width: 200px;height: 20px;font-size: 16px;height: 20px;line-height: 20px;border-bottom: 1px solid #000;
+}
+.w80h20fs20lh20bb1s{
+	width: 80px;height: 20px;font-size: 16px;line-height: 20px;border-bottom: 1px solid #000;
+}
+.w50h20fs20lh20bb1s{
+	width: 50px;height: 20px;font-size: 16px;line-height: 20px;border-bottom: 1px solid #000;
+}
+.w100Bh20lh20fs20{
+	width: 100%;height: 20px;line-height: 20px; font-size: 16px;
+}
+.h15w15{
+	width: 15px;height: 15px;
+}
+.w80{
+	width:  80px;
+}
+.w160{
+	width:  160px;
+}
+.w240{
+	width:  240px;
+}
+.w320{
+	width:  320px;
+}
+.w400{
+	width:  400px;
+}
+.w480{
+	width:  480px;
+}
+.w560{
+	width:  560px;
+}
+.fs20lh30tac{
+	font-size: 16px;text-align: center;
+}
+
+.fs16lh30tac{
+	font-size: 14px;text-align: center;
+}
+.fw600{
+	font-weight: 600;
+}
+.bb1s{
+	border-bottom: 1px solid #000;
+}
+.w100bh150dbfl{
+	width: 100%;height: 150px;display: block;float: left;
+}
+.w100bh30dbfs20lh30tac{
+	width: 100%;height: 30px;display: block; font-size: 16px;line-height: 30px;text-align: center;
+}
+.pStyle{
+	font-size: 16px;
+}
+.pStyle16{
+	font-size: 14px;
+}
+.w100bh120db{
+	width: 100%;height: 120px;display: block;
+}
+.w180h30dbm20a0a{
+	width: 180px;height: 30px;display: block;margin: 20px auto 0 auto;
+}
+.w80h100bdbbaccfllh30tacfs20cp{
+	width: 80px;height: 100%;display: block;background: #2E81CD;color: #fff;float: left;line-height: 30px;text-align: center;font-size: 16px;cursor: pointer;
+}
+.ml20{
+	margin-left: 20px;
+}
+.cur{
+	cursor: pointer;
+}
+.QZimg{
+	z-index: 999;
+	 position: absolute; 
+	cursor: pointer;
+}
+.QZimg1{
+	z-index: 999;
+	 /* position: absolute;  */
+	cursor: pointer;
+}
+.w800h80{
+	width: 800px;
+	height: 80px;
+}
+.w100bh80db{
+	width: 100%;
+	height: 80px;
+	display: block;
+}
+.w300h100bdbfs20fw600fllh80{
+	width: 300px;height: 100%;display: block;font-size: 16px;font-weight: 600;float: left;line-height: 80px;
+}
+.w160h80fl{
+	width: 160px;height: 80px;float: left;
+}
+.w400h80{
+	width: 400px;height: 80px;
+}
+.w100bh80db{
+	width: 100%;height: 80px;display: block;
+}
+.w200h100bdbfw600fllh80{
+	width: 200px;height: 100%;display: block;font-size: 16px;font-weight: 600;float: left;line-height: 80px;
+}
+.w200h100bdbfl{
+	width: 200px;height: 100%;display: block;float: left;
+}
+.mbt {
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-left: 20px;
+    float: right;
+    height: 40px;
+    width: 80px;
+    border-radius: 6px;
+    border: 1px cornflowerblue solid;
+    background-color: dodgerblue;
+    color: white;
+}
+
+.image_list li {
+    float: left;
+}
+
+.image_list  img {
+    height: 120px;
+}

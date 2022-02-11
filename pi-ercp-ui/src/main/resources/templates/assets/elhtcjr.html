@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>残疾人两项补贴入户核查表</title>
+    <link rel="stylesheet" href="../../static/css/difficulttable.css"/>
+    <script type="text/javascript" src="../../static/js/jquery-1.2.6.min.js"></script>
+    <style>
+			.image_list li {
+				float: left;
+			}
+
+			.image_list  img {
+				height: 120px;
+			}
+
+			.mbt {
+				margin-right: 20px;
+				margin-top: 20px;
+				margin-left: 20px;
+				float: right;
+				height: 40px;
+				width: 80px;
+				border-radius: 6px;
+				border: 1px cornflowerblue solid;
+				background-color: dodgerblue;
+				color: white;
+			}
+
+    </style>
+</head>
+
+<body>
+<div class="main_body">
+    <div style="height: 30px;"></div>
+	<h1 class="main_tit" >残疾人两项补贴入户核查表</h1>
+
+    <table class="main_table">
+        <tbody>
+			<tr >
+				<td colspan="12">
+					<div class="pull_left" style="padding-left: 30px;">
+						所属地区：
+					    <span id="county">二连浩特市</span>
+					    <span id="towns"></span>乡（镇、苏木）
+					    <span id="village"></span>村（居）委会
+					</div>
+					      
+					<div class="pull_right" style="padding-right: 30px;">
+					    <span>核查时间：</span>
+					    <span id="year"></span>年
+					    <span id="month"></span>月
+					    <span id="day"></span>日
+					</div>
+				</td>
+			</tr>
+        <tr>
+            <td width="114">姓名</th>
+            <td id="name"></td>
+			<td>性别</td>
+			<td id="sex"></td>
+            <td>民族</td>
+            <td id="nationname"></td>
+            <td>联系电话</td>
+            <td  id="phone"></td>
+            <td>居住地址</td>
+            <td  colspan="3" id="addr"></td>
+        </tr>
+		 <tr>
+		    <td width="114">户籍地址</th>
+		    <td  colspan="11" id="haddr"></td>
+		</tr>
+		 <tr>
+		    <td  colspan="12" >共同生活家庭成员</td>
+		</tr>
+		<tbody class="main_table" id="members" >
+        <tr>
+		   <td>姓名</td>
+           <td colspan="2">家庭关系</td>
+		   <td colspan="3">身份证号码</td>
+		   <td>年龄</td>
+		   <td>婚姻状况</td>
+		   <td>残疾类型</td>
+		   <td>残疾等级</td>
+		   <td>职业</td>
+		   <td>月收入</td>
+        </tr>
+		</tbody>
+        <tr>
+            <td rowspan="2">居住环境</td>
+            <td>装修情况</td>
+			<td>电视</td>
+			<td>电脑</td>
+			<td>冰箱</td>
+			<td>热水器</td>
+			<td>微波炉</td>
+			<td>洗衣机</td>
+			<td>空调</td>	
+			<td colspan="3">其他</td>	
+        </tr>
+	
+		 <tr>
+		    <td id="zxqkname"></td>
+			<td id="dsName"></td>
+			<td id="dnName"></td>
+			<td id="bxName"></td>
+			<td id="rsqName"></td>
+			<td id="wblName"></td>
+			<td id="xyjName"></td>
+			<td id="ktName"></td>	
+			<td id="jzqt" colspan="3"></td>	
+		</tr>
+		  <tr>
+		    <td rowspan="2">住房情况</td>
+		    <td colspan="2">住房类型</td>
+			<td colspan="2">房屋所有者</td>
+			<td colspan="2">住房面积</td>
+			<td colspan="2">房产数量</td>	
+			<td colspan="3">其他</td>	
+		</tr>
+		 <tr>
+		 
+		   <td colspan="2" id="zflxname"></td>
+		   <td colspan="2" id="homeowner"></td>
+		   <td colspan="2" ><span id="homearea"></span>㎡</td>
+		   <td colspan="2" id="homecount"></td>
+		   <td colspan="3" id="homeother"></td>	
+		</tr>
+       <tr style="height: 120px;">
+          <td>被核查人家庭代表签字按手印</td>
+          <td colspan="11" class="text_left">
+              <ul class="image_list" id="memberimage">
+                  <img id="image_member_s" onclick="setmembersignature()"/>
+                  <img id="image_member_f" onclick="setmemberfingerprint()"/>
+                  <button class="mbt" onclick="setmembersignature()">签 字</button>
+                  <button class="mbt" onclick="setmemberfingerprint()">指纹</button>
+              </ul>
+          </td>
+      </tr>
+      <tr style="height: 120px;">
+          <td>核查人员签字</td>
+          <td colspan="11" class="text_left">
+              <ul class="image_list" id="workerimages">
+                  <img id="image_worker_s" onclick="setworksignature()"/>
+                  <button class="mbt" onclick="setworksignature()">签字</button>
+              </ul>
+          </td>
+      
+      </tr>
+      <tr>
+          <td>入户情况</td>
+          <td colspan="11" id="rhdetail"></td>
+      </tr>
+        </tbody>
+
+  
+    </table>
+
+    <div><br/><br/><br/><br/><br/><br/></div>
+    <script type="text/javascript">
+
+				function initData(data) {
+				    setMemberSignatureData(data.dbsign);
+					setMemberFingerprintData(data.dbfingerprint);
+					setWorksignData(data.worksign);
+					
+					
+<!--					$("#county").html(data.county);-->
+					 $("#towns").html(data.towns);
+					 $("#village").html(data.village_name);
+					
+					var date = formatDate(data.timestamp).split("-");
+					$("#year").html(date[0]);
+					$("#month").html(date[1]);
+					$("#day").html(date[2]);
+
+					var sexs = ["","男","女"];
+
+					$("#name").html(data.name);
+					$("#sex").html(sexs[data.gender]== undefined ?"":sexs[data.gender]);
+					$("#nationname").html(data.nation_name);
+					$("#phone").html(data.phone);
+					$("#addr").html(data.addr);
+					$("#haddr").html(data.haddr);
+					var zxqk =["简装","毛坯","精装"];
+					$("#zxqkname").html(zxqk[data.decorate_info]);
+					$("#dsName").html(data.tv == 1 ? "有" : "无");
+					$("#dnName").html(data.computer == 1 ? "有" : "无");
+					$("#bxName").html(data.ice_box == 1 ? "有" : "无");
+					$("#rsqName").html(data.hot_box == 1 ? "有" : "无");
+					$("#wblName").html(data.micro_box == 1 ? "有" : "无");
+					$("#xyjName").html(data.wash_box == 1 ? "有" : "无");
+					$("#ktName").html(data.air_box == 1 ? "有" : "无");
+					$("#jzqt").html(data.real_home_case);
+					
+					$("#zflxname").html(data.house_type_name);
+                    $("#homeowner").html(data.homeowner);
+					$("#homearea").html(data.homearea);
+					$("#homecount").html(data.homecount);
+					$("#homeother").html(data.other_case);
+					$("#rhdetail").html(data.rhdetail);
+					
+				
+					var relations=["","本人","配偶","养子女","儿子","女儿","父母","祖父母","兄弟姐妹","孙子女","（外）祖父母","儿媳","女婿","侄儿（女）","外甥子（女）","其他"];
+					var marrys=["","未婚","已婚","离异","丧偶"];
+					var works=["","务工","务农","在校学生","固定工作","无工作","退休人员"];
+					var cjlxs=["","视力残疾","听力残疾","言语残疾","肢体残疾","智力残疾","精神残疾","多重残疾","其他残疾"];
+					var cjdj=["","一级残疾","二级残疾","三级残疾","四级残疾"];
+					for(var i = 0; i < data.memBeans.length; i++) {
+						var memname,memrelation,memage,memwedding,memidcard,memcjlx,memcjdj,memworkname,memmoney;
+
+						if(data.memBeans[i].name==undefined){
+						memname='';
+						}else{
+						memname=data.memBeans[i].name ;
+						}
+
+						memrelation=relations[data.memBeans[i].relationid];
+						if(memrelation==undefined){
+						memrelation='';
+						}
+						if(data.memBeans[i].age==undefined){
+						memage='';
+						}else{
+						memage=data.memBeans[i].age ;
+						}
+
+						if(data.memBeans[i].marriage_id==99){
+						memwedding='未说明的婚姻状况';
+						}else{
+						memwedding=marrys[data.memBeans[i].marriage_id];
+						}
+						if(memwedding==undefined){
+						memwedding='';
+						}
+
+						if(data.memBeans[i].idcard==undefined){
+						memidcard='';
+						}else{
+						memidcard=data.memBeans[i].idcard ;
+						}
+						memcjlx= cjlxs[data.memBeans[i].ensure_type];
+						if(memcjlx==undefined){
+							memcjlx="";
+						}
+						memcjdj= cjdj[data.memBeans[i].ensure_level];
+						if(memcjdj==undefined){
+							memcjdj="";
+						}
+						memworkname=data.memBeans[i].work;
+						if(memworkname==undefined){
+						memworkname='';
+						}
+						if(data.memBeans[i].memmoney==undefined || data.memBeans[i].memmoney==0){
+						memmoney='';
+						}else{
+						memmoney=data.memBeans[i].memmoney +"    元" ;
+						}
+						
+				
+						var smember = '<tr><td>' +
+							memname +
+							'</td><td colspan="2">' +
+							memrelation +
+							'</td><td colspan="3">' +
+							memidcard +
+							'</td><td>' +
+							memage +
+							'</td><td>' +
+							memwedding +
+							'</td><td>' +
+							memcjlx +
+							'</td><td>' +
+							memcjdj +
+							'</td><td>' +
+							memworkname +
+							'</td><td>' +
+							memmoney  +
+							'</td></tr>';
+						$("#members").append(smember)
+					}
+               
+					
+				
+					
+				}
+
+					//申请人签字
+					function setmembersignature() {
+						android.memberSingature();
+					}
+					//申请人指纹
+					function setmemberfingerprint() {
+						android.memberFingerprint();
+					}
+
+					//核查人员签字
+					function setworksignature() {
+						android.workSingature();
+					}
+
+					//设置申请人签字
+					function setMemberSignatureData(imgpath) {
+						$('#image_member_s').attr("src", imgpath);
+					}
+					//设置申请人指紋
+					function setMemberFingerprintData(imgpath) {
+						$('#image_member_f').attr("src", imgpath);
+					}
+
+
+                    //设置核查人员签字
+					function setWorksignData(imgpath) {
+						$('#image_worker_s').attr("src", imgpath);
+					}
+
+				function formatDate(now) {
+					var d = new Date(now);
+					var year = d.getFullYear();
+					var month = d.getMonth() + 1;
+					var date = d.getDate();
+					var hour = d.getHours();
+					var minute = d.getMinutes();
+					var second = d.getSeconds();
+					return year + "-" + month + "-" + date;
+				}
+
+
+
+    </script>
+</div>
+
+</body>
+
+</html>

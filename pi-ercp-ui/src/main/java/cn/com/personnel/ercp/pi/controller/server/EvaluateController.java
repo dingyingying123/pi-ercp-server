@@ -97,4 +97,13 @@ public class EvaluateController extends PageController {
         return evaluateService.deleteEvaluateInfo(serverEvaluateInfoVO);
     }
 
+    /**
+     * 获取编号
+     * @return
+     */
+    @RequestMapping("/getLetterNumber")
+    @ResponseBody
+    public ReturnEntity getLetterNumber(){
+        return evaluateService.getLetterNumber();
+    }
 }

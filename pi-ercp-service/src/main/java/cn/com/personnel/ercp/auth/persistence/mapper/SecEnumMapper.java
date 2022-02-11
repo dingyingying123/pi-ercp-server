@@ -53,4 +53,5 @@ public interface SecEnumMapper extends BaseMapper<SecEnum> {
     SecEnum selectEnumByKeyByEnglistName(@Param("secEnumType") SecEnumTypeVO secEnumType);
 
 
+    List<String> selectNameByKeyByEnlName(@Param("secEnumType") SecEnumType enumType);
 }

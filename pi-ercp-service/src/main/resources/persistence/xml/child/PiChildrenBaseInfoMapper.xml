@@ -76,7 +76,7 @@
   </resultMap>
 
   <select id="queryPiChildrenBaseInfoList" resultMap="BaseResultMap">
-    select * from pi_children_base_info i
+    select coalesce ((select count(*) from pi_children_guardian_info g where i.child_id=g.child_id),0) as guardian,i.* from pi_children_base_info i
     <where>
       <if test="info.childAccountAddress != null and info.childAccountAddress != ''">
         i.child_account_address like concat('%', #{info.childAccountAddress}, '%')
@@ -111,8 +111,11 @@
       <if test="info.childViolationGuardian != null and info.childViolationGuardian != ''">
          and i.child_violation_guardian like concat('%', #{info.childViolationGuardian}, '%')
       </if>
-      <if test="info.status != null and info.status != ''">
+      <if test="info.status != null and info.status != '' and info.status != '-1'">
          and i.status = #{info.status}
+      </if>
+      <if test="info.status != null and info.status != '' and info.status == '-1'">
+         and i.status != '0'
       </if>
     </where>
     order by i.create_time desc
@@ -270,4 +273,118 @@
       on p.child_account_province=s6.child_account_province and p.child_account_city=s6.child_account_city and p.child_account_county=s6.child_account_county and p.child_account_town=s6.child_account_town and p.child_account_address=s6.child_account_address
 
   </select>
+
+    <select id="queryTakeCaseList" resultMap="BaseResultMap">
+        select b.* from server_take_case_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
+        <where>
+            <if test="childName != null and childName != '' ">
+                (i.child_name like concat('%', #{childName}, '%') or b.child_id_no like concat('%', #{childName}, '%'))
+            </if>
+            <if test="childId != null and childId != '' ">
+                and i.child_id = #{childId}
+            </if>
+            <if test="area != null and area != '' ">
+                and b.area like concat('%', #{area}, '%')
+            </if>
+            <if test="caseStatus != null and caseStatus != ''">
+                and s.case_status = #{caseStatus}
+            </if>
+        </where>
+        order by i.case_date desc
+    </select>
+
+    <select id="queryEstimateList" resultMap="BaseResultMap">
+        select b.* from server_estimate_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
+        <where>
+            <if test="childName != null and childName != '' ">
+                (i.child_name like concat('%', #{childName}, '%') or b.child_id_no like concat('%', #{childName}, '%'))
+            </if>
+            <if test="childId != null and childId != '' ">
+                and i.child_id = #{childId}
+            </if>
+            <if test="area != null and area != '' ">
+                and b.area like concat('%', #{area}, '%')
+            </if>
+            <if test="caseStatus != null and caseStatus != ''">
+                and s.case_status = #{caseStatus}
+            </if>
+            <if test="estimateStatus != null and estimateStatus != ''">
+                and s.estimate_status = #{estimateStatus}
+            </if>
+        </where>
+        order by i.estimate_date desc
+    </select>
+
+    <select id="queryPlanList" resultMap="BaseResultMap">
+        select b.* from server_plan_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
+        <where>
+            <if test="childName != null and childName != '' ">
+                (i.child_name like concat('%', #{childName}, '%') or b.child_id_no like concat('%', #{childName}, '%'))
+            </if>
+            <if test="childId != null and childId != '' ">
+                and i.child_id = #{childId}
+            </if>
+            <if test="area != null and area != '' ">
+                and b.area like concat('%', #{area}, '%')
+            </if>
+            <if test="planStatus != null and planStatus != ''">
+                and s.plan_status = #{planStatus}
+            </if>
+        </where>
+        order by i.plan_date desc
+    </select>
+
+    <select id="queryInterventionList" resultMap="BaseResultMap">
+        select b.* from server_interview_intervention_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
+        <where>
+            <if test="childName != null and childName != '' ">
+                (i.child_name like concat('%', #{childName}, '%') or b.child_id_no like concat('%', #{childName}, '%'))
+            </if>
+            <if test="childId != null and childId != '' ">
+                and i.child_id = #{childId}
+            </if>
+            <if test="area != null and area != '' ">
+                and b.area like concat('%', #{area}, '%')
+            </if>
+            <if test="interventionStatus != null and interventionStatus != ''">
+                and s.intervention_status = #{interventionStatus}
+            </if>
+        </where>
+        union
+        select b.* from server_available_resources_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
+        <where>
+            <if test="childName != null and childName != '' ">
+                (i.child_name like concat('%', #{childName}, '%') or b.child_id_no like concat('%', #{childName}, '%'))
+            </if>
+            <if test="childId != null and childId != '' ">
+                and i.child_id = #{childId}
+            </if>
+            <if test="area != null and area != '' ">
+                and b.area like concat('%', #{area}, '%')
+            </if>
+            <if test="interventionStatus != null and interventionStatus != ''">
+                and s.intervention_status = #{interventionStatus}
+            </if>
+        </where>
+
+    </select>
+
+    <select id="queryEvaluateList" resultMap="BaseResultMap">
+        select b.* from server_evaluate_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
+        <where>
+            <if test="childName != null and childName != '' ">
+                (i.child_name like concat('%', #{childName}, '%') or b.child_id_no like concat('%', #{childName}, '%'))
+            </if>
+            <if test="childId != null and childId != '' ">
+                and i.child_id = #{childId}
+            </if>
+            <if test="area != null and area != '' ">
+                and b.area like concat('%', #{area}, '%')
+            </if>
+            <if test="evaluateStatus != null and evaluateStatus != ''">
+                and s.evaluate_status = #{evaluateStatus}
+            </if>
+        </where>
+        order by i.evaluate_date desc
+    </select>
 </mapper>

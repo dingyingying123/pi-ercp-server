@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -42,16 +43,16 @@ public class CaseCloseService extends BaseService implements ICaseCloseService {
         if(serverCaseClosedInfoVO == null || StringUtils.isEmpty(serverCaseClosedInfoVO.getCloseId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
-        ServerEvaluateInfoVO evaluateInfoVO = serverEvaluateInfoMapper.queryCaseClosedInfo(serverCaseClosedInfoVO);
+        ServerCaseClosedInfoVO caseClosedInfoVO = serverCaseClosedInfoMapper.queryCaseClosedInfo(serverCaseClosedInfoVO);
 
-        ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(evaluateInfoVO.getStaId());
-        evaluateInfoVO.setCaseStatus(serverChildStatusInfo.getCaseStatus());
-        evaluateInfoVO.setEstimateStatus(serverChildStatusInfo.getEstimateStatus());
-        evaluateInfoVO.setPlanStatus(serverChildStatusInfo.getPlanStatus());
-        evaluateInfoVO.setInterventionStatus(serverChildStatusInfo.getInterventionStatus());
-        evaluateInfoVO.setEvaluateStatus(serverChildStatusInfo.getEvaluateStatus());
-        evaluateInfoVO.setCaseClosedStatus(serverChildStatusInfo.getCaseClosedStatus());
-        return ReturnEntity.ok(evaluateInfoVO);
+        ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.selectByPrimaryKey(caseClosedInfoVO.getStaId());
+        caseClosedInfoVO.setCaseStatus(serverChildStatusInfo.getCaseStatus());
+        caseClosedInfoVO.setEstimateStatus(serverChildStatusInfo.getEstimateStatus());
+        caseClosedInfoVO.setPlanStatus(serverChildStatusInfo.getPlanStatus());
+        caseClosedInfoVO.setInterventionStatus(serverChildStatusInfo.getInterventionStatus());
+        caseClosedInfoVO.setEvaluateStatus(serverChildStatusInfo.getEvaluateStatus());
+        caseClosedInfoVO.setCaseClosedStatus(serverChildStatusInfo.getCaseClosedStatus());
+        return ReturnEntity.ok(caseClosedInfoVO);
     }
 
     @Override
@@ -64,17 +65,18 @@ public class CaseCloseService extends BaseService implements ICaseCloseService {
 
     @Override
     public ReturnEntity saveCaseClosedInfo(ServerCaseClosedInfoVO serverCaseClosedInfoVO, SecUser secUser) {
+        if(StringUtils.isEmpty(serverCaseClosedInfoVO.getChildId())){
+            return ReturnEntity.errorMsg("参数错误！");
+        }
+        ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.queryOneStatusByChildId(serverCaseClosedInfoVO.getChildId());
+        if(serverChildStatusInfo == null){
+            return ReturnEntity.errorMsg("儿童信息不存在！");
+        }
         if(StringUtils.isEmpty(serverCaseClosedInfoVO.getCloseId())){
-            if(StringUtils.isEmpty(serverCaseClosedInfoVO.getChildId())){
-                return ReturnEntity.errorMsg("参数错误！");
-            }
-            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.queryOneStatusByChildId(serverCaseClosedInfoVO.getChildId());
-            if(serverChildStatusInfo == null){
-                return ReturnEntity.errorMsg("儿童信息不存在！");
-            }
             serverCaseClosedInfoVO.setStaId(serverChildStatusInfo.getStaId());
             String planId = UUIDKit.getUUID();
             serverCaseClosedInfoVO.setCloseId(planId);
+            serverCaseClosedInfoVO.setCloseNo(getNumber());
             serverCaseClosedInfoVO.setReceiver(secUser.getUserName());
             serverCaseClosedInfoVO.setStatus(CommonConstants.ServerApprovalStatus.CLOSE_CASE_SAVE);
             serverCaseClosedInfoVO.setCreator(secUser.getUserId());
@@ -89,6 +91,7 @@ public class CaseCloseService extends BaseService implements ICaseCloseService {
             serverChildStatusInfo.setArea(secUser.getArea());
             serverChildStatusInfoMapper.updateByPrimaryKeySelective(serverChildStatusInfo);
         }else{
+            serverCaseClosedInfoVO.setStaId(serverChildStatusInfo.getStaId());
             serverCaseClosedInfoVO.setUpdator(secUser.getUserId());
             serverCaseClosedInfoVO.setUpdateTime(new Date());
             serverCaseClosedInfoVO.setArea(secUser.getArea());
@@ -102,14 +105,18 @@ public class CaseCloseService extends BaseService implements ICaseCloseService {
         if(StringUtils.isEmpty(serverCaseClosedInfoVO.getCloseId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
-        serverCaseClosedInfoVO.setStatus(CommonConstants.ServerApprovalStatus.CLOSE_CASE_SUBMIT);
-        serverCaseClosedInfoVO.setUpdateTime(new Date());
-        serverCaseClosedInfoVO.setUpdator(secUser.getUserId());
-        serverCaseClosedInfoVO.setArea(secUser.getArea());
-        serverCaseClosedInfoMapper.updateByPrimaryKeySelective(serverCaseClosedInfoVO);
+        ServerCaseClosedInfo serverCaseClosedInfo = serverCaseClosedInfoMapper.selectByPrimaryKey(serverCaseClosedInfoVO.getCloseId());
+        if(serverCaseClosedInfo == null){
+            return ReturnEntity.errorMsg("数据不存在！");
+        }
+        serverCaseClosedInfo.setStatus(CommonConstants.ServerApprovalStatus.CLOSE_CASE_SUBMIT);
+        serverCaseClosedInfo.setUpdateTime(new Date());
+        serverCaseClosedInfo.setUpdator(secUser.getUserId());
+//        serverCaseClosedInfo.setArea(secUser.getArea());
+        serverCaseClosedInfoMapper.updateByPrimaryKeySelective(serverCaseClosedInfo);
 
         ServerChildStatusInfo statusInfo = new ServerChildStatusInfo();
-        statusInfo.setStaId(serverCaseClosedInfoVO.getStaId());
+        statusInfo.setStaId(serverCaseClosedInfo.getStaId());
         statusInfo.setEvaluateStatus(CommonConstants.ServerApprovalStatus.CLOSE_CASE_SUBMIT);
         statusInfo.setUpdator(secUser.getUserId());
         statusInfo.setUpdateTime(new Date());
@@ -136,5 +143,19 @@ public class CaseCloseService extends BaseService implements ICaseCloseService {
         serverChildStatusInfo.setCaseClosedStatus("");
         serverChildStatusInfoMapper.updateByPrimaryKeySelective(serverChildStatusInfo);
         return ReturnEntity.ok(serverCaseClosedInfoVO);
+    }
+
+    public String getNumber() {
+        Date date = new Date();
+        String prefix = new SimpleDateFormat("yyyy").format(date) + new SimpleDateFormat("MM").format(date);
+        logger.info("=========前缀：" + prefix);
+        return prefix + serverCaseClosedInfoMapper.getLetterNumber(prefix);
+    }
+
+    @Override
+    public ReturnEntity getLetterNumber() {
+        ReturnEntity returnEntity = new ReturnEntity(CommonConstants.SUCCESS_CODE, CommonConstants.SUCCESS_MESSAGE, null);
+        returnEntity.setData(getNumber());
+        return returnEntity;
     }
 }

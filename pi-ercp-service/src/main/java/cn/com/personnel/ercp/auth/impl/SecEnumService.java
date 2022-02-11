@@ -7,6 +7,7 @@ package cn.com.personnel.ercp.auth.impl;
 
 import cn.com.personnel.ercp.auth.module.JSSelectNode;
 import cn.com.personnel.ercp.auth.persistence.entity.SecEnum;
+import cn.com.personnel.ercp.auth.persistence.entity.SecEnumType;
 import cn.com.personnel.ercp.auth.persistence.mapper.SecEnumMapper;
 import cn.com.personnel.ercp.auth.service.ISecEnumService;
 import cn.com.personnel.ercp.common.constants.CommonConstants;
@@ -193,6 +194,12 @@ public class SecEnumService extends BaseService implements ISecEnumService {
 		} catch (Exception e) {
 			throw new BusinessException("查询字段项失败");
 		}
+	}
+
+	@Override
+	public ReturnEntity selectNameByKeyByEnlName(SecEnumType enumType) {
+		List<String> enumNameList = secEnumMapper.selectNameByKeyByEnlName(enumType);
+		return ReturnEntity.ok(enumNameList);
 	}
 
 

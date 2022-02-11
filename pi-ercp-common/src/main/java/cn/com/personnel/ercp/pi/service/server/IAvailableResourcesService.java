@@ -15,4 +15,6 @@ public interface IAvailableResourcesService {
     ReturnEntity submitAvailableResourcesInfo(ServerAvailableResourcesInfoVO serverAvailableResourcesInfoVO, SecUser secUser);
 
     ReturnEntity deleteAvailableResourcesInfo(ServerAvailableResourcesInfoVO serverAvailableResourcesInfoVO);
+
+    ReturnEntity getLetterNumber();
 }

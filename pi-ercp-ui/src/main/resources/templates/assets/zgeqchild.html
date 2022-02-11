@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>儿童入户核查表</title>
+		<link rel="stylesheet" href="../../static/css/difficulttable.css" />
+		<script type="text/javascript" src="../../static/js/jquery-1.2.6.min.js"></script>
+		<style>
+			.image_list li {
+				float: left;
+			}
+
+			.image_list  img {
+				height: 120px;
+			}
+
+			.mbt {
+				margin-right: 20px;
+				margin-top: 20px;
+				margin-left: 20px;
+				float: left;
+				height: 40px;
+				width: 100px;
+				border-radius: 6px;
+				border: 1px cornflowerblue solid;
+				background-color: dodgerblue;
+				color: white;
+			}
+
+    </style>
+	</head>
+
+	<body>
+		<div class="main_body">
+			<div style="height: 30px;"></div>
+			<h1 class="main_tit" id="tablename">儿 童 入 户 核 查 表</h1>
+			<div class="main_head">
+				<div class="pull_left">
+					苏木镇（街道办事处）<span class="main_info" id="towns"></span>
+					嘎查村（居委会）<span class="main_info" id="village"></span>
+
+				</div>
+
+				<div class="pull_right">
+					<span>入户时间：</span>
+					<span class="main_info wid50" id="year"></span>年
+					<span class="main_info wid50" id="month"></span>月
+					<span class="main_info wid50" id="day"></span>日
+				</div>
+				<br />
+			</div>
+
+			<table class="main_table">
+				<tbody>
+					<tr>
+						<td width="114">姓名</td>
+						<td colspan="2" id="name"></td>
+						<td>性别</td>
+						<td colspan="2" id="sex"></td>
+						<td>民族</td>
+						<td colspan="2" id="nation"></td>
+						<td>出生日期</td>
+						<td colspan="2" id="birthday"></td>
+					</tr>
+					<tr>
+						<td>身份证号</td>
+						<td colspan="5" id="idcard"></td>
+						<td>户籍状况</td>
+						<td colspan="5" id="hjxz"></td>
+					</tr>
+					<tr>
+						<td>户籍地址</td>
+						<td colspan="5" id="haddr"></td>
+						<td>居住地址</td>
+						<td colspan="5" id="addr"></td>
+					</tr>
+					<tr>
+						<td>儿童类型</td>
+						<td colspan="11" id="children_type"></td>
+					</tr>
+					<tr>
+						<td>困境儿童情况</td>
+						<td colspan="11" id="difficulty_type"></td>
+					</tr>
+					<tr>
+						<td>养育类型</td>
+						<td colspan="11" id="raise_type"></td>
+					</tr>
+					<tr>
+						<td>儿童健康状况</td>
+						<td colspan="2" id="health_state"></td>
+						<td>残疾类型</td>
+						<td colspan="2" id="disease"></td>
+						<td>残疾等级</td>
+						<td colspan="2" id="disease_level"></td>
+						<td>患病类型</td>
+						<td colspan="2" id="sick_type"></td>
+					</tr>
+					<tr>
+						<td>工学情况</td>
+						<td colspan="3" id="ws_info_type"></td>
+						<td colspan="2">就读学校</td>
+						<td colspan="6" id="attend_school"></td>
+					</tr>
+					<tr>
+						<td>救助情况</td>
+						<td colspan="11" id="relief_type"> </td>
+					</tr>
+					<tr>
+						<td rowspan="4"> 父亲基本<br />信息</td>
+						<td>姓名</td>
+						<td colspan="2" id="father_name"></td>
+						<td colspan="2">身份证号</td>
+						<td colspan="3" id="father_idcard"></td>
+						<td colspan="1">联系电话</td>
+						<td colspan="2" id="father_phone"></td>
+					</tr>
+					<tr>
+						<td>健康状况</td>
+						<td colspan="2" id="father_health_state"></td>
+						<td colspan="2">残疾类别</td>
+						<td colspan="2" id="father_disease"></td>
+						<td colspan="1">残疾等级</td>
+						<td colspan="1" id="father_disease_level"></td>
+						<td colspan="1">患病类型</td>
+						<td colspan="1" id="father_sick_type"></td>
+					</tr>
+					<tr>
+						<td>户籍地址</td>
+						<td colspan="6" id="father_haddr"></td>
+						<td colspan="1">居住地址</td>
+						<td colspan="3" id="father_addr"></td>
+					</tr>
+					<tr>
+						<td>其他情况</td>
+						<td colspan="10" id="father_other"></td>
+					</tr>
+					<tr>
+						<td rowspan="4"> 母亲基本<br />信息</td>
+						<td>姓名</td>
+						<td colspan="2" id="mather_name"></td>
+						<td colspan="2" >身份证号</td>
+						<td colspan="3" id="mather_idcard"></td>
+						<td colspan="1">联系电话</td>
+						<td colspan="2" id="mather_phone"></td>
+					</tr>
+					<tr>
+						<td>健康状况</td>
+						<td colspan="2"  id="mather_health_state"></td>
+						<td colspan="2">残疾类别</td>
+						<td colspan="2" id="mather_disease"></td>
+						<td colspan="1">残疾等级</td>
+						<td colspan="1" id="mather_disease_level"></td>
+						<td colspan="1">患病类型</td>
+						<td colspan="1" id="mather_sick_type"></td>
+					</tr>
+					<tr>
+						<td>户籍地址</td>
+						<td colspan="6" id="mather_haddr"></td>
+						<td colspan="1">居住地址</td>
+						<td colspan="3" id="mather_addr"></td>
+					</tr>
+					<tr>
+						<td>其他情况</td>
+						<td colspan="10" id="mather_other"></td>
+					</tr>
+				</tbody>
+
+				<table class="main_table" id="commonLifesMemBen">
+					
+				</table>
+				<table class="main_table">
+					<tbody>
+						<tr style="height: warp;">
+							<td rowspan="3" width="114">保障费发<br/>放情况</td>
+							<td colspan="2">领取方式</td>
+							<td colspan="3" id="reget_way"></td>
+							<td colspan="1">起领年月</td>
+							<td colspan="2" id="reget_date"></td>
+							<td colspan="1">保障标准</td>
+							<td colspan="2"id="bzbz"></td>
+						</tr>
+						<tr>
+							<td colspan="2">领取人（开户人）</td>
+							<td colspan="3" id="account_number"></td>
+							<td colspan="3">领取人与儿童关系</td>
+							<td colspan="3"  id="yktbgr"></td>
+						</tr>
+						<tr>
+							<td colspan="2">开户银行</td>
+							<td colspan="3" id="bankcode"></td>
+							<td colspan="2">银行账号</td>
+							<td colspan="4" id="bank_account"></td>
+						</tr>
+						<td>目前存在的困难</td>
+						<td colspan="5" id="hcresultexplanation"></td>
+						<td colspan="2">帮扶建议</td>
+						<td colspan="4" id="help_suggest"></td>
+						</tr>
+						<tr style="height: 80px;">
+							<td>本人签字/指纹</td>
+							<td colspan="5">
+								<ul id="memberimage" class="image_list">
+									<img id="image_member_s" style="width: 50px;" />
+									<img id="image_member_f" style="width: 50px;" />
+
+								</ul>
+							</td>
+							<td colspan="2">调查人签字</td>
+							<td colspan="4">
+								<ul id="workerimages" class="image_list">
+									<img id="image_worker_s" style="width: 50px;" />
+								</ul>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+			</table>
+
+			<table>
+				<div style="float: left; height: 60px; text-align: center;margin-top: 100px;">
+					<button class="mbt" onclick="setmembersignature()">本人签字</button>
+					<button class="mbt" onclick="setmemberfingerprint()">本人指纹</button>
+					<button class="mbt" onclick="setworksignature()">调查人签字</button>
+
+				</div>
+			</table>
+			<div><br /><br /><br /><br /><br /><br /></div>
+			<script type="text/javascript">
+				
+			function initData(data) {
+					setMemberSignatureData(data.dbsign);
+					setMemberFingerprintData(data.dbfingerprint);
+					setWorksignData(data.worksigns);
+					// $("#tablename").html(data.tablename);
+					$("#towns").html(data.towns);
+					$("#village").html(data.village_name);
+					var date = formatDate(data.timestamp).split("-");
+					$("#year").html(date[0]);
+					$("#month").html(date[1]);
+					$("#day").html(date[2]);
+					$("#name").html(data.name);
+					var sexs =["","男","女"];
+					$("#sex").html(sexs[data.gender]);
+					$("#nation").html(data.nation_name);
+					$("#birthday").html(data.birthday);
+					$("#idcard").html(data.idcard);
+					$("#hjxz").html(data.house_nature_name);
+					$("#haddr").html(data.haddr);
+					$("#addr").html(data.addr);
+					//儿童类型
+					var children_types =["","孤儿","困境儿童"];
+					$("#children_type").html(children_types[data.children_type]);
+					//困境儿童情况
+					var difficulty_types =["","社会散居孤儿","弃婴","事实无人抚养儿童","流浪儿童","艾滋病感染儿童","低保家庭儿童","特困供养儿童","建档立卡儿童","因残因病导致家庭贫困儿童","困境家庭儿童","单亲困境家庭儿童","单亲家庭儿童","受家庭暴力影响儿童"];
+					if(data.difficulty_type==99){
+					$("#difficulty_type").html("其他-"+data.difficulty_other);
+					}else{
+					$("#difficulty_type").html(difficulty_types[data.difficulty_type]);
+					}
+					//养育类型
+					var raise_types =["","父母养育","(外)祖父母养育","其他亲属养育","市儿童福利院集中养育","市未成年人保护中心临时监护儿童","无亲属关系人养育","父（母）单位养育","居委会（村委会）等养育","独立（独自）生活"];
+					if(data.raise_type==99){
+					$("#raise_type").html("其他-"+data.raise_other);
+					}else{
+					$("#raise_type").html(raise_types[data.raise_type]);
+					}
+
+					$("#health_state").html(data.health_state==1?"是":"否");
+					//残疾类型
+					var diseases =["","视力残疾","听力残疾","言语残疾","肢体残疾","智力残疾","精神残疾","多重残疾","其他残疾"];
+					$("#disease").html(diseases[data.disease]);
+					//残疾等级
+					var disease_levels =["","一级残废","二级残废","三级残废","四级残废"];
+					$("#disease_level").html(disease_levels[data.disease_level]);
+					//患病类型
+					var sick_types =["","先天性心脏病","脑血管病","白血病","地中海贫血","传染病","慢性阻塞性肺气肿","肾病综合征","关节病（髋、膝）","肾炎","类风湿性关节炎","其他一年内治疗支出超过大病保险给付钱的疾病"];
+					if(data.sick_type==99){
+					$("#sick_type").html("其他-"+data.sick_other);
+					}else{
+					$("#sick_type").html(sick_types[data.sick_type]);
+					}
+					//工学情况
+					var ws_info_types =["","未入学","幼儿园","小学","初中	","高中或职业高中","技校","中专","大专","本科","研究生","辍学","特教","无就学能力","待业","就业"];
+					if(data.ws_info_type==99){
+					$("#ws_info_type").html("其他-"+data.ws_other);
+					}else{
+					$("#ws_info_type").html(ws_info_types[data.ws_info_type]);
+					}
+					$("#attend_school").html(data.attend_school);
+					//救助情况
+					var relief_types =["","低保","特困供养","临时救助","医疗救助","住房救助","困难残疾人生活补贴","重度残疾人生活补贴","建档立卡户","孤儿基本生活补贴","事实无人抚养基本生活补贴","艾滋病感染儿童救助"];
+					if(data.relief_type==99){
+					$("#relief_type").html("其他-"+data.help_reason);
+					}else{
+					$("#relief_type").html(relief_types[data.relief_type]);
+					}
+					//与儿童关系
+					var relations=["","父亲","母亲","祖父","祖母","外祖父","外祖母","其他"];
+					var other_info=["","死亡","失踪","失联","服刑在押","强制隔离戒毒","被执行其他限制人身自由的措施"];
+
+					for(var i = 0; i < data.memBeans.length; i++) {
+							if(data.memBeans[i].relationid==1){
+								$("#father_name").html(data.memBeans[i].name);
+								$("#father_idcard").html(data.memBeans[i].idcard);
+								$("#father_phone").html(data.memBeans[i].phone);
+								$("#father_health_state").html(data.memBeans[i].health_state==1?"是":"否");
+								$("#father_disease").html(diseases[data.memBeans[i].ensure_type]);
+								$("#father_disease_level").html(disease_levels[data.memBeans[i].ensure_level]);
+								if(data.memBeans[i].memdisease==99){
+									$("#father_sick_type").html("其他-"+data.memBeans[i].memdisease_other);
+								}else{
+									$("#father_sick_type").html(sick_types[data.memBeans[i].memdisease]);
+								}
+								$("#father_haddr").html(data.memBeans[i].member_homeaddr);
+								$("#father_addr").html(data.memBeans[i].home_address);
+								if(data.memBeans[i].other_type==99){
+									$("#father_other").html("其他");
+								}else{
+									$("#father_other").html(other_info[data.memBeans[i].other_type]);
+								}
+							}else if(data.memBeans[i].relationid==2){
+								$("#mather_name").html(data.memBeans[i].name);
+								$("#mather_idcard").html(data.memBeans[i].idcard);
+								$("#mather_phone").html(data.memBeans[i].phone);
+								$("#mather_health_state").html(data.memBeans[i].health_state==1?"是":"否");
+								$("#mather_disease").html(diseases[data.memBeans[i].ensure_type]);
+								$("#mather_disease_level").html(disease_levels[data.memBeans[i].ensure_level]);
+								if(data.memBeans[i].memdisease==99){
+									$("#mather_sick_type").html("其他-"+data.memBeans[i].memdisease_other);
+								}else{
+									$("#mather_sick_type").html(sick_types[data.memBeans[i].memdisease]);
+								}
+								$("#mather_haddr").html(data.memBeans[i].member_homeaddr);
+								$("#mather_addr").html(data.memBeans[i].home_address);
+								if(data.memBeans[i].other_type==99){
+									$("#mather_other").html("其他");
+								}else{
+									$("#mather_other").html(other_info[data.memBeans[i].other_type]);
+								}
+							}
+					}
+					//领取方式
+					var reget_ways=["","一卡通","银行转账"];
+					$("#reget_way").html(reget_ways[data.reget_way]);
+					$("#reget_date").html(data.reget_date);
+					$("#bzbz").html(data.standards);
+					$("#account_number").html(data.account_number);
+					$("#yktbgr").html(data.yktbgr);
+					//银行
+					var banks=["","二连浩特市农村合作银行","中国银行","中国农业银行","中国工商银行","中国建设银行","中国邮政储蓄银行","乌海市商业银行","中国农业发展银行","阿拉善左旗农村合作银行","阿拉善右旗农村信用合作联社","额济纳旗农村信用合作联社","阿拉善左旗方大村镇银行","农村信用合作联社","农村合作银行","鄂尔多斯市商业银行","手工发放","内蒙古银行","","农商银行"];
+					$("#bankcode").html(banks[data.bankcode]);
+					$("#bank_account").html(data.bank_account);
+					$("#hcresultexplanation").html(data.hcresultexplanation);
+					$("#help_suggest").html(data.help_suggest);
+
+					if(data.memJhrBeans.length>0){
+
+					for(var i = 0; i < data.memJhrBeans.length; i++) {
+
+						var health=data.memJhrBeans[i].health_state==1 ? "是":"否";
+						var disease =diseases[data.memJhrBeans[i].ensure_type];
+						if(disease==undefined){
+							disease="";
+						}
+						var disease_level=disease_levels[data.memJhrBeans[i].ensure_level];
+						if(disease_level==undefined){
+							disease_level="";
+						}
+						var sick_type ;
+						if(data.memJhrBeans[i].memdisease==99){
+							sick_type="其他-"+data.memJhrBeans[i].memdisease_other;
+						}else{
+							sick_type=sick_types[data.memJhrBeans[i].memdisease];
+						}
+						if(sick_type==undefined){
+							sick_type="";
+						}
+						var other;
+						if(data.memJhrBeans[i].other_type==99){
+							other="其他";
+						}else{
+							other=other_info[data.memJhrBeans[i].other_type];
+						}
+						if(other==undefined){
+							other="";
+						}
+						var hans ="";
+						if(i==0){
+							hans='<td rowspan="'+4*data.memJhrBeans.length+'" width="114"> 其他监护<br/>人信息</td>';
+						}else{
+							hans="";
+						}
+						var name =data.memJhrBeans[i].name;
+						if(name==undefined){
+							name="";
+						}
+						var idcard=data.memJhrBeans[i].idcard;
+						if(idcard==undefined){
+							idcard="";
+						}
+						var phone =data.memJhrBeans[i].phone;
+						if(phone==undefined){
+							phone="";
+						}
+						var mhaddr=data.memJhrBeans[i].member_homeaddr;
+						if(mhaddr==undefined){
+							mhaddr="";
+						}
+						var maddr=data.memJhrBeans[i].home_address;
+						if(maddr==undefined){
+							maddr="";
+						}
+						var relation =relations[data.memJhrBeans[i].relationid];
+						if(relation==undefined){
+							relation="";
+						}
+						var  smember='<tr>'
+						+hans+'<td>'
+						+'姓名'+'</td><td colspan="2">'
+						+name+'</td><td colspan="2">'
+						+'身份证号'+'</td><td colspan="3">'
+						+idcard+'</td><td colspan="1">'
+						+'联系电话'+'</td><td colspan="2">'
+						+phone+'</td></tr><tr><td>'
+						+'健康状况'+'</td><td colspan="2" >'
+						+health+'</td><td colspan="2">'
+						+'残疾类别'+'</td><td colspan="2">'
+						+disease+'</td><td colspan="1">'
+						+'残疾等级'+'</td><td colspan="1">'
+						+disease_level+'</td><td colspan="1">'
+						+'患病类型'+'</td><td colspan="1">'
+						+sick_type+'</td></tr><tr><td>'
+						+'户籍地址'+'</td><td colspan="6">'
+						+mhaddr+'</td><td colspan="1">'
+						+'居住地址'+'</td><td colspan="3">'
+						+maddr+	'</td></tr><tr><td>'
+						+'其他情况'+'</td><td colspan="6">'
+						+other+	'</td><td colspan="2">'
+						+'受委托监护人<br/>/监护人与<br/>儿童关系'+'</td><td colspan="2">'
+						+relation+'</td>'
+						'</tr>';
+						$("#commonLifesMemBen").append(smember)	;		
+					}
+				
+					}else{
+						
+						var  smember='<tr><td rowspan="4" width="114"> 其他监护<br/>人信息</td><td>'
+						+'姓名'+'</td><td colspan="2">'
+						+''+'</td><td colspan="2">'
+						+'身份证号'+'</td><td colspan="3">'
+						+''+'</td><td colspan="1">'
+						+'联系电话'+'</td><td colspan="2">'
+						+''+'</td></tr><tr><td>'
+						+'健康状况'+'</td><td colspan="2" >'
+						+''+'</td><td colspan="2">'
+						+'残疾类别'+'</td><td colspan="2">'
+						+''+'</td><td colspan="1">'
+						+'残疾等级'+'</td><td colspan="1">'
+						+''+'</td><td colspan="1">'
+						+'患病类型'+'</td><td colspan="1">'
+						+''+'</td></tr><tr><td>'
+						+'户籍地址'+'</td><td colspan="6">'
+						+''+'</td><td colspan="1">'
+						+'居住地址'+'</td><td colspan="3">'
+						+''+'</td></tr><tr><td>'
+						+'其他情况'+'</td><td colspan="6">'
+						+''+	'</td><td colspan="2">'
+						+'受委托监护人<br/>/监护人与<br/>儿童关系'+'</td><td colspan="2">'
+						+''+'</td>'
+						'</tr>';
+						$("#commonLifesMemBen").append(smember)	;
+					}
+				}
+
+				//申请人签字
+				function setmembersignature() {
+					android.memberSingature();
+				}
+				//申请人指纹
+				function setmemberfingerprint() {
+					android.memberFingerprint();
+				}
+
+				//核查人员签字
+				function setworksignature() {
+					android.workSingature();
+				}
+
+				//设置申请人签字
+				function setMemberSignatureData(imgpath) {
+					$('#image_member_s').attr("src", imgpath);
+				}
+				//设置申请人指紋
+				function setMemberFingerprintData(imgpath) {
+					$('#image_member_f').attr("src", imgpath);
+				}
+
+
+				
+				//设置核查人员签字
+				function setWorksignData(imgpath) {
+					$('#image_worker_s').attr("src", imgpath);
+				}
+				
+
+				function formatDate(now) {
+					var d = new Date(now);
+					var year = d.getFullYear();
+					var month = d.getMonth() + 1;
+					var date = d.getDate();
+					var hour = d.getHours();
+					var minute = d.getMinutes();
+					var second = d.getSeconds();
+					return year + "-" + month + "-" + date;
+				}
+			</script>
+		</div>
+
+	</body>
+
+</html>

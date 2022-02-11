@@ -83,4 +83,16 @@
   <select id="queryTakeCaseInfo" resultMap="BaseResultMapVO">
     select * from server_take_case_info where case_id=#{caseId}
   </select>
+
+  <select id="getLetterNumber" parameterType="java.lang.String" resultType="java.lang.String">
+      SELECT
+        #{ prefix } || CASE WHEN res.str ISNULL THEN '0001' ELSE res.str END
+      FROM (
+        SELECT
+          to_char(MAX(regexp_replace(case_no,'('|| #{ prefix } ||')(\d{4})','\2','g')::int + 1), 'FM0000') as str
+        FROM
+          server_take_case_info
+        WHERE case_no ~ ('^'|| #{ prefix } ||'\d{4}$')
+      ) res
+  </select>
 </mapper>

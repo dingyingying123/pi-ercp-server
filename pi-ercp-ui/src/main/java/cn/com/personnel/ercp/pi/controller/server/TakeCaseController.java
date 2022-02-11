@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -96,5 +97,25 @@ public class TakeCaseController extends PageController {
     public ReturnEntity submitTakeCaseInfo(@RequestBody ServerTakeCaseInfoVO serverTakeCaseInfoVO){
         SecUser secUser = getTokenLoginUser();
         return takeCaseService.submitTakeCaseInfo(serverTakeCaseInfoVO, secUser);
+    }
+
+    /**
+     * 获取编号
+     * @return
+     */
+    @RequestMapping("/getLetterNumber")
+    @ResponseBody
+    public ReturnEntity getLetterNumber(){
+        return takeCaseService.getLetterNumber();
+    }
+
+    /**
+     * 获取编号
+     * @return
+     */
+    @RequestMapping("/getLetterNumberByType")
+    @ResponseBody
+    public ReturnEntity getLetterNumberByType(@RequestParam("type") String type){
+        return takeCaseService.getLetterNumber(type);
     }
 }

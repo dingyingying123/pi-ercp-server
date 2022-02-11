@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -38,9 +39,10 @@ public class InterviewInterventionService extends BaseService implements IInterv
     @Override
     public ReturnEntity queryInterviewInterventionList(ServerInterviewInterventionVO serverInterviewInterventionVO, PagenationQueryParameter buildPagenation) {
         setPageHelper(buildPagenation);
-        List<ServerInterviewInterventionVO> serverInterviewInterventionVOList = serverInterviewInterventionInfoMapper.queryInterviewInterventionList(serverInterviewInterventionVO);
+        List<ServerInterviewInterventionVO> serverInterviewInterventionVOList = serverInterviewInterventionInfoMapper.queryInterventionList(serverInterviewInterventionVO);
         return ReturnEntity.ok(new PageInfo<>(serverInterviewInterventionVOList));
     }
+
 
     @Override
     public ReturnEntity queryInterviewInterventionInfo(ServerInterviewInterventionVO serverInterviewInterventionVO) {
@@ -70,17 +72,18 @@ public class InterviewInterventionService extends BaseService implements IInterv
     @Override
     public ReturnEntity saveInterviewInterventionInfo(ServerInterviewInterventionVO serverInterviewInterventionVO, SecUser secUser) {
         logger.info("=============保存直接介入参数：" + serverInterviewInterventionVO);
+        if(StringUtils.isEmpty(serverInterviewInterventionVO.getChildId())){
+            return ReturnEntity.errorMsg("参数错误！");
+        }
+        ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.queryOneStatusByChildId(serverInterviewInterventionVO.getChildId());
+        if(serverChildStatusInfo == null){
+            return ReturnEntity.errorMsg("儿童信息不存在！");
+        }
         if(StringUtils.isEmpty(serverInterviewInterventionVO.getViewId())){
-            if(StringUtils.isEmpty(serverInterviewInterventionVO.getChildId())){
-                return ReturnEntity.errorMsg("参数错误！");
-            }
-            ServerChildStatusInfo serverChildStatusInfo = serverChildStatusInfoMapper.queryOneStatusByChildId(serverInterviewInterventionVO.getChildId());
-            if(serverChildStatusInfo == null){
-                return ReturnEntity.errorMsg("儿童信息不存在！");
-            }
             serverInterviewInterventionVO.setStaId(serverChildStatusInfo.getStaId());
             String planId = UUIDKit.getUUID();
             serverInterviewInterventionVO.setViewId(planId);
+            serverInterviewInterventionVO.setViewNo(getNumber());
             serverInterviewInterventionVO.setReceiver(secUser.getUserName());
             serverInterviewInterventionVO.setStatus(CommonConstants.ServerApprovalStatus.INTERVENTIONING_SAVE);
             serverInterviewInterventionVO.setCreator(secUser.getUserId());
@@ -95,6 +98,7 @@ public class InterviewInterventionService extends BaseService implements IInterv
             serverChildStatusInfo.setArea(secUser.getArea());
             serverChildStatusInfoMapper.updateByPrimaryKeySelective(serverChildStatusInfo);
         }else{
+            serverInterviewInterventionVO.setStaId(serverChildStatusInfo.getStaId());
             serverInterviewInterventionVO.setUpdator(secUser.getUserId());
             serverInterviewInterventionVO.setUpdateTime(new Date());
             serverInterviewInterventionVO.setArea(secUser.getArea());
@@ -108,14 +112,18 @@ public class InterviewInterventionService extends BaseService implements IInterv
         if(StringUtils.isEmpty(serverInterviewInterventionVO.getViewId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
-        serverInterviewInterventionVO.setStatus(CommonConstants.ServerApprovalStatus.INTERVENTIONSUBMITED);
-        serverInterviewInterventionVO.setUpdateTime(new Date());
-        serverInterviewInterventionVO.setUpdator(secUser.getUserId());
-        serverInterviewInterventionVO.setArea(secUser.getArea());
-        serverInterviewInterventionInfoMapper.updateByPrimaryKeySelective(serverInterviewInterventionVO);
+        ServerInterviewInterventionInfo serverInterviewInterventionInfo = serverInterviewInterventionInfoMapper.selectByPrimaryKey(serverInterviewInterventionVO.getViewId());
+        if(serverInterviewInterventionInfo == null){
+            return ReturnEntity.errorMsg("数据不存在！");
+        }
+        serverInterviewInterventionInfo.setStatus(CommonConstants.ServerApprovalStatus.INTERVENTIONSUBMITED);
+        serverInterviewInterventionInfo.setUpdateTime(new Date());
+        serverInterviewInterventionInfo.setUpdator(secUser.getUserId());
+//        serverInterviewInterventionInfo.setArea(secUser.getArea());
+        serverInterviewInterventionInfoMapper.updateByPrimaryKeySelective(serverInterviewInterventionInfo);
 
         ServerChildStatusInfo statusInfo = new ServerChildStatusInfo();
-        statusInfo.setStaId(serverInterviewInterventionVO.getStaId());
+        statusInfo.setStaId(serverInterviewInterventionInfo.getStaId());
         if("是".equals(serverInterviewInterventionVO.getAllSubmit())){
             statusInfo.setInterventionStatus(CommonConstants.ServerApprovalStatus.INTERVENTIONSUBMITED);
         }else {
@@ -153,5 +161,19 @@ public class InterviewInterventionService extends BaseService implements IInterv
             serverChildStatusInfoMapper.updateByPrimaryKeySelective(serverChildStatusInfo);
         }
         return ReturnEntity.ok(serverInterviewInterventionVO);
+    }
+
+    public String getNumber() {
+        Date date = new Date();
+        String prefix = new SimpleDateFormat("yyyy").format(date) + new SimpleDateFormat("MM").format(date);
+        logger.info("=========前缀：" + prefix);
+        return prefix + serverInterviewInterventionInfoMapper.getLetterNumber(prefix);
+    }
+
+    @Override
+    public ReturnEntity getLetterNumber() {
+        ReturnEntity returnEntity = new ReturnEntity(CommonConstants.SUCCESS_CODE, CommonConstants.SUCCESS_MESSAGE, null);
+        returnEntity.setData(getNumber());
+        return returnEntity;
     }
 }

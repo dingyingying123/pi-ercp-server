@@ -18,4 +18,6 @@ public interface IEvaluateService {
     ReturnEntity submitEvaluateInfo(ServerEvaluateInfoVO serverEvaluateInfoVO, SecUser secUser);
 
     ReturnEntity deleteEvaluateInfo(ServerEvaluateInfoVO serverEvaluateInfoVO);
+
+    ReturnEntity getLetterNumber();
 }

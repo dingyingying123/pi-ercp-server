@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../../static/js/jquery-1.2.6.min.js"></script>
+    <style>
+        .mbt {
+				margin-right: 20px;
+				margin-top: 20px;
+				margin-left: 20px;
+				float: right;
+				height: 30px;
+				width: 60px;
+				border-radius: 6px;
+				border: 1px cornflowerblue solid;
+				background-color: dodgerblue;
+				color: white;
+				outline:none;
+			}
+    </style>
+</head>
+<body>
+<div>
+    <p style="height:30px;"></p>
+    <p class="MsoNormal" align="center" style="text-align:center"><span
+            style="font-size:22.0pt;font-family:方正小标宋简体;mso-hansi-font-family:黑体">责任告知书</span></p>
+    <p class="MsoNormal" align="left" style="text-align:left;text-indent:32.05pt;
+line-height:27.0pt;mso-line-height-rule:exactly"><span style="font-size:14.0pt;
+font-family:仿宋_GB2312;mso-hansi-font-family:仿宋;mso-bidi-font-family:仿宋;
+mso-bidi-font-weight:bold">居民在接受核查时，请仔细阅读并了解以下内容。享受救助的家庭必须如实提供家庭基本信息及相关证明材料，
+主要内容：本人及配偶的家庭收入、财产（房屋、车辆、存款、证券、保险）、是否有工作单位和职务、工商税务、民办非企业等有关投资注册登记等信息，
+同时还要如实申报家庭成员是否有过或正在收押、在押、涉毒等违法情况。享保人及家庭成员必须积极配合入户调查，无正当理由不配合调查或者拒绝调查的视为放弃享受社会救助。</span></p>
+    <p class="MsoNormal" align="left" style="text-align:left;text-indent:32.05pt;
+line-height:27.0pt;mso-line-height-rule:exactly"><span  style="font-size:14.0pt;
+font-family:仿宋_GB2312;mso-hansi-font-family:仿宋;mso-bidi-font-family:仿宋;
+mso-bidi-font-weight:bold">享保人在提供有关材料时如有故意隐瞒、虚报、伪造材料等行为，一经发现将取消受理资格，
+    </span><span id="neimeng" style="font-size:14.0pt;
+        font-family:仿宋_GB2312;mso-hansi-font-family:仿宋;mso-bidi-font-family:仿宋;
+        mso-bidi-font-weight:bold">根据《内蒙古自治区社会救助办法》第七十二条规定，</span><span style="font-size:14.0pt;
+        font-family:仿宋_GB2312;mso-hansi-font-family:仿宋;mso-bidi-font-family:仿宋;
+        mso-bidi-font-weight:bold">有关机构将其相关信息记入个人信用记录。不良信用记录将严重影响到您今后的就业、
+出行、信用卡和贷款申请等生活的多个方面。</span></p>
+    <p class="MsoNormal" align="left" style="text-align:left;text-indent:32.05pt;
+line-height:27.0pt;mso-line-height-rule:exactly"><span style="font-size:14.0pt;
+font-family:仿宋_GB2312;mso-hansi-font-family:仿宋;mso-bidi-font-family:仿宋;
+mso-bidi-font-weight:bold">根据《刑法》第二百六十六条、最高人民法院、最高人民检察院《关于办理诈骗刑事案件具体应用法律若干问题的解释》
+等规定，诈骗公私财物（以欺诈、伪造证明材料或者其他手段骗取养老、医疗、工伤、失业、生育等社会保险金或者其他社会保障待遇，最低生活保障属社会保障待遇之一），
+数额较大的（诈骗公私财物价值三千元至一万元以上），处三年以下有期徒刑、拘役或者管制，并处或者单处罚金。简而言之，骗取社会保障待遇数额一旦达到3000元，将追究刑事责任。</span></p>
+    <p class="MsoNormal" align="left" style="text-align:left;text-indent:32.05pt;
+line-height:27.0pt;mso-line-height-rule:exactly;height:120px;"><span style="font-size:14.0pt;
+font-family:仿宋_GB2312;mso-hansi-font-family:仿宋;mso-bidi-font-family:仿宋;
+mso-bidi-font-weight:bold;">申请人签字（或按手印）：
+    <img id="img_sign" align="center" height="120px">
+    <img id="img_finger" align="center" height="120px">
+    <button class="mbt" onclick="setZrgzsSign()">签字</button>
+    <button class="mbt" onclick="setZrgzsFinger()">指纹</button>
+</span>
+    </p>
+    <p class="MsoNormal" align="left" style="text-align:right;text-indent:32.05pt;
+line-height:27.0pt;mso-line-height-rule:exactly;margin-right:20pt"><span id="time" style="font-size:14.0pt;font-family:仿宋_GB2312;mso-hansi-font-family:仿宋;
+mso-bidi-font-family:仿宋;mso-bidi-font-weight:bold">　　　　年　　月　　日</span></p>
+</div>
+</body>
+<script>
+    function initData(sign,finger,time,isGuangXi){
+        setSignatureData(sign);
+        setFingerprintData(finger);
+        setTime(time);
+        setShowOrHide(isGuangXi);
+    }
+    function setShowOrHide(isGuangXi){
+        if(isGuangXi == "gx"){
+         $('#neimeng').hide()
+        }else{
+         $('#neimeng').show()
+        }
+    }
+    //设置签字
+    function setSignatureData(imgpath) {
+        $('#img_sign').attr("src", imgpath);
+    }
+    //设置指紋
+    function setMemberFingerprintData(imgpath) {
+        $('#img_finger').attr("src", imgpath);
+    }
+
+    function setTime(time){
+      if(time!=""){
+        $("#time").html(time);
+      }
+    }
+
+	function setZrgzsSign() {
+        android.zrgzsSign();
+    }
+
+    function setZrgzsFinger() {
+        android.zrgzsFinger();
+    }
+
+</script>
+</html>

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.DigestUtils;
+import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.security.MessageDigest;
@@ -34,7 +35,7 @@ public class SecUserService extends BaseService implements ISecUserService {
     @Override
     public List<SecUser> queryUser(SecUser secUser, PagenationQueryParameter pageParam) {
         setPageHelper(pageParam);
-        return secUserMapper.select(secUser);
+        return secUserMapper.queryUserByArea(secUser);
     }
 
     @Override
@@ -57,18 +58,25 @@ public class SecUserService extends BaseService implements ISecUserService {
      */
     @Override
     public SecUser addUser(SecUser secUser) {
-        // 检查用户是否存在
-        SecUser queryEntity = new SecUser();
-        queryEntity.setUserId(secUser.getUserId());
-        int countResult = secUserMapper.selectCount(queryEntity);
-        Assert.state(countResult < 1, "用户名已经存在！");
 
-        // 插入数据
-        secUser.setPwd(DigestUtils.md5DigestAsHex(generatPwd(secUser)));
-        secUser.setPwdLock("是");
-        secUser.setStatus("有效");
-        secUser.setCreateTime(new Date());
-        secUserMapper.insert(secUser);
+        // 检查用户是否存在
+//        SecUser queryEntity = new SecUser();
+//        queryEntity.setUserId(secUser.getUserId());
+//        int countResult = secUserMapper.selectCount(queryEntity);
+//        Assert.state(countResult < 1, "用户名已经存在！");
+
+        if(StringUtils.isEmpty(secUser.getUserId())) {
+            // 插入数据
+            secUser.setPwd(DigestUtils.md5DigestAsHex(generatPwd(secUser)));
+            secUser.setPwdLock("是");
+            secUser.setStatus("有效");
+            secUser.setCreateTime(new Date());
+            secUserMapper.insert(secUser);
+        }else{
+            secUser.setUpdateTime(new Date());
+            secUser.setPwd(DigestUtils.md5DigestAsHex(generatPwd(secUser)));
+            secUserMapper.updateByPrimaryKeySelective(secUser);
+        }
         return secUser;
     }
 

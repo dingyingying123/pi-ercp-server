@@ -39,11 +39,49 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
     FileInfoMapper fileInfoMapper;
 
     @Override
-    public ReturnEntity queryPiChildrenBaseInfoList(PiChildrenBaseInfo piChildrenBaseInfo, PagenationQueryParameter buildPagenation) {
+    public ReturnEntity queryPiChildrenBaseInfoList(PiChildrenBaseInfoVO piChildrenBaseInfo, PagenationQueryParameter buildPagenation) {
+        logger.info("===========type:" + piChildrenBaseInfo.getType());
+        List<PiChildrenBaseInfo> childrenBaseInfoList = null;
         //分页
         setPageHelper(buildPagenation);
-        //根据条件查询
-        List<PiChildrenBaseInfo> childrenBaseInfoList = piChildrenBaseInfoMapper.queryPiChildrenBaseInfoList(piChildrenBaseInfo);
+        if(StringUtils.isNotEmpty(piChildrenBaseInfo.getType())){
+            if("0".equals(piChildrenBaseInfo.getType())){//0进行中和1已完成
+                piChildrenBaseInfo.setStatus(piChildrenBaseInfo.getType());
+                //根据条件查询
+                childrenBaseInfoList = piChildrenBaseInfoMapper.queryPiChildrenBaseInfoList(piChildrenBaseInfo);
+            }else if("1".equals(piChildrenBaseInfo.getType())){//接案新增，审批通过数据
+                piChildrenBaseInfo.setStatus(CommonConstants.ApprovalStatus.NOTDRAFT);
+                //根据条件查询
+                childrenBaseInfoList = piChildrenBaseInfoMapper.queryPiChildrenBaseInfoList(piChildrenBaseInfo);
+            }else if("2".equals(piChildrenBaseInfo.getType())){//接案新增，审批通过数据
+                piChildrenBaseInfo.setStatus(CommonConstants.ApprovalStatus.APPROVED);
+                //根据条件查询
+                childrenBaseInfoList = piChildrenBaseInfoMapper.queryPiChildrenBaseInfoList(piChildrenBaseInfo);
+            }else if("3".equals(piChildrenBaseInfo.getType())){//预估新增，接案已提交数据
+                piChildrenBaseInfo.setCaseStatus(CommonConstants.ServerApprovalStatus.CASE_SUBMITED);
+                //根据条件查询
+                childrenBaseInfoList = piChildrenBaseInfoMapper.queryTakeCaseList(piChildrenBaseInfo);
+            }else if("4".equals(piChildrenBaseInfo.getType())){//计划新增，预估已提交数据
+                piChildrenBaseInfo.setEstimateStatus(CommonConstants.ServerApprovalStatus.ESTIMATE_SUBMITED);
+                //根据条件查询
+                childrenBaseInfoList = piChildrenBaseInfoMapper.queryEstimateList(piChildrenBaseInfo);
+            }else if("5".equals(piChildrenBaseInfo.getType())){//介入新增，计划已提交数据
+                piChildrenBaseInfo.setPlanStatus(CommonConstants.ServerApprovalStatus.PLANSUBMITED);
+                //根据条件查询
+                childrenBaseInfoList = piChildrenBaseInfoMapper.queryPlanList(piChildrenBaseInfo);
+            }else if("6".equals(piChildrenBaseInfo.getType())){//评价新增，介入已提交数据
+                piChildrenBaseInfo.setInterventionStatus(CommonConstants.ServerApprovalStatus.INTERVENTIONSUBMITED);
+                //根据条件查询
+                childrenBaseInfoList = piChildrenBaseInfoMapper.queryInterventionList(piChildrenBaseInfo);
+            }else if("7".equals(piChildrenBaseInfo.getType())){//结案新增，评价已提交数据
+                piChildrenBaseInfo.setEvaluateStatus(CommonConstants.ServerApprovalStatus.EVALUATE_SUBMIT);
+                //根据条件查询
+                childrenBaseInfoList = piChildrenBaseInfoMapper.queryEvaluateList(piChildrenBaseInfo);
+            }
+        }else{
+            //根据条件查询
+            childrenBaseInfoList = piChildrenBaseInfoMapper.queryPiChildrenBaseInfoList(piChildrenBaseInfo);
+        }
         //返回数据
         return ReturnEntity.ok(new PageInfo<>(childrenBaseInfoList));
     }
@@ -298,6 +336,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
         example.orderBy("relationship");
         List<PiChildrenGuardianInfo> piChildrenGuardianInfos = piChildrenGuardianInfoMapper.selectByExample(example);
         piChildrenBaseInfoVO.setPiChildrenGuardianInfoList(piChildrenGuardianInfos);
+        piChildrenBaseInfoVO.setGuardian("" + piChildrenGuardianInfos.size());
         return ReturnEntity.ok(piChildrenBaseInfoVO);
     }
 
@@ -376,5 +415,28 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
     public ReturnEntity queryChildrenStatisticsList(PiChildrenBaseInfo piChildrenBaseInfo) {
         List<ChildrenStatisticsInfoVO> childrenStatisticsInfoVOList = piChildrenBaseInfoMapper.queryChildrenStatisticsList(piChildrenBaseInfo);
         return ReturnEntity.ok(childrenStatisticsInfoVOList);
+    }
+
+    @Override
+    public PiChildrenBaseInfoVO queryH5PiChildrenBaseInfo(PiChildrenBaseInfo piChildrenBaseInfo) {
+        PiChildrenBaseInfoVO piChildrenBaseInfoVO = piChildrenBaseInfoMapper.queryPiChildrenBaseInfo(piChildrenBaseInfo);
+        Example example = new Example(PiChildrenGuardianInfo.class);
+        example.createCriteria().andEqualTo("childId", piChildrenBaseInfo.getChildId());
+        example.orderBy("relationship");
+        List<PiChildrenGuardianInfo> piChildrenGuardianInfos = piChildrenGuardianInfoMapper.selectByExample(example);
+        if(piChildrenGuardianInfos.size() > 0){
+            for (PiChildrenGuardianInfo guardianInfo : piChildrenGuardianInfos) {
+                if("0".equals(guardianInfo.getRelationship())){
+                    piChildrenBaseInfoVO.setFatherGuardian(guardianInfo);
+                }else if("1".equals(guardianInfo.getRelationship())){
+                    piChildrenBaseInfoVO.setMatherGuardian(guardianInfo);
+                }else{
+                    piChildrenBaseInfoVO.setOtherGuardian(guardianInfo);
+                }
+            }
+        }
+        piChildrenBaseInfoVO.setPiChildrenGuardianInfoList(piChildrenGuardianInfos);
+        piChildrenBaseInfoVO.setGuardian("" + piChildrenGuardianInfos.size());
+        return piChildrenBaseInfoVO;
     }
 }

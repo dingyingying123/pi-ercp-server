@@ -7,6 +7,7 @@ package cn.com.personnel.ercp.auth.service;
 
 import cn.com.personnel.ercp.auth.module.JSSelectNode;
 import cn.com.personnel.ercp.auth.persistence.entity.SecEnum;
+import cn.com.personnel.ercp.auth.persistence.entity.SecEnumType;
 import cn.com.personnel.ercp.common.persistence.entity.ReturnEntity;
 import cn.com.personnel.springboot.framework.core.page.PagenationQueryParameter;
 import cn.com.personnel.springboot.framework.core.service.IService;
@@ -71,4 +72,6 @@ public interface ISecEnumService extends IService {
     List<SecEnum> selectEnumByKeyAll(String key, String system);
 
     ReturnEntity selectEnumByKey(String key);
+
+    ReturnEntity selectNameByKeyByEnlName(SecEnumType enumType);
 }

@@ -84,4 +84,16 @@
   <select id="queryPlanInfo" resultMap="BaseResultMapVO">
     select * from server_plan_info where plan_id=#{planId}
   </select>
+
+  <select id="getLetterNumber" parameterType="java.lang.String" resultType="java.lang.String">
+      SELECT
+        #{ prefix } || CASE WHEN res.str ISNULL THEN '0001' ELSE res.str END
+      FROM (
+        SELECT
+          to_char(MAX(regexp_replace(plan_no,'('|| #{ prefix } ||')(\d{4})','\2','g')::int + 1), 'FM0000') as str
+        FROM
+          server_plan_info
+        WHERE plan_no ~ ('^'|| #{ prefix } ||'\d{4}$')
+      ) res
+  </select>
 </mapper>

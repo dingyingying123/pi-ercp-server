@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>内蒙古弘德益民政务科技信息服务中心家庭经济状况入户核查表</title>
+		<link rel="stylesheet" href="../../static/css/difficulttable.css" />
+		<script type="text/javascript" src="../../static/js/jquery-1.2.6.min.js"></script>
+		<style>
+			.image_list li {
+				float: left;
+			}
+
+			.image_list img {
+				height: 120px;
+			}
+			
+			.mbt {
+				margin-right: 20px;
+				margin-top: 20px;
+				margin-left: 20px;
+				float: right;
+				height: 40px;
+				width: 80px;
+				border-radius: 6px;
+				border: 1px cornflowerblue solid;
+				background-color: dodgerblue;
+				color: white;
+			}
+			.gx {
+			visibility: visible;
+			}
+			.other {
+			visibility: visible;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="main_body">
+
+			<h1 class="main_tit" id="tablename">内蒙古弘德益民政务科技信息服务中心家庭经济状况入户核查表</h1>
+			<div class="main_head">
+				<div class="pull_left">
+
+					<span class="main_info" id="county"></span>区（县）
+					<span class="main_info" id="towns"></span>乡（镇、街道）
+					<span class="main_info" id="village"></span>村（居）委会
+					<span class="main_info" id="group"></span>小组（屯、社）
+				</div>
+				<div class="pull_right">
+					<span>核查时间：</span>
+					<span class="main_info wid50" id="year"> </span>年
+					<span class="main_info wid50" id="month"></span>月
+					<span class="main_info wid50" id="day"></span>日
+				</div>
+			</div>
+			<table class="main_table">
+				<tr>
+					<th width="100">*户主姓名</th>
+					<td id="name"></td>
+					<th width="100">*民族</th>
+					<td id="nationname"></td>
+					<th width="100">*性别</th>
+					<td id="sexname"></td>
+					<th width="100">*联系方式</th>
+					<td id="phone"> </td>
+				</tr>
+				<tr>
+					<th>*身份证号</th>
+					<td id="idcard"></td>
+					<th>*年龄</th>
+					<td id="age"></td>
+					<th>*供养方式</th>
+					<td id="gytypename"></td>
+					<th>*残疾及重病类型</th>
+					<td id="disease"></td>
+				</tr>
+				<tr>
+					<th width="100">*户籍性质</th>
+					<td id="hjxzname"></td>
+					<th>*家庭共同生活人口数</th>
+					<td id="homemembercount"></td>
+					<th>*是否人户分离</th>
+					<td id="sfrhflname"></td>
+					<th>*是否贫困建档立卡</th>
+					<td id="sfjdlkname"></td>
+				</tr>
+				<tr>
+					<th>*实际居住地址</th>
+					<td colspan="3" id="addr"></td>
+					<th>*户籍地址</th>
+					<td colspan="3" id="haddr"></td>
+				</tr>
+			</table>
+			<table class="main_table" id="memJhrBeans">
+				<tr>
+					<th width="100" class="bor_top_no">房产信息</th>
+					<th class="bor_top_no">*住房类型</th>
+					<td class="bor_top_no" id="zflxname"></td>
+					<th class="bor_top_no">*所有者</th>
+					<td width="100" class="bor_top_no" id="homeowner"></td>
+					<th class="bor_top_no">*住房面积(平米)</th>
+					<td class="bor_top_no" id="homearea"></td>
+					<th class="bor_top_no">*房产数量</th>
+					<td class="bor_top_no" id="homecount"></td>
+				</tr>
+
+				<tr>
+					<th rowspan="10">监护人信息</th>
+					<td>*姓名</td>
+					<td>*性别</td>
+					<td>*与户主关系</td>
+					<td>年龄</td>
+					<td>婚姻状态</td>
+					<td width="200">*身份证号</td>
+					<td>联系方式</td>
+					<td>工作单位及职业</td>
+				</tr>
+			</table>
+				<table class="main_table">
+					<tr>
+						<th rowspan="2" width="100" class="bor_top_no">*实际居住环境</th>
+						<td class="bor_top_no" width="100">装修情况</td>
+						<td class="bor_top_no">电视</td>
+						<td class="bor_top_no">电脑</td>
+						<td class="bor_top_no">冰箱</td>
+						<td class="bor_top_no">空调</td>
+						<td class="bor_top_no">热水器</td>
+						<td class="bor_top_no">微波炉</td>
+						<td class="bor_top_no">洗衣机</td>
+						<td class="bor_top_no">其他</td>
+					</tr>
+					<tr>
+						<td id="zxqkname"></td>
+						<td id="dsname"></td>
+						<td id="dnname"></td>
+						<td id="bxname"></td>
+						<td id="ktname"></td>
+						<td id="rsqname"></td>
+						<td id="wblname"></td>
+						<td id="xyjname"></td>
+						<td id="realhomeqt" colspan="2"></td>
+
+					</tr>
+				</table>
+				<table class="main_table">
+					<tr>
+						<th rowspan="7" width="100" class="bor_top_no">*其他</th>
+						<td colspan="2" class="bor_top_no">耕地(亩)</td>
+						<td colspan="3" class="bor_top_no">经济树木(亩)</td>
+						<td colspan="3" class="bor_top_no">家畜</td>
+						<td colspan="3" class="bor_top_no">家禽</td>
+					</tr>
+					<tr>
+						<td colspan="2" id="gdcount"></td>
+						<td colspan="3" id="jjsmcount"></td>
+						<td colspan="3" id="jcdetail"></td>
+						<td colspan="3" id="jqdetail"></td>
+					</tr>
+					<tr>
+						<td colspan="5">是否拥有非维持家庭基本生活需要的机动车辆</td>
+						<td id="sfyyfwcjdcname"></td>
+						<td colspan="4">是否有工商注册或合作社注册</td>
+						<td id="sfygszcname"></td>
+					</tr>
+					<tr>
+						<td colspan="5">是否拥有设施大棚（暖棚）</td>
+						<td id="sfyyssdpname"></td>
+						<td colspan="4">家庭成员是否有领取财政、社保离退休金或遗属补助</td>
+						<td id="jtcysfbzname"></td>
+					</tr>
+					<tr>
+						<td colspan="5">是否拥有高档奢侈生活消费品或大型农机具</td>
+						<td id="sfyygdscpname"></td>
+						<td colspan="4">是否拥有商业用房或2套及以上住房或近2年内<br />非因拆迁购买商品房</td>
+						<td id="sfyysyyfname"></td>
+					</tr>
+					<tr>
+						<td colspan="5">是否经常使用雇工从事生产经营活动</td>
+						<td id="sfsygzname"></td>
+						<td colspan="4">是否规模养殖户</td>
+						<td id="sfgmyzhname"></td>
+					</tr>
+					<tr>
+						<td>其他<br />情形</td>
+						<td colspan="10" id="qtqt"></td>
+					</tr>
+                </table>
+            <table class="main_table">
+                <tr class="other">
+                    <th width="100">生活自理能力评估</th>
+                    <td colspan="12" class="text_left">
+                        <span class="check_box"><input id="lifeable_ck1" type="checkbox" disabled="disabled"/>自主吃饭</span>
+                        <span class="check_box"><input id="lifeable_ck2" type="checkbox" disabled="disabled"/>自主穿衣</span>
+                        <span class="check_box"><input id="lifeable_ck3" type="checkbox" disabled="disabled"/>自主上下床</span>
+                        <span class="check_box"><input id="lifeable_ck4" type="checkbox" disabled="disabled"/>自主如厕</span>
+                        <span class="check_box"><input id="lifeable_ck5" type="checkbox" disabled="disabled"/>自主室内行走</span>
+                        <span class="check_box"><input id="lifeable_ck6" type="checkbox" disabled="disabled"/>自主洗澡</span>
+                    </td>
+                </tr>
+            </table>
+            <table class="main_table">
+					<tr>
+						<th colspan="12">请根据实际调查结果填写以上内容，确认无误后签字或按手印</th>
+					</tr>
+					<tr style="height: 120px;">
+						<th  width="100">*申请人意见及<br/>签字或按手印</th>
+						<td colspan="11" class="text_left">
+							<ul class="image_list" id="memberimage">
+								<img id="image_member_s" onclick="setmembersignature()" />
+								<img id="image_member_f" onclick="setmemberfingerprint()" />
+								<button class="mbt" onclick="setmembersignature()">签  字</button>
+								<button class="mbt" onclick="setmemberfingerprint()">指纹</button>
+							</ul>
+						</td>
+					</tr>
+					<tr style="height: 120px;">
+						<th>*核查人员签字</th>
+						<td colspan="11" class="text_left">
+							<ul class="image_list" id="workerimages">
+	                          	<img id="image_worker_s" onclick="setworksignature()" />
+								<button class="mbt" onclick="setworksignature()">签字</button>
+							</ul>
+						</td>
+
+					</tr>
+					<tr>
+						<th>入户情况<br /></th>
+						<td colspan="11" id="rhdetail"></td>
+					</tr>
+				</table>
+				<p>
+					<td>说明：带"*"号项的内容必须填写</td>
+				</p>
+				<script type="text/javascript">								
+					function initData(data) {
+						$("#tablename").html(data.tablename);
+						$("#addr").html(data.addr);
+						$("#age").html(data.age);
+						$("#bxname").html(data.ice_box== 1 ? "有" : "无");
+						$("#disease").html(data.disease);
+						$("#dnname").html(data.computer== 1 ? "有" : "无");
+						$("#dsname").html(data.tv== 1 ? "有" : "无");
+						$("#gdcount").html(data.plowland_num);
+						$("#group").html(data.village_group);
+						$("#gytypename").html(data.provide_way_name);
+						$("#haddr").html(data.haddr);
+						$("#hjxzname").html(data.house_nature_name);
+						$("#homearea").html(data.homearea);
+						$("#homecount").html(data.homecount);
+						$("#homemembercount").html(data.homemembercount);
+						$("#homeowner").html(data.homeowner);
+						$("#idcard").html(data.idcard);
+						$("#jcdetail").html(data.livestock);
+						$("#jjsmcount").html(data.trees_num);
+						$("#jqdetail").html(data.poultry);
+						$("#jtcysfbzname").html(data.retire_subsidy== 1 ? "是" : "否");
+						$("#ktname").html(data.air_box== 1 ? "有" : "无");
+						$("#name").html(data.name);
+						$("#nationname").html(data.nation_name);
+						$("#phone").html(data.phone);
+						$("#qtqt").html(data.other_case);
+						$("#realhomeqt").html(data.real_home_case);
+						$("#rsqname").html(data.hot_box== 1 ? "有" : "无");
+						var sexs = ["","男","女"];
+						$("#sexname").html(data.gender == "" ? sexs[0] :sexs[data.gender]);
+
+						$("#sfgmyzhname").html(data.feed_home== 1 ? "是" : "否");
+						$("#sfjdlkname").html(data.create_card== 1 ? "是" : "否");
+						$("#sfrhflname").html(data.home_separate== 1 ? "是" : "否");
+						$("#sfsygzname").html(data.hire_person== 1 ? "是" : "否");
+						$("#sfyyfwcjdcname").html(data.motor_car== 1 ? "是" : "否");
+						$("#sfyygdscpname").html(data.high_large== 1 ? "是" : "否");
+						$("#sfyyssdpname").html(data.farm_facility== 1 ? "是" : "否");
+						$("#sfyysyyfname").html(data.more_house== 1 ? "是" : "否");
+						$("#village").html(data.village_name);
+						$("#wblname").html(data.micro_box== 1 ? "有" : "无");
+						$("#xyjname").html(data.wash_box== 1 ? "有" : "无");
+						$("#zflxname").html(data.house_type_name);
+
+        				var zxqks=["简装","毛坯","精装"];
+						$("#zxqkname").html(data.decorate_info==""?"" :zxqks[data.decorate_info]);
+						var date = formatDate(data.timestamp).split("-");
+						$("#year").html(date[0]);
+						$("#month").html(date[1]);
+						$("#day").html(date[2]);
+						$("#county").html(data.county);
+						$("#towns").html(data.towns);
+						$("#sfygszcname").html(data.reg_info== 1 ? "是" : "否");
+						
+						var relations=["","本人","配偶","养子女","儿子","女儿","父母","祖父母","兄弟姐妹","孙子女","（外）祖父母","儿媳","女婿","侄儿（女）","外甥子（女）","其他"];
+						var marrys=["","未婚","已婚","离异","丧偶"];
+						var works=["务工","务农","固定工作","无工作","离退休人员","在职人员","在读小学","在读初中","在读高中","在读大学","其他"];
+						if(data.memJhrBeans.length>0){
+						for(var i = 0; i < data.memJhrBeans.length; i++) {
+						var sexmem = data.memJhrBeans[i].gender_id =="" ? sexs[0] :sexs[data.memJhrBeans[i].gender_id];
+						var relation= relations[data.memJhrBeans[i].relationid];
+						if(relation==undefined){
+						relation="";F
+						}
+						var marry="";
+						if(data.memJhrBeans[i].marriage_id==99){
+						marry="";
+						}else{
+						marry=marrys[data.memJhrBeans[i].marriage_id];
+						}
+						if(marry==undefined){
+						marry="";
+						}
+						var work=data.memJhrBeans[i].work;
+						if(work==undefined){
+						work="";
+						}
+							var smember = '<tr><td>' +
+								data.memJhrBeans[i].name +
+								'</td><td>' +
+								sexmem +
+								' </td><td>' +
+								relation +
+								'</td><td>' +
+								data.memJhrBeans[i].age +
+								'</td><td>' +
+								marry +
+								'</td><td>' +
+								data.memJhrBeans[i].idcard +
+								'</td><td>' +
+								data.memJhrBeans[i].phone +
+								'</td><td>' +
+								work +
+
+								'</td></tr>';
+							$("#memJhrBeans").append(smember)
+						}
+						}else{
+						var smember = '<tr><td>' +
+								'</td><td>' +
+								' </td><td>' +
+								'</td><td>' +
+								'</td><td>' +
+								'</td><td>' +
+								'</td><td>' +
+								'</td><td>' +
+								'</td></tr>';
+							$("#memJhrBeans").append(smember)
+						}
+						$("#rhdetail").html(data.rhdetail);
+						var labs = [$("#lifeable_ck1"), $("#lifeable_ck2"), $("#lifeable_ck3"), $("#lifeable_ck4"), $("#lifeable_ck5"), $("#lifeable_ck6")];
+
+						var lifeable = data.life_ability.split(",");
+						for(var i = 0; i < lifeable.length; i++) {
+							labs[lifeable[i]-1].attr("checked", true)
+						}
+						setMemberSignatureData(data.dbsign);
+						setMemberFingerprintData(data.dbfingerprint);
+						setWorksignData(data.worksign);
+
+					}
+
+					//申请人签字
+					function setmembersignature() {
+						android.memberSingature();
+
+					}
+					//申请人指纹
+					function setmemberfingerprint() {
+						android.memberFingerprint();
+					}
+
+					//核查人员签字
+					function setworksignature() {
+						android.workSingature();
+
+					}
+
+					//设置申请人签字
+					function setMemberSignatureData(imgpath) {
+						$('#image_member_s').attr("src", imgpath);
+
+					}
+					//设置申请人指紋
+					function setMemberFingerprintData(imgpath) {
+						$('#image_member_f').attr("src", imgpath);
+					}
+
+
+                    //设置核查人员签字
+					function setWorksignData(imgpath) {
+						$('#image_worker_s').attr("src", imgpath);
+
+					}
+
+					function formatDate(now) {
+						var d = new Date(now);
+						var year = d.getFullYear();
+						var month = d.getMonth() + 1;
+						var date = d.getDate();
+						var hour = d.getHours();
+						var minute = d.getMinutes();
+						var second = d.getSeconds();
+						return year + "-" + month + "-" + date;
+					}
+				</script>
+		</div>
+	</body>
+
+</html>

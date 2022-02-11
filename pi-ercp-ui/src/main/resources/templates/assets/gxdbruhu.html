@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>广西助力社会救助服务中心家庭经济状况入户核查表</title>
+    <link rel="stylesheet" href="../../static/css/difficulttable.css"/>
+    <script type="text/javascript" src="../../static/js/jquery-1.2.6.min.js"></script>
+    <style>
+			.image_list li {
+				float: left;
+			}
+
+			.image_list  img {
+				height: 120px;
+			}
+
+			.mbt {
+				margin-right: 20px;
+				margin-top: 20px;
+				margin-left: 20px;
+				float: right;
+				height: 40px;
+				width: 80px;
+				border-radius: 6px;
+				border: 1px cornflowerblue solid;
+				background-color: dodgerblue;
+				color: white;
+			}
+			.db{
+				text-align: -moz-center;
+			}
+			.difficult{
+				text-align: -moz-center;
+			}
+			.lowIncome{
+				text-align: -moz-center;
+			}
+			.temporary{
+				text-align: -moz-center;
+			}
+			.common{
+				text-align: -moz-center;
+			}
+
+
+
+    </style>
+</head>
+
+<body>
+<div class="main_body">
+    <div style="height: 30px;"></div>
+    <h1 class="main_tit" id="tablename">广西助力社会救助服务中心家庭经济状况入户核查表</h1>
+    <div class="main_head">
+
+        <div class="pull_left" id="gx">
+            <span class="main_info" id="county"></span>区
+            <span class="main_info" id="towns"></span>乡（镇）
+            <span class="main_info" id="qxunit_name"></span>村（居、街）委会
+
+
+        </div>
+
+        <div class="pull_right">
+            <span>核查时间：</span>
+            <span class="main_info wid50" id="year"></span>
+        </div>
+        <br/>
+
+    </div>
+    <div class="pull_left" id="db_type">
+
+        <span>类型：</span>
+        <span class="check_box" style="margin: 2px;float: center;">
+					<input type="checkbox" disabled="disabled" id="ncdb"/>农村低保</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="check_box" style="margin: 2px;float: center;">
+					<input type="checkbox" disabled="disabled" id="czdb"/>城镇低保</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    </div>
+    <div class="pull_left" id="tk_type">
+
+        <span>类型：</span>
+        <span class="check_box" style="margin: 2px;float: center;">
+					<input type="checkbox" disabled="disabled" id="nctk"/>农村特困</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="check_box" style="margin: 2px;float: center;">
+					<input type="checkbox" disabled="disabled" id="cztk"/>城镇特困</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    </div>
+    <div class="pull_left" id="dsr_type">
+
+        <span>类型：</span>
+        <span class="check_box" style="margin: 2px;float: center;">
+					<input type="checkbox" disabled="disabled" id="ncdsr"/>农村低收入</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="check_box" style="margin: 2px;float: center;">
+					<input type="checkbox" disabled="disabled" id="czdsr"/>城镇低收入</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    </div>
+    <table class="main_table">
+        <tbody>
+        <tr>
+            <td colspan="13">家庭基本信息</td>
+        </tr>
+        <tr>
+            <td width="114px">户主姓名</td>
+            <td id="hhName" width="7%"></td>
+            <td width="7%">身份证号码</td>
+            <td width="14%" id="hhIdentity" colspan="2"></td>
+            <td width="7%">救助类别</td>
+            <td width="14%" colspan="2" id="ensureTypen"></td>
+            <td width="7%">救助细别</td>
+            <td width="14%" colspan="2" id="ensureTypecn"></td>
+            <td width="7%" class="db">计划生育户</td>
+            <td width="7%" id="planChilds" class="db"></td>
+
+        </tr>
+        <tr>
+            <td width="114px" id="star_time_name">居住地址</td>
+            <td id="homeAddress" colspan="2" width="14%"></td>
+            <td width="7%" class="lowIncome">保障起始时间</td>
+            <td width="14%" id="permitDate" colspan="2" class="lowIncome"></td>
+            <td width="7%" class="difficult">银行账号</td>
+            <td width="14%" id="account" colspan="2" class="difficult"></td>
+            <td width="7%" class="temporary">开户人名称</td>
+            <td width="7%" id="memberId" class="temporary"></td>
+            <td width="7%">开户人身份</td>
+            <td width="7%" id="memberIdShip" class="temporary"></td>
+
+        </tr>
+        <tr>
+            <td width="114px">开户银行<br/>种类</td>
+            <td width="14%" id="bankCode" width="21%"></td>
+            <td width="7%">刚性支出（元）</td>
+            <td width="7%" id="rigidMoney"></td>
+            <td width="7%">是否搬迁户</td>
+            <td width="7%" id="remove"></td>
+            <td width="7%">是否水库移民</td>
+            <td width="7%" id="removeWater"></td>
+            <td width="7%">是否水库移民</td>
+            <td width="7%" id="bankName"></td>
+            <td width="7%">是否经办人员近亲属</td>
+            <td width="7%" colspan="2" id="isRelatives"></td>
+        </tr>
+        <tr>
+            <td width="114px">房产信息</td>
+            <td width="7%">住房类型</td>
+            <td width="7%">住房结构</td>
+            <td width="7%" colspan="2">住房地址</td>
+            <td width="7%" colspan="2">所有者</td>
+            <td width="7%" colspan="2">建筑面积</td>
+            <td width="7%" colspan="2">使用面积</td>
+            <td width="7%" colspan="2">房产（建房）证号</td>
+
+        </tr>
+        <tr>
+            <td width="114px">第一套</td>
+            <td id="houseType" width="7%"></td>
+            <td id="houseStructure" width="7%"></td>
+            <td width="7%" colspan="2" id="houseAddress"></td>
+            <td width="7%" colspan="2" id="memberId2"></td>
+            <td width="7%" colspan="2" id="builtupArea"></td>
+            <td width="7%" colspan="2" id="houseArea"></td>
+            <td width="7%" colspan="2" id="houseNo"></td>
+
+        </tr>
+        <tr>
+            <td width="114px">第二套</td>
+            <td id="houseType2" width="7%"></td>
+            <td id="houseStructure2" width="7%"></td>
+            <td width="7%" colspan="2" id="houseAddress2"></td>
+            <td width="7%" colspan="2" id="memberId22"></td>
+            <td width="7%" colspan="2" id="builtupArea2"></td>
+            <td width="7%" colspan="2" id="houseArea2"></td>
+            <td width="7%" colspan="2" id="houseNo2"></td>
+
+        </tr>
+        <tr>
+            <td width="114px">申请原因</td>
+            <td id="applyReason" colspan="12"></td>
+        </tr>
+        <tr>
+            <td colspan="13">家庭成员信息</td>
+        </tr>
+        <tr>
+            <td width="114px">姓名</td>
+            <td width="14%">身份证<br/>号码</td>
+            <td width="7%">与户主<br/>关系</td>
+            <td width="7%">户籍性质</td>
+            <td width="7%">婚姻状况</td>
+            <td width="7%">健康状况</td>
+            <td width="7%">残疾类型</td>
+            <td width="7%">残疾等级</td>
+            <td width="7%" colspan="2">重病病种</td>
+            <td width="7%">劳动能力</td>
+            <td width="7%">单位/学校<br/>名称</td>
+            <td width="7%">年/月收入</td>
+           
+
+        </tr>
+        </tbody>
+        <tbody id="memBeans">
+
+        </tbody>
+        <tr>
+            <td colspan="13" id="notmember">非共同生活成员信息</td>
+        </tr>
+        <tr>
+            <td width="114px">姓名</td>
+            <td width="14%">身份证<br/>号码</td>
+            <td width="7%">与户主<br/>关系</td>
+            <td width="7%">婚姻状况</td>
+            <td width="7%">健康状况</td>
+            <td width="7%">残疾类型</td>
+            <td width="7%">残疾等级</td>
+            <td width="14%" colspan="2">重病病种</td>
+            <td width="7%">劳动能力</td>
+            <td width="7%">单位/学校<br/>名称</td>
+            <td width="7%">就业地点</td>
+            <td width="7%">年/月 收入</td>
+        </tr>
+        <tbody id="notmembers">
+
+        </tbody>
+
+        <tr>
+            <td colspan="13">财产信息</td>
+        </tr>
+        <tr>
+            <td width="114px">小型汽车(辆)</td>
+            <td width="7%" id="smallcarQuantity"></td>
+            <td width="7%">摩托车(辆)</td>
+            <td width="7%" id="motorcycleQuantity"></td>
+            <td width="7%">银行存款(元)</td>
+            <td width="7%" id="saveDeposit"></td>
+            <td width="7%">空调(台)</td>
+            <td width="7%" id="airQuantity"></td>
+            <td width="7%">其他家电(台)</td>
+            <td width="7%" id="otherAppliances"></td>
+            <td width="7%">其他家<br/>庭财产</td>
+            <td colspan="2" width="14%" id="familyProperty"></td>
+        </tr>
+        <tr>
+            <td width="114px">耕地(亩)</td>
+            <td width="7%" id="cultivatedLand"></td>
+            <td width="7%">鱼塘(亩)</td>
+            <td width="7%" id="fishPond"></td>
+            <td width="7%">经济林木(亩)</td>
+            <td width="7%" id="economicForest"></td>
+            <td width="7%">家禽家畜(只)</td>
+            <td width="7%" id="livestockPoultry"></td>
+            <td width="7%">责任田</td>
+            <td width="7%" id="responsibilityCropla"></td>
+            <td width="7%">其他家<br/>庭经营</td>
+            <td colspan="2" width="14%" id="familyFinance"></td>
+        </tr>
+
+
+    </table>
+
+    <div style="text-align: -webkit-center; padding: 10px;"> 请 根 据 实 际 调 查 结 果 填 写 以 上 内 容 ，确 认
+        无 误 后 签 字 或 按 手 印
+    </div>
+    <table class="main_table">
+
+        <tr style="height: 120px; ">
+            <th width="114px">*申请人意见及<br/>签字或按手印</th>
+            <td colspan="11" class="text_left">
+                <ul class="image_list" id="memberimage">
+                    <img id="image_member_s" onclick="setmembersignature()"/>
+                    <img id="image_member_f" onclick="setmemberfingerprint()"/>
+                    <button class="mbt" onclick="setmembersignature()">签 字</button>
+                    <button class="mbt" onclick="setmemberfingerprint()">指纹</button>
+                </ul>
+            </td>
+        </tr>
+        <tr style="height: 120px;">
+            <th>*核查人员签字</th>
+            <td colspan="11" class="text_left">
+                <ul class="image_list" id="workerimages">
+                    <img id="image_worker_s" onclick="setworksignature()"/>
+                    <button class="mbt" onclick="setworksignature()">签字</button>
+                </ul>
+            </td>
+
+        </tr>
+        <tr style="height: 80px;">
+            <th>入户情况</th>
+            <td colspan="11" id="rhdetail"></td>
+        </tr>
+
+    </table>
+    </table>
+
+    <p>
+
+    </p>
+    <div><br/><br/><br/><br/><br/><br/></div>
+</div>
+<script type="text/javascript">
+<!--	initData(-->
+<!--	{-->
+<!--        "abcMoney":"1",-->
+<!--        "abcStandard":"1",-->
+<!--        "account":"10162822810",-->
+<!--        "adjustAmta":"0",-->
+<!--        "adjustAmtb":"0",-->
+<!--        "aidAmount":"1",-->
+<!--        "apType":"4",-->
+<!--        "applyHid":"D37C255A77E04EB080B9937DFD1C66B1",-->
+<!--        "applyReason":"肢体二级",-->
+<!--        "bankAddress":"广西北部湾银行",-->
+<!--        "bankCode":"3",-->
+<!--        "bankCodeName":"中国农业银行",-->
+<!--        "builtupArea":"49",-->
+<!--        "buzId":"90f977f2b2f89f9520e40e91fdf86957",-->
+<!--        "cultivatedLand":"0",-->
+<!--        "draftTime":"2020-09-24 15:44:20",-->
+<!--        "draftUid":"-1",-->
+<!--        "economicForest":"0",-->
+<!--        "ensureId":"A450104198009151536",-->
+<!--        "ensureType":"1",-->
+<!--        "ensureTypec":"1-1",-->
+<!--        "ensureTypecn":"A-1",-->
+<!--        "ensureTypen":"A",-->
+<!--        "enterHomeTime":"2020-11-12",-->
+<!--        "fishPond":"0",-->
+<!--        "haveTowHouse":true,-->
+<!--        "helpmoney":"0",-->
+<!--        "hhAddress":"南宁市西乡塘区北大北路16号1栋1单元101号房",-->
+<!--        "hhId":"95c01ee9f8d146ec81a74aadfb1c18f2",-->
+<!--        "hhIdentity":"450104198009151536",-->
+<!--        "hhName":"莫育",-->
+<!--        "homeAddress":"南宁市西乡塘区北大北路16号1栋1单元101号房",-->
+<!--        "homehisId":"CC38EA85094F4869A33BDE16B3494359",-->
+<!--        "houseAddress":"南宁市西乡塘区北大北路",-->
+<!--        "houseAddress2":"南宁市西乡塘区北大北路",-->
+<!--        "houseArea":"49",-->
+<!--        "houseArea2":"0",-->
+<!--        "houseStructure":"4",-->
+<!--        "houseStructure2":"4",-->
+<!--        "houseType":"3",-->
+<!--        "houseType2":"3",-->
+<!--        "hpermitDate":"2018-10-01",-->
+<!--        "income":"0",-->
+<!--        "isOther":false,-->
+<!--        "isRelatives":"1",-->
+<!--        "isWorker":false,-->
+<!--        "iscity":"1",-->
+<!--        "listApplyMemberAllInfo":[-->
+<!--            {-->
+<!--                "accountName":"",-->
+<!--                "adjustAmt":"0",-->
+<!--                "adjustAmta":"0",-->
+<!--                "adjustAmtb":"0",-->
+<!--                "age":"40",-->
+<!--                "applyHid":"D37C255A77E04EB080B9937DFD1C66B1",-->
+<!--                "balanceDeposit":"",-->
+<!--                "bankDeposit":"",-->
+<!--                "beginDate":"",-->
+<!--                "birthdayDate":"1980-09-15",-->
+<!--                "brandModel":"",-->
+<!--                "buzId":"90f977f2b2f89f9520e40e91fdf86957",-->
+<!--                "cellPhone":"13471016227",-->
+<!--                "chronicDisease":"常见病",-->
+<!--                "chronicDisease2":"2",-->
+<!--                "correctionType":"1",-->
+<!--                "correspondence":"",-->
+<!--                "degree":"1",-->
+<!--                "disablityCase":"2",-->
+<!--                "disablityCaseName":"",-->
+<!--                "disease":"1,2",-->
+<!--                "diseaseName":"急性白血病(再生障碍性贫血),恶性肿瘤",-->
+<!--                "eduState":"1",-->
+<!--                "electricityTariff":"0",-->
+<!--                "electricityTariffOpen":true,-->
+<!--                "email":"",-->
+<!--                "employmentPlace":"",-->
+<!--                "enbaseCareHisList":[-->
+
+<!--                ],-->
+<!--                "enbaseIncomeHisList":[-->
+<!--                    {-->
+<!--                        "amount":"1",-->
+<!--                        "applyHid":"D37C255A77E04EB080B9937DFD1C66B1",-->
+<!--                        "hhId":"95c01ee9f8d146ec81a74aadfb1c18f2",-->
+<!--                        "incomeId":"A7130D387BF944C6BC5D397FD3F72558",-->
+<!--                        "incomeType":"99",-->
+<!--                        "memberId":"7ac47af1468549a4b09be9a1e8f291f5",-->
+<!--                        "memberhisId":"7E0EB22ED8464471AB1F558111C6CDF2",-->
+<!--                        "noAmount":"9",-->
+<!--                        "vpState":"1"-->
+<!--                    },-->
+<!--					{-->
+<!--					    "amount":"2",-->
+<!--					    "applyHid":"D37C255A77E04EB080B9937DFD1C66B1",-->
+<!--					    "hhId":"95c01ee9f8d146ec81a74aadfb1c18f2",-->
+<!--					    "incomeId":"A7130D387BF944C6BC5D397FD3F72558",-->
+<!--					    "incomeType":"1",-->
+<!--					    "memberId":"7ac47af1468549a4b09be9a1e8f291f5",-->
+<!--					    "memberhisId":"7E0EB22ED8464471AB1F558111C6CDF2",-->
+<!--					    "noAmount":"3",-->
+<!--					    "vpState":"1"-->
+<!--					}-->
+<!--                ],-->
+<!--                "enbaseSafetyHisList":[-->
+
+<!--                ],-->
+<!--                "enbuzApplyMoptsList":[-->
+
+<!--                ],-->
+<!--                "ensureType":"",-->
+<!--                "ensureTypec":"",-->
+<!--                "ensureTypecn":"",-->
+<!--                "ensureTypen":"",-->
+<!--                "expendEdu":"",-->
+<!--                "expendMedical":"",-->
+<!--                "fund":"",-->
+<!--                "grad":true,-->
+<!--                "gradDate":"",-->
+<!--                "handicaped":"4",-->
+<!--                "handicapedName":"",-->
+<!--                "haveCare":"",-->
+<!--                "healthState":"1",-->
+<!--                "healthStateName":"",-->
+<!--                "hhId":"95c01ee9f8d146ec81a74aadfb1c18f2",-->
+<!--                "hmRole":"2",-->
+<!--                "homehisId":"CC38EA85094F4869A33BDE16B3494359",-->
+<!--                "housingFund":"",-->
+<!--                "identifcardId":"450104198009151536",-->
+<!--                "isApply":"1",-->
+<!--                "isCorrection":"1",-->
+<!--                "isEdge":"2",-->
+<!--                "isElectricityTariff":"1",-->
+<!--                "isHaveFeedingNeeds":"",-->
+<!--                "isMaster":"1",-->
+<!--                "isMonitor":"2",-->
+<!--                "isNew":"",-->
+<!--                "isPoverty":"1",-->
+<!--                "isRegression":"2",-->
+<!--                "isReligion":"1",-->
+<!--                "isRelocation":"1",-->
+<!--                "isWithapplicantAccount":"1",-->
+<!--                "jobState":"2",-->
+<!--                "laborAbility":"2",-->
+<!--                "laborAbilityName":"",-->
+<!--                "livingAbility":"",-->
+<!--                "marketCapitalisation":"",-->
+<!--                "marriageState":"1",-->
+<!--                "marriageStateName":"未婚",-->
+<!--                "memberCausesPoverty":"1,2",-->
+<!--                "memberEnsureId":"",-->
+<!--                "memberHomeAddr":"南宁市西乡塘区北大北路16号1栋1单元101号房",-->
+<!--                "memberId":"7ac47af1468549a4b09be9a1e8f291f5",-->
+<!--                "memberName":"莫育",-->
+<!--                "memberType":"",-->
+<!--                "memberhisId":"7E0EB22ED8464471AB1F558111C6CDF2",-->
+<!--                "money":"1",-->
+<!--                "nation":"1",-->
+<!--                "operatingVehicle":"",-->
+<!--                "operationsNo":"",-->
+<!--                "originalMoney":"",-->
+<!--                "plateNumber":"",-->
+<!--                "poor":"1",-->
+<!--                "povertyDate":"2020-11-12",-->
+<!--                "registerNature":"1",-->
+<!--                "registerNatureName":"非农业户口",-->
+<!--                "relationShip":"",-->
+<!--                "relationshipCode":"1",-->
+<!--                "relationshipCodeName":"本人",-->
+<!--                "remarks":"",-->
+<!--                "school":"",-->
+<!--                "schoolNature":"",-->
+<!--                "schoolPhone":"",-->
+<!--                "sdate":"2018-10",-->
+<!--                "sex":"1",-->
+<!--                "socialFace":"1",-->
+<!--                "specificType":"",-->
+<!--                "studyStage":"",-->
+<!--                "telelphone":"",-->
+<!--                "unitCall":"",-->
+<!--                "unitNature":"",-->
+<!--                "utilities":"",-->
+<!--                "vpState":"1",-->
+<!--                "workStation":"",-->
+<!--                "yearNum":""-->
+<!--            }-->
+<!--        ],-->
+<!--        "listApplyNoMemberInfo":[-->
+
+<!--        ],-->
+<!--        "memCount":"1",-->
+<!--        "memberId":"莫育",-->
+<!--        "memberId2":"莫天喜",-->
+<!--        "memberIdShip":"1",-->
+<!--        "memberIdShipName":"",-->
+<!--        "modifyTime":"2020-09-24 15:44:20",-->
+<!--        "modifyUid":"-1",-->
+<!--        "noperatingVehicle":"0",-->
+<!--        "oldApplyHid":"368F81F8B02B46DEA58C1AAB8FD73D0E",-->
+<!--        "operatingVehicle":"0",-->
+<!--        "permitDate":"2020-09-01",-->
+<!--        "planChilds":"99",-->
+<!--        "remove":"1",-->
+<!--        "removeWater":"1",-->
+<!--        "responsibilityCropla":"0",-->
+<!--        "rhdetail":"",-->
+<!--        "rigidMoney":"200",-->
+<!--        "saveDeposit":"0",-->
+<!--        "smallcarQuantity":"1",-->
+<!--        "standard":"111",-->
+<!--        "stopDate":"2050-01-31",-->
+<!--        "surePopulation":"1",-->
+<!--        "timeFlag":"3",-->
+<!--        "ts":"2020-09-24 15:44:20",-->
+<!--        "type":"",-->
+<!--        "unitId":"450107001005",-->
+<!--        "unitName":"南铁北四区社区",-->
+<!--        "vpState":"4"-->
+<!--}-->
+<!--	);-->
+			
+			function initData(data) {
+
+                if (data.iscity == "0") {
+                        $("#tk_type").hide();
+                        $("#dsr_type").hide();
+ 						$("#db_type").show();
+						$("#ncdb").attr("checked", true);
+	                    $("#ensureTypen").html(data.ensureTypen);
+					} else if (data.iscity == "1") {
+					    $("#tk_type").hide();
+                        $("#dsr_type").hide();
+ 						$("#db_type").show();
+						$("#czdb").attr("checked", true);
+						$("#ensureTypen").html(data.ensureTypen);
+					}else if (data.iscity == "6") {
+					    $("#tk_type").show();
+                        $("#dsr_type").hide();
+ 						$("#db_type").hide();
+						$("#nctk").attr("checked", true);
+						$("#ensureTypen").html("农村特困");
+						$("#notmember").html("赡抚养人信息");
+					}else if (data.iscity == "31") {
+					    $("#tk_type").show();
+                        $("#dsr_type").hide();
+ 						$("#db_type").hide();
+						$("#cztk").attr("checked", true);
+						$("#ensureTypen").html("城市特困");
+						$("#notmember").html("赡抚养人信息");
+					}else if (data.iscity == "10") {
+					    $("#tk_type").hide();
+                        $("#dsr_type").show();
+ 						$("#db_type").hide();
+						$("#ncdsr").attr("checked", true);
+						$("#ensureTypen").html("农村低收入");
+					}else if (data.iscity == "11") {
+					    $("#tk_type").hide();
+                        $("#dsr_type").show();
+ 						$("#db_type").hide();
+						$("#czdsr").attr("checked", true);
+						$("#ensureTypen").html("城市低收入");
+					}
+				$("#hhName").html(data.hhName);
+				$("#hhIdentity").html(data.hhIdentity);
+
+				$("#ensureTypecn").html(data.ensureTypecn);
+				var planChildsList =["","独生子女","双子女","双女结扎","诚信计生户","其他"];
+				if(data.planChilds==99 ){
+						$("#planChilds").html("其他");
+				}else if(data.planChilds ==100){
+						$("#planChilds").html("双女结扎");
+				}else if(data.planChilds==101){
+						$("#planChilds").html("诚信计生户");
+				}else {
+					$("#planChilds").html(planChildsList[data.planChilds]);
+				}
+			
+                $("#homeAddress").html(data.homeAddress);
+				$("#permitDate").html(data.permitDate);
+				$("#account").html(data.account);
+				$("#memberId").html(data.memberId);
+				
+				var memberIdShipList =["","共同生活成员","非共同生活成员","工作人员","其他"];
+				if(data.memberIdShip == 99 ){
+					$("#memberIdShip").html("其他");
+				}else {
+					$("#memberIdShip").html(memberIdShipList[data.memberIdShip]);
+				}
+
+
+				var bankCodeNames =["","","中国银行","","中国农业银行","中国工商银行","中国建设银行","中国邮政储蓄银行 ","中信银行","中国农业发展银行","","","","","农村信用合作联社","","农村合作银行","中国交通银行","广西北部湾银行","桂林银行","柳州银行","","广西农村信用社"];
+               if(data.bankCode== 87){
+					$("#bankCode").html("广西宁明县农村商业银行");
+				}else if(data.bankCode == 88 ){
+					$("#bankCode").html("兴业银行");
+				}else{
+					$("#bankCode").html(bankCodeNames[data.bankCode]);
+				}
+
+				$("#rigidMoney").html(data.rigidMoney);
+				$("#remove").html(data.remove== 1 ? "是" : "否");
+				$("#removeWater").html(data.removeWater== 1 ? "是" : "否");
+				$("#bankName").html(data.removeWater== 1 ? "是" : "否");
+				$("#isRelatives").html(data.isRelatives== 1 ? "是" : "否");
+				var houseTypes=["","租赁","其他","自有","借住","租赁私有","租赁公有"];
+				var houseStructures=["","简易棚坯","土木结构","砖木结构","砖混结构","钢筋混凝土结构","其他结构"];
+				$("#houseType").html(houseTypes[data.houseType]);
+				$("#houseStructure").html(houseStructures[data.houseStructure]);
+				$("#houseAddress").html(data.houseAddress);
+				$("#memberId2").html(data.memberId2);
+				$("#builtupArea").html(data.builtupArea);
+				$("#houseArea").html(data.houseArea);
+				$("#houseNo").html(data.houseNo);
+
+				$("#houseType2").html(houseTypes[data.houseType2]);
+				$("#houseStructure2").html(houseStructures[data.houseStructure2]);
+				$("#houseAddress2").html(data.houseAddress2);
+				$("#memberId22").html(data.memberId22);
+				$("#builtupArea2").html(data.builtupArea2);
+				$("#houseArea2").html(data.houseArea2);
+				$("#houseNo2").html(data.houseNo2);
+
+				$("#smallcarQuantity").html(data.smallcarQuantity);
+				$("#motorcycleQuantity").html(data.motorcycleQuantity);
+				$("#saveDeposit").html(data.saveDeposit);
+				$("#airQuantity").html(data.airQuantity);
+                $("#otherAppliances").html(data.otherAppliances);
+                $("#cultivatedLand").html(data.cultivatedLand);
+                $("#economicForest").html(data.economicForest);
+                $("#livestockPoultry").html(data.livestockPoultry);
+                $("#fishPond").html(data.fishPond);
+                $("#responsibilityCropla").html(data.responsibilityCropla);
+                $("#familyFinance").html(data.householdProducts);
+                $("#familyProperty").html(data.familyProperty);
+
+                $("#qxunit_name").html(data.unitName);
+                $("#county").html(data.countyName);
+                $("#towns").html(data.townsName);
+                $("#rhdetail").html(data.enterDetail);
+                $("#applyReason").html(data.applyReason);
+				$("#year").html(data.enterHomeTime);
+			
+				var gz_income = 0,
+					jy_income = 0,
+					zy_income = 0,
+					cc_income = 0,
+					other_income = 0;
+				var relationshipCodeNameList =["","本人","配偶","子/婿","女/媳","孙子、孙女或外孙子、外孙女","父母","祖父母或外祖父母","","婿","","媳","孙子","孙女","外孙子","外孙女","父亲","母亲","祖父","祖母","外祖父","外祖母","兄","弟","姐","妹","子","女","侄子","侄女","姐夫","妹夫","嫂","叔父","婶娘","公公","婆婆","弟媳","岳父","岳母"];
+				var registerNatureNameList=["","非农业户口","农业户口"];
+				var marriageStateNameList=["","未婚","已婚","离异","丧偶"];
+				var healthStateNameList=["","健康或良好","一般或较弱","重病","残疾"];
+				var handicapedNameList=["","视力残疾","听力残疾","言语残疾","肢体残疾","智力残疾","精神残疾","多重残疾","其他残疾"];
+				var handicapedLevelList=["","一级残疾","二级残疾","三级残疾","四级残疾"];
+				var diseaseNameList=["","急性白血病(再生障碍性贫血)","恶性肿瘤","严重传染性肝炎(并发症)","系统性红斑狼疮晚期","孕产妇高危重症抢救","严重精神病","急性传染性肺结核及国家规定的特种传染病","严重心脑血管疾病/中风(有明显后遗症)","严重肾病综合症慢性肾衰竭(尿毒症)","急性心律衰竭/心肌梗塞/风湿性心脏病","","","民政部门认定的其他病种","急性胰腺炎","重症艾滋病","晚期血吸虫病","重症慢性病"];
+				var laborAbilityNameList=["","有劳动能力","部分丧失劳动能力","无劳动能力"];
+				if (data.listApplyMemberAllInfo.length > 0) {
+				
+					for (var i = 0; i < data.listApplyMemberAllInfo.length; i++) {
+
+						var member_name='', identifcard_id='', relationshipCodeName='', registerNatureName='', marriageStateName='', healthStateName='',
+							handicapedName='',
+							disablityCaseName='', diseaseName='', laborAbilityName='', workStation='', school='', employmentPlace='', poorName='';
+
+						if (data.listApplyMemberAllInfo[i].memberName == undefined) {
+							member_name = '';
+						} else {
+							member_name = data.listApplyMemberAllInfo[i].memberName;
+						}
+					
+						if (data.listApplyMemberAllInfo[i].identifcardId == undefined) {
+							identifcard_id = '';
+						} else {
+							identifcard_id = data.listApplyMemberAllInfo[i].identifcardId;
+						}
+			
+						if (data.listApplyMemberAllInfo[i].relationshipCode == '') {
+							relationshipCodeName = '';
+						} else if(data.listApplyMemberAllInfo[i].relationshipCod==99){
+							relationshipCodeName="其他";
+						}else{
+							relationshipCodeName =relationshipCodeNameList[data.listApplyMemberAllInfo[i].relationshipCode] ;
+						}
+						
+						if (data.listApplyMemberAllInfo[i].registerNature == '') {
+							registerNatureName = '';
+						} else if(data.listApplyMemberAllInfo[i].registerNature==99){
+							registerNatureName="其他";
+						}else{
+							registerNatureName =registerNatureNameList[data.listApplyMemberAllInfo[i].registerNature] ;
+						}
+						
+						if (data.listApplyMemberAllInfo[i].marriageState == '') {
+							marriageStateName = '';
+						} else 	if (data.listApplyMemberAllInfo[i].marriageState == 99) {
+							marriageStateName="未说明的婚姻状态";
+						}else 	if (data.listApplyMemberAllInfo[i].marriageState == 100) {
+							marriageStateName="已婚分户";
+						}else{
+							marriageStateName = marriageStateNameList[data.listApplyMemberAllInfo[i].marriageState];
+						}
+						
+						if (data.listApplyMemberAllInfo[i].healthState == '') {
+							healthStateName = '';
+						} else {
+							healthStateName = healthStateNameList[data.listApplyMemberAllInfo[i].healthState];
+						}
+					
+						if (data.listApplyMemberAllInfo[i].handicaped == '') {
+							handicapedName = '';
+						} else {
+							handicapedName = handicapedNameList[data.listApplyMemberAllInfo[i].handicaped];
+						}
+				
+						if (data.listApplyMemberAllInfo[i].disablityCase == '') {
+							disablityCaseName = '';
+						} else {
+							disablityCaseName = handicapedLevelList[data.listApplyMemberAllInfo[i].disablityCase];
+						}
+
+						if (data.listApplyMemberAllInfo[i].disease== '') {
+							diseaseName = '';
+						} else {
+							var s =data.listApplyMemberAllInfo[i].disease;	
+							var dis= s.split(',');
+						
+						for (var j = 0; j < dis.length; j++) {
+							if( j == (dis.length-1)){
+							diseaseName+=	diseaseNameList[dis[j]];
+							}else{
+							diseaseName+=	diseaseNameList[dis[j]] +",";
+							}
+						}
+						}
+					
+						if (data.listApplyMemberAllInfo[i].laborAbility == '') {
+							laborAbilityName = '';
+						} else {
+							laborAbilityName =laborAbilityNameList[data.listApplyMemberAllInfo[i].laborAbility];
+						}
+					
+						if (data.listApplyMemberAllInfo[i].workStation == undefined) {
+							workStation = '';
+						} else {
+							workStation = data.listApplyMemberAllInfo[i].workStation + '/';
+						}
+						if (data.listApplyMemberAllInfo[i].school == undefined) {
+							school = '';
+						} else {
+							school = data.listApplyMemberAllInfo[i].school;
+						}
+
+							var incomes = data.listApplyMemberAllInfo[i].enbaseIncomeHisList;
+
+							var yearIncome=0;
+							for (var j = 0; j < incomes.length; j++) {
+
+							if(incomes[j].amount != undefined){
+							yearIncome=yearIncome+ parseFloat(incomes[j].amount);
+							}
+							if(incomes[j].noAmount != undefined){
+								yearIncome=yearIncome+ parseFloat(incomes[j].noAmount);
+							}
+
+							}
+							employmentPlace = yearIncome;
+
+						var smember = '<tr><td>' +
+							member_name +
+							'</td><td>' +
+							identifcard_id +
+							' </td><td>' +
+							relationshipCodeName +
+							'</td><td>' +
+							registerNatureName +
+							'</td><td>' +
+							marriageStateName +
+							'</td><td>' +
+							healthStateName +
+							'</td><td>' +
+							handicapedName +
+							'</td><td >' +
+							disablityCaseName +
+							'</td> <td colspan="2">' +
+							diseaseName +
+							'</td><td>' +
+							laborAbilityName +
+							'</td><td>' +
+							workStation + school +
+							'</td><td>' +
+							employmentPlace 
+							'</td></tr>' ;
+						$("#memBeans").append(smember);
+					}
+
+				} else {
+
+					var smember0 = '<tr><td>' +
+						'</td><td>' +
+						' </td><td>' +
+						'</td><td>' +
+						'</td><td>' +
+						'</td><td>' +
+						'</td><td>' +
+						'</td><td>' +
+						'</td><td>' +
+						'</td><td>' +
+						'</td><td>' +
+						'</td><td>' +
+						'</td></tr>';
+					$("#memBeans").append(smember0);
+				}
+
+				if (data.listApplyNoMemberInfo.length > 0) {
+					for (var i = 0; i < data.listApplyNoMemberInfo.length; i++) {
+
+						var member_name, identifcard_id, relationshipCodeName, marriageStateName, healthStateName, handicapedName,
+							disablityCaseName, diseaseName, laborAbilityName, workStation, employmentPlace, money ,school;
+
+						if (data.listApplyNoMemberInfo[i].memberName == '') {
+							member_name = '';
+						} else {
+							member_name = data.listApplyNoMemberInfo[i].memberName;
+						}
+
+						if (data.listApplyNoMemberInfo[i].identifcardId == '') {
+							identifcard_id = '';
+						} else {
+							identifcard_id = data.listApplyNoMemberInfo[i].identifcardId;
+						}
+
+                        if (data.listApplyNoMemberInfo[i].relationshipCode == '') {
+							relationshipCodeName = '';
+						} else if(data.listApplyNoMemberInfo[i].relationshipCode==99){
+							relationshipCodeName="其他";
+						}else{
+							relationshipCodeName =relationshipCodeNameList[data.listApplyNoMemberInfo[i].relationshipCode] ;
+						}
+
+						if (data.listApplyNoMemberInfo[i].marriageState == '') {
+							marriageStateName = '';
+						} else 	if (data.listApplyNoMemberInfo[i].marriageState == 99) {
+							marriageStateName="未说明的婚姻状态";
+						}else 	if (data.listApplyNoMemberInfo[i].marriageState == 100) {
+							marriageStateName="已婚分户";
+						}else{
+							marriageStateName = marriageStateNameList[data.listApplyNoMemberInfo[i].marriageState];
+						}
+
+						if (data.listApplyNoMemberInfo[i].healthState == '') {
+							healthStateName = '';
+						} else {
+							healthStateName = healthStateNameList[data.listApplyNoMemberInfo[i].healthState];
+						}
+						
+						if (data.listApplyNoMemberInfo[i].handicaped == '') {
+							handicapedName = '';
+						} else {
+							handicapedName = handicapedNameList[data.listApplyNoMemberInfo[i].handicaped];
+						}
+						
+						
+						if (data.listApplyNoMemberInfo[i].disablityCase == '') {
+							disablityCaseName = '';
+						} else {
+							disablityCaseName = handicapedLevelList[data.listApplyNoMemberInfo[i].disablityCase];
+						}
+						
+						if (data.listApplyNoMemberInfo[i].disease== '') {
+							diseaseName = '';
+						} else {
+							var s =data.listApplyNoMemberInfo[i].disease;	
+							var dis= s.split(',');
+						
+						for (var j = 0; j < dis.length; j++) {
+							if( j == (dis.length-1)){
+							diseaseName+=	diseaseNameList[dis[j]];
+							}else{
+							diseaseName+=	diseaseNameList[dis[j]] +",";
+							}
+						}
+						}
+						
+						
+						if (data.listApplyNoMemberInfo[i].laborAbility == '') {
+							laborAbilityName = '';
+						} else {
+							laborAbilityName =laborAbilityNameList[data.listApplyNoMemberInfo[i].laborAbility];
+						}
+						if (data.listApplyNoMemberInfo[i].workStation == '') {
+							workStation = '';
+						} else {
+							workStation = data.listApplyNoMemberInfo[i].workStation + '/';
+						}
+                        if (data.listApplyMemberAllInfo[i].school == undefined) {
+							school = '';
+						} else {
+							school = data.listApplyMemberAllInfo[i].school;
+						}
+                        if (data.listApplyNoMemberInfo[i].employmentPlace == '') {
+							employmentPlace = '';
+						} else {
+							employmentPlace = data.listApplyNoMemberInfo[i].employmentPlace;
+						}
+						var incomes = data.listApplyNoMemberInfo[i].enbaseNonmemberIncomeList;
+						var yearIncome=0;
+						for (var j = 0; j < incomes.length; j++) {
+							if(incomes[j].amount != undefined){
+							yearIncome=yearIncome+ parseFloat(incomes[j].amount);
+							}
+							if(incomes[j].noAmount != undefined){
+								yearIncome=yearIncome+ parseFloat(incomes[j].noAmount);
+							}
+<!--							yearIncome=yearIncome+ parseFloat(incomes[j].amount)+parseFloat(incomes[j].noAmount)-->
+
+
+						}
+
+						money = yearIncome;
+						
+
+						var smember = '<tr><td>' +
+							member_name +
+							'</td><td>' +
+							identifcard_id +
+							' </td><td>' +
+							relationshipCodeName +
+							'</td><td>' +
+							marriageStateName +
+							'</td><td>' +
+							healthStateName +
+							'</td><td>' +
+							handicapedName +
+							'</td><td>' +
+							disablityCaseName +
+							'</td><td  colspan="2">' +
+							diseaseName +
+							'</td><td>' +
+							laborAbilityName +
+							'</td><td>' +
+							workStation +school+
+							'</td><td>' +
+							employmentPlace +
+							'</td><td>' +
+							money +
+							'</td></tr>';
+						$("#notmembers").append(smember);
+					}
+				} else {
+					var smember = '<tr><td>' +
+						'</td><td>' +
+						' </td><td>' +
+						'</td><td>' +
+						'</td><td>' +
+						'</td><td>' +
+						'</td><td>' +
+						'</td><td  colspan="2">' +
+						'</td><td>' +
+						'</td><td>' +
+						'</td><td>' +
+						'</td><td>' +
+						'</td></tr>';
+					$("#notmembers").append(smember);
+				}
+
+}
+//申请人签字
+					function setmembersignature() {
+						android.memberSingature();
+					}
+					//申请人指纹
+					function setmemberfingerprint() {
+						android.memberFingerprint();
+					}
+
+					//核查人员签字
+					function setworksignature() {
+						android.workSingature();
+					}
+
+			//设置申请人签字
+			function setMemberSignatureData(imgpath) {
+				$('#image_member_s').attr("src", imgpath);
+
+			}
+			//设置申请人指紋
+			function setMemberFingerprintData(imgpath) {
+				$('#image_member_f').attr("src", imgpath);
+			}
+
+
+			//设置核查人员签字
+			function setWorksignData(imgpath) {
+				$('#image_worker_s').attr("src", imgpath);
+			}
+
+
+</script>
+
+</body>
+
+</html>
