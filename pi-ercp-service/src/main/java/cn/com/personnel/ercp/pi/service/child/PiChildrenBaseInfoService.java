@@ -388,7 +388,9 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
                 }else{
                     str = fileInfo1.getFileCat();
                     fileInfoVO = new FileInfoVO();
-                    fileInfoVO.getFileInfoList().add(fileInfo1);
+                    List<FileInfo> fileList = new ArrayList<>();
+                    fileList.add(fileInfo1);
+                    fileInfoVO.setFileInfoList(fileList);
                     fileInfoVOList.add(fileInfoVO);
                 }
             }
@@ -403,7 +405,10 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
                 }else{
                     str = fileInfo1.getFileCat();
                     fileInfoVO = new FileInfoVO();
-                    fileInfoVO.getFileInfoList().add(fileInfo1);
+                    List<FileInfo> fileList = new ArrayList<>();
+                    fileList.add(fileInfo1);
+                    fileInfoVO.setFileInfoList(fileList);
+//                    fileInfoVO.getFileInfoList().add(fileInfo1);
                     fileInfoVOList.add(fileInfoVO);
                 }
             }

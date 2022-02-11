@@ -1,5 +1,8 @@
 package cn.com.personnel.ercp.pi.controller.children;
 
+import cn.com.personnel.ercp.common.kit.FileKitConfig;
+import cn.com.personnel.ercp.common.persistence.entity.FileInfo;
+import cn.com.personnel.ercp.common.persistence.mapper.FileInfoMapper;
 import cn.com.personnel.ercp.pi.module.child.PiChildrenBaseInfoVO;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenBaseInfo;
 import cn.com.personnel.ercp.pi.service.child.IPiChildrenBaseInfoService;
@@ -16,16 +19,25 @@ import org.springframework.web.servlet.ModelAndView;
 public class H5ChildrenBaseInfoController extends PageController {
     @Autowired
     IPiChildrenBaseInfoService piChildrenBaseInfoService;
+    @Autowired
+    FileInfoMapper fileInfoMapper;
+    @Autowired
+    private FileKitConfig fileKitConfig;
 
     @RequestMapping("/toH5ChildrenModel")
     public ModelAndView toH5ChildrenModel(@RequestParam("childId") String childId){
         logger.info("===========进来了childId:" + childId);
-        ModelAndView modelAndView = new ModelAndView("/assets/children");
+        ModelAndView modelAndView = new ModelAndView("/children");
         if(StringUtils.isNotEmpty(childId)){
             PiChildrenBaseInfo piChildrenBaseInfo = new PiChildrenBaseInfo();
             piChildrenBaseInfo.setChildId(childId);
             PiChildrenBaseInfoVO piChildrenBaseInfoVO = piChildrenBaseInfoService.queryH5PiChildrenBaseInfo(piChildrenBaseInfo);
             modelAndView.addObject("info", piChildrenBaseInfoVO);
+            FileInfo fileInfo = fileInfoMapper.queryOneFilesByCatByFlag(childId, "申请人签字");
+            modelAndView.addObject("applyfile", fileInfo == null ? null : fileKitConfig.getFileBasePath() + fileInfo.getFilePath());
+            FileInfo fileInfo2 = fileInfoMapper.queryOneFilesByCatByFlag(childId, "审核人签字");
+            modelAndView.addObject("approvefile", fileInfo2 == null ? null : fileKitConfig.getFileBasePath() + fileInfo2.getFilePath());
+            response.addHeader("Access-Control-Allow-Origin", "*");
         }
 
         return modelAndView;

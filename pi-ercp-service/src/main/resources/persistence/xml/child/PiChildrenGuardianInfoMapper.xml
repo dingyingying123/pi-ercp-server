@@ -61,9 +61,6 @@
       <if test="childId != null and childId != ''">
         i.child_id = #{childId}
       </if>
-      <if test="guardianId != null and guardianId != ''">
-        and guardian_id = #{guardianId}
-      </if>
     </where>
     order by f.file_cat, upload_time desc
   </select>

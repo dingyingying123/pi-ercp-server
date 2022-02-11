@@ -73,4 +73,10 @@
     <update id="updateFileFlag">
         update sec_file_info set file_flag=#{bondId} where file_cat=#{fileCat} and file_flag=#{fileFlag}
     </update>
+
+    <select id="queryOneFilesByCatByFlag" resultMap="BaseResultMap">
+        select * from sec_file_info
+        where file_cat = #{fileCat} and file_flag = #{fileFlag}
+        order by upload_time desc limit 1
+    </select>
 </mapper>

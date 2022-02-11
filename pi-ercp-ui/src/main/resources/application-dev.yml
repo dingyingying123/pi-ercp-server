@@ -93,7 +93,8 @@ sap:
   mandt: 401
 
 file:
-  upload: /data/sfs/xd/file
+  upload: \data\apache-tomcat-8.5.37\webapps\ROOT\file
+  basePath: http://localhost:8080
 
 den:
 #  serverUrl: http://pev.goldwind.com.cn:50000
