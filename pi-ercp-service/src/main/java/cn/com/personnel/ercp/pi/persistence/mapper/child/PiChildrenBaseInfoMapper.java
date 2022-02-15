@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface PiChildrenBaseInfoMapper extends BaseMapper<PiChildrenBaseInfo> {
-    List<PiChildrenBaseInfo> queryPiChildrenBaseInfoList(@Param("info") PiChildrenBaseInfo piChildrenBaseInfo);
+    List<PiChildrenBaseInfoVO> queryPiChildrenBaseInfoList(@Param("info") PiChildrenBaseInfo piChildrenBaseInfo);
 
     void submitPiChildrenBaseInfoList(SecUser secUser);
 
@@ -18,13 +18,13 @@ public interface PiChildrenBaseInfoMapper extends BaseMapper<PiChildrenBaseInfo>
 
     List<ChildrenStatisticsInfoVO> queryChildrenStatisticsList(PiChildrenBaseInfo piChildrenBaseInfo);
 
-    List<PiChildrenBaseInfo> queryTakeCaseList(PiChildrenBaseInfoVO piChildrenBaseInfo);
+    List<PiChildrenBaseInfoVO> queryTakeCaseList(PiChildrenBaseInfoVO piChildrenBaseInfo);
 
-    List<PiChildrenBaseInfo> queryEstimateList(PiChildrenBaseInfoVO piChildrenBaseInfo);
+    List<PiChildrenBaseInfoVO> queryEstimateList(PiChildrenBaseInfoVO piChildrenBaseInfo);
 
-    List<PiChildrenBaseInfo> queryPlanList(PiChildrenBaseInfoVO piChildrenBaseInfo);
+    List<PiChildrenBaseInfoVO> queryPlanList(PiChildrenBaseInfoVO piChildrenBaseInfo);
 
-    List<PiChildrenBaseInfo> queryInterventionList(PiChildrenBaseInfoVO piChildrenBaseInfo);
+    List<PiChildrenBaseInfoVO> queryInterventionList(PiChildrenBaseInfoVO piChildrenBaseInfo);
 
-    List<PiChildrenBaseInfo> queryEvaluateList(PiChildrenBaseInfoVO piChildrenBaseInfo);
+    List<PiChildrenBaseInfoVO> queryEvaluateList(PiChildrenBaseInfoVO piChildrenBaseInfo);
 }

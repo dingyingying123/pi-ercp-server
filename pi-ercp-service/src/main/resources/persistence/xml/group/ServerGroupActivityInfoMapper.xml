@@ -21,6 +21,7 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="updator" property="updator" jdbcType="VARCHAR" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="activity_effectiveness" property="activityEffectiveness" jdbcType="VARCHAR" />
   </resultMap>
 
   <select id="queryGroupActivityList" resultMap="BaseResultMap">

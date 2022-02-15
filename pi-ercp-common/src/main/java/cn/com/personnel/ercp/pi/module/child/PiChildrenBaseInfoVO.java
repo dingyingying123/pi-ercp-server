@@ -19,6 +19,12 @@ public class PiChildrenBaseInfoVO extends PiChildrenBaseInfo {
     private PiChildrenGuardianInfo matherGuardian;
     private PiChildrenGuardianInfo otherGuardian;
 
+    private String problemsAndNeedsFaced;
+    private String caseDate;
+    private String expectedGoal;
+    private String expectedExecution;
+    private String implementationStatus;
+
     public List<PiChildrenGuardianInfo> getPiChildrenGuardianInfoList() {
         return piChildrenGuardianInfoList;
     }
@@ -105,5 +111,45 @@ public class PiChildrenBaseInfoVO extends PiChildrenBaseInfo {
 
     public void setOtherGuardian(PiChildrenGuardianInfo otherGuardian) {
         this.otherGuardian = otherGuardian;
+    }
+
+    public String getProblemsAndNeedsFaced() {
+        return problemsAndNeedsFaced;
+    }
+
+    public void setProblemsAndNeedsFaced(String problemsAndNeedsFaced) {
+        this.problemsAndNeedsFaced = problemsAndNeedsFaced;
+    }
+
+    public String getCaseDate() {
+        return caseDate;
+    }
+
+    public void setCaseDate(String caseDate) {
+        this.caseDate = caseDate;
+    }
+
+    public String getExpectedGoal() {
+        return expectedGoal;
+    }
+
+    public void setExpectedGoal(String expectedGoal) {
+        this.expectedGoal = expectedGoal;
+    }
+
+    public String getExpectedExecution() {
+        return expectedExecution;
+    }
+
+    public void setExpectedExecution(String expectedExecution) {
+        this.expectedExecution = expectedExecution;
+    }
+
+    public String getImplementationStatus() {
+        return implementationStatus;
+    }
+
+    public void setImplementationStatus(String implementationStatus) {
+        this.implementationStatus = implementationStatus;
     }
 }

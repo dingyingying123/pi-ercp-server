@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface PiChildrenGuardianInfoMapper extends BaseMapper<PiChildrenGuardianInfo> {
     List<FileInfo> queryGuardianFileList(PiChildrenBaseInfo piChildrenBaseInfo);
+
+    List<PiChildrenGuardianInfo> queryGuardianList(PiChildrenBaseInfo piChildrenBaseInfo);
 }

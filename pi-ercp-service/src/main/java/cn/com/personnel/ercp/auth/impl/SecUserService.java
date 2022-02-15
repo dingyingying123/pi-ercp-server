@@ -65,17 +65,16 @@ public class SecUserService extends BaseService implements ISecUserService {
 //        int countResult = secUserMapper.selectCount(queryEntity);
 //        Assert.state(countResult < 1, "用户名已经存在！");
 
-        if(StringUtils.isEmpty(secUser.getUserId())) {
+        secUser.setUpdateTime(new Date());
+        secUser.setPwd(DigestUtils.md5DigestAsHex(generatPwd(secUser)));
+        int count = secUserMapper.updateByPrimaryKeySelective(secUser);
+        if(count == 0) {
             // 插入数据
             secUser.setPwd(DigestUtils.md5DigestAsHex(generatPwd(secUser)));
             secUser.setPwdLock("是");
             secUser.setStatus("有效");
             secUser.setCreateTime(new Date());
             secUserMapper.insert(secUser);
-        }else{
-            secUser.setUpdateTime(new Date());
-            secUser.setPwd(DigestUtils.md5DigestAsHex(generatPwd(secUser)));
-            secUserMapper.updateByPrimaryKeySelective(secUser);
         }
         return secUser;
     }

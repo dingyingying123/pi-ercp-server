@@ -45,6 +45,9 @@ public class ServerGroupActivityInfo {
     @Column(name = "update_time")
     private Date updateTime;
 
+    @Column(name = "activity_effectiveness")
+    private String activityEffectiveness;
+
     /**
      * @return group_id
      */
@@ -261,5 +264,13 @@ public class ServerGroupActivityInfo {
      */
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getActivityEffectiveness() {
+        return activityEffectiveness;
+    }
+
+    public void setActivityEffectiveness(String activityEffectiveness) {
+        this.activityEffectiveness = activityEffectiveness;
     }
 }

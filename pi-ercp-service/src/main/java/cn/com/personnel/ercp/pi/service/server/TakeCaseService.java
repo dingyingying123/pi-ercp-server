@@ -4,6 +4,7 @@ import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
 import cn.com.personnel.ercp.common.constants.CommonConstants;
 import cn.com.personnel.ercp.common.persistence.entity.ReturnEntity;
 import cn.com.personnel.ercp.framework.kit.UUIDKit;
+import cn.com.personnel.ercp.pi.module.child.PiChildrenBaseInfoVO;
 import cn.com.personnel.ercp.pi.module.server.ServerTakeCaseInfoVO;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenBaseInfo;
 import cn.com.personnel.ercp.pi.persistence.entity.server.ServerChildStatusInfo;
@@ -154,6 +155,22 @@ public class TakeCaseService extends BaseService implements ITakeCaseService {
         if(serverTakeCaseInfo == null){
             return ReturnEntity.errorMsg("数据不存在！");
         }
+        if(StringUtils.isEmpty(serverTakeCaseInfo.getChildName())){
+            return ReturnEntity.errorMsg("儿童姓名为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverTakeCaseInfo.getChildMale())){
+            return ReturnEntity.errorMsg("儿童性别为必填项！");
+        }
+        if(StringUtils.isEmpty(serverTakeCaseInfo.getChildAge())){
+            return ReturnEntity.errorMsg("儿童年龄为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverTakeCaseInfo.getCaseSource())){
+            return ReturnEntity.errorMsg("个案来源为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverTakeCaseInfo.getProblemsAndNeedsFaced())){
+            return ReturnEntity.errorMsg("儿童面临的问题和需要为必填项，不能为空！");
+        }
+
         serverTakeCaseInfoVO.setStatus(CommonConstants.ServerApprovalStatus.CASE_SUBMITED);
         serverTakeCaseInfoVO.setUpdateTime(new Date());
         serverTakeCaseInfoVO.setUpdator(secUser.getUserId());
@@ -188,9 +205,9 @@ public class TakeCaseService extends BaseService implements ITakeCaseService {
         setPageHelper(buildPagenation);
         //根据条件查询
         piChildrenBaseInfo.setStatus(CommonConstants.ApprovalStatus.APPROVED);
-        List<PiChildrenBaseInfo> childrenBaseInfoList = piChildrenBaseInfoMapper.queryPiChildrenBaseInfoList(piChildrenBaseInfo);
+        List<PiChildrenBaseInfoVO> childrenBaseInfoList = piChildrenBaseInfoMapper.queryPiChildrenBaseInfoList(piChildrenBaseInfo);
         //返回数据
-        return ReturnEntity.ok(new PageInfo<PiChildrenBaseInfo>(childrenBaseInfoList));
+        return ReturnEntity.ok(new PageInfo<PiChildrenBaseInfoVO>(childrenBaseInfoList));
     }
 
     public String getNumber() {

@@ -210,6 +210,26 @@ public class EstimateService extends BaseService implements IEstimateService {
         if(serverEstimateInfo == null){
             return ReturnEntity.errorMsg("数据不存在！");
         }
+
+        if(StringUtils.isEmpty(serverEstimateInfo.getChildName())){
+            return ReturnEntity.errorMsg("儿童姓名为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverEstimateInfo.getChildMale())){
+            return ReturnEntity.errorMsg("儿童性别为必填项！");
+        }
+        if(StringUtils.isEmpty(serverEstimateInfo.getChildAge())){
+            return ReturnEntity.errorMsg("儿童年龄为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverEstimateInfo.getAcceptanceReason())){
+            return ReturnEntity.errorMsg("接案原因及当时出现的问题为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverEstimateInfo.getFamilyBackground())){
+            return ReturnEntity.errorMsg("家庭背景为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverEstimateInfo.getImportantGrowthExperience())){
+            return ReturnEntity.errorMsg("重要成长经历为必填项，不能为空！");
+        }
+
         serverEstimateInfo.setStatus(CommonConstants.ServerApprovalStatus.ESTIMATE_SUBMITED);
         serverEstimateInfo.setUpdateTime(new Date());
         serverEstimateInfo.setUpdator(secUser.getUserId());

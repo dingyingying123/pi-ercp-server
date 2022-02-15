@@ -110,6 +110,42 @@ public class EvaluateService extends BaseService implements IEvaluateService {
         if(serverEvaluateInfo == null){
             return ReturnEntity.errorMsg("数据不存在！");
         }
+        if(StringUtils.isEmpty(serverEvaluateInfo.getChildName())){
+            return ReturnEntity.errorMsg("儿童姓名为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverEvaluateInfo.getChildMale())){
+            return ReturnEntity.errorMsg("儿童性别为必填项！");
+        }
+        if(StringUtils.isEmpty(serverEvaluateInfo.getChildAge())){
+            return ReturnEntity.errorMsg("儿童年龄为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverEvaluateInfo.getCaseDescription())){
+            return ReturnEntity.errorMsg("个案描述为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverEvaluateInfo.getServiceGoal())){
+            return ReturnEntity.errorMsg("服务目标为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverEvaluateInfo.getServiceStartDate())){
+            return ReturnEntity.errorMsg("服务起止日期为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverEvaluateInfo.getServicesProvidedAndProgress())){
+            return ReturnEntity.errorMsg("提供的服务及进展情况为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverEvaluateInfo.getCurrentStatusChildren())){
+            return ReturnEntity.errorMsg("儿童现状为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverEvaluateInfo.getCaseClosedSituation())){
+            return ReturnEntity.errorMsg("结案情况为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverEvaluateInfo.getInterventionWorkReflection())){
+            return ReturnEntity.errorMsg("介入工作反思为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverEvaluateInfo.getHelpReceived())){
+            return ReturnEntity.errorMsg("获得的帮助为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverEvaluateInfo.getIsMeetsExpectations())){
+            return ReturnEntity.errorMsg("是否达到预期为必填项，不能为空！");
+        }
         serverEvaluateInfo.setStatus(CommonConstants.ServerApprovalStatus.EVALUATE_SUBMIT);
         serverEvaluateInfo.setUpdateTime(new Date());
         serverEvaluateInfo.setUpdator(secUser.getUserId());

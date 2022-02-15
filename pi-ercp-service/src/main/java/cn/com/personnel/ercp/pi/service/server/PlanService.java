@@ -134,6 +134,27 @@ public class PlanService extends BaseService implements IPlanService {
         if(serverPlanInfo == null){
             return ReturnEntity.errorMsg("数据不存在！");
         }
+        if(StringUtils.isEmpty(serverPlanInfo.getChildName())){
+            return ReturnEntity.errorMsg("儿童姓名为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverPlanInfo.getProblemEscription())){
+            return ReturnEntity.errorMsg("问题描述为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverPlanInfo.getExpectedGoal())){
+            return ReturnEntity.errorMsg("预期目标为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverPlanInfo.getSpecificStrategiesAndMethods())){
+            return ReturnEntity.errorMsg("具体策略和方法为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverPlanInfo.getExecutor())){
+            return ReturnEntity.errorMsg("执行者为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverPlanInfo.getExpectedExecution())){
+            return ReturnEntity.errorMsg("预计执行为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverPlanInfo.getImplementationStatus())){
+            return ReturnEntity.errorMsg("执行状况为必填项，不能为空！");
+        }
         serverPlanInfo.setStatus(CommonConstants.ServerApprovalStatus.PLANPARTSUBMIT);
         serverPlanInfo.setUpdateTime(new Date());
         serverPlanInfo.setUpdator(secUser.getUserId());

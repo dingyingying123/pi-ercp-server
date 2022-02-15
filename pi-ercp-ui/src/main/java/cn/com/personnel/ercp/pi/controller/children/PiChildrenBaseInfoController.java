@@ -3,6 +3,7 @@ package cn.com.personnel.ercp.pi.controller.children;
 import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
 import cn.com.personnel.ercp.common.persistence.entity.ReturnEntity;
 import cn.com.personnel.ercp.pi.module.child.PiChildrenBaseInfoVO;
+import cn.com.personnel.ercp.pi.persistence.entity.child.PiAddress;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenBaseInfo;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenGuardianInfo;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenLocationInfo;
@@ -162,5 +163,16 @@ public class PiChildrenBaseInfoController extends PageController {
     @ResponseBody
     public ReturnEntity queryChildrenStatisticsList(@RequestBody PiChildrenBaseInfo piChildrenBaseInfo){
         return piChildrenBaseInfoService.queryChildrenStatisticsList(piChildrenBaseInfo);
+    }
+
+    /**
+     * 根据省市县镇查询村列表
+     * @param piAddress
+     * @return
+     */
+    @RequestMapping("/queryAddressList")
+    @ResponseBody
+    public ReturnEntity queryAddressList(@RequestBody PiAddress piAddress){
+        return piChildrenBaseInfoService.queryAddressList(piAddress);
     }
 }

@@ -3,6 +3,7 @@ package cn.com.personnel.ercp.pi.service.child;
 import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
 import cn.com.personnel.ercp.common.persistence.entity.ReturnEntity;
 import cn.com.personnel.ercp.pi.module.child.PiChildrenBaseInfoVO;
+import cn.com.personnel.ercp.pi.persistence.entity.child.PiAddress;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenBaseInfo;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenGuardianInfo;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenLocationInfo;
@@ -34,4 +35,6 @@ public interface IPiChildrenBaseInfoService {
     ReturnEntity queryChildrenStatisticsList(PiChildrenBaseInfo piChildrenBaseInfo);
 
     PiChildrenBaseInfoVO queryH5PiChildrenBaseInfo(PiChildrenBaseInfo piChildrenBaseInfo);
+
+    ReturnEntity queryAddressList(PiAddress piAddress);
 }

@@ -57,7 +57,13 @@
   </resultMap>
 
   <resultMap id="BaseResultMapVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.child.PiChildrenBaseInfoVO">
-
+      <result column="problems_and_needs_faced" property="problemsAndNeedsFaced" jdbcType="VARCHAR" />
+      <result column="expected_goal" property="expectedGoal" jdbcType="VARCHAR" />
+      <result column="expected_execution" property="expectedExecution" jdbcType="VARCHAR" />
+      <result column="implementation_status" property="implementationStatus" jdbcType="VARCHAR" />
+      <result column="case_date" property="caseDate" jdbcType="VARCHAR" />
+      <collection property="piChildrenGuardianInfoList" ofType="cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenGuardianInfo"
+                  select="cn.com.personnel.ercp.pi.persistence.mapper.child.PiChildrenGuardianInfoMapper.queryGuardianList" column="{childId=child_id}" />
   </resultMap>
 
   <resultMap id="BaseResultMapVO1" type="cn.com.personnel.ercp.pi.module.child.ChildrenStatisticsInfoVO">
@@ -75,8 +81,8 @@
     <result column="orphanCount" jdbcType="VARCHAR" property="orphanCount" />
   </resultMap>
 
-  <select id="queryPiChildrenBaseInfoList" resultMap="BaseResultMap">
-    select coalesce ((select count(*) from pi_children_guardian_info g where i.child_id=g.child_id),0) as guardian,i.* from pi_children_base_info i
+  <select id="queryPiChildrenBaseInfoList" resultMap="BaseResultMapVO">
+    select coalesce ((select count(*) from pi_children_guardian_info g where i.child_id=g.child_id),0)+1 as guardian,i.* from pi_children_base_info i
     <where>
       <if test="info.childAccountAddress != null and info.childAccountAddress != ''">
         i.child_account_address like concat('%', #{info.childAccountAddress}, '%')
@@ -116,6 +122,9 @@
       </if>
       <if test="info.status != null and info.status != '' and info.status == '-1'">
          and i.status != '0'
+      </if>
+      <if test="info.type != null and info.type == '2'">
+        and i.child_id not in (select child_id from server_take_case_info group by child_id)
       </if>
     </where>
     order by i.create_time desc
@@ -274,8 +283,8 @@
 
   </select>
 
-    <select id="queryTakeCaseList" resultMap="BaseResultMap">
-        select b.* from server_take_case_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
+    <select id="queryTakeCaseList" resultMap="BaseResultMapVO">
+        select b.*,i.problems_and_needs_faced from server_take_case_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
         <where>
             <if test="childName != null and childName != '' ">
                 (i.child_name like concat('%', #{childName}, '%') or b.child_id_no like concat('%', #{childName}, '%'))
@@ -289,11 +298,14 @@
             <if test="caseStatus != null and caseStatus != ''">
                 and s.case_status = #{caseStatus}
             </if>
+            <if test="type != null and type == '3'">
+                and i.child_id not in (select child_id from server_estimate_info group by child_id)
+            </if>
         </where>
         order by i.case_date desc
     </select>
 
-    <select id="queryEstimateList" resultMap="BaseResultMap">
+    <select id="queryEstimateList" resultMap="BaseResultMapVO">
         select b.* from server_estimate_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
         <where>
             <if test="childName != null and childName != '' ">
@@ -311,11 +323,14 @@
             <if test="estimateStatus != null and estimateStatus != ''">
                 and s.estimate_status = #{estimateStatus}
             </if>
+            <if test="type != null and type == '4'">
+                and i.child_id not in (select child_id from server_plan_info group by child_id)
+            </if>
         </where>
         order by i.estimate_date desc
     </select>
 
-    <select id="queryPlanList" resultMap="BaseResultMap">
+    <select id="queryPlanList" resultMap="BaseResultMapVO">
         select b.* from server_plan_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
         <where>
             <if test="childName != null and childName != '' ">
@@ -330,12 +345,17 @@
             <if test="planStatus != null and planStatus != ''">
                 and s.plan_status = #{planStatus}
             </if>
+            <if test="type != null and type == '5'">
+                and i.child_id not in (select child_id from server_interview_intervention_info group by child_id)
+                and i.child_id not in (select child_id from server_available_resources_info group by child_id)
+            </if>
         </where>
         order by i.plan_date desc
     </select>
 
-    <select id="queryInterventionList" resultMap="BaseResultMap">
-        select b.* from server_interview_intervention_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
+    <select id="queryInterventionList" resultMap="BaseResultMapVO">
+        select b.*,c.problems_and_needs_faced from server_interview_intervention_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
+        left join server_take_case_info c on c.child_id =b.child_id
         <where>
             <if test="childName != null and childName != '' ">
                 (i.child_name like concat('%', #{childName}, '%') or b.child_id_no like concat('%', #{childName}, '%'))
@@ -348,10 +368,14 @@
             </if>
             <if test="interventionStatus != null and interventionStatus != ''">
                 and s.intervention_status = #{interventionStatus}
+            </if>
+            <if test="type != null and type == '6'">
+                and i.child_id not in (select child_id from server_evaluate_info group by child_id)
             </if>
         </where>
         union
-        select b.* from server_available_resources_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
+        select b.*,c.problems_and_needs_faced from server_available_resources_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
+        left join server_take_case_info c on c.child_id =b.child_id
         <where>
             <if test="childName != null and childName != '' ">
                 (i.child_name like concat('%', #{childName}, '%') or b.child_id_no like concat('%', #{childName}, '%'))
@@ -364,13 +388,23 @@
             </if>
             <if test="interventionStatus != null and interventionStatus != ''">
                 and s.intervention_status = #{interventionStatus}
+            </if>
+            <if test="type != null and type == '6'">
+                and i.child_id not in (select child_id from server_evaluate_info group by child_id)
             </if>
         </where>
 
     </select>
 
-    <select id="queryEvaluateList" resultMap="BaseResultMap">
-        select b.* from server_evaluate_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
+    <select id="queryEvaluateList" resultMap="BaseResultMapVO">
+        select b.*,c.problems_and_needs_faced,c.case_date,ss.expected_goal,
+        case when ss.expected_execution is null and ss.expected_execution = '' then ss.implementation_status
+        else concat(ss.expected_execution , ';' , ss.implementation_status) end as expected_execution
+        from server_evaluate_info i left join pi_children_base_info b on i.child_id =b.child_id join server_child_status_info s on s.sta_id=i.sta_id
+        left join server_take_case_info c on c.child_id =b.child_id
+        left join (select i.* from server_plan_info i join
+        (select spi.child_id,max(spi.create_time) as create_time from server_plan_info spi group by spi.child_id) as sp on i.child_id =sp.child_id and i.create_time =sp.create_time) as ss
+        on ss.child_id =b.child_id
         <where>
             <if test="childName != null and childName != '' ">
                 (i.child_name like concat('%', #{childName}, '%') or b.child_id_no like concat('%', #{childName}, '%'))
@@ -383,6 +417,9 @@
             </if>
             <if test="evaluateStatus != null and evaluateStatus != ''">
                 and s.evaluate_status = #{evaluateStatus}
+            </if>
+            <if test="type != null and type == '7'">
+                and i.child_id not in (select child_id from server_case_closed_info group by child_id)
             </if>
         </where>
         order by i.evaluate_date desc

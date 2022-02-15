@@ -35,6 +35,8 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="updator" property="updator" jdbcType="VARCHAR" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="member_profession" property="memberProfession" jdbcType="VARCHAR" />
+    <result column="is_live_together" property="isLiveTogether" jdbcType="VARCHAR" />
   </resultMap>
 
   <resultMap id="BaseResultMapVO" type="cn.com.personnel.ercp.common.persistence.entity.FileInfo" >
@@ -63,5 +65,13 @@
       </if>
     </where>
     order by f.file_cat, upload_time desc
+  </select>
+
+  <select id="queryGuardianList" resultMap="BaseResultMap">
+    select * from pi_children_guardian_info i
+    <where>
+      i.child_id=#{childId}
+    </where>
+    order by relationship
   </select>
 </mapper>

@@ -118,8 +118,8 @@ public class FileController extends PageController {
         Map<String, Object> map = new HashMap<>();
         SecUser user = (SecUser) getLoginUser();
         try {
-            List<FileInfo> fileInfos = fileService.uploadFiles((user == null ? "system" : user.getUserId()),
-                    user == null ? "system" : user.getUserName(), file, info);
+            List<FileInfo> fileInfos = fileService.uploadFiles((user == null ? "admin" : user.getUserId()),
+                    user == null ? "admin" : user.getUserName(), file, info);
             if (fileInfos != null) {
                 List<String> fileKeys = new ArrayList<String>();
                 for (FileInfo fileInfo : fileInfos) {

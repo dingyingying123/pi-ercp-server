@@ -90,6 +90,11 @@ public class PiChildrenGuardianInfo {
     @Column(name = "update_time")
     private Date updateTime;
 
+    @Column(name = "member_profession")
+    private String memberProfession;
+
+    @Column(name = "is_live_together")
+    private String isLiveTogether;
 
     /**
      * @return guardian_id
@@ -497,5 +502,21 @@ public class PiChildrenGuardianInfo {
 
     public void setCurrentProvince(String currentProvince) {
         this.currentProvince = currentProvince;
+    }
+
+    public String getMemberProfession() {
+        return memberProfession;
+    }
+
+    public void setMemberProfession(String memberProfession) {
+        this.memberProfession = memberProfession;
+    }
+
+    public String getIsLiveTogether() {
+        return isLiveTogether;
+    }
+
+    public void setIsLiveTogether(String isLiveTogether) {
+        this.isLiveTogether = isLiveTogether;
     }
 }

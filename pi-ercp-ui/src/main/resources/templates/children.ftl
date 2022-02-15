@@ -209,14 +209,13 @@
                 </tr>
                 <tr>
                     <td colspan="1" class="w80  fs20lh30tac">保障标准</td>
-                    <td colspan="5" class="w80  fs20lh30tac"> ${(info.securityFeeGuaranteeStandard)!}                                   （每人每月发放多少补助资金）</td>
+                    <td colspan="5" class="w80  fs20lh30tac"> ${(info.securityFeeGuaranteeStandard)!}  （每人每月发放多少补助资金）</td>
                 </tr>
                 <tr style="height: 100px;">
                     <td colspan="1" class="w80  fs20lh30tac fw600">申请人签字</td>
                     <td colspan="14" >
                         <ul class="image_list" id="memberimager">
-<#--                            <img id="image_member_r" src="${(applyfile)!}" onclick="setshsignature()"/>-->
-                            <img id="image_member_r" src="http://127.0.0.1:8080/1-1.png" onclick="setshsignature()"/>
+                            <img id="image_member_r" src="/file/download/${(applyfile)!}"/>
                             <button class="mbt" onclick="sethcsignature()">签 字</button>
                         </ul>
                     </td>
@@ -225,9 +224,10 @@
                     <td colspan="1" class="w80  fs20lh30tac fw600">核查人签字</td>
                     <td colspan="14" class="w80">
                         <ul class="image_list" id="image_worker_s">
-                            <img id="image_worker_s" src="${(approvefile)!}" onclick="setshsignature()"/>
+                            <h2>${(user.userName)!}</h2>
+<#--                            <img id="image_worker_s" src="${(approvefile)!}" onclick="setshsignature()"/>-->
                         </ul>
-                        <button class="mbt" onclick="setworksignature()">签字</button>
+<#--                        <button class="mbt" onclick="setworksignature()">签字</button>-->
                     </td>
                 </tr>
                 <!-- <tr>
@@ -283,14 +283,7 @@
 <script type="text/javascript"  src="/pages/paperlessHtml/js/finger.js"></script> --%>
    -->
 <script type="text/javascript">
-
-		function initData(data){
-				
-			getInfo(data);
-		
-		}
-
-		 //设置调查人员签字 进入form时加载用
+	    //设置调查人员签字 进入form时加载用
 		function setSignDcrData(imgpathstring) {
 			var imgpaths=imgpathstring.split(",");
 			$("#image_worker_s").html("");
@@ -310,30 +303,14 @@
 		function setworksignature() {
 			android.dcrSign();
 		}
-		// //被认定人签字
-		// function setBrdrsignature() {
-		// 	android.brdrSign();
-		// }
-		// //设置被认定人签字
-		// function setSignBrdrData(imgpath) {
-		// 	$('#image_member_b').attr("src", imgpath);
-		// }
-		//核查人签字
+		//申请人签字
 		function sethcsignature() {
-			android.rdrSign();
-		}
-		// //设置认定人签字
-		function setSignRdrData(imgpath) {
-			$('#image_member_r').attr("src", imgpath);
+			android.applySign();
 		}
 		 //修改核查人员签字
 		function editworksignature(imgpath1) {
-				android.deletePic(imgpath1);
+            android.deletePic(imgpath1);
 		}
-
-
 </script>
 </body>
-
-
 </html>

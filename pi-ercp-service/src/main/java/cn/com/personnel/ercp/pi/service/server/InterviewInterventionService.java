@@ -116,6 +116,25 @@ public class InterviewInterventionService extends BaseService implements IInterv
         if(serverInterviewInterventionInfo == null){
             return ReturnEntity.errorMsg("数据不存在！");
         }
+        if(StringUtils.isEmpty(serverInterviewInterventionInfo.getChildName())){
+            return ReturnEntity.errorMsg("儿童姓名为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverInterviewInterventionInfo.getDateTime())){
+            return ReturnEntity.errorMsg("日期/时间为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverInterviewInterventionInfo.getPlace())){
+            return ReturnEntity.errorMsg("地点为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverInterviewInterventionInfo.getTarget())){
+            return ReturnEntity.errorMsg("目标为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverInterviewInterventionInfo.getMainContent())){
+            return ReturnEntity.errorMsg("主要内容为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverInterviewInterventionInfo.getEvaluationAndReflection())){
+            return ReturnEntity.errorMsg("评估及反思为必填项，不能为空！");
+        }
+
         serverInterviewInterventionInfo.setStatus(CommonConstants.ServerApprovalStatus.INTERVENTIONSUBMITED);
         serverInterviewInterventionInfo.setUpdateTime(new Date());
         serverInterviewInterventionInfo.setUpdator(secUser.getUserId());

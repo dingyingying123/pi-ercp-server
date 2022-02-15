@@ -314,6 +314,39 @@ public class DateUtils {
         }
     }
 
+    /**
+     * 根据身份证号计算年龄
+     * @param sfzjh
+     * @return
+     */
+    public static String getAge(String sfzjh){
+        if(sfzjh == null || "".equals(sfzjh) ){
+            return "身份证件号有误,无法计算年龄";
+        }
+
+        if (sfzjh.length() != 15 && sfzjh.length() != 18){
+            return "身份证件号有误,无法计算年龄";
+        }
+
+        String age="";
+
+        Calendar cal = Calendar.getInstance();
+        int yearNow = cal.get(Calendar.YEAR);
+        int monthNow = cal.get(Calendar.MONTH)+1;
+        int dayNow = cal.get(Calendar.DATE);
+
+        int year = Integer.valueOf(sfzjh.substring(6, 10));
+        int month = Integer.valueOf(sfzjh.substring(10,12));
+        int day = Integer.valueOf(sfzjh.substring(12,14));
+
+        if ((month < monthNow) || (month == monthNow && day<= dayNow) ){
+            age = String.valueOf(yearNow - year);
+        }else {
+            age = String.valueOf(yearNow - year-1);
+        }
+
+        return age;
+    }
 }
 
 

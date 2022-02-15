@@ -109,6 +109,27 @@ public class CaseCloseService extends BaseService implements ICaseCloseService {
         if(serverCaseClosedInfo == null){
             return ReturnEntity.errorMsg("数据不存在！");
         }
+        if(StringUtils.isEmpty(serverCaseClosedInfo.getChildName())){
+            return ReturnEntity.errorMsg("儿童姓名为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverCaseClosedInfo.getChildMale())){
+            return ReturnEntity.errorMsg("儿童性别为必填项！");
+        }
+        if(StringUtils.isEmpty(serverCaseClosedInfo.getChildAge())){
+            return ReturnEntity.errorMsg("儿童年龄为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverCaseClosedInfo.getCaseClosedDate())){
+            return ReturnEntity.errorMsg("结案个案日期为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverCaseClosedInfo.getCurrentStatusServiceObjects())){
+            return ReturnEntity.errorMsg("服务对象现状为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverCaseClosedInfo.getReasonForClosing())){
+            return ReturnEntity.errorMsg("结案原因为必填项，不能为空！");
+        }
+        if(StringUtils.isEmpty(serverCaseClosedInfo.getDoYouKnowEnd())){
+            return ReturnEntity.errorMsg("服务对象知道个案已结束并知道在有需要时如何得到服务为必填项，不能为空！");
+        }
         serverCaseClosedInfo.setStatus(CommonConstants.ServerApprovalStatus.CLOSE_CASE_SUBMIT);
         serverCaseClosedInfo.setUpdateTime(new Date());
         serverCaseClosedInfo.setUpdator(secUser.getUserId());

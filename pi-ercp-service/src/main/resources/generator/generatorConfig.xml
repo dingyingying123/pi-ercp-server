@@ -87,8 +87,11 @@
 <!--		<table tableName="pi_children_location_info" domainObjectName="PiChildrenLocationInfo" >-->
 <!--			<generatedKey column="location_id"  sqlStatement="JDBC"/>-->
 <!--		</table>-->
-		<table tableName="pi_sign_in_info" domainObjectName="PiSignInInfo" >
-			<generatedKey column="sign_id"  sqlStatement="JDBC"/>
+<!--		<table tableName="pi_sign_in_info" domainObjectName="PiSignInInfo" >-->
+<!--			<generatedKey column="sign_id"  sqlStatement="JDBC"/>-->
+<!--		</table>-->
+		<table tableName="pi_address" domainObjectName="PiAddress" >
+			<generatedKey column="address_id"  sqlStatement="JDBC"/>
 		</table>
 
    </context>
