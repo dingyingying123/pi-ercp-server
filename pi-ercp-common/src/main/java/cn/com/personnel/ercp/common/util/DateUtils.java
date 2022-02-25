@@ -321,11 +321,11 @@ public class DateUtils {
      */
     public static String getAge(String sfzjh){
         if(sfzjh == null || "".equals(sfzjh) ){
-            return "身份证件号有误,无法计算年龄";
+            return "false";
         }
 
         if (sfzjh.length() != 15 && sfzjh.length() != 18){
-            return "身份证件号有误,无法计算年龄";
+            return "false";
         }
 
         String age="";

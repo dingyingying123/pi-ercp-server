@@ -215,8 +215,14 @@
                     <td colspan="1" class="w80  fs20lh30tac fw600">申请人签字</td>
                     <td colspan="14" >
                         <ul class="image_list" id="memberimager">
-                            <img id="image_member_r" src="/file/download/${(applyfile)!}"/>
-                            <button class="mbt" onclick="sethcsignature()">签 字</button>
+                            <#if applyfile??>
+                                <img id="image_member_r"  src="/file/download/${(applyfile)!}"/>
+                                <#else >
+                                <img id="image_member_r" src="#"/>
+                            </#if>
+
+                            <button class="mbt" onclick="android.Sign('${(childId)!}')">签 字</button>
+<#--                            <button class="mbt" onclick="android.Sign('812b2d486e7c446eb52c86c0b3f122e6')">签 字</button>-->
                         </ul>
                     </td>
                 </tr>
@@ -305,11 +311,15 @@
 		}
 		//申请人签字
 		function sethcsignature() {
-			android.applySign();
+            window.android.Sign();
 		}
 		 //修改核查人员签字
 		function editworksignature(imgpath1) {
-            android.deletePic(imgpath1);
+            window.android.deletePic(imgpath1);
+		}
+
+		function reload() {
+            window.location.reload();
 		}
 </script>
 </body>

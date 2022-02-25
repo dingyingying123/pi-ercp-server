@@ -35,7 +35,8 @@ public class PiChildrenBaseInfoController extends PageController {
     public ReturnEntity queryPiChildrenBaseInfoList(@RequestBody PiChildrenBaseInfoVO piChildrenBaseInfo){
         SecUser secUser = getTokenLoginUser();
         if(StringUtils.isNotEmpty(secUser.getArea())){
-            piChildrenBaseInfo.setArea(secUser.getArea());
+//            piChildrenBaseInfo.setArea(secUser.getArea());
+            piChildrenBaseInfo.setCreator(secUser.getUserId());
         }
         return piChildrenBaseInfoService.queryPiChildrenBaseInfoList(piChildrenBaseInfo, buildPagenation());
     }

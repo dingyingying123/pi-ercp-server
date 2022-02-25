@@ -97,7 +97,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
         if(piChildrenBaseInfo != null && StringUtils.isNotEmpty(piChildrenBaseInfo.getChildId())){
             try {
                 String age = DateUtils.getAge(piChildrenBaseInfo.getChildIdNo());
-                if(StringUtils.isNotEmpty(age)){
+                if(StringUtils.isNotEmpty(age) && !"false".equals(age)){
                     piChildrenBaseInfo.setChildAge(age);
                 }
                 piChildrenBaseInfo.setUpdateTime(new Date());
@@ -135,10 +135,18 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
                         if (StringUtils.isEmpty(childrenGuardianInfo.getGuardianId())) {
                             childrenGuardianInfo.setGuardianId(UUIDKit.getUUID());
                             childrenGuardianInfo.setChildId(piChildrenBaseInfo.getChildId());
+                            String age1 = DateUtils.getAge(childrenGuardianInfo.getIdNo());
+                            if(StringUtils.isNotEmpty(age1) && !"false".equals(age1)){
+                                childrenGuardianInfo.setAge(age1);
+                            }
                             childrenGuardianInfo.setCreator(secUser.getUserId());
                             childrenGuardianInfo.setCreateTime(new Date());
                             piChildrenGuardianInfoMapper.insert(childrenGuardianInfo);
                         } else {
+                            String age1 = DateUtils.getAge(childrenGuardianInfo.getIdNo());
+                            if(StringUtils.isNotEmpty(age1) && !"false".equals(age1)){
+                                childrenGuardianInfo.setAge(age1);
+                            }
                             childrenGuardianInfo.setUpdator(secUser.getUserId());
                             childrenGuardianInfo.setUpdateTime(new Date());
                             piChildrenGuardianInfoMapper.updateByPrimaryKeySelective(childrenGuardianInfo);
@@ -154,6 +162,10 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
             try {
                 String childId = UUIDKit.getUUID();
                 piChildrenBaseInfo.setChildId(childId);
+                String age = DateUtils.getAge(piChildrenBaseInfo.getChildIdNo());
+                if(StringUtils.isNotEmpty(age) && !"false".equals(age)){
+                    piChildrenBaseInfo.setChildAge(age);
+                }
                 piChildrenBaseInfo.setCreateTime(new Date());
                 piChildrenBaseInfo.setCreator(secUser.getUserId());
                 piChildrenBaseInfo.setArea(secUser.getArea());
@@ -164,12 +176,17 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
                     for (PiChildrenGuardianInfo childrenGuardianInfo : piChildrenGuardianInfoList) {
                         childrenGuardianInfo.setGuardianId(UUIDKit.getUUID());
                         childrenGuardianInfo.setChildId(childId);
+                        String age1 = DateUtils.getAge(childrenGuardianInfo.getIdNo());
+                        if(StringUtils.isNotEmpty(age1) && !"false".equals(age1)){
+                            childrenGuardianInfo.setAge(age1);
+                        }
                         childrenGuardianInfo.setCreator(secUser.getUserId());
                         childrenGuardianInfo.setCreateTime(new Date());
                         piChildrenGuardianInfoMapper.insert(childrenGuardianInfo);
                     }
                 }
             }catch (Exception e){
+                e.printStackTrace();
                 return  ReturnEntity.errorMsg("儿童的身份证号重复！");
             }
         }
@@ -289,12 +306,6 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
 
         if(StringUtils.isEmpty(info.getChildEscalationType())){
             return ReturnEntity.errorMsg("儿童上报类型为必填项，不能为空！");
-        }
-        if(StringUtils.isEmpty(info.getChildDisabilityLevel())){
-            return ReturnEntity.errorMsg("儿童户口地址为必填项，不能为空！");
-        }
-        if(StringUtils.isEmpty(info.getChildDiseaseType())){
-            return ReturnEntity.errorMsg("儿童患病病种为必填项，不能为空！");
         }
         if(StringUtils.isEmpty(info.getChildSchoolAttendance())){
             return ReturnEntity.errorMsg("儿童就学情况为必填项，不能为空！");

@@ -37,6 +37,7 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="member_profession" property="memberProfession" jdbcType="VARCHAR" />
     <result column="is_live_together" property="isLiveTogether" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="VARCHAR" />
   </resultMap>
 
   <resultMap id="BaseResultMapVO" type="cn.com.personnel.ercp.common.persistence.entity.FileInfo" >
@@ -58,7 +59,7 @@
   </resultMap>
 
   <select id="queryGuardianFileList" resultMap="BaseResultMapVO">
-    select * from pi_children_guardian_info i join sec_file_info f on i.guardian_id=f.file_flag
+    select * from pi_children_guardian_info i join sec_file_info f on i.child_id=f.file_flag
     <where>
       <if test="childId != null and childId != ''">
         i.child_id = #{childId}

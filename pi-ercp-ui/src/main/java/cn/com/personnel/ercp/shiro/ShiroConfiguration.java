@@ -84,7 +84,7 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/bps/api/**", "anon"); //
         filterChainDefinitionMap.put("/checkCtrl/**", "anon"); //
         filterChainDefinitionMap.put("/baseCommon/**", "anon"); //
-        filterChainDefinitionMap.put("/h5ChildrenBaseInfo/toH5ChildrenModel", "anon"); //
+//        filterChainDefinitionMap.put("/h5ChildrenBaseInfo/toH5ChildrenModel", "anon"); //
         filterChainDefinitionMap.put("/headServer/**", "anon"); //
         filterChainDefinitionMap.put("/rest/credit/guaranteeWeb/**", "anon"); //
 //        filterChainDefinitionMap.put("/base/**", "anon"); //

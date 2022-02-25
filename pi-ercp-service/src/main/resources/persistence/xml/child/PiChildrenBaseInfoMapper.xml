@@ -120,10 +120,13 @@
       <if test="info.status != null and info.status != '' and info.status != '-1'">
          and i.status = #{info.status}
       </if>
+        <if test="info.creator != null and info.creator != ''">
+         and i.creator = #{info.creator}
+      </if>
       <if test="info.status != null and info.status != '' and info.status == '-1'">
          and i.status != '0'
       </if>
-      <if test="info.type != null and info.type == '2'">
+      <if test='info.type != null and info.type == "2"'>
         and i.child_id not in (select child_id from server_take_case_info group by child_id)
       </if>
     </where>
@@ -298,8 +301,11 @@
             <if test="caseStatus != null and caseStatus != ''">
                 and s.case_status = #{caseStatus}
             </if>
-            <if test="type != null and type == '3'">
+            <if test='type != null and type == "3"'>
                 and i.child_id not in (select child_id from server_estimate_info group by child_id)
+            </if>
+            <if test="creator != null and creator != ''">
+                and i.creator = #{creator}
             </if>
         </where>
         order by i.case_date desc
@@ -323,8 +329,11 @@
             <if test="estimateStatus != null and estimateStatus != ''">
                 and s.estimate_status = #{estimateStatus}
             </if>
-            <if test="type != null and type == '4'">
+            <if test='type != null and type == "4"'>
                 and i.child_id not in (select child_id from server_plan_info group by child_id)
+            </if>
+            <if test="creator != null and creator != ''">
+                and i.creator = #{creator}
             </if>
         </where>
         order by i.estimate_date desc
@@ -345,9 +354,12 @@
             <if test="planStatus != null and planStatus != ''">
                 and s.plan_status = #{planStatus}
             </if>
-            <if test="type != null and type == '5'">
+            <if test='type != null and type == "5"'>
                 and i.child_id not in (select child_id from server_interview_intervention_info group by child_id)
                 and i.child_id not in (select child_id from server_available_resources_info group by child_id)
+            </if>
+            <if test="creator != null and creator != ''">
+                and i.creator = #{creator}
             </if>
         </where>
         order by i.plan_date desc
@@ -369,8 +381,11 @@
             <if test="interventionStatus != null and interventionStatus != ''">
                 and s.intervention_status = #{interventionStatus}
             </if>
-            <if test="type != null and type == '6'">
+            <if test='type != null and type == "6"'>
                 and i.child_id not in (select child_id from server_evaluate_info group by child_id)
+            </if>
+            <if test="creator != null and creator != ''">
+                and i.creator = #{creator}
             </if>
         </where>
         union
@@ -389,8 +404,11 @@
             <if test="interventionStatus != null and interventionStatus != ''">
                 and s.intervention_status = #{interventionStatus}
             </if>
-            <if test="type != null and type == '6'">
+            <if test='type != null and type == "6"'>
                 and i.child_id not in (select child_id from server_evaluate_info group by child_id)
+            </if>
+            <if test="creator != null and creator != ''">
+                and i.creator = #{creator}
             </if>
         </where>
 
@@ -418,8 +436,11 @@
             <if test="evaluateStatus != null and evaluateStatus != ''">
                 and s.evaluate_status = #{evaluateStatus}
             </if>
-            <if test="type != null and type == '7'">
+            <if test='type != null and type == "7"'>
                 and i.child_id not in (select child_id from server_case_closed_info group by child_id)
+            </if>
+            <if test="creator != null and creator != ''">
+                and i.creator = #{creator}
             </if>
         </where>
         order by i.evaluate_date desc

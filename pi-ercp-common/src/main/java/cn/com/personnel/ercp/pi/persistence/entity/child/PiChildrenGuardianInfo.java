@@ -96,6 +96,8 @@ public class PiChildrenGuardianInfo {
     @Column(name = "is_live_together")
     private String isLiveTogether;
 
+    private String age;
+
     /**
      * @return guardian_id
      */
@@ -518,5 +520,13 @@ public class PiChildrenGuardianInfo {
 
     public void setIsLiveTogether(String isLiveTogether) {
         this.isLiveTogether = isLiveTogether;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
     }
 }
