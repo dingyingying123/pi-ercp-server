@@ -20,7 +20,9 @@ import cn.com.personnel.ercp.pi.persistence.mapper.child.PiChildrenGuardianInfoM
 import cn.com.personnel.ercp.pi.persistence.mapper.child.PiChildrenLocationInfoMapper;
 import cn.com.personnel.springboot.framework.core.page.PagenationQueryParameter;
 import cn.com.personnel.springboot.framework.service.BaseService;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
+import netscape.javascript.JSObject;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +48,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
     @Override
     public ReturnEntity queryPiChildrenBaseInfoList(PiChildrenBaseInfoVO piChildrenBaseInfo, PagenationQueryParameter buildPagenation) {
         logger.info("===========type:" + piChildrenBaseInfo.getType() + ",status:" + piChildrenBaseInfo.getStatus());
+        logger.info("===========入参:" + JSONObject.toJSONString(piChildrenBaseInfo));
         List<PiChildrenBaseInfoVO> childrenBaseInfoList = null;
         //分页
         setPageHelper(buildPagenation);
@@ -94,6 +97,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
     @Override
     public ReturnEntity savePiChildrenBaseInfo(PiChildrenBaseInfoVO piChildrenBaseInfo, SecUser secUser) {
         logger.info("===========ChildId:" + piChildrenBaseInfo.getChildId() + ",身份证号:" + piChildrenBaseInfo.getChildIdNo());
+        logger.info("===========保存入参:" + JSONObject.toJSONString(piChildrenBaseInfo));
         if(piChildrenBaseInfo != null && StringUtils.isNotEmpty(piChildrenBaseInfo.getChildId())){
             try {
                 String age = DateUtils.getAge(piChildrenBaseInfo.getChildIdNo());
@@ -196,11 +200,12 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
 
     @Override
     public ReturnEntity deletePiChildrenBaseInfo(PiChildrenBaseInfo piChildrenBaseInfo, SecUser secUser) {
+        logger.info("===========入参:" + JSONObject.toJSONString(piChildrenBaseInfo));
         if(piChildrenBaseInfo != null && StringUtils.isEmpty(piChildrenBaseInfo.getChildId())){
             return ReturnEntity.errorMsg("数据不存在！");
         }
         PiChildrenBaseInfo info = piChildrenBaseInfoMapper.selectByPrimaryKey(piChildrenBaseInfo.getChildId());
-        if(CommonConstants.ApprovalStatus.DRAFT.equals(info.getStatus()) || CommonConstants.ApprovalStatus.NOTPASS.equals(info.getStatus())) {
+        if(CommonConstants.ApprovalStatus.DRAFT.equals(info.getStatus()) || CommonConstants.ApprovalStatus.NOTPASS.equals(info.getStatus()) || CommonConstants.ApprovalStatus.COMPLETED.equals(info.getStatus())) {
             Example example = new Example(PiChildrenGuardianInfo.class);
             example.createCriteria().andEqualTo("childId", piChildrenBaseInfo.getChildId());
             piChildrenGuardianInfoMapper.deleteByExample(example);
@@ -268,6 +273,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
      */
     @Override
     public ReturnEntity submitPiChildrenBaseInfo(PiChildrenBaseInfo piChildrenBaseInfo, SecUser secUser) {
+        logger.info("===========入参:" + JSONObject.toJSONString(piChildrenBaseInfo));
         if(piChildrenBaseInfo != null && StringUtils.isEmpty(piChildrenBaseInfo.getChildId())){
             return ReturnEntity.errorMsg("数据不存在！");
         }
@@ -379,7 +385,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
                     return ReturnEntity.errorMsg("监护人健康状况为必填项，不能为空！");
                 }
 
-                if(StringUtils.isEmpty(piChildrenGuardianInfo.getOtherCases())){
+                if(StringUtils.isEmpty(piChildrenGuardianInfo.getReasons())){
                     return ReturnEntity.errorMsg("监护人其他原由为必填项，不能为空！");
                 }
             }
@@ -401,6 +407,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
 
     @Override
     public ReturnEntity approvePiChildrenBaseInfo(PiChildrenBaseInfo piChildrenBaseInfo, SecUser secUser) {
+        logger.info("===========审核入参:" + JSONObject.toJSONString(piChildrenBaseInfo));
         if(piChildrenBaseInfo == null && StringUtils.isEmpty(piChildrenBaseInfo.getChildId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
@@ -414,6 +421,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
 
     @Override
     public ReturnEntity queryPiChildrenGuardianInfoList(PiChildrenGuardianInfo piChildrenGuardianInfo) {
+        logger.info("===========入参:" + JSONObject.toJSONString(piChildrenGuardianInfo));
         if(piChildrenGuardianInfo != null && StringUtils.isEmpty(piChildrenGuardianInfo.getChildId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
@@ -426,6 +434,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
 
     @Override
     public ReturnEntity queryPiChildrenBaseInfo(PiChildrenBaseInfo piChildrenBaseInfo) {
+        logger.info("===========入参:" + JSONObject.toJSONString(piChildrenBaseInfo));
         if(piChildrenBaseInfo != null && StringUtils.isEmpty(piChildrenBaseInfo.getChildId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
@@ -441,6 +450,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
 
     @Override
     public ReturnEntity savePiChildrenLocationInfo(PiChildrenLocationInfo piChildrenLocationInfo, SecUser secUser) {
+        logger.info("===========入参:" + JSONObject.toJSONString(piChildrenLocationInfo));
         if(piChildrenLocationInfo != null && StringUtils.isNotEmpty(piChildrenLocationInfo.getLocationId())){
             piChildrenLocationInfo.setUpdateTime(new Date());
             piChildrenLocationInfo.setUpdator(secUser.getUserId());
@@ -456,6 +466,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
 
     @Override
     public ReturnEntity queryPiChildrenLocationInfo(PiChildrenLocationInfo piChildrenLocationInfo) {
+        logger.info("===========入参:" + JSONObject.toJSONString(piChildrenLocationInfo));
         if(piChildrenLocationInfo != null && StringUtils.isEmpty(piChildrenLocationInfo.getChildId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
@@ -471,6 +482,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
 
     @Override
     public ReturnEntity queryChildrenFileList(PiChildrenBaseInfo piChildrenBaseInfo) {
+        logger.info("===========入参:" + JSONObject.toJSONString(piChildrenBaseInfo));
         if(piChildrenBaseInfo != null && StringUtils.isEmpty(piChildrenBaseInfo.getChildId())){
             return ReturnEntity.errorMsg("参数错误！");
         }
@@ -517,12 +529,14 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
 
     @Override
     public ReturnEntity queryChildrenStatisticsList(PiChildrenBaseInfo piChildrenBaseInfo) {
+        logger.info("===========统计入参:" + JSONObject.toJSONString(piChildrenBaseInfo));
         List<ChildrenStatisticsInfoVO> childrenStatisticsInfoVOList = piChildrenBaseInfoMapper.queryChildrenStatisticsList(piChildrenBaseInfo);
         return ReturnEntity.ok(childrenStatisticsInfoVOList);
     }
 
     @Override
     public PiChildrenBaseInfoVO queryH5PiChildrenBaseInfo(PiChildrenBaseInfo piChildrenBaseInfo) {
+        logger.info("===========入参:" + JSONObject.toJSONString(piChildrenBaseInfo));
         PiChildrenBaseInfoVO piChildrenBaseInfoVO = piChildrenBaseInfoMapper.queryPiChildrenBaseInfo(piChildrenBaseInfo);
         Example example = new Example(PiChildrenGuardianInfo.class);
         example.createCriteria().andEqualTo("childId", piChildrenBaseInfo.getChildId());
@@ -546,6 +560,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
 
     @Override
     public ReturnEntity queryAddressList(PiAddress piAddress) {
+        logger.info("===========入参:" + JSONObject.toJSONString(piAddress));
         return ReturnEntity.ok(piAddressMapper.queryAddressList(piAddress));
     }
 }

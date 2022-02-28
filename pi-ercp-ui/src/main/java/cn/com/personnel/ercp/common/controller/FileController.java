@@ -116,7 +116,7 @@ public class FileController extends PageController {
     public ReturnEntity fileUpload(@RequestParam(value = "file") MultipartFile[] file, FileInfo info) {
         ReturnEntity returnEntity = new ReturnEntity(CommonConstants.SUCCESS_CODE, CommonConstants.SUCCESS_MESSAGE, null);
         Map<String, Object> map = new HashMap<>();
-        SecUser user = (SecUser) getLoginUser();
+        SecUser user = getTokenLoginUser();
         try {
             List<FileInfo> fileInfos = fileService.uploadFiles((user == null ? "admin" : user.getUserId()),
                     user == null ? "admin" : user.getUserName(), file, info);
@@ -157,6 +157,17 @@ public class FileController extends PageController {
     @ResponseBody
     public ReturnEntity deleteFileByKey(@PathVariable String fileKey){
         return fileService.deleteFileByKey(fileKey);
+    }
+
+    /**
+     * 删除文件
+     * @param fileInfo
+     * @return
+     */
+    @RequestMapping("/deleteFileByKey")
+    @ResponseBody
+    public ReturnEntity deleteFileByKey(@RequestBody FileInfo fileInfo){
+        return fileService.deleteFileByKey(fileInfo.getFileKey());
     }
 
     /**
