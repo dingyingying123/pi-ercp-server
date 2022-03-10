@@ -54,6 +54,7 @@
     <result column="guardian" jdbcType="VARCHAR" property="guardian" />
     <result column="child_age" jdbcType="VARCHAR" property="childAge" />
     <result column="approve_opinion" jdbcType="VARCHAR" property="approveOpinion" />
+    <result column="home_situation" jdbcType="VARCHAR" property="homeSituation" />
   </resultMap>
 
   <resultMap id="BaseResultMapVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.child.PiChildrenBaseInfoVO">

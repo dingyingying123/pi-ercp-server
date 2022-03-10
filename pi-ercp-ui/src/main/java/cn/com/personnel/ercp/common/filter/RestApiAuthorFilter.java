@@ -1,18 +1,15 @@
 package cn.com.personnel.ercp.common.filter;
 
 
-import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
 import cn.com.personnel.ercp.auth.persistence.mapper.SecUserMapper;
 import cn.com.personnel.ercp.auth.service.ISecUserService;
 import cn.com.personnel.ercp.common.constants.CommonConstants;
 import cn.com.personnel.ercp.common.kit.CommonConfig;
 import cn.com.personnel.ercp.common.persistence.entity.ReturnEntity;
 import cn.com.personnel.ercp.common.service.IPortalTokenService;
-import cn.com.personnel.ercp.framework.auth.SecurityContext;
+import cn.com.personnel.springboot.framework.core.controller.CustomHttpServletRequestWrapper;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +54,15 @@ public class RestApiAuthorFilter extends BaseFilter implements Filter{
             response.setDateHeader("Expires", 0);  
             response.setHeader("WWW-authenticate", "Basic Realm=\"auth\"");  
         } else {
-            chain.doFilter(request, response);
+            CustomHttpServletRequestWrapper requestWrapper = null;
+            if (request instanceof HttpServletRequest) {
+                requestWrapper = new CustomHttpServletRequestWrapper((HttpServletRequest) request);
+            }
+            if (requestWrapper == null) {
+                chain.doFilter(request, response);
+            } else {
+                chain.doFilter(requestWrapper, response);
+            }
         }            
  
         
@@ -95,7 +100,6 @@ public class RestApiAuthorFilter extends BaseFilter implements Filter{
            writer.write(JSON.toJSONString(jsonObject));
            return false;
        }
-
 //	   return secUserService.checkAuth(api, ip, userName, password);
 	   return true;
    }

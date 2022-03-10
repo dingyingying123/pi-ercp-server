@@ -148,6 +148,9 @@ public class PiChildrenBaseInfo {
     @Column(name = "approve_opinion")
     private String approveOpinion;
 
+    @Column(name = "home_situation")
+    private String homeSituation;
+
     /**
      * @return child_id
      */
@@ -802,5 +805,13 @@ public class PiChildrenBaseInfo {
 
     public void setOrganizationResidentialTown(String organizationResidentialTown) {
         this.organizationResidentialTown = organizationResidentialTown;
+    }
+
+    public String getHomeSituation() {
+        return homeSituation;
+    }
+
+    public void setHomeSituation(String homeSituation) {
+        this.homeSituation = homeSituation;
     }
 }

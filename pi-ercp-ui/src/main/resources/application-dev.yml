@@ -71,7 +71,7 @@ app:
   app_name: 儿童服务平台
   app_module: factory                #factory/devlop
   app_cookie_name: pi_cookie_dev
-  expire_time: 7200000  #过期时间
+  expire_time: 720000000  #过期时间
 
 oa:
   serverUrl: http://10.12.7.14:80

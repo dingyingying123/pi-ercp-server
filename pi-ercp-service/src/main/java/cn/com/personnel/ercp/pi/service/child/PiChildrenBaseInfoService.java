@@ -123,6 +123,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
                     for (int i = 0; i < piChildrenGuardianInfos.size(); i++){
                         PiChildrenGuardianInfo piChildrenGuardianInfo = piChildrenGuardianInfos.get(i);
                         for(PiChildrenGuardianInfo childrenGuardianInfo : piChildrenGuardianInfoList){
+                            if(!checkGuardian(childrenGuardianInfo))continue;
                             if(piChildrenGuardianInfo.getRelationship() != null && piChildrenGuardianInfo.getRelationship().equals(childrenGuardianInfo.getRelationship())){
                                 flag = false;
                             }
@@ -136,24 +137,26 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
                 }
                 if(piChildrenGuardianInfoList != null && piChildrenGuardianInfoList.size() > 0) {
                     for (PiChildrenGuardianInfo childrenGuardianInfo : piChildrenGuardianInfoList) {
-                        if (StringUtils.isEmpty(childrenGuardianInfo.getGuardianId())) {
-                            childrenGuardianInfo.setGuardianId(UUIDKit.getUUID());
-                            childrenGuardianInfo.setChildId(piChildrenBaseInfo.getChildId());
-                            String age1 = DateUtils.getAge(childrenGuardianInfo.getIdNo());
-                            if(StringUtils.isNotEmpty(age1) && !"false".equals(age1)){
-                                childrenGuardianInfo.setAge(age1);
+                        if(checkGuardian(childrenGuardianInfo)) {
+                            if (StringUtils.isEmpty(childrenGuardianInfo.getGuardianId())) {
+                                childrenGuardianInfo.setGuardianId(UUIDKit.getUUID());
+                                childrenGuardianInfo.setChildId(piChildrenBaseInfo.getChildId());
+                                String age1 = DateUtils.getAge(childrenGuardianInfo.getIdNo());
+                                if (StringUtils.isNotEmpty(age1) && !"false".equals(age1)) {
+                                    childrenGuardianInfo.setAge(age1);
+                                }
+                                childrenGuardianInfo.setCreator(secUser.getUserId());
+                                childrenGuardianInfo.setCreateTime(new Date());
+                                piChildrenGuardianInfoMapper.insert(childrenGuardianInfo);
+                            } else {
+                                String age1 = DateUtils.getAge(childrenGuardianInfo.getIdNo());
+                                if (StringUtils.isNotEmpty(age1) && !"false".equals(age1)) {
+                                    childrenGuardianInfo.setAge(age1);
+                                }
+                                childrenGuardianInfo.setUpdator(secUser.getUserId());
+                                childrenGuardianInfo.setUpdateTime(new Date());
+                                piChildrenGuardianInfoMapper.updateByPrimaryKeySelective(childrenGuardianInfo);
                             }
-                            childrenGuardianInfo.setCreator(secUser.getUserId());
-                            childrenGuardianInfo.setCreateTime(new Date());
-                            piChildrenGuardianInfoMapper.insert(childrenGuardianInfo);
-                        } else {
-                            String age1 = DateUtils.getAge(childrenGuardianInfo.getIdNo());
-                            if(StringUtils.isNotEmpty(age1) && !"false".equals(age1)){
-                                childrenGuardianInfo.setAge(age1);
-                            }
-                            childrenGuardianInfo.setUpdator(secUser.getUserId());
-                            childrenGuardianInfo.setUpdateTime(new Date());
-                            piChildrenGuardianInfoMapper.updateByPrimaryKeySelective(childrenGuardianInfo);
                         }
                     }
                 }
@@ -196,6 +199,56 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
         }
         return ReturnEntity.ok(piChildrenBaseInfo);
 
+    }
+
+    private Boolean checkGuardian(PiChildrenGuardianInfo childrenGuardianInfo){
+        Boolean check = false;
+        if(childrenGuardianInfo == null){
+            check = false;
+        }else{
+            if(StringUtils.isNotEmpty(childrenGuardianInfo.getIdNo())){
+                check = true;
+            }else if(StringUtils.isNotEmpty(childrenGuardianInfo.getTelNo())){
+                check = true;
+            }else if(StringUtils.isNotEmpty(childrenGuardianInfo.getAccountProvince())){
+                check = true;
+            }else if(StringUtils.isNotEmpty(childrenGuardianInfo.getAccountCity())){
+                check = true;
+            }else if(StringUtils.isNotEmpty(childrenGuardianInfo.getAccountCounty())){
+                check = true;
+            }else if(StringUtils.isNotEmpty(childrenGuardianInfo.getAccountTown())){
+                check = true;
+            }else if(StringUtils.isNotEmpty(childrenGuardianInfo.getAccountAddress())){
+                check = true;
+            }else if(StringUtils.isNotEmpty(childrenGuardianInfo.getCurrentProvince())){
+                check = true;
+            }else if(StringUtils.isNotEmpty(childrenGuardianInfo.getCurrentCity())){
+                check = true;
+            }else if(StringUtils.isNotEmpty(childrenGuardianInfo.getCurrentCounty())){
+                check = true;
+            }else if(StringUtils.isNotEmpty(childrenGuardianInfo.getCurrentTown())){
+                check = true;
+            }else if(StringUtils.isNotEmpty(childrenGuardianInfo.getCurrentAddress())){
+                check = true;
+            }else if(StringUtils.isNotEmpty(childrenGuardianInfo.getHealthStatus())){
+                check = true;
+            }else if(StringUtils.isNotEmpty(childrenGuardianInfo.getDisabilityType())){
+                check = true;
+            }else if(StringUtils.isNotEmpty(childrenGuardianInfo.getFamilyIncome())){
+                check = true;
+            }else if(StringUtils.isNotEmpty(childrenGuardianInfo.getOtherCases())){
+                check = true;
+//            }else if(StringUtils.isNotEmpty(childrenGuardianInfo.getRelationship())){
+//                check = true;
+            }else if(StringUtils.isNotEmpty(childrenGuardianInfo.getReasons())){
+                check = true;
+            }else if(StringUtils.isNotEmpty(childrenGuardianInfo.getMemberProfession())){
+                check = true;
+            }else if(StringUtils.isNotEmpty(childrenGuardianInfo.getIsLiveTogether())){
+                check = true;
+            }
+        }
+        return check;
     }
 
     @Override

@@ -1,12 +1,6 @@
 package cn.com.personnel.ercp;
 
-import cn.com.personnel.ercp.common.util.DateUtils;
 import cn.com.personnel.ercp.framework.kit.UUIDKit;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.text.PDFTextStripper;
-import org.springframework.util.DigestUtils;
-
-import java.io.*;
 
 public class TestMain {
     public static void main(String[] args){

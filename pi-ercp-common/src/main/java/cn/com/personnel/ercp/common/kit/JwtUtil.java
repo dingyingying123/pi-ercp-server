@@ -266,7 +266,8 @@ public class JwtUtil {
     private static Map generateToken(String key, String uid, String username, String area, Date date, String tokenName) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(key);
-            String token = JWT.create().withClaim("uid", uid).withClaim("username", username).withClaim("area", area).withExpiresAt(date)
+            String token = JWT.create().withClaim("uid", uid).withClaim("username", username).withClaim("area", area)
+//                    .withExpiresAt(date)
                     .sign(algorithm);
             // 附带userinfo信息
             Map<String, Object> resultMap = new HashMap<>();
