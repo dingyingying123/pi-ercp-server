@@ -31,8 +31,8 @@ public class CustomHttpServletRequestWrapper extends HttpServletRequestWrapper {
             if(body != null && body.length > 0) {
                 Map<String, Object> paramter = new HashMap<String, Object>();
                 JSONObject jsonObject = JSONObject.parseObject(getBody());
-                String pageNumber = jsonObject.get("pageNumber").toString();
-                String pageSize = jsonObject.get("pageSize").toString();
+                String pageNumber = jsonObject == null || jsonObject.get("pageNumber") == null ? "" : jsonObject.get("pageNumber").toString();
+                String pageSize = jsonObject == null || jsonObject.get("pageSize") == null ? "" : jsonObject.get("pageSize").toString();
                 if (!"".equals(pageNumber)) {
                     paramter.put("pageNumber", pageNumber);
                 }

@@ -1,5 +1,6 @@
 server:
-  port: 8088   # HTTP (Tomcat) port
+  port: 8088
+
 management:
   port: 9001
 
@@ -10,9 +11,10 @@ spring:
       - org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
       - com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration
   application:
-     name: sfs-ui
+    name: fss-ui
   messages:
     basename: i18n/message
+
   freemarker:
     allowRequestOverride: false
     allowSessionOverride: false
@@ -27,53 +29,55 @@ spring:
     templateEncoding: UTF-8
     templateLoaderPath: classpath:/templates/  #表示所有的模板文件都放在该目录下
     settings:
-        locale: zh_CN
-        date_format: yyyy-MM-dd
-        time_format: HH:mm:ss
-        datetime_format: yyyy-MM-dd HH:mm:ss
-        auto_import: /spring.ftl as spring
+      locale: zh_CN
+      date_format: yyyy-MM-dd
+      time_format: HH:mm:ss
+      datetime_format: yyyy-MM-dd HH:mm:ss
+      auto_import: /macro/spring.ftl as spring
     resources:
-        cachePeriod: 60 # http 缓存过期时间
-        staticLocations: # 设置静态资源的存放地址
-            - classpath:/static
+      cachePeriod: 60 # http 缓存过期时间
+      staticLocations: # 设置静态资源的存放地址
+        - classpath:/static
 
   dubbo:
-     appname: dubbo-demo-ui
-     registry: zookeeper://127.0.0.1:2181
-     protocol: dubbo
+    appname: dubbo-demo-ui
+    registry: zookeeper://127.0.0.1:2181
+    protocol: dubbo
+
   session:
-    store-type: redis     #redis/none
+    store-type: none     #redis/none
     redis:
       flush-mode: on_save
       namespace: fss
   redis:
-      host: 10.12.7.18
-      port: 6379
-      pool:
-        max-idle: 8
-        min-idle: 0
-        max-active: 8
-        max-wait: 1
-      timeout: 0
-      database: 1
-      password: gw123459
-     
+    host: 10.12.7.17
+    port: 6379
+    pool:
+      max-idle: 8
+      min-idle: 0
+      max-active: 8
+      max-wait: 1
+    timeout: 0
+    database: 1
+    password:
+
 logging:
-  config: classpath:logback-prd.xml
-  path: /data/sfs/xd/logs
-       
+  config: classpath:logback-dev.xml
+  path: /usr/local/local/pi/logs
+
+
 app:
-  app_code: sfs_xd
-  app_name: 共享财务平台
-  app_module: devlop                #factory/devlop
-  app_cookie_name: fss_cookie_prd
-  expire_time: 7200000  #过期时间
+  app_code: pi
+  app_name: 儿童服务平台
+  app_module: factory                #factory/devlop
+  app_cookie_name: pi_cookie_dev
+  expire_time: 720000000  #过期时间
 
 oa:
-  serverUrl: http://toa.goldwind.org:80
+  serverUrl: http://10.12.7.14:80
   userName: rest
   password: 123456
-  uploadFileServerUrl: http://toa.goldwind.org/seeyon/uploadService.do?method=processUploadService
+  uploadFileServerUrl: http://10.12.7.14/seeyon/uploadService.do?method=processUploadService
 
 open:
   userName: SFS
@@ -82,24 +86,30 @@ open:
 
 token:
   refreshTokenExpireTime: 1800
+  deviceCode: piservice
+
 
 sap:
-  mandt: 800
+  mandt: 401
 
 file:
-  upload: /data/nas/sfs/xd/file
+  upload: /usr/local/local/pi/file
+  basePath: http://localhost:8080
+
 den:
-#  serverUrl: http://prd.goldwind.com.cn:8000
-#  username: SERVICE
-#  password: gw654321
-#  serverUrl: http://pas.goldwind.com.cn:50000
-#  username: PIW_WEB_EAM
-#  password: hpeam2017
-  serverUrl: http://pod.goldwind.com.cn:50000
-  username: PIW_WEB_SFS
-  password: POD0915pK
+  #  serverUrl: http://pev.goldwind.com.cn:50000
+  #  username: gw_eam
+  #  password: hpeam2017
+  #pas 10.12.1.43
+  #gw_eam/hpeam2017
+  serverUrl: http://pas.goldwind.com.cn:50000
+  username: PIW_WEB_EAM
+  password: hpeam2017
+
+
 BPS:
-  serverUrl: http://api-bps.goldwind.com.cn:8080
+  serverUrl: http://10.12.7.237:8080
+  #serverUrl: http://localhost:8080
   app:
     startGWTaskURL: /default/goldwindAPI/startGWTask  #发起流程
     excuteGWTaskURL: /default/goldwindAPI/excuteGWTask  #执行流程
@@ -133,10 +143,10 @@ eis:
   tokenCode: portal
 
 vue:
-  ip : http://sfs.goldwind.com.cn
-  port : 80/xd
-  #ip: http://127.0.0.1
-  #port: 8080
+  #  ip : http://10.12.2.106
+  #  port : 8090
+  ip : http://localhost
+  port : 8080
   eisip: https://eis.goldwind.com.cn
   eisport: 9443/xd
   outer: 10.12.50.169  #外网的nginx的ip
