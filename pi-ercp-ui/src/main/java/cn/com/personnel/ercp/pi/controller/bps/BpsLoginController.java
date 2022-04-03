@@ -191,7 +191,7 @@ public class BpsLoginController extends PageController {
     @ResponseBody
     public Map<String, Object> sign(@RequestBody JSONObject jsonObject){
         return JwtUtil.sign((String)(jsonObject.get("userId")), (String)(jsonObject.get("userName")),
-                (String)(jsonObject.get("appCode")), (String)(jsonObject.get("deviceCode")));
+                (String)(jsonObject.get("appCode")), (String)(jsonObject.get("authority")), (String)(jsonObject.get("deviceCode")));
     }
 
     @RequestMapping("/openInnerFlow")

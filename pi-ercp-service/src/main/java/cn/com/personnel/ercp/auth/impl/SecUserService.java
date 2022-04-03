@@ -105,9 +105,7 @@ public class SecUserService extends BaseService implements ISecUserService {
     @Override
     public int deleteUser(SecUser secUser) {
         try {
-            secUser.setUserId(secUser.getUserId());
-            secUser.setStatus("作废");
-            int row = secUserMapper.updateByPrimaryKeySelective(secUser);
+            int row = secUserMapper.deleteByPrimaryKey(secUser.getUserId());
             if (row > 0)
                 return 1;
         } catch (Exception e) {

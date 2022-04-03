@@ -60,9 +60,10 @@
                                  <prop key="url">jdbc:postgresql://localhost:5432/personel?currentSchema=public</prop>
                                  <prop key="user">postgres</prop>
                                  <prop key="password" >Dyy13664171388</prop>
-<!--                <prop key="url">jdbc:postgresql://10.12.1.102:5432/sfsprd?currentSchema=public</prop>-->
-<!--                <prop key="user">sfsuser</prop>-->
-<!--                <prop key="password" >9TY(fj7kd</prop>-->
+<!--                172.31.208.79-->
+<!--                <prop key="url">jdbc:postgresql://39.107.45.194:5432/postgres?currentSchema=public</prop>-->
+<!--                <prop key="user">postgres</prop>-->
+<!--                <prop key="password" >postgres</prop>-->
             </props>
         </property>
     </bean>

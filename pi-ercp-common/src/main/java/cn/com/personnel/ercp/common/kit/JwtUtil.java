@@ -182,6 +182,20 @@ public class JwtUtil {
     }
 
     /**
+     * 获得token中的信息无需key解密也能获得
+     *
+     * @return token中包含的用户ID
+     */
+    public static String getAuthority(String token) {
+        try {
+            DecodedJWT jwt = JWT.decode(token);
+            return jwt.getClaim("authority").asString();
+        } catch (JWTDecodeException e) {
+            return null;
+        }
+    }
+
+    /**
      * 生成签名,指定时间后过期
      *
      * @param uid        用户ID
@@ -189,10 +203,10 @@ public class JwtUtil {
      * @param deviceCode 设备编码
      * @return 加密的token
      */
-    public static Map<String, Object> sign(String uid, String username, String area, String deviceCode) {
+    public static Map<String, Object> sign(String uid, String username, String area, String authority, String deviceCode) {
         Date date = new Date(System.currentTimeMillis() + expire_time);
         String key = username + uid + ApplicationConfig.APP_CODE + deviceCode;
-        return generateToken(key, uid, username, area, date, "refresh_token");
+        return generateToken(key, uid, username, area, authority, date, "refresh_token");
     }
 
     /**
@@ -224,9 +238,10 @@ public class JwtUtil {
         String uid = getUID(token);
         String username = getUsername(token);
         String area = getArea(token);
+        String authority = getAuthority(token);
         Date date = new Date(System.currentTimeMillis() + 120 * 60 * 1000);
         String key = username + uid + ApplicationConfig.APP_CODE + deviceCode + "2021";
-        return generateToken(key, uid, username, area, date, "access_token");
+        return generateToken(key, uid, username, area, authority, date, "access_token");
     }
 
     /**
@@ -263,10 +278,10 @@ public class JwtUtil {
      * @param date     过期时间
      * @return
      */
-    private static Map generateToken(String key, String uid, String username, String area, Date date, String tokenName) {
+    private static Map generateToken(String key, String uid, String username, String area, String authority, Date date, String tokenName) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(key);
-            String token = JWT.create().withClaim("uid", uid).withClaim("username", username).withClaim("area", area)
+            String token = JWT.create().withClaim("uid", uid).withClaim("username", username).withClaim("area", area).withClaim("authority", authority)
 //                    .withExpiresAt(date)
                     .sign(algorithm);
             // 附带userinfo信息

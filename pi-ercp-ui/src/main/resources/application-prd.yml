@@ -68,7 +68,7 @@ logging:
 
 app:
   app_code: pi
-  app_name: 儿童服务平台
+  app_name: 儿童服务管理平台
   app_module: factory                #factory/devlop
   app_cookie_name: pi_cookie_dev
   expire_time: 720000000  #过期时间

@@ -61,8 +61,6 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/mobile/**", "anon"); // 表示可以匿名访问移动端接口
         filterChainDefinitionMap.put("/autoLogin/**", "anon"); // 表示可以匿名访问移动端接口
         filterChainDefinitionMap.put("/v2/**", "anon"); // swagger接口
-        filterChainDefinitionMap.put("/credit/bondIssueApplication/preview/**", "anon"); // pdf 预览
-        filterChainDefinitionMap.put("/credit/guaranteeInfo/getDepartmentLeader", "anon"); // 暂时表示可以匿名访问
         filterChainDefinitionMap.put("/swagger-ui.html", "anon");
         filterChainDefinitionMap.put("/webjars/**", "anon");
         filterChainDefinitionMap.put("/swagger-resources/**", "anon");
@@ -86,7 +84,6 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/baseCommon/**", "anon"); //
 //        filterChainDefinitionMap.put("/h5ChildrenBaseInfo/toH5ChildrenModel", "anon"); //
         filterChainDefinitionMap.put("/headServer/**", "anon"); //
-        filterChainDefinitionMap.put("/rest/credit/guaranteeWeb/**", "anon"); //
 //        filterChainDefinitionMap.put("/base/**", "anon"); //
         // ================= 暴露的接口 结束 ====================//
 

@@ -65,8 +65,8 @@ public class PortalTokenService extends BaseService implements IPortalTokenServi
     }
 
     @Override
-    public Map<String, Object> sign(String uid, String username, String area, String deviceCode) {
-        return JwtUtil.sign(uid, username, area, deviceCode);
+    public Map<String, Object> sign(String uid, String username, String area, String authority, String deviceCode) {
+        return JwtUtil.sign(uid, username, area, authority, deviceCode);
     }
 
     @Override

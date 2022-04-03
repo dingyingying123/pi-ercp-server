@@ -766,7 +766,8 @@ public abstract class BaseController {
             String uid = JwtUtil.getUID(token);
             String userName = JwtUtil.getUsername(token);
             String area = JwtUtil.getArea(token);
-            logger.info("token参数：uid:" + uid + ",username:" + userName + ",area:" + area);
+            String authority = JwtUtil.getAuthority(token);
+            logger.info("token参数：uid:" + uid + ",username:" + userName + ",area:" + area + ",authority:" + authority);
             secUser.setUserId(uid);
             secUser.setUserName(userName);
             secUser.setArea(area);

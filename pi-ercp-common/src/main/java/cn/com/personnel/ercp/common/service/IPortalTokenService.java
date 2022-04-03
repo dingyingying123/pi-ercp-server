@@ -109,9 +109,10 @@ public interface IPortalTokenService extends IService {
      * @param username
      * @param area
      * @param deviceCode
+     * @param authority
      * @return
      */
-    public Map<String, Object> sign(String uid, String username, String area, String deviceCode);
+    public Map<String, Object> sign(String uid, String username, String area, String authority, String deviceCode);
 
     /**
      * 获取accesstoken

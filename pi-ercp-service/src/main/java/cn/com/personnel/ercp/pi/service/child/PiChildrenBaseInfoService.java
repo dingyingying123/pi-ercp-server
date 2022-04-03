@@ -61,7 +61,12 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
                 piChildrenBaseInfo.setStatus(CommonConstants.ApprovalStatus.NOTDRAFT);
                 //根据条件查询
                 childrenBaseInfoList = piChildrenBaseInfoMapper.queryPiChildrenBaseInfoList(piChildrenBaseInfo);
-            }else if("2".equals(piChildrenBaseInfo.getType())){//接案新增，审批通过数据
+            }else if("2".equals(piChildrenBaseInfo.getType())){//已发送审批
+                piChildrenBaseInfo.setCreator(null);
+                piChildrenBaseInfo.setStatus(CommonConstants.ApprovalStatus.APPROVING);
+                //根据条件查询
+                childrenBaseInfoList = piChildrenBaseInfoMapper.queryPiChildrenBaseInfoList(piChildrenBaseInfo);
+            }else if("8".equals(piChildrenBaseInfo.getType())){//接案新增，审批通过数据
                 piChildrenBaseInfo.setStatus(CommonConstants.ApprovalStatus.APPROVED);
                 //根据条件查询
                 childrenBaseInfoList = piChildrenBaseInfoMapper.queryPiChildrenBaseInfoList(piChildrenBaseInfo);
@@ -335,18 +340,18 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
             return ReturnEntity.errorMsg("数据不存在！");
         }
 
-        if(StringUtils.isEmpty(info.getArea())){
-            return ReturnEntity.errorMsg("区域为必填项！");
-        }
+//        if(StringUtils.isEmpty(info.getArea())){
+//            return ReturnEntity.errorMsg("区域为必填项！");
+//        }
         if(StringUtils.isEmpty(info.getChildName())){
             return ReturnEntity.errorMsg("儿童姓名为必填项，不能为空！");
         }
         if(StringUtils.isEmpty(info.getChildIdNo())){
             return ReturnEntity.errorMsg("儿童身份证号为必填项，不能为空！");
         }
-        if(StringUtils.isEmpty(info.getChildTelNo())){
-            return ReturnEntity.errorMsg("儿童联系电话为必填项，不能为空！");
-        }
+//        if(StringUtils.isEmpty(info.getChildTelNo())){
+//            return ReturnEntity.errorMsg("儿童联系电话为必填项，不能为空！");
+//        }
         if(StringUtils.isEmpty(info.getChildNationality())){
             return ReturnEntity.errorMsg("儿童民族为必填项，不能为空！");
         }
@@ -374,75 +379,75 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
         if(guardianInfoList.size() == 0){
             return ReturnEntity.errorMsg("请填写监护人信息！！");
         }
-        for(PiChildrenGuardianInfo piChildrenGuardianInfo : guardianInfoList){
-            if("0".equals(piChildrenGuardianInfo.getRelationship())){
-                if(StringUtils.isEmpty(piChildrenGuardianInfo.getName())){
-                    return ReturnEntity.errorMsg("父亲姓名为必填项，不能为空！");
-                }
-                if(StringUtils.isEmpty(piChildrenGuardianInfo.getIdNo())){
-                    return ReturnEntity.errorMsg("父亲身份证号为必填项，不能为空！");
-                }
-                if(StringUtils.isEmpty(piChildrenGuardianInfo.getTelNo())){
-                    return ReturnEntity.errorMsg("父亲联系电话为必填项，不能为空！");
-                }
-                if(StringUtils.isEmpty(piChildrenGuardianInfo.getAccountAddress())){
-                    return ReturnEntity.errorMsg("父亲户口地址为必填项，不能为空！");
-                }
-                if(StringUtils.isEmpty(piChildrenGuardianInfo.getCurrentAddress())){
-                    return ReturnEntity.errorMsg("父亲现住址为必填项，不能为空！");
-                }
-                if(StringUtils.isEmpty(piChildrenGuardianInfo.getHealthStatus())){
-                    return ReturnEntity.errorMsg("父亲健康状况为必填项，不能为空！");
-                }
-
-                if(StringUtils.isEmpty(piChildrenGuardianInfo.getFamilyIncome())){
-                    return ReturnEntity.errorMsg("父亲家庭收入为必填项，不能为空！");
-                }
-            }else if("1".equals(piChildrenGuardianInfo.getRelationship())){
-                if(StringUtils.isEmpty(piChildrenGuardianInfo.getName())){
-                    return ReturnEntity.errorMsg("母亲姓名为必填项，不能为空！");
-                }
-                if(StringUtils.isEmpty(piChildrenGuardianInfo.getIdNo())){
-                    return ReturnEntity.errorMsg("母亲身份证号为必填项，不能为空！");
-                }
-                if(StringUtils.isEmpty(piChildrenGuardianInfo.getTelNo())){
-                    return ReturnEntity.errorMsg("母亲联系电话为必填项，不能为空！");
-                }
-                if(StringUtils.isEmpty(piChildrenGuardianInfo.getAccountAddress())){
-                    return ReturnEntity.errorMsg("母亲户口地址为必填项，不能为空！");
-                }
-                if(StringUtils.isEmpty(piChildrenGuardianInfo.getCurrentAddress())){
-                    return ReturnEntity.errorMsg("母亲现住址为必填项，不能为空！");
-                }
-                if(StringUtils.isEmpty(piChildrenGuardianInfo.getHealthStatus())){
-                    return ReturnEntity.errorMsg("母亲健康状况为必填项，不能为空！");
-                }
-
-                if(StringUtils.isEmpty(piChildrenGuardianInfo.getFamilyIncome())){
-                    return ReturnEntity.errorMsg("母亲家庭收入为必填项，不能为空！");
-                }
-            }else {
-                if(StringUtils.isEmpty(piChildrenGuardianInfo.getName())){
-                    return ReturnEntity.errorMsg("监护人姓名为必填项，不能为空！");
-                }
-                if(StringUtils.isEmpty(piChildrenGuardianInfo.getIdNo())){
-                    return ReturnEntity.errorMsg("监护人身份证号为必填项，不能为空！");
-                }
-                if(StringUtils.isEmpty(piChildrenGuardianInfo.getTelNo())){
-                    return ReturnEntity.errorMsg("监护人联系电话为必填项，不能为空！");
-                }
-                if(StringUtils.isEmpty(piChildrenGuardianInfo.getRelationship())){
-                    return ReturnEntity.errorMsg("监护人与儿童关系为必填项，不能为空！");
-                }
-                if(StringUtils.isEmpty(piChildrenGuardianInfo.getHealthStatus())){
-                    return ReturnEntity.errorMsg("监护人健康状况为必填项，不能为空！");
-                }
-
-                if(StringUtils.isEmpty(piChildrenGuardianInfo.getReasons())){
-                    return ReturnEntity.errorMsg("监护人其他原由为必填项，不能为空！");
-                }
-            }
-        }
+//        for(PiChildrenGuardianInfo piChildrenGuardianInfo : guardianInfoList){
+//            if("0".equals(piChildrenGuardianInfo.getRelationship())){
+//                if(StringUtils.isEmpty(piChildrenGuardianInfo.getName())){
+//                    return ReturnEntity.errorMsg("父亲姓名为必填项，不能为空！");
+//                }
+//                if(StringUtils.isEmpty(piChildrenGuardianInfo.getIdNo())){
+//                    return ReturnEntity.errorMsg("父亲身份证号为必填项，不能为空！");
+//                }
+//                if(StringUtils.isEmpty(piChildrenGuardianInfo.getTelNo())){
+//                    return ReturnEntity.errorMsg("父亲联系电话为必填项，不能为空！");
+//                }
+//                if(StringUtils.isEmpty(piChildrenGuardianInfo.getAccountAddress())){
+//                    return ReturnEntity.errorMsg("父亲户口地址为必填项，不能为空！");
+//                }
+//                if(StringUtils.isEmpty(piChildrenGuardianInfo.getCurrentAddress())){
+//                    return ReturnEntity.errorMsg("父亲现住址为必填项，不能为空！");
+//                }
+//                if(StringUtils.isEmpty(piChildrenGuardianInfo.getHealthStatus())){
+//                    return ReturnEntity.errorMsg("父亲健康状况为必填项，不能为空！");
+//                }
+//
+//                if(StringUtils.isEmpty(piChildrenGuardianInfo.getFamilyIncome())){
+//                    return ReturnEntity.errorMsg("父亲家庭收入为必填项，不能为空！");
+//                }
+//            }else if("1".equals(piChildrenGuardianInfo.getRelationship())){
+//                if(StringUtils.isEmpty(piChildrenGuardianInfo.getName())){
+//                    return ReturnEntity.errorMsg("母亲姓名为必填项，不能为空！");
+//                }
+//                if(StringUtils.isEmpty(piChildrenGuardianInfo.getIdNo())){
+//                    return ReturnEntity.errorMsg("母亲身份证号为必填项，不能为空！");
+//                }
+//                if(StringUtils.isEmpty(piChildrenGuardianInfo.getTelNo())){
+//                    return ReturnEntity.errorMsg("母亲联系电话为必填项，不能为空！");
+//                }
+//                if(StringUtils.isEmpty(piChildrenGuardianInfo.getAccountAddress())){
+//                    return ReturnEntity.errorMsg("母亲户口地址为必填项，不能为空！");
+//                }
+//                if(StringUtils.isEmpty(piChildrenGuardianInfo.getCurrentAddress())){
+//                    return ReturnEntity.errorMsg("母亲现住址为必填项，不能为空！");
+//                }
+//                if(StringUtils.isEmpty(piChildrenGuardianInfo.getHealthStatus())){
+//                    return ReturnEntity.errorMsg("母亲健康状况为必填项，不能为空！");
+//                }
+//
+//                if(StringUtils.isEmpty(piChildrenGuardianInfo.getFamilyIncome())){
+//                    return ReturnEntity.errorMsg("母亲家庭收入为必填项，不能为空！");
+//                }
+//            }else {
+//                if(StringUtils.isEmpty(piChildrenGuardianInfo.getName())){
+//                    return ReturnEntity.errorMsg("监护人姓名为必填项，不能为空！");
+//                }
+//                if(StringUtils.isEmpty(piChildrenGuardianInfo.getIdNo())){
+//                    return ReturnEntity.errorMsg("监护人身份证号为必填项，不能为空！");
+//                }
+//                if(StringUtils.isEmpty(piChildrenGuardianInfo.getTelNo())){
+//                    return ReturnEntity.errorMsg("监护人联系电话为必填项，不能为空！");
+//                }
+//                if(StringUtils.isEmpty(piChildrenGuardianInfo.getRelationship())){
+//                    return ReturnEntity.errorMsg("监护人与儿童关系为必填项，不能为空！");
+//                }
+//                if(StringUtils.isEmpty(piChildrenGuardianInfo.getHealthStatus())){
+//                    return ReturnEntity.errorMsg("监护人健康状况为必填项，不能为空！");
+//                }
+//
+//                if(StringUtils.isEmpty(piChildrenGuardianInfo.getReasons())){
+//                    return ReturnEntity.errorMsg("监护人其他原由为必填项，不能为空！");
+//                }
+//            }
+//        }
 
         info.setStatus(CommonConstants.ApprovalStatus.COMPLETED);//已完成
         info.setUpdateTime(new Date());

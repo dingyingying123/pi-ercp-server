@@ -1,6 +1,7 @@
 package cn.com.personnel.ercp.pi.controller.children;
 
 import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
+import cn.com.personnel.ercp.auth.service.ISecUserService;
 import cn.com.personnel.ercp.common.persistence.entity.ReturnEntity;
 import cn.com.personnel.ercp.pi.module.child.PiChildrenBaseInfoVO;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiAddress;
@@ -24,6 +25,8 @@ public class PiChildrenBaseInfoController extends PageController {
 
     @Autowired
     IPiChildrenBaseInfoService piChildrenBaseInfoService;
+    @Autowired
+    ISecUserService secUserService;
 
     /**
      * 查询儿童基本信息列表
@@ -34,7 +37,8 @@ public class PiChildrenBaseInfoController extends PageController {
     @ResponseBody
     public ReturnEntity queryPiChildrenBaseInfoList(@RequestBody PiChildrenBaseInfoVO piChildrenBaseInfo){
         SecUser secUser = getTokenLoginUser();
-        if(StringUtils.isNotEmpty(secUser.getArea())){
+        SecUser user = secUserService.selectByUserId(secUser.getUserId());
+        if(StringUtils.isNotEmpty(user.getAuthority()) && "录入员".equals(user.getAuthority())){
 //            piChildrenBaseInfo.setArea(secUser.getArea());
             piChildrenBaseInfo.setCreator(secUser.getUserId());
         }

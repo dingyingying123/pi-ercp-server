@@ -10,6 +10,20 @@
     <title>困境儿童和留守儿童基本信息采集表</title>
 </head>
 <body><!--  onload="getInfo()"	 -->
+<style>
+    /* 布局纵向 */
+    .a4-endwise{
+        width: 1075px;
+        height: 1568px;
+        border: 1px #000 solid;
+    }
+    /* 布局横向 */
+    .a4-broadwise{
+        width: 1569px;
+        height: 1075px;
+        border: 1px #000 solid;
+    }
+</style>
 <div class="bigContent">
     <!--<div class="titleImg" id="titleImg"></div>-->
     <div class="content" id="content">
