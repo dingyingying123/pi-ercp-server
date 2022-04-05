@@ -62,7 +62,9 @@
                     <td colspan="1" class="w160  fs20lh30tac">民  族</td>
                     <td colspan="1" class="w80  fs20lh30tac">${(info.childNationality)!}</td>
                     <td colspan="1" class="w80  fs20lh30tac">性  别</td>
-                    <td colspan="3" class="w160  fs20lh30tac">${(info.childMale)!}</td>
+                    <td colspan="1" class="w80  fs20lh30tac">${(info.childMale)!}</td>
+                    <td colspan="1" class="w80  fs20lh30tac">入户情况</td>
+                    <td colspan="1" class="w80  fs20lh30tac">${(info.homeSituation)!}</td>
                 </tr>
                 <tr>
                     <td colspan="1" class="w80  fs20lh30tac">户口地址</td>

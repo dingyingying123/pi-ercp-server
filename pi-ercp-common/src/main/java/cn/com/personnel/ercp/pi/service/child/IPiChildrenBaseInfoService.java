@@ -9,6 +9,8 @@ import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenGuardianInfo;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenLocationInfo;
 import cn.com.personnel.springboot.framework.core.page.PagenationQueryParameter;
 
+import java.util.List;
+
 public interface IPiChildrenBaseInfoService {
     ReturnEntity queryPiChildrenBaseInfoList(PiChildrenBaseInfoVO piChildrenBaseInfo, PagenationQueryParameter buildPagenation);
 
@@ -37,4 +39,6 @@ public interface IPiChildrenBaseInfoService {
     PiChildrenBaseInfoVO queryH5PiChildrenBaseInfo(PiChildrenBaseInfo piChildrenBaseInfo);
 
     ReturnEntity queryAddressList(PiAddress piAddress);
+
+    void exportExcelByTemplete(String fileName, PiChildrenBaseInfoVO piChildrenBaseInfo);
 }

@@ -25,6 +25,8 @@ public class PiChildrenBaseInfoVO extends PiChildrenBaseInfo {
     private String expectedExecution;
     private String implementationStatus;
 
+    List<String> ids;
+
     public List<PiChildrenGuardianInfo> getPiChildrenGuardianInfoList() {
         return piChildrenGuardianInfoList;
     }
@@ -151,5 +153,13 @@ public class PiChildrenBaseInfoVO extends PiChildrenBaseInfo {
 
     public void setImplementationStatus(String implementationStatus) {
         this.implementationStatus = implementationStatus;
+    }
+
+    public List<String> getIds() {
+        return ids;
+    }
+
+    public void setIds(List<String> ids) {
+        this.ids = ids;
     }
 }

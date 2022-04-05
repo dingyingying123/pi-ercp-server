@@ -13,11 +13,10 @@ import cn.com.personnel.springboot.framework.core.controller.PageController;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/pi/piChildrenBaseInfo")
@@ -179,5 +178,15 @@ public class PiChildrenBaseInfoController extends PageController {
     @ResponseBody
     public ReturnEntity queryAddressList(@RequestBody PiAddress piAddress){
         return piChildrenBaseInfoService.queryAddressList(piAddress);
+    }
+
+    /**
+     * 按模板导出excel
+     * @param piChildrenBaseInfoVO
+     */
+    @PostMapping("/exportExcelByTemplete")
+    @ResponseBody
+    public void exportExcelByTemplete(@RequestBody PiChildrenBaseInfoVO piChildrenBaseInfoVO){
+        piChildrenBaseInfoService.exportExcelByTemplete("儿童信息表", piChildrenBaseInfoVO);
     }
 }

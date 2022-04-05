@@ -67,6 +67,61 @@
                   select="cn.com.personnel.ercp.pi.persistence.mapper.child.PiChildrenGuardianInfoMapper.queryGuardianList" column="{childId=child_id}" />
   </resultMap>
 
+    <resultMap id="ChildrenExcelVO" extends="BaseResultMap" type="cn.com.personnel.ercp.pi.module.child.ChildrenExcelVO">
+        <id column="child_id" jdbcType="VARCHAR" property="childId" />
+        <result column="area" jdbcType="VARCHAR" property="area" />
+        <result column="child_name" jdbcType="VARCHAR" property="childName" />
+        <result column="child_id_no" jdbcType="VARCHAR" property="childIdNo" />
+        <result column="child_tel_no" jdbcType="VARCHAR" property="childTelNo" />
+        <result column="child_nationality" jdbcType="VARCHAR" property="childNationality" />
+        <result column="child_male" jdbcType="VARCHAR" property="childMale" />
+        <result column="child_account_province" jdbcType="VARCHAR" property="childAccountProvince" />
+        <result column="child_account_city" jdbcType="VARCHAR" property="childAccountCity" />
+        <result column="child_account_county" jdbcType="VARCHAR" property="childAccountCounty" />
+        <result column="child_account_town" jdbcType="VARCHAR" property="childAccountTown" />
+        <result column="child_account_address" jdbcType="VARCHAR" property="childAccountAddress" />
+        <result column="child_current_province" jdbcType="VARCHAR" property="childCurrentProvince" />
+        <result column="child_current_city" jdbcType="VARCHAR" property="childCurrentCity" />
+        <result column="child_current_county" jdbcType="VARCHAR" property="childCurrentCounty" />
+        <result column="child_current_town" jdbcType="VARCHAR" property="childCurrentTown" />
+        <result column="child_current_address" jdbcType="VARCHAR" property="childCurrentAddress" />
+        <result column="child_health_status" jdbcType="VARCHAR" property="childHealthStatus" />
+        <result column="child_escalation_type" jdbcType="VARCHAR" property="childEscalationType" />
+        <result column="child_disability_type" jdbcType="VARCHAR" property="childDisabilityType" />
+        <result column="child_disability_level" jdbcType="VARCHAR" property="childDisabilityLevel" />
+        <result column="child_disease_type" jdbcType="VARCHAR" property="childDiseaseType" />
+        <result column="child_school_attendance" jdbcType="VARCHAR" property="childSchoolAttendance" />
+        <result column="child_other_cases" jdbcType="VARCHAR" property="childOtherCases" />
+        <result column="child_poverty_alleviation_implementation" jdbcType="VARCHAR" property="childPovertyAlleviationImplementation" />
+        <result column="child_violation_guardian" jdbcType="VARCHAR" property="childViolationGuardian" />
+        <result column="organization_name" jdbcType="VARCHAR" property="organizationName" />
+        <result column="organization_principal" jdbcType="VARCHAR" property="organizationPrincipal" />
+        <result column="organization_tel_no" jdbcType="VARCHAR" property="organizationTelNo" />
+        <result column="organization_nature" jdbcType="VARCHAR" property="organizationNature" />
+        <result column="organization_residential_province" jdbcType="VARCHAR" property="organizationResidentialProvince" />
+        <result column="organization_residential_city" jdbcType="VARCHAR" property="organizationResidentialCity" />
+        <result column="organization_residential_county" jdbcType="VARCHAR" property="organizationResidentialCounty" />
+        <result column="organization_residential_town" jdbcType="VARCHAR" property="organizationResidentialTown" />
+        <result column="organization_residential_address" jdbcType="VARCHAR" property="organizationResidentialAddress" />
+        <result column="help_suggestions" jdbcType="VARCHAR" property="helpSuggestions" />
+        <result column="security_fee_collection_method" jdbcType="VARCHAR" property="securityFeeCollectionMethod" />
+        <result column="security_fee_collector" jdbcType="VARCHAR" property="securityFeeCollector" />
+        <result column="security_fee_recipient_relationship" jdbcType="VARCHAR" property="securityFeeRecipientRelationship" />
+        <result column="security_fee_guarantee_standard" jdbcType="VARCHAR" property="securityFeeGuaranteeStandard" />
+        <result column="isdelete" jdbcType="VARCHAR" property="isdelete" />
+        <result column="status" jdbcType="VARCHAR" property="status" />
+        <result column="creator" jdbcType="VARCHAR" property="creator" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="updator" jdbcType="VARCHAR" property="updator" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="guardian" jdbcType="VARCHAR" property="guardian" />
+        <result column="child_age" jdbcType="VARCHAR" property="childAge" />
+        <result column="approve_opinion" jdbcType="VARCHAR" property="approveOpinion" />
+        <result column="home_situation" jdbcType="VARCHAR" property="homeSituation" />
+      <collection property="piChildrenGuardianInfoList" ofType="cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenGuardianInfo"
+                  select="cn.com.personnel.ercp.pi.persistence.mapper.child.PiChildrenGuardianInfoMapper.queryGuardianList" column="{childId=child_id}" />
+  </resultMap>
+
   <resultMap id="BaseResultMapVO1" type="cn.com.personnel.ercp.pi.module.child.ChildrenStatisticsInfoVO">
     <result column="child_account_province" jdbcType="VARCHAR" property="childAccountProvince" />
     <result column="child_account_city" jdbcType="VARCHAR" property="childAccountCity" />
@@ -129,6 +184,62 @@
       </if>
       <if test='info.type != null and info.type == "2"'>
         and i.child_id not in (select child_id from server_take_case_info group by child_id)
+      </if>
+    </where>
+    order by i.create_time desc
+  </select>
+
+  <select id="selectExcelByIds" resultMap="BaseResultMapVO">
+    select i.* from pi_children_base_info i
+    <where>
+      <if test="info.childAccountAddress != null and info.childAccountAddress != ''">
+        i.child_account_address like concat('%', #{info.childAccountAddress}, '%')
+      </if>
+      <if test="info.childCurrentAddress != null and info.childCurrentAddress != ''">
+         and i.child_current_address like concat('%', #{info.childCurrentAddress}, '%')
+      </if>
+      <if test="info.childName != null and info.childName != ''">
+         and i.child_name like concat('%', #{info.childName}, '%')
+      </if>
+      <if test="info.childIdNo != null and info.childIdNo != ''">
+         and i.child_id_no like concat('%', #{info.childIdNo}, '%')
+      </if>
+      <if test="info.childTelNo != null and info.childTelNo != ''">
+         and i.child_tel_no like concat('%', #{info.childTelNo}, '%')
+      </if>
+      <if test="info.childNationality != null and info.childNationality != ''">
+         and i.child_nationality like concat('%', #{info.childNationality}, '%')
+      </if>
+      <if test="info.childMale != null and info.childMale != ''">
+         and i.child_male like concat('%', #{info.childMale}, '%')
+      </if>
+      <if test="info.childHealthStatus != null and info.childHealthStatus != ''">
+         and i.child_health_status like concat('%', #{info.childHealthStatus}, '%')
+      </if>
+      <if test="info.childEscalationType != null and info.childEscalationType != ''">
+         and i.child_escalation_type like concat('%', #{info.childEscalationType}, '%')
+      </if>
+      <if test="info.childDisabilityType != null and info.childDisabilityType != ''">
+         and i.child_disability_type like concat('%', #{info.childDisabilityType}, '%')
+      </if>
+      <if test="info.childViolationGuardian != null and info.childViolationGuardian != ''">
+         and i.child_violation_guardian like concat('%', #{info.childViolationGuardian}, '%')
+      </if>
+      <if test="info.status != null and info.status != '' and info.status != '-1'">
+         and i.status = #{info.status}
+      </if>
+        <if test="info.creator != null and info.creator != ''">
+         and i.creator = #{info.creator}
+      </if>
+      <if test="info.status != null and info.status != '' and info.status == '-1'">
+         and i.status != '0'
+      </if>
+      <if test='info.type != null and info.type == "2"'>
+        and i.child_id not in (select child_id from server_take_case_info group by child_id)
+      </if>
+      <if test="ids != null and ids.size &gt; 0">
+        and i.child_id in
+          <foreach collection="ids" item="id" open="(" close=")" separator=","> #{id} </foreach>
       </if>
     </where>
     order by i.create_time desc
