@@ -1,6 +1,7 @@
 package cn.com.personnel.ercp.pi.service.child;
 
 import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
+import cn.com.personnel.ercp.common.persistence.entity.FileInfo;
 import cn.com.personnel.ercp.common.persistence.entity.ReturnEntity;
 import cn.com.personnel.ercp.pi.module.child.PiChildrenBaseInfoVO;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiAddress;
@@ -41,4 +42,6 @@ public interface IPiChildrenBaseInfoService {
     ReturnEntity queryAddressList(PiAddress piAddress);
 
     void exportExcelByTemplete(String fileName, PiChildrenBaseInfoVO piChildrenBaseInfo);
+
+    void exportImage(FileInfo fileInfo);
 }

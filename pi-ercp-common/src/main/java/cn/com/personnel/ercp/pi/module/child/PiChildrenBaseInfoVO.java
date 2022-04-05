@@ -25,6 +25,9 @@ public class PiChildrenBaseInfoVO extends PiChildrenBaseInfo {
     private String expectedExecution;
     private String implementationStatus;
 
+    private String fileCat;
+    private String fileFlag;
+
     List<String> ids;
 
     public List<PiChildrenGuardianInfo> getPiChildrenGuardianInfoList() {
@@ -161,5 +164,21 @@ public class PiChildrenBaseInfoVO extends PiChildrenBaseInfo {
 
     public void setIds(List<String> ids) {
         this.ids = ids;
+    }
+
+    public String getFileCat() {
+        return fileCat;
+    }
+
+    public void setFileCat(String fileCat) {
+        this.fileCat = fileCat;
+    }
+
+    public String getFileFlag() {
+        return fileFlag;
+    }
+
+    public void setFileFlag(String fileFlag) {
+        this.fileFlag = fileFlag;
     }
 }

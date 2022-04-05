@@ -2,6 +2,7 @@ package cn.com.personnel.ercp.pi.controller.children;
 
 import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
 import cn.com.personnel.ercp.auth.service.ISecUserService;
+import cn.com.personnel.ercp.common.persistence.entity.FileInfo;
 import cn.com.personnel.ercp.common.persistence.entity.ReturnEntity;
 import cn.com.personnel.ercp.pi.module.child.PiChildrenBaseInfoVO;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiAddress;
@@ -188,5 +189,15 @@ public class PiChildrenBaseInfoController extends PageController {
     @ResponseBody
     public void exportExcelByTemplete(@RequestBody PiChildrenBaseInfoVO piChildrenBaseInfoVO){
         piChildrenBaseInfoService.exportExcelByTemplete("儿童信息表", piChildrenBaseInfoVO);
+    }
+
+    /**
+     * 按模板导出excel
+     * @param fileInfo
+     */
+    @PostMapping("/exportImage")
+    @ResponseBody
+    public void exportImage(@RequestBody FileInfo fileInfo){
+        piChildrenBaseInfoService.exportImage(fileInfo);
     }
 }

@@ -2,7 +2,6 @@ package cn.com.personnel.ercp.pi.service.child;
 
 import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
 import cn.com.personnel.ercp.auth.persistence.mapper.SecUserMapper;
-import cn.com.personnel.ercp.common.autoconfig.DataUtils;
 import cn.com.personnel.ercp.common.autoconfig.ExcelUtils;
 import cn.com.personnel.ercp.common.autoconfig.MultiTitle;
 import cn.com.personnel.ercp.common.constants.CommonConstants;
@@ -10,14 +9,10 @@ import cn.com.personnel.ercp.common.kit.FileKitConfig;
 import cn.com.personnel.ercp.common.persistence.entity.FileInfo;
 import cn.com.personnel.ercp.common.persistence.entity.ReturnEntity;
 import cn.com.personnel.ercp.common.persistence.mapper.FileInfoMapper;
-import cn.com.personnel.ercp.common.service.BaseRenderExcel;
+import cn.com.personnel.ercp.common.service.IFileService;
 import cn.com.personnel.ercp.common.util.DateUtils;
 import cn.com.personnel.ercp.framework.kit.UUIDKit;
-import cn.com.personnel.ercp.framework.kit.excel.ColHeadView;
-import cn.com.personnel.ercp.pi.module.ImportParamsVO;
 import cn.com.personnel.ercp.pi.module.base.FileInfoVO;
-import cn.com.personnel.ercp.pi.module.child.ChildrenBaseInfoExcelVO;
-import cn.com.personnel.ercp.pi.module.child.ChildrenExcelVO;
 import cn.com.personnel.ercp.pi.module.child.ChildrenStatisticsInfoVO;
 import cn.com.personnel.ercp.pi.module.child.PiChildrenBaseInfoVO;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiAddress;
@@ -32,35 +27,26 @@ import cn.com.personnel.springboot.framework.core.page.PagenationQueryParameter;
 import cn.com.personnel.springboot.framework.service.BaseService;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
-import netscape.javascript.JSObject;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
-import org.apache.poi.hssf.usermodel.HSSFPatriarch;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
 import org.apache.poi.xssf.usermodel.XSSFDrawing;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.jeecgframework.poi.excel.entity.ImportParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import sun.nio.cs.ext.GBK;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -80,6 +66,8 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
     SecUserMapper secUserMapper;
     @Autowired
     private FileKitConfig fileKitConfig;
+    @Autowired
+    IFileService fileService;
 
     @Override
     public ReturnEntity queryPiChildrenBaseInfoList(PiChildrenBaseInfoVO piChildrenBaseInfo, PagenationQueryParameter buildPagenation) {
@@ -660,7 +648,6 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
 
     @Override
     public void exportExcelByTemplete(String fileName, PiChildrenBaseInfoVO piChildrenBaseInfo){
-        List datas = null;
         List<PiChildrenBaseInfoVO> childrenExcelVOList = piChildrenBaseInfoMapper.selectExcelByIds(piChildrenBaseInfo, piChildrenBaseInfo.getIds());
 
         if (childrenExcelVOList.size() > 0) {
@@ -691,17 +678,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
             HttpServletResponse response = servletRequestAttributes.getResponse();
             // 设置导出excel文件
             try {
-//                out = response.getOutputStream();
-//                ZipOutputStream zipOutputStream = new ZipOutputStream(out);
-//                String fileName1 = "批量儿童信息文件" + ".zip";
-//                response.setContentType("application/octet-stream ");
-//                response.setHeader("Connection", "close"); // 表示不能用浏览器直接打开
-//                response.setHeader("Accept-Ranges", "bytes");// 告诉客户端允许断点续传多线程连接下载
-//                response.setHeader("Content-Disposition",
-//                        "attachment;filename=" + new String(fileName.getBytes("GB2312"), "UTF8"));
-//                response.setCharacterEncoding("UTF-8");
-
-            String pathname=new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+            String pathname= "Children_Info_" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
             response.setCharacterEncoding("UTF-8"); // 重点突出
             response.setContentType("application/zip");
             // 对文件名进行编码处理中文问题
@@ -729,9 +706,70 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
 
+    @Override
+    public void exportImage(FileInfo fileInfo) {
+        List<FileInfo> fileInfoList = fileInfoMapper.queryFilesByCatByFlag(fileInfo);
 
-
+        if (fileInfoList.size() > 0) {
+            //获取response
+            ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+            HttpServletResponse response = servletRequestAttributes.getResponse();
+            List<Map<String, Object>> zipEntryList = new ArrayList<>();
+            try {
+                for(FileInfo fileInfo1 : fileInfoList) {
+//                    response.setHeader("content-type", "application/octet-stream");
+//                    // 设置文件类型
+//                    response.setContentType("application/octet-stream");
+//                    // 下载设置下载窗口标题
+//                    response.setHeader("Content-Disposition", "attachment; filename="
+//                            + new String(fileInfo1.getFileName().getBytes("UTF-8"), "ISO-8859-1"));
+//                    OutputStream os = response.getOutputStream();
+//                    BufferedOutputStream bos = new BufferedOutputStream(os);
+                    // 获得内容
+                    byte[] temp = fileService.getFileContent(fileInfo1.getFilePath());
+//                    bos.write(temp, 0, temp.length);
+//                    bos.flush();
+//                    bos.close();
+                    InputStream ais = new ByteArrayInputStream(temp);
+                    ais.close();
+                    ZipEntry zipEntry = new ZipEntry(fileInfo1.getFileName());
+                    Map<String, Object> map = new HashMap();
+                    map.put("stream",ais);
+                    map.put("zip",zipEntry);
+                    zipEntryList.add(map);
+                }
+                // 设置导出文件
+                String pathname= "Image_" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+                response.setCharacterEncoding("UTF-8"); // 重点突出
+                response.setContentType("application/zip");
+                // 对文件名进行编码处理中文问题
+                pathname = new String(pathname.getBytes("UTF-8"), StandardCharsets.UTF_8) + ".zip";
+                //设置前台下载压缩包名
+                response.setHeader("Content-Disposition", "attachment;filename=" + pathname);
+                response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
+                byte[] buf = new byte[1024];
+                ZipOutputStream zipout = new ZipOutputStream(response.getOutputStream());
+                for (int i = 0; i < zipEntryList.size(); i++) {
+                    ZipEntry zipEntryDetail = (ZipEntry) zipEntryList.get(i).get("zip");
+                    InputStream in = (InputStream) zipEntryList.get(i).get("stream");
+                    // Add ZIP entry to output stream.
+                    zipout.putNextEntry(zipEntryDetail);
+                    // Transfer bytes from the file to the ZIP file
+                    int len;
+                    while ((len = in.read(buf)) > 0) {
+                        zipout.write(buf, 0, len);
+                    }
+                    // Complete the entry
+                    zipout.closeEntry();
+                    in.close();
+                }
+                zipout.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -985,7 +1023,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
                     bos.close();
                     byte[] barray = bos.toByteArray();
                     InputStream ais = new ByteArrayInputStream(barray);
-                    is.close();
+                    ais.close();
                     ZipEntry zipEntry = new ZipEntry(childrenExcelVO.getChildName() + fileName + ".xlsx");
                     Map<String, Object> map = new HashMap();
                     map.put("stream",ais);
