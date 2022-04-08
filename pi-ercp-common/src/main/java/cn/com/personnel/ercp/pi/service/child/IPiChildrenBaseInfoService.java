@@ -41,7 +41,7 @@ public interface IPiChildrenBaseInfoService {
 
     ReturnEntity queryAddressList(PiAddress piAddress);
 
-    void exportExcelByTemplete(String fileName, PiChildrenBaseInfoVO piChildrenBaseInfo);
+    ReturnEntity exportExcelByTemplete(String fileName, PiChildrenBaseInfoVO piChildrenBaseInfo);
 
-    void exportImage(FileInfo fileInfo);
+    ReturnEntity exportImage(PiChildrenBaseInfoVO piChildrenBaseInfoVO);
 }

@@ -40,10 +40,20 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import sun.nio.cs.ext.GBK;
 import tk.mybatis.mapper.entity.Example;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.imageio.ImageIO;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -68,6 +78,8 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
     private FileKitConfig fileKitConfig;
     @Autowired
     IFileService fileService;
+    @Autowired
+    IGenerateExcelZipService generateExcelZipService;
 
     @Override
     public ReturnEntity queryPiChildrenBaseInfoList(PiChildrenBaseInfoVO piChildrenBaseInfo, PagenationQueryParameter buildPagenation) {
@@ -647,133 +659,242 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
     }
 
     @Override
-    public void exportExcelByTemplete(String fileName, PiChildrenBaseInfoVO piChildrenBaseInfo){
+    public ReturnEntity exportExcelByTemplete(String fileName, PiChildrenBaseInfoVO piChildrenBaseInfo){
+        long l1 = System.currentTimeMillis();
         List<PiChildrenBaseInfoVO> childrenExcelVOList = piChildrenBaseInfoMapper.selectExcelByIds(piChildrenBaseInfo, piChildrenBaseInfo.getIds());
-
+        String pathname = "";
         if (childrenExcelVOList.size() > 0) {
-            List<Map<String, Object>> zipEntryList = new ArrayList<>();
-            for(PiChildrenBaseInfoVO childrenExcelVO : childrenExcelVOList) {
-                SecUser secUser = secUserMapper.selectByPrimaryKey(childrenExcelVO.getCreator());
-                PiChildrenGuardianInfo fatherGuardian = null;
-                PiChildrenGuardianInfo matherGuardian = null;
-                PiChildrenGuardianInfo otherGuardian = null;
-                if(childrenExcelVO.getPiChildrenGuardianInfoList() != null && childrenExcelVO.getPiChildrenGuardianInfoList().size() > 0){
-                    List<PiChildrenGuardianInfo> piChildrenGuardianInfoList = childrenExcelVO.getPiChildrenGuardianInfoList();
-                    for(PiChildrenGuardianInfo guardianInfo : piChildrenGuardianInfoList){
-                        if("0".equals(guardianInfo.getRelationship())){
-                            fatherGuardian = guardianInfo;
-                        }else if("1".equals(guardianInfo.getRelationship())){
-                            matherGuardian = guardianInfo;
-                        }else {
-                            otherGuardian = guardianInfo;
-                        }
-                    }
-                }
-                Map<String, Object> map = generateExcel(fileName, childrenExcelVO, secUser, fatherGuardian, matherGuardian, otherGuardian);
-                zipEntryList.add(map);
-            }
-            OutputStream out = null;
+            logger.info("===========导出数量：" + childrenExcelVOList.size());
+
+
+//            OutputStream out = null;
             //获取response
-            ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            HttpServletResponse response = servletRequestAttributes.getResponse();
+//            ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+//            HttpServletResponse response = servletRequestAttributes.getResponse();
             // 设置导出excel文件
-            try {
-            String pathname= "Children_Info_" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-            response.setCharacterEncoding("UTF-8"); // 重点突出
-            response.setContentType("application/zip");
-            // 对文件名进行编码处理中文问题
-            pathname = new String(pathname.getBytes(), StandardCharsets.UTF_8) + ".zip";
-            //设置前台下载压缩包名
-            response.setHeader("Content-Disposition", "attachment;filename=" + pathname);
-            response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
-            byte[] buf = new byte[1024];
-                ZipOutputStream zipout = new ZipOutputStream(response.getOutputStream());
-                for (int i = 0; i < zipEntryList.size(); i++) {
-                    ZipEntry zipEntryDetail = (ZipEntry) zipEntryList.get(i).get("zip");
-                    InputStream in = (InputStream) zipEntryList.get(i).get("stream");
-                    // Add ZIP entry to output stream.
-                    zipout.putNextEntry(zipEntryDetail);
-                    // Transfer bytes from the file to the ZIP file
-                    int len;
-                    while ((len = in.read(buf)) > 0) {
-                        zipout.write(buf, 0, len);
-                    }
-                    // Complete the entry
-                    zipout.closeEntry();
-                    in.close();
+//            try {
+                pathname= "Children_Info_" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+//                response.setCharacterEncoding("UTF-8"); // 重点突出
+//                response.setContentType("application/zip");
+                // 对文件名进行编码处理中文问题
+                pathname = fileKitConfig.getFileTemp() + new String(pathname.getBytes(), StandardCharsets.UTF_8) + ".zip";
+                //设置前台下载压缩包名
+//                response.setHeader("Content-Disposition", "attachment;filename=" + pathname);
+//                response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
+
+//                ZipOutputStream zipout = new ZipOutputStream(response.getOutputStream());
+//                pathname = fileKitConfig.getFileTemp() + new String(pathname.getBytes("UTF-8"), StandardCharsets.UTF_8) + ".zip";
+
+                generateExcelZipService.generateExcelZip(fileName, pathname, childrenExcelVOList);
+
+//                for (int i = 0; i < zipEntryList.size(); i++) {
+//                    ZipEntry zipEntryDetail = (ZipEntry) zipEntryList.get(i).get("zip");
+//                    InputStream in = (InputStream) zipEntryList.get(i).get("stream");
+//                    // Add ZIP entry to output stream.
+//                    zipout.putNextEntry(zipEntryDetail);
+//                    // Transfer bytes from the file to the ZIP file
+//                    int len;
+//                    while ((len = in.read(buf)) > 0) {
+//                        zipout.write(buf, 0, len);
+//                    }
+//                    // Complete the entry
+//                    zipout.closeEntry();
+//                    in.close();
+//                }
+
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+        }
+        long l2 = System.currentTimeMillis();
+        logger.info("=============导出儿童信息用时：" + (l2 - l1));
+        return ReturnEntity.ok(fileKitConfig.getFileBasePath() + "/file/download?path=" + URLEncoder.encode(pathname));
+    }
+
+    private void generateExcelZip(String fileName, String pathname, List<PiChildrenBaseInfoVO> childrenExcelVOList) throws IOException {
+        List<SecUser> secUserList = secUserMapper.selectAll();
+        Map<String, String> userMap = new HashMap<>();
+        if(secUserList.size() > 0){
+            for(SecUser user : secUserList){
+                if(!userMap.containsKey(user.getUserId())){
+                    userMap.put(user.getUserId(), user.getUserName());
                 }
-                zipout.close();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
+        byte[] buf = new byte[1024];
+        FileOutputStream fos = null;
+        File zipFile = new File(fileKitConfig.getFilePath() +pathname);
+        //执行创建
+        zipFile.createNewFile();
+        fos = new FileOutputStream(zipFile);
+        //设置前台下载压缩包名
+        ZipOutputStream zipout = new ZipOutputStream(fos);
+        List<Map<String, Object>> zipEntryList = new ArrayList<>();
+        int i = 1;
+        for(PiChildrenBaseInfoVO childrenExcelVO : childrenExcelVOList) {
+            logger.info("===========导出第：" + i++ + "条");
+//                SecUser secUser = secUserMapper.selectByPrimaryKey(childrenExcelVO.getCreator());
+            PiChildrenGuardianInfo fatherGuardian = null;
+            PiChildrenGuardianInfo matherGuardian = null;
+            PiChildrenGuardianInfo otherGuardian = null;
+            if(childrenExcelVO.getPiChildrenGuardianInfoList() != null && childrenExcelVO.getPiChildrenGuardianInfoList().size() > 0){
+                List<PiChildrenGuardianInfo> piChildrenGuardianInfoList = childrenExcelVO.getPiChildrenGuardianInfoList();
+                for(PiChildrenGuardianInfo guardianInfo : piChildrenGuardianInfoList){
+                    if("0".equals(guardianInfo.getRelationship())){
+                        fatherGuardian = guardianInfo;
+                    }else if("1".equals(guardianInfo.getRelationship())){
+                        matherGuardian = guardianInfo;
+                    }else {
+                        otherGuardian = guardianInfo;
+                    }
+                }
+            }
+            Map<String, Object> map = generateExcel(fileName, childrenExcelVO, userMap.get(childrenExcelVO.getCreator()), fatherGuardian, matherGuardian, otherGuardian);
+            zipEntryList.add(map);
+            ZipEntry zipEntryDetail = (ZipEntry) map.get("zip");
+            InputStream in = (InputStream) map.get("stream");
+            // Add ZIP entry to output stream.
+            zipout.putNextEntry(zipEntryDetail);
+            // Transfer bytes from the file to the ZIP file
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                zipout.write(buf, 0, len);
+            }
+            // Complete the entry
+            zipout.closeEntry();
+            in.close();
+        }
+        zipout.close();
     }
 
     @Override
-    public void exportImage(FileInfo fileInfo) {
-        List<FileInfo> fileInfoList = fileInfoMapper.queryFilesByCatByFlag(fileInfo);
+    public ReturnEntity exportImage(PiChildrenBaseInfoVO piChildrenBaseInfoVO) {
+        String pathname = "";
+        if(piChildrenBaseInfoVO.getIds() != null && piChildrenBaseInfoVO.getIds().size() > 0) {
+            List<FileInfo> fileInfoList = fileInfoMapper.queryFilesByFlags(piChildrenBaseInfoVO.getIds());
 
-        if (fileInfoList.size() > 0) {
-            //获取response
-            ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            HttpServletResponse response = servletRequestAttributes.getResponse();
-            List<Map<String, Object>> zipEntryList = new ArrayList<>();
-            try {
-                for(FileInfo fileInfo1 : fileInfoList) {
-//                    response.setHeader("content-type", "application/octet-stream");
-//                    // 设置文件类型
-//                    response.setContentType("application/octet-stream");
-//                    // 下载设置下载窗口标题
-//                    response.setHeader("Content-Disposition", "attachment; filename="
-//                            + new String(fileInfo1.getFileName().getBytes("UTF-8"), "ISO-8859-1"));
-//                    OutputStream os = response.getOutputStream();
-//                    BufferedOutputStream bos = new BufferedOutputStream(os);
-                    // 获得内容
-                    byte[] temp = fileService.getFileContent(fileInfo1.getFilePath());
-//                    bos.write(temp, 0, temp.length);
-//                    bos.flush();
-//                    bos.close();
-                    InputStream ais = new ByteArrayInputStream(temp);
-                    ais.close();
-                    ZipEntry zipEntry = new ZipEntry(fileInfo1.getFileName());
-                    Map<String, Object> map = new HashMap();
-                    map.put("stream",ais);
-                    map.put("zip",zipEntry);
-                    zipEntryList.add(map);
-                }
-                // 设置导出文件
-                String pathname= "Image_" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-                response.setCharacterEncoding("UTF-8"); // 重点突出
-                response.setContentType("application/zip");
-                // 对文件名进行编码处理中文问题
-                pathname = new String(pathname.getBytes("UTF-8"), StandardCharsets.UTF_8) + ".zip";
-                //设置前台下载压缩包名
-                response.setHeader("Content-Disposition", "attachment;filename=" + pathname);
-                response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
-                byte[] buf = new byte[1024];
-                ZipOutputStream zipout = new ZipOutputStream(response.getOutputStream());
-                for (int i = 0; i < zipEntryList.size(); i++) {
-                    ZipEntry zipEntryDetail = (ZipEntry) zipEntryList.get(i).get("zip");
-                    InputStream in = (InputStream) zipEntryList.get(i).get("stream");
-                    // Add ZIP entry to output stream.
-                    zipout.putNextEntry(zipEntryDetail);
-                    // Transfer bytes from the file to the ZIP file
-                    int len;
-                    while ((len = in.read(buf)) > 0) {
-                        zipout.write(buf, 0, len);
+            if (fileInfoList.size() > 0) {
+                //获取response
+//                ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+//                HttpServletResponse response = servletRequestAttributes.getResponse();
+                List<Map<String, Object>> zipEntryList = new ArrayList<>();
+                try {
+                    for (FileInfo fileInfo1 : fileInfoList) {
+                        // 获得内容
+                        byte[] temp = fileService.getFileContent(fileInfo1.getFilePath());
+
+                        InputStream ais = new ByteArrayInputStream(temp);
+                        ais.close();
+                        ZipEntry zipEntry = new ZipEntry(fileInfo1.getFileName());
+                        Map<String, Object> map = new HashMap();
+                        map.put("stream", ais);
+                        map.put("zip", zipEntry);
+                        zipEntryList.add(map);
                     }
-                    // Complete the entry
-                    zipout.closeEntry();
-                    in.close();
+                    // 设置导出文件
+                    pathname = "Image_" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+//                    response.setCharacterEncoding("UTF-8"); // 重点突出
+//                    response.setContentType("application/zip");
+                    // 对文件名进行编码处理中文问题
+                    pathname = fileKitConfig.getFileTemp() + new String(pathname.getBytes("UTF-8"), StandardCharsets.UTF_8) + ".zip";
+                    FileOutputStream fos = null;
+                    File zipFile = new File(fileKitConfig.getFilePath() +pathname);
+                    //执行创建
+                    zipFile.createNewFile();
+                    fos = new FileOutputStream(zipFile);
+//                    zos = new ZipOutputStream(fos);
+                    //设置前台下载压缩包名
+//                    response.setHeader("Content-Disposition", "attachment;filename=" + pathname);
+//                    response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
+                    byte[] buf = new byte[1024];
+//                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    ZipOutputStream zipout = new ZipOutputStream(fos);
+                    for (int i = 0; i < zipEntryList.size(); i++) {
+                        ZipEntry zipEntryDetail = (ZipEntry) zipEntryList.get(i).get("zip");
+                        InputStream in = (InputStream) zipEntryList.get(i).get("stream");
+                        // Add ZIP entry to output stream.
+                        zipout.putNextEntry(zipEntryDetail);
+                        // Transfer bytes from the file to the ZIP file
+                        int len;
+                        while ((len = in.read(buf)) > 0) {
+                            zipout.write(buf, 0, len);
+                        }
+                        // Complete the entry
+                        zipout.closeEntry();
+                        in.close();
+                    }
+                    zipout.close();
+
+                    // 收件人电子邮箱
+//                    String to = "471259661@qq.com";
+//
+//                    // 发件人电子邮箱
+//                    String from = "dingyingying_521@163.com";
+//
+//                    // 指定发送邮件的主机为 localhost
+//                    String host = "localhost";
+//
+//                    // 获取系统属性
+//                    Properties properties = System.getProperties();
+//
+//                    // 设置邮件服务器
+//                    properties.setProperty("mail.smtp.host", host);
+//
+//                    // 获取默认的 Session 对象。
+//                    Session session = Session.getDefaultInstance(properties);
+//
+//                    try{
+//                        // 创建默认的 MimeMessage 对象。
+//                        MimeMessage message = new MimeMessage(session);
+//
+//                        // Set From: 头部头字段
+//                        message.setFrom(new InternetAddress(from));
+//
+//                        // Set To: 头部头字段
+//                        message.addRecipient(Message.RecipientType.TO,
+//                                new InternetAddress(to));
+//
+//                        // Set Subject: 头字段
+//                        message.setSubject("This is the Subject Line!");
+//
+//                        // 创建消息部分
+//                        BodyPart messageBodyPart = new MimeBodyPart();
+//
+//                        // 消息
+//                        messageBodyPart.setText("This is message body");
+//
+//                        // 创建多重消息
+//                        Multipart multipart = new MimeMultipart();
+//
+//                        // 设置文本消息部分
+//                        multipart.addBodyPart(messageBodyPart);
+//
+//                        // 附件部分
+//                        messageBodyPart = new MimeBodyPart();
+////                        String filename = "file.txt";
+//                        DataSource source = new ByteArrayDataSource(bos.toByteArray(), "application/zip");
+//                        messageBodyPart.setDataHandler(new DataHandler(source));
+//                        messageBodyPart.setFileName(pathname);
+//                        multipart.addBodyPart(messageBodyPart);
+//
+//                        // 发送完整消息
+//                        message.setContent(multipart );
+//
+//                        //   发送消息
+//                        Transport.send(message);
+//                        System.out.println("Sent message successfully....");
+//                    }catch (Exception mex) {
+//                        mex.printStackTrace();
+//                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                zipout.close();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
+        return ReturnEntity.ok(fileKitConfig.getFileBasePath() + "/file/download?path=" + URLEncoder.encode(pathname));
     }
 
-    private Map<String, Object> generateExcel(String fileName, PiChildrenBaseInfoVO childrenExcelVO, SecUser secUser, PiChildrenGuardianInfo fatherGuardian, PiChildrenGuardianInfo matherGuardian, PiChildrenGuardianInfo otherGuardian) {
+    private Map<String, Object> generateExcel(String fileName, PiChildrenBaseInfoVO childrenExcelVO, String userName, PiChildrenGuardianInfo fatherGuardian, PiChildrenGuardianInfo matherGuardian, PiChildrenGuardianInfo otherGuardian) {
         ByteArrayOutputStream bos = null;
         BufferedImage bufferImg = null;
         try {
@@ -993,7 +1114,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
                  * 核查人签字
                  * */
                 row = rows.next();
-                row.getCell(1).setCellValue(secUser.getUserName());
+                row.getCell(1).setCellValue(userName);
 
                 try{
                     // 写数据
@@ -1008,14 +1129,16 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
                         File file = new File(realPath);
                         if(file.exists()){
                             bufferImg = ImageIO.read(file);
-                            ImageIO.write(bufferImg, "jpg", byteArrayOut);
-                            //画图的顶级管理器，一个sheet只能获取一个（一定要注意这点）
-                            XSSFDrawing patriarch = sheet.createDrawingPatriarch();
-                            XSSFClientAnchor anchor = new XSSFClientAnchor(10240000, 102400, 10240000, 1024000,(short) 2, 29, (short) 4, 29);
-                            anchor.setAnchorType(1);
-                            //插入图片
-                            patriarch.createPicture(anchor,workbook.addPicture(byteArrayOut.toByteArray(), XSSFWorkbook.PICTURE_TYPE_JPEG));
-                            bufferImg = null;
+                            if (bufferImg != null) {
+                                ImageIO.write(bufferImg, "jpg", byteArrayOut);
+                                //画图的顶级管理器，一个sheet只能获取一个（一定要注意这点）
+                                XSSFDrawing patriarch = sheet.createDrawingPatriarch();
+                                XSSFClientAnchor anchor = new XSSFClientAnchor(10240000, 102400, 10240000, 1024000,(short) 2, 29, (short) 4, 29);
+                                anchor.setAnchorType(1);
+                                //插入图片
+                                patriarch.createPicture(anchor,workbook.addPicture(byteArrayOut.toByteArray(), XSSFWorkbook.PICTURE_TYPE_JPEG));
+                                bufferImg = null;
+                            }
                         }
                     }
                     workbook.write(bos);
@@ -1024,7 +1147,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
                     byte[] barray = bos.toByteArray();
                     InputStream ais = new ByteArrayInputStream(barray);
                     ais.close();
-                    ZipEntry zipEntry = new ZipEntry(childrenExcelVO.getChildName() + fileName + ".xlsx");
+                    ZipEntry zipEntry = new ZipEntry(childrenExcelVO.getChildName() + fileName + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".xlsx");
                     Map<String, Object> map = new HashMap();
                     map.put("stream",ais);
                     map.put("zip",zipEntry);
@@ -1107,4 +1230,6 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
         titles7.add(new MultiTitle(childrenExcelVO == null ? "" : childrenExcelVO.getChildViolationGuardian(), d));
         titleList.add(titles7);
     }
+
+
 }

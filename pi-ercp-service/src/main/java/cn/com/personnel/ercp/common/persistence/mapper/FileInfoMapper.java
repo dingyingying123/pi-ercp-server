@@ -17,4 +17,6 @@ public interface FileInfoMapper extends BaseMapper<FileInfo> {
     void insertBatch(List<FileInfo> fileInfoList);
 
     FileInfo queryOneFilesByCatByFlag(@Param("fileFlag") String fileFlag, @Param("fileCat") String fileCat);
+
+    List<FileInfo> queryFilesByFlags(@Param("ids") List<String> ids);
 }

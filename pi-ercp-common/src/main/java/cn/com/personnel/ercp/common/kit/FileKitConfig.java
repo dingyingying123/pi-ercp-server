@@ -23,6 +23,9 @@ public class FileKitConfig {
 	 public String getFilePath() {
 		 return env.getProperty("file.upload");
 	 }
+	 public String getFileTemp() {
+		 return env.getProperty("file.temp");
+	 }
 	 public String getFileBasePath() {
 		 return env.getProperty("file.basePath");
 	 }

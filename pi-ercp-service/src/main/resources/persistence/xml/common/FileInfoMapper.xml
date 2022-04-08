@@ -79,4 +79,14 @@
         where file_cat = #{fileCat} and file_flag = #{fileFlag}
         order by upload_time desc limit 1
     </select>
+
+    <select id="queryFilesByFlags" resultMap="BaseResultMap">
+        select * from sec_file_info
+        <where> file_cat not in ('houseNo', '申请人签字')
+            <if test="ids != null and ids.size > 0"> and file_flag in
+                <foreach collection="ids" item="id" separator="," open="(" close=")">#{id}</foreach>
+            </if>
+        </where>
+        order by file_cat
+    </select>
 </mapper>

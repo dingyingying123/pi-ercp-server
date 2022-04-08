@@ -187,17 +187,17 @@ public class PiChildrenBaseInfoController extends PageController {
      */
     @PostMapping("/exportExcelByTemplete")
     @ResponseBody
-    public void exportExcelByTemplete(@RequestBody PiChildrenBaseInfoVO piChildrenBaseInfoVO){
-        piChildrenBaseInfoService.exportExcelByTemplete("儿童信息表", piChildrenBaseInfoVO);
+    public ReturnEntity exportExcelByTemplete(@RequestBody PiChildrenBaseInfoVO piChildrenBaseInfoVO){
+        return piChildrenBaseInfoService.exportExcelByTemplete("儿童信息表", piChildrenBaseInfoVO);
     }
 
     /**
      * 按模板导出excel
-     * @param fileInfo
+     * @param piChildrenBaseInfoVO
      */
     @PostMapping("/exportImage")
     @ResponseBody
-    public void exportImage(@RequestBody FileInfo fileInfo){
-        piChildrenBaseInfoService.exportImage(fileInfo);
+    public ReturnEntity exportImage(@RequestBody PiChildrenBaseInfoVO piChildrenBaseInfoVO){
+        return piChildrenBaseInfoService.exportImage(piChildrenBaseInfoVO);
     }
 }

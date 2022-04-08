@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +47,33 @@ public class FileController extends PageController {
                 BufferedOutputStream bos = new BufferedOutputStream(os);
                 // 获得内容
                 byte[] temp = fileService.getFileContent(fileInfo.getFilePath());
+                bos.write(temp, 0, temp.length);
+                bos.flush();
+                bos.close();
+
+            }
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+    }
+
+    @RequestMapping("/download")
+    public void downloadFileByPath(String path) {
+        try {
+        	File file = new File(path);
+            if (file != null) {
+                response.setHeader("content-type", "application/octet-stream");
+                // 设置文件类型
+                response.setContentType("application/octet-stream");
+                // 下载设置下载窗口标题
+                response.setHeader("Content-Disposition", "attachment; filename="
+                        + new String(file.getName().getBytes("UTF-8"), "ISO-8859-1"));
+                OutputStream os = response.getOutputStream();
+                BufferedOutputStream bos = new BufferedOutputStream(os);
+                // 获得内容
+                byte[] temp = fileService.getFileContent(path);
                 bos.write(temp, 0, temp.length);
                 bos.flush();
                 bos.close();

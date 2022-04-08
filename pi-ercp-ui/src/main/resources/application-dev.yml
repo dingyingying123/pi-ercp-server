@@ -94,7 +94,9 @@ sap:
 
 file:
   upload: \data\file
-  basePath: http://localhost:8080
+  temp: \temp\
+  basePath: http://piservice.natapp1.cc
+#  basePath: http://localhost:8080
 
 den:
 #  serverUrl: http://pev.goldwind.com.cn:50000
