@@ -137,6 +137,26 @@
     <result column="orphanCount" jdbcType="VARCHAR" property="orphanCount" />
   </resultMap>
 
+    <resultMap id="FileResultMap" type="cn.com.personnel.ercp.pi.module.child.ChildrenFileInfoVO" >
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <result column="file_key" property="fileKey" jdbcType="VARCHAR" />
+        <result column="appcode" property="appcode" jdbcType="VARCHAR" />
+        <result column="file_cat" property="fileCat" jdbcType="VARCHAR" />
+        <result column="file_name" property="fileName" jdbcType="VARCHAR" />
+        <result column="file_type" property="fileType" jdbcType="VARCHAR" />
+        <result column="file_size" property="fileSize" jdbcType="BIGINT" />
+        <result column="file_loc" property="fileLoc" jdbcType="VARCHAR" />
+        <result column="file_path" property="filePath" jdbcType="VARCHAR" />
+        <result column="uploader" property="uploader" jdbcType="VARCHAR" />
+        <result column="upload_time" property="uploadTime" jdbcType="TIMESTAMP" />
+        <result column="status" property="status" jdbcType="VARCHAR" />
+        <result column="file_flag" property="fileFlag" jdbcType="VARCHAR" />
+        <result column="child_name" jdbcType="VARCHAR" property="childName" />
+        <result column="child_id_no" jdbcType="VARCHAR" property="childIdNo" />
+    </resultMap>
+
   <select id="queryPiChildrenBaseInfoList" resultMap="BaseResultMapVO">
     select coalesce ((select count(*) from pi_children_guardian_info g where i.child_id=g.child_id),0)+1 as guardian,i.* from pi_children_base_info i
     <where>
@@ -556,5 +576,15 @@
             </if>
         </where>
         order by i.evaluate_date desc
+    </select>
+
+    <select id="queryFilesByFlags" resultMap="FileResultMap">
+        select f.*,b.child_name,b.child_id_no from sec_file_info f join pi_children_base_info b on f.file_flag=b.child_id
+        <where> file_cat not in ('houseNo', '申请人签字')
+            <if test="ids != null and ids.size > 0"> and file_flag in
+                <foreach collection="ids" item="id" separator="," open="(" close=")">#{id}</foreach>
+            </if>
+        </where>
+        order by file_flag
     </select>
 </mapper>
