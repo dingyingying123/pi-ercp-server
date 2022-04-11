@@ -16,7 +16,7 @@ spring:
      basename: i18n/message
      
   freemarker:
-    allowRequestOverride: false
+    allowRequestOverride: true
     allowSessionOverride: false
     cache: false
     checkTemplateLocation: true
@@ -85,17 +85,20 @@ open:
   url: http://10.12.7.200:7111
 
 token:
-  refreshTokenExpireTime: 1800
+  refreshTokenExpireTime: 18000000
   deviceCode: piservice
 
 
-sap:
-  mandt: 401
+android:
+  masterSecret: 401
+  appKey:
 
 file:
   upload: \data\file
   temp: \temp\
   basePath: http://piservice.natapp1.cc
+  mail: dingyingying_521@163.com
+  passw: UJMAMHEROJENFFWV
 #  basePath: http://localhost:8080
 
 den:

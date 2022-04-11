@@ -231,4 +231,17 @@ public class CommonConfig {
     }
 
     /*===========SAP结束==============*/
+
+    /*===========token开始==============*/
+    public String getMasterSecret(){
+        return env.getProperty("android.masterSecret");
+    }
+
+    public String getAppKey(){
+        return env.getProperty("android.appKey");
+    }
+    public static final String MASTER_SECRET = "这里换成App对应的值";
+    public static final String APP_KEY = "这里换成App对应的值";
+    /*===========SAP结束==============*/
+
 }

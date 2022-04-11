@@ -29,6 +29,12 @@ public class FileKitConfig {
 	 public String getFileBasePath() {
 		 return env.getProperty("file.basePath");
 	 }
+	 public String getFileMail() {
+		 return env.getProperty("file.mail");
+	 }
+	 public String getFilePassw() {
+		 return env.getProperty("file.passw");
+	 }
 
 	/**
 	 * 文件上传配置

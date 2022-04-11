@@ -87,6 +87,6 @@
                 <foreach collection="ids" item="id" separator="," open="(" close=")">#{id}</foreach>
             </if>
         </where>
-        order by file_cat
+        order by file_flag
     </select>
 </mapper>

@@ -86,6 +86,7 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/headServer/**", "anon"); //
         filterChainDefinitionMap.put("/pi/piChildrenBaseInfo/exportExcelByTemplete", "anon"); //
         filterChainDefinitionMap.put("/pi/piChildrenBaseInfo/exportImage", "anon"); //
+        filterChainDefinitionMap.put("/pi/piChildrenBaseInfo/sendEmail", "anon"); //
         // ================= 暴露的接口 结束 ====================//
 
         filterChainDefinitionMap.put("/*", "authc");// 表示需要认证才可以访问

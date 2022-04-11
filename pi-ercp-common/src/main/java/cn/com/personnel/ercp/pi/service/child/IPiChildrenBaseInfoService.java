@@ -1,7 +1,6 @@
 package cn.com.personnel.ercp.pi.service.child;
 
 import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
-import cn.com.personnel.ercp.common.persistence.entity.FileInfo;
 import cn.com.personnel.ercp.common.persistence.entity.ReturnEntity;
 import cn.com.personnel.ercp.pi.module.child.PiChildrenBaseInfoVO;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiAddress;
@@ -9,8 +8,6 @@ import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenBaseInfo;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenGuardianInfo;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenLocationInfo;
 import cn.com.personnel.springboot.framework.core.page.PagenationQueryParameter;
-
-import java.util.List;
 
 public interface IPiChildrenBaseInfoService {
     ReturnEntity queryPiChildrenBaseInfoList(PiChildrenBaseInfoVO piChildrenBaseInfo, PagenationQueryParameter buildPagenation);
@@ -41,7 +38,7 @@ public interface IPiChildrenBaseInfoService {
 
     ReturnEntity queryAddressList(PiAddress piAddress);
 
-    ReturnEntity exportExcelByTemplete(String fileName, PiChildrenBaseInfoVO piChildrenBaseInfo);
+    ReturnEntity exportExcelByTemplete(String fileName, PiChildrenBaseInfoVO piChildrenBaseInfo, SecUser secUser);
 
     ReturnEntity exportImage(PiChildrenBaseInfoVO piChildrenBaseInfoVO);
 }

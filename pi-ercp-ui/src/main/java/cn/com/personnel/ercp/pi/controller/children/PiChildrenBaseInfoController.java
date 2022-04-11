@@ -9,6 +9,7 @@ import cn.com.personnel.ercp.pi.persistence.entity.child.PiAddress;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenBaseInfo;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenGuardianInfo;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenLocationInfo;
+import cn.com.personnel.ercp.pi.service.child.IGenerateExcelZipService;
 import cn.com.personnel.ercp.pi.service.child.IPiChildrenBaseInfoService;
 import cn.com.personnel.springboot.framework.core.controller.PageController;
 import org.apache.commons.lang3.StringUtils;
@@ -188,7 +189,8 @@ public class PiChildrenBaseInfoController extends PageController {
     @PostMapping("/exportExcelByTemplete")
     @ResponseBody
     public ReturnEntity exportExcelByTemplete(@RequestBody PiChildrenBaseInfoVO piChildrenBaseInfoVO){
-        return piChildrenBaseInfoService.exportExcelByTemplete("儿童信息表", piChildrenBaseInfoVO);
+        SecUser secUser = getTokenLoginUser();
+        return piChildrenBaseInfoService.exportExcelByTemplete("儿童信息表", piChildrenBaseInfoVO, secUser);
     }
 
     /**
@@ -199,5 +201,22 @@ public class PiChildrenBaseInfoController extends PageController {
     @ResponseBody
     public ReturnEntity exportImage(@RequestBody PiChildrenBaseInfoVO piChildrenBaseInfoVO){
         return piChildrenBaseInfoService.exportImage(piChildrenBaseInfoVO);
+    }
+
+    @Autowired
+    IGenerateExcelZipService generateExcelZipService;
+    /**
+     * 按模板导出excel
+     * @param piChildrenBaseInfoVO
+     */
+    @PostMapping("/sendEmail")
+    @ResponseBody
+    public ReturnEntity sendEmail(@RequestBody PiChildrenBaseInfoVO piChildrenBaseInfoVO){
+        try {
+            generateExcelZipService.sendEmail(piChildrenBaseInfoVO.getFilePath(), piChildrenBaseInfoVO.getSubject(), piChildrenBaseInfoVO.getToMail());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ReturnEntity.ok();
     }
 }

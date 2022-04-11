@@ -12,7 +12,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 @Configuration // 声明当前类是一个配置类，相当于Spring配置的XML文件
-@ComponentScan(basePackages={"com.chenfeng.xiaolyuh.thread"})
 @EnableAsync// 利用@EnableAsync注解开启异步任务的支持
 // 配置类实现AsyncConfigurer接口并重写getAsyncExecutor方法，并返回ThreadPoolTaskExecutor，这样我们就获得了一个基于线程池TaskExecutor
 public class ThreadConfig implements AsyncConfigurer {

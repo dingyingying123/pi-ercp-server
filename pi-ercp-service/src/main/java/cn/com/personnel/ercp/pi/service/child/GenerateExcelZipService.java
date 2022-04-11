@@ -4,6 +4,7 @@ import cn.com.personnel.ercp.auth.persistence.entity.SecUser;
 import cn.com.personnel.ercp.auth.persistence.mapper.SecUserMapper;
 import cn.com.personnel.ercp.common.autoconfig.ExcelUtils;
 import cn.com.personnel.ercp.common.kit.FileKitConfig;
+import cn.com.personnel.ercp.common.kit.JdPushVo;
 import cn.com.personnel.ercp.common.persistence.entity.FileInfo;
 import cn.com.personnel.ercp.common.persistence.mapper.FileInfoMapper;
 import cn.com.personnel.ercp.pi.module.child.PiChildrenBaseInfoVO;
@@ -18,12 +19,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.imageio.ImageIO;
+import javax.mail.*;
+import javax.mail.internet.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.Executor;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -37,11 +42,13 @@ public class GenerateExcelZipService extends BaseService implements IGenerateExc
     FileKitConfig fileKitConfig;
     @Autowired
     SecUserMapper secUserMapper;
+//    @Autowired
+//    IJdPushService jdPushService;
 
     @Async
     @Override
-    public void generateExcelZip(String fileName, String pathname, List<PiChildrenBaseInfoVO> childrenExcelVOList) {
-                List<SecUser> secUserList = secUserMapper.selectAll();
+    public void generateExcelZip(String fileName, String pathname, List<PiChildrenBaseInfoVO> childrenExcelVOList, String toMail, SecUser secUser) {
+        List<SecUser> secUserList = secUserMapper.selectAll();
         Map<String, String> userMap = new HashMap<>();
         if(secUserList.size() > 0){
             for(SecUser user : secUserList){
@@ -51,6 +58,8 @@ public class GenerateExcelZipService extends BaseService implements IGenerateExc
             }
         }
         try{
+            String zipname= "Children_Info_" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())  + ".zip";
+            pathname = fileKitConfig.getFileTemp() + new String(zipname.getBytes(), StandardCharsets.UTF_8);
             byte[] buf = new byte[1024];
             FileOutputStream fos = null;
             File zipFile = new File(fileKitConfig.getFilePath() +pathname);
@@ -80,6 +89,19 @@ public class GenerateExcelZipService extends BaseService implements IGenerateExc
                     }
                 }
                 Map<String, Object> map = generateExcel(fileName, childrenExcelVO, userMap.get(childrenExcelVO.getCreator()), fatherGuardian, matherGuardian, otherGuardian);
+                if(i % 500 == 0){
+                    zipout.close();
+                    sendEmail(fileKitConfig.getFilePath() + pathname, "儿童信息导出文件" + zipname, toMail);
+                    zipEntryList.clear();
+                    zipname= "Children_Info_" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".zip";
+                    pathname = fileKitConfig.getFileTemp() + new String(zipname.getBytes(), StandardCharsets.UTF_8);
+                    zipFile = new File(fileKitConfig.getFilePath() +pathname);
+                    //执行创建
+                    zipFile.createNewFile();
+                    fos = new FileOutputStream(zipFile);
+                    //设置前台下载压缩包名
+                    zipout = new ZipOutputStream(fos);
+                }
                 zipEntryList.add(map);
                 ZipEntry zipEntryDetail = (ZipEntry) map.get("zip");
                 InputStream in = (InputStream) map.get("stream");
@@ -95,9 +117,69 @@ public class GenerateExcelZipService extends BaseService implements IGenerateExc
                 in.close();
             }
             zipout.close();
+//            JdPushVo jdPushVo = new JdPushVo();
+//            jdPushVo.setAlias(secUser.getUserId());
+//            jdPushVo.setDeviceTagAlias(secUser.getUserId());
+//            jdPushVo.setAlert("儿童信息生成已完成，可以根据链接到电脑上下载了！");
+//            jdPushVo.setTitle("儿童信息生成完毕");
+//            jdPushService.jpushAndroid(jdPushVo);
+            if(i % 500 != 0) {
+                sendEmail(fileKitConfig.getFilePath() + pathname, "儿童信息导出文件" + zipname, toMail);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Async
+    @Override
+    public void sendEmail(String path, String subject, String toMail) throws Exception {
+        logger.info("============开始发送邮件，发送给：" + toMail);
+        /*
+         * 1. 得到session
+         */
+        Properties props = new Properties();
+        props.setProperty("mail.smtp.host", "smtp.163.com");
+        props.setProperty("mail.smtp.auth", "true");
+
+        Authenticator auth = new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {//IMAP/SMTP  UJMAMHEROJENFFWV
+                return new PasswordAuthentication(fileKitConfig.getFileMail(), fileKitConfig.getFilePassw());
+            }
+        };
+        Session session = Session.getInstance(props, auth);
+        //设置调试信息在控制台打印出来
+//        session.setDebug(true);
+        // 创建邮件消息
+        MimeMessage msg = new MimeMessage(session);
+        // 设置发件人
+        msg.setFrom(new InternetAddress(fileKitConfig.getFileMail()));
+        // 设置收件人
+        msg.setRecipients(Message.RecipientType.TO, new InternetAddress[]{new InternetAddress(toMail)});
+        // 设置邮件标题
+        msg.setSubject(subject);
+
+        //上面的代码都一样
+        MimeMultipart list = new MimeMultipart();//创建内容列表
+
+//        MimeBodyPart part1 = new MimeBodyPart();//创建内容对象
+//        part1.setContent("文字内容", "text/html;charset=utf-8");//添加文本内容
+//        list.addBodyPart(part1);//把上面有文本内容的部分添加到列表
+
+        File file = new File(path);
+        MimeBodyPart part2 = new MimeBodyPart();//创建内容对象2
+//        part2.attachFile(file);//要添加文件的绝对路径
+        FileDataSource fileDataSource = new FileDataSource(path);
+        part2.setDataHandler(new DataHandler(fileDataSource));
+        part2.setFileName(MimeUtility.encodeText(fileDataSource.getName()));
+        list.addBodyPart(part2);//把这一部分添加到列表中
+        // 设置邮件的内容体
+        msg.setContent(list, "text/html;charset=utf-8");//设置邮件内容，内容就是刚才创建的列表
+        // 发送邮件
+        Transport.send(msg);
+        file.delete();
+        logger.info("============结束发送邮件，发送给：" + toMail);
     }
 
     private Map<String, Object> generateExcel(String fileName, PiChildrenBaseInfoVO childrenExcelVO, String userName, PiChildrenGuardianInfo fatherGuardian, PiChildrenGuardianInfo matherGuardian, PiChildrenGuardianInfo otherGuardian) {

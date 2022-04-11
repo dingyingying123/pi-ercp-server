@@ -28,6 +28,10 @@ public class PiChildrenBaseInfoVO extends PiChildrenBaseInfo {
     private String fileCat;
     private String fileFlag;
 
+    private String toMail;
+    private String filePath;
+    private String subject;
+
     List<String> ids;
 
     public List<PiChildrenGuardianInfo> getPiChildrenGuardianInfoList() {
@@ -180,5 +184,29 @@ public class PiChildrenBaseInfoVO extends PiChildrenBaseInfo {
 
     public void setFileFlag(String fileFlag) {
         this.fileFlag = fileFlag;
+    }
+
+    public String getToMail() {
+        return toMail;
+    }
+
+    public void setToMail(String toMail) {
+        this.toMail = toMail;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 }

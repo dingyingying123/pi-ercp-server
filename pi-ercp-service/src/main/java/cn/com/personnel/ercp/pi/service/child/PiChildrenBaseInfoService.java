@@ -35,22 +35,9 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import sun.nio.cs.ext.GBK;
 import tk.mybatis.mapper.entity.Example;
 
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
 import javax.imageio.ImageIO;
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-import javax.mail.util.ByteArrayDataSource;
-import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URLEncoder;
@@ -659,13 +646,14 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
     }
 
     @Override
-    public ReturnEntity exportExcelByTemplete(String fileName, PiChildrenBaseInfoVO piChildrenBaseInfo){
+    public ReturnEntity exportExcelByTemplete(String fileName, PiChildrenBaseInfoVO piChildrenBaseInfo, SecUser secUser){
         long l1 = System.currentTimeMillis();
         List<PiChildrenBaseInfoVO> childrenExcelVOList = piChildrenBaseInfoMapper.selectExcelByIds(piChildrenBaseInfo, piChildrenBaseInfo.getIds());
         String pathname = "";
+        String msg = "没有需要导出的附件！";
         if (childrenExcelVOList.size() > 0) {
             logger.info("===========导出数量：" + childrenExcelVOList.size());
-
+            msg = "将导出" + childrenExcelVOList.size() + "条数据，可能会需要的时间比较久，请耐心等待！";
 
 //            OutputStream out = null;
             //获取response
@@ -685,94 +673,22 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
 //                ZipOutputStream zipout = new ZipOutputStream(response.getOutputStream());
 //                pathname = fileKitConfig.getFileTemp() + new String(pathname.getBytes("UTF-8"), StandardCharsets.UTF_8) + ".zip";
 
-                generateExcelZipService.generateExcelZip(fileName, pathname, childrenExcelVOList);
-
-//                for (int i = 0; i < zipEntryList.size(); i++) {
-//                    ZipEntry zipEntryDetail = (ZipEntry) zipEntryList.get(i).get("zip");
-//                    InputStream in = (InputStream) zipEntryList.get(i).get("stream");
-//                    // Add ZIP entry to output stream.
-//                    zipout.putNextEntry(zipEntryDetail);
-//                    // Transfer bytes from the file to the ZIP file
-//                    int len;
-//                    while ((len = in.read(buf)) > 0) {
-//                        zipout.write(buf, 0, len);
-//                    }
-//                    // Complete the entry
-//                    zipout.closeEntry();
-//                    in.close();
-//                }
-
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+                generateExcelZipService.generateExcelZip(fileName, pathname, childrenExcelVOList, piChildrenBaseInfo.getToMail(), secUser);
         }
         long l2 = System.currentTimeMillis();
         logger.info("=============导出儿童信息用时：" + (l2 - l1));
-        return ReturnEntity.ok(fileKitConfig.getFileBasePath() + "/file/download?path=" + URLEncoder.encode(pathname));
+        return new ReturnEntity(CommonConstants.SUCCESS_CODE, msg, fileKitConfig.getFileBasePath() + "/file/download?path=" + URLEncoder.encode(pathname));
     }
 
-    private void generateExcelZip(String fileName, String pathname, List<PiChildrenBaseInfoVO> childrenExcelVOList) throws IOException {
-        List<SecUser> secUserList = secUserMapper.selectAll();
-        Map<String, String> userMap = new HashMap<>();
-        if(secUserList.size() > 0){
-            for(SecUser user : secUserList){
-                if(!userMap.containsKey(user.getUserId())){
-                    userMap.put(user.getUserId(), user.getUserName());
-                }
-            }
-        }
-        byte[] buf = new byte[1024];
-        FileOutputStream fos = null;
-        File zipFile = new File(fileKitConfig.getFilePath() +pathname);
-        //执行创建
-        zipFile.createNewFile();
-        fos = new FileOutputStream(zipFile);
-        //设置前台下载压缩包名
-        ZipOutputStream zipout = new ZipOutputStream(fos);
-        List<Map<String, Object>> zipEntryList = new ArrayList<>();
-        int i = 1;
-        for(PiChildrenBaseInfoVO childrenExcelVO : childrenExcelVOList) {
-            logger.info("===========导出第：" + i++ + "条");
-//                SecUser secUser = secUserMapper.selectByPrimaryKey(childrenExcelVO.getCreator());
-            PiChildrenGuardianInfo fatherGuardian = null;
-            PiChildrenGuardianInfo matherGuardian = null;
-            PiChildrenGuardianInfo otherGuardian = null;
-            if(childrenExcelVO.getPiChildrenGuardianInfoList() != null && childrenExcelVO.getPiChildrenGuardianInfoList().size() > 0){
-                List<PiChildrenGuardianInfo> piChildrenGuardianInfoList = childrenExcelVO.getPiChildrenGuardianInfoList();
-                for(PiChildrenGuardianInfo guardianInfo : piChildrenGuardianInfoList){
-                    if("0".equals(guardianInfo.getRelationship())){
-                        fatherGuardian = guardianInfo;
-                    }else if("1".equals(guardianInfo.getRelationship())){
-                        matherGuardian = guardianInfo;
-                    }else {
-                        otherGuardian = guardianInfo;
-                    }
-                }
-            }
-            Map<String, Object> map = generateExcel(fileName, childrenExcelVO, userMap.get(childrenExcelVO.getCreator()), fatherGuardian, matherGuardian, otherGuardian);
-            zipEntryList.add(map);
-            ZipEntry zipEntryDetail = (ZipEntry) map.get("zip");
-            InputStream in = (InputStream) map.get("stream");
-            // Add ZIP entry to output stream.
-            zipout.putNextEntry(zipEntryDetail);
-            // Transfer bytes from the file to the ZIP file
-            int len;
-            while ((len = in.read(buf)) > 0) {
-                zipout.write(buf, 0, len);
-            }
-            // Complete the entry
-            zipout.closeEntry();
-            in.close();
-        }
-        zipout.close();
-    }
+
 
     @Override
     public ReturnEntity exportImage(PiChildrenBaseInfoVO piChildrenBaseInfoVO) {
         String pathname = "";
+        String msg = "没有需要导出的附件！";
         if(piChildrenBaseInfoVO.getIds() != null && piChildrenBaseInfoVO.getIds().size() > 0) {
             List<FileInfo> fileInfoList = fileInfoMapper.queryFilesByFlags(piChildrenBaseInfoVO.getIds());
-
+            msg = "将导出" + fileInfoList.size() + "张图片，可能会需要的时间比较久，请耐心等待！";
             if (fileInfoList.size() > 0) {
                 //获取response
 //                ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -824,75 +740,16 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
                         in.close();
                     }
                     zipout.close();
-
-                    // 收件人电子邮箱
-//                    String to = "471259661@qq.com";
-//
-//                    // 发件人电子邮箱
-//                    String from = "dingyingying_521@163.com";
-//
-//                    // 指定发送邮件的主机为 localhost
-//                    String host = "localhost";
-//
-//                    // 获取系统属性
-//                    Properties properties = System.getProperties();
-//
-//                    // 设置邮件服务器
-//                    properties.setProperty("mail.smtp.host", host);
-//
-//                    // 获取默认的 Session 对象。
-//                    Session session = Session.getDefaultInstance(properties);
-//
-//                    try{
-//                        // 创建默认的 MimeMessage 对象。
-//                        MimeMessage message = new MimeMessage(session);
-//
-//                        // Set From: 头部头字段
-//                        message.setFrom(new InternetAddress(from));
-//
-//                        // Set To: 头部头字段
-//                        message.addRecipient(Message.RecipientType.TO,
-//                                new InternetAddress(to));
-//
-//                        // Set Subject: 头字段
-//                        message.setSubject("This is the Subject Line!");
-//
-//                        // 创建消息部分
-//                        BodyPart messageBodyPart = new MimeBodyPart();
-//
-//                        // 消息
-//                        messageBodyPart.setText("This is message body");
-//
-//                        // 创建多重消息
-//                        Multipart multipart = new MimeMultipart();
-//
-//                        // 设置文本消息部分
-//                        multipart.addBodyPart(messageBodyPart);
-//
-//                        // 附件部分
-//                        messageBodyPart = new MimeBodyPart();
-////                        String filename = "file.txt";
-//                        DataSource source = new ByteArrayDataSource(bos.toByteArray(), "application/zip");
-//                        messageBodyPart.setDataHandler(new DataHandler(source));
-//                        messageBodyPart.setFileName(pathname);
-//                        multipart.addBodyPart(messageBodyPart);
-//
-//                        // 发送完整消息
-//                        message.setContent(multipart );
-//
-//                        //   发送消息
-//                        Transport.send(message);
-//                        System.out.println("Sent message successfully....");
-//                    }catch (Exception mex) {
-//                        mex.printStackTrace();
-//                    }
-                } catch (IOException e) {
+                    generateExcelZipService.sendEmail(fileKitConfig.getFilePath() + pathname, "图片导出文件", piChildrenBaseInfoVO.getToMail());
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
-        return ReturnEntity.ok(fileKitConfig.getFileBasePath() + "/file/download?path=" + URLEncoder.encode(pathname));
+        return new ReturnEntity(CommonConstants.SUCCESS_CODE, msg, fileKitConfig.getFileBasePath() + "/file/download?path=" + URLEncoder.encode(pathname));
     }
+
+
 
     private Map<String, Object> generateExcel(String fileName, PiChildrenBaseInfoVO childrenExcelVO, String userName, PiChildrenGuardianInfo fatherGuardian, PiChildrenGuardianInfo matherGuardian, PiChildrenGuardianInfo otherGuardian) {
         ByteArrayOutputStream bos = null;
@@ -1231,5 +1088,59 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
         titleList.add(titles7);
     }
 
-
+    private void generateExcelZip(String fileName, String pathname, List<PiChildrenBaseInfoVO> childrenExcelVOList) throws IOException {
+        List<SecUser> secUserList = secUserMapper.selectAll();
+        Map<String, String> userMap = new HashMap<>();
+        if(secUserList.size() > 0){
+            for(SecUser user : secUserList){
+                if(!userMap.containsKey(user.getUserId())){
+                    userMap.put(user.getUserId(), user.getUserName());
+                }
+            }
+        }
+        byte[] buf = new byte[1024];
+        FileOutputStream fos = null;
+        File zipFile = new File(fileKitConfig.getFilePath() +pathname);
+        //执行创建
+        zipFile.createNewFile();
+        fos = new FileOutputStream(zipFile);
+        //设置前台下载压缩包名
+        ZipOutputStream zipout = new ZipOutputStream(fos);
+        List<Map<String, Object>> zipEntryList = new ArrayList<>();
+        int i = 1;
+        for(PiChildrenBaseInfoVO childrenExcelVO : childrenExcelVOList) {
+            logger.info("===========导出第：" + i++ + "条");
+//                SecUser secUser = secUserMapper.selectByPrimaryKey(childrenExcelVO.getCreator());
+            PiChildrenGuardianInfo fatherGuardian = null;
+            PiChildrenGuardianInfo matherGuardian = null;
+            PiChildrenGuardianInfo otherGuardian = null;
+            if(childrenExcelVO.getPiChildrenGuardianInfoList() != null && childrenExcelVO.getPiChildrenGuardianInfoList().size() > 0){
+                List<PiChildrenGuardianInfo> piChildrenGuardianInfoList = childrenExcelVO.getPiChildrenGuardianInfoList();
+                for(PiChildrenGuardianInfo guardianInfo : piChildrenGuardianInfoList){
+                    if("0".equals(guardianInfo.getRelationship())){
+                        fatherGuardian = guardianInfo;
+                    }else if("1".equals(guardianInfo.getRelationship())){
+                        matherGuardian = guardianInfo;
+                    }else {
+                        otherGuardian = guardianInfo;
+                    }
+                }
+            }
+            Map<String, Object> map = generateExcel(fileName, childrenExcelVO, userMap.get(childrenExcelVO.getCreator()), fatherGuardian, matherGuardian, otherGuardian);
+            zipEntryList.add(map);
+            ZipEntry zipEntryDetail = (ZipEntry) map.get("zip");
+            InputStream in = (InputStream) map.get("stream");
+            // Add ZIP entry to output stream.
+            zipout.putNextEntry(zipEntryDetail);
+            // Transfer bytes from the file to the ZIP file
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                zipout.write(buf, 0, len);
+            }
+            // Complete the entry
+            zipout.closeEntry();
+            in.close();
+        }
+        zipout.close();
+    }
 }
