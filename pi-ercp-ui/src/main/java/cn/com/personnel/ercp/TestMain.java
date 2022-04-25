@@ -8,7 +8,7 @@ public class TestMain {
 //        String md5 =  DigestUtils.md5DigestAsHex((userId + "@"+ "sfs#goldwind123").getBytes());
 //        String url = "http://sfs.goldwind.com.cn/xd/sfs_xd/autoLogin/autoLogin?userId="+userId+"&sign="+md5;
 //        System.out.println(url);
-        for(int i = 0; i < 389; i++) {
+        for(int i = 0; i < 1; i++) {
             System.out.println(UUIDKit.getUUID());
         }
 //        String o = " 65050220150000075";
@@ -46,6 +46,12 @@ public class TestMain {
 //        catch (IOException e){
 //            e.printStackTrace();
 //        }
+        String fileName = "aa27994af5e2297b12da8bb81fce1988.album";
+        System.out.println(fileName);
+        if(fileName.endsWith(".album")){
+            fileName = fileName.substring(0,fileName.length()-5) + "jpg";
+        }
+        System.out.println(fileName);
     }
 }
 

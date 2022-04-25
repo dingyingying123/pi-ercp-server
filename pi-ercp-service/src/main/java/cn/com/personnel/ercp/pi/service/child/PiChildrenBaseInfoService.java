@@ -11,8 +11,10 @@ import cn.com.personnel.ercp.common.persistence.entity.ReturnEntity;
 import cn.com.personnel.ercp.common.persistence.mapper.FileInfoMapper;
 import cn.com.personnel.ercp.common.service.IFileService;
 import cn.com.personnel.ercp.common.util.DateUtils;
+import cn.com.personnel.ercp.common.util.StringCtrlUtils;
 import cn.com.personnel.ercp.framework.kit.UUIDKit;
 import cn.com.personnel.ercp.pi.module.base.FileInfoVO;
+import cn.com.personnel.ercp.pi.module.child.ChildrenFileInfoVO;
 import cn.com.personnel.ercp.pi.module.child.ChildrenStatisticsInfoVO;
 import cn.com.personnel.ercp.pi.module.child.PiChildrenBaseInfoVO;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiAddress;
@@ -49,6 +51,7 @@ import java.util.zip.ZipOutputStream;
 
 @Service
 public class PiChildrenBaseInfoService extends BaseService implements IPiChildrenBaseInfoService {
+    private static final int BUFFER_SIZE = 1024;
     @Autowired
     PiChildrenBaseInfoMapper piChildrenBaseInfoMapper;
     @Autowired
@@ -67,6 +70,8 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
     IFileService fileService;
     @Autowired
     IGenerateExcelZipService generateExcelZipService;
+
+    public static final Integer MAIL_SIZE = 31457280;
 
     @Override
     public ReturnEntity queryPiChildrenBaseInfoList(PiChildrenBaseInfoVO piChildrenBaseInfo, PagenationQueryParameter buildPagenation) {
@@ -149,14 +154,21 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
                 if(piChildrenGuardianInfos.size() > 0){
                     Boolean flag = true;
                     for (int i = 0; i < piChildrenGuardianInfos.size(); i++){
+                        flag = true;
                         PiChildrenGuardianInfo piChildrenGuardianInfo = piChildrenGuardianInfos.get(i);
+                        logger.info("=======监护人1=====getRelationship:" + piChildrenGuardianInfo.getRelationship());
                         for(PiChildrenGuardianInfo childrenGuardianInfo : piChildrenGuardianInfoList){
+
+                            logger.info("=======监护人2=====getRelationship:" + childrenGuardianInfo.getRelationship());
                             if(!checkGuardian(childrenGuardianInfo))continue;
                             if(piChildrenGuardianInfo.getRelationship() != null && piChildrenGuardianInfo.getRelationship().equals(childrenGuardianInfo.getRelationship())){
+                                logger.info("=======我进来了=====getRelationship:" + childrenGuardianInfo.getRelationship());
                                 flag = false;
                             }
                         }
+                        logger.info("=======删除监护人=====flag:" + flag);
                         if(flag){
+                            logger.info("=======删除监护人=====");
                             piChildrenGuardianInfoMapper.deleteByPrimaryKey(piChildrenGuardianInfo.getGuardianId());
                             piChildrenGuardianInfos.remove(piChildrenGuardianInfo);
                             i--;
@@ -647,6 +659,7 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
 
     @Override
     public ReturnEntity exportExcelByTemplete(String fileName, PiChildrenBaseInfoVO piChildrenBaseInfo, SecUser secUser){
+        logger.info("=============导出参数：" + piChildrenBaseInfo.getChildName() + ",  " + piChildrenBaseInfo.getChildAccountAddress());
         long l1 = System.currentTimeMillis();
         List<PiChildrenBaseInfoVO> childrenExcelVOList = piChildrenBaseInfoMapper.selectExcelByIds(piChildrenBaseInfo, piChildrenBaseInfo.getIds());
         String pathname = "";
@@ -686,70 +699,202 @@ public class PiChildrenBaseInfoService extends BaseService implements IPiChildre
     public ReturnEntity exportImage(PiChildrenBaseInfoVO piChildrenBaseInfoVO) {
         String pathname = "";
         String msg = "没有需要导出的附件！";
-        if(piChildrenBaseInfoVO.getIds() != null && piChildrenBaseInfoVO.getIds().size() > 0) {
-            List<FileInfo> fileInfoList = fileInfoMapper.queryFilesByFlags(piChildrenBaseInfoVO.getIds());
+//        if(piChildrenBaseInfoVO.getIds() != null && piChildrenBaseInfoVO.getIds().size() > 0) {
+            List<ChildrenFileInfoVO> fileInfoList = piChildrenBaseInfoMapper.queryFilesByFlags(piChildrenBaseInfoVO, piChildrenBaseInfoVO.getIds());
             msg = "将导出" + fileInfoList.size() + "张图片，可能会需要的时间比较久，请耐心等待！";
-            if (fileInfoList.size() > 0) {
-                //获取response
-//                ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-//                HttpServletResponse response = servletRequestAttributes.getResponse();
-                List<Map<String, Object>> zipEntryList = new ArrayList<>();
+            String path = System.getProperty("user.dir");
+            logger.info("================当前文件位置：" + path);
+        if (fileInfoList.size() > 0) {
                 try {
-                    for (FileInfo fileInfo1 : fileInfoList) {
-                        // 获得内容
-                        byte[] temp = fileService.getFileContent(fileInfo1.getFilePath());
-
-                        InputStream ais = new ByteArrayInputStream(temp);
-                        ais.close();
-                        ZipEntry zipEntry = new ZipEntry(fileInfo1.getFileName());
-                        Map<String, Object> map = new HashMap();
-                        map.put("stream", ais);
-                        map.put("zip", zipEntry);
-                        zipEntryList.add(map);
-                    }
                     // 设置导出文件
-                    pathname = "Image_" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-//                    response.setCharacterEncoding("UTF-8"); // 重点突出
-//                    response.setContentType("application/zip");
+                    String zipname = "Image_" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
                     // 对文件名进行编码处理中文问题
-                    pathname = fileKitConfig.getFileTemp() + new String(pathname.getBytes("UTF-8"), StandardCharsets.UTF_8) + ".zip";
+                    pathname = fileKitConfig.getFileTemp() + new String(zipname.getBytes("UTF-8"), StandardCharsets.UTF_8) + ".zip";
                     FileOutputStream fos = null;
-                    File zipFile = new File(fileKitConfig.getFilePath() +pathname);
-                    //执行创建
-                    zipFile.createNewFile();
-                    fos = new FileOutputStream(zipFile);
-//                    zos = new ZipOutputStream(fos);
-                    //设置前台下载压缩包名
-//                    response.setHeader("Content-Disposition", "attachment;filename=" + pathname);
-//                    response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
+                    ZipOutputStream zipout = null;
                     byte[] buf = new byte[1024];
-//                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                    ZipOutputStream zipout = new ZipOutputStream(fos);
-                    for (int i = 0; i < zipEntryList.size(); i++) {
-                        ZipEntry zipEntryDetail = (ZipEntry) zipEntryList.get(i).get("zip");
-                        InputStream in = (InputStream) zipEntryList.get(i).get("stream");
-                        // Add ZIP entry to output stream.
-                        zipout.putNextEntry(zipEntryDetail);
-                        // Transfer bytes from the file to the ZIP file
-                        int len;
-                        while ((len = in.read(buf)) > 0) {
-                            zipout.write(buf, 0, len);
+                    Map<String, List<ChildrenFileInfoVO>> listMap = new HashMap<>();
+                    for(ChildrenFileInfoVO childrenFileInfoVO : fileInfoList){
+                        if(listMap.containsKey(childrenFileInfoVO.getChildName() + childrenFileInfoVO.getChildIdNo())){
+                            listMap.get(childrenFileInfoVO.getChildName() + childrenFileInfoVO.getChildIdNo()).add(childrenFileInfoVO);
+                        }else{
+                            List<ChildrenFileInfoVO> fileInfoVOList = new ArrayList<>();
+                            fileInfoVOList.add(childrenFileInfoVO);
+                            listMap.put(childrenFileInfoVO.getChildName() + childrenFileInfoVO.getChildIdNo(), fileInfoVOList);
                         }
-                        // Complete the entry
-                        zipout.closeEntry();
-                        in.close();
                     }
+                    List<Map<String, Object>> zipEntryList = new ArrayList<>();
+
+                    //邮件发送附件的大小
+                    int sumSize = 0;
+                    int size = 0;
+                    String unitName = "";
+                    String fileName= "";
+//                    pathname = fileKitConfig.getFileTemp() + new String(zipname.getBytes(), StandardCharsets.UTF_8);
+                    for(String key : listMap.keySet()){
+                        List<ChildrenFileInfoVO> fileInfoChildList = listMap.get(key);
+                        for (ChildrenFileInfoVO fileInfo1 : fileInfoChildList) {
+                            size += fileInfo1.getFileSize();
+                        }
+                        //当达到发送邮件大小上限时，发送邮件
+                        if(sumSize + size > MAIL_SIZE){
+
+                            // 对文件名进行编码处理中文问题
+                            pathname = fileKitConfig.getFileTemp() + new String(zipname.getBytes("UTF-8"), StandardCharsets.UTF_8) + ".zip";
+                            File zipFile = new File(StringCtrlUtils.changeString(fileKitConfig.getFilePath() +pathname));
+                            logger.info("==============绝对路径：" + zipFile.getAbsolutePath());
+                            logger.info("==============相对路径：" + zipFile.getCanonicalPath());
+                            //执行创建
+                            zipFile.createNewFile();
+                            fos = new FileOutputStream(zipFile);
+                            zipout = new ZipOutputStream(fos);
+                            List<File> sourceFileList = new ArrayList<>();
+                            sourceFileList.add(new File(StringCtrlUtils.changeString(fileName)));
+                            compress(sourceFileList, zipout, true);
+                            generateExcelZipService.sendEmail(fileKitConfig.getFilePath() + pathname, "图片导出文件" + zipname, piChildrenBaseInfoVO.getToMail());
+                            //清空重新累计发送
+                            zipEntryList.clear();
+                            sumSize = size;
+                            //更新文件名字
+                            zipname = "Image_" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+                            zipFile.delete();
+                        }else{
+                            sumSize += size;
+                        }
+
+                        unitName = fileInfoChildList.get(0).getChildName() + fileInfoChildList.get(0).getChildIdNo();
+                        fileName = fileKitConfig.getFilePath() + fileKitConfig.getFileTemp() + zipname + "/" + new String(unitName.getBytes(), StandardCharsets.UTF_8) + "/";
+                        File unitFile = new File(StringCtrlUtils.changeString(fileName));
+                        unitFile.mkdirs();
+                        FileOutputStream fosf = null;
+                        for (ChildrenFileInfoVO fileInfo1 : fileInfoChildList) {
+                            unitFile = new File(StringCtrlUtils.changeString(fileName + fileInfo1.getFileName()));
+                            unitFile.createNewFile();
+                            fosf = new FileOutputStream(unitFile);
+                            // 获得内容
+                            byte[] temp = fileService.getFileContent(StringCtrlUtils.changeString(fileInfo1.getFilePath()));
+                            InputStream ais = new FileInputStream(unitFile);
+                            fosf.write(temp);
+
+                            ZipEntry zipEntry = new ZipEntry(fileInfo1.getFileName());
+                            Map<String, Object> map = new HashMap();
+                            map.put("stream", ais);
+                            map.put("zip", zipEntry);
+                            zipEntryList.add(map);
+                            fosf.close();
+//                                ais.close();
+                        }
+                    }
+
+                    if(zipEntryList.size() > 0){
+                        // 对文件名进行编码处理中文问题
+                        pathname = fileKitConfig.getFileTemp() + new String(zipname.getBytes("UTF-8"), StandardCharsets.UTF_8) + ".zip";
+                        File zipFile = new File(StringCtrlUtils.changeString(fileKitConfig.getFilePath() +pathname));
+                        //执行创建
+                        zipFile.createNewFile();
+                        fos = new FileOutputStream(zipFile);
+                        zipout = new ZipOutputStream(fos);
+                        List<File> sourceFileList = new ArrayList<>();
+                        sourceFileList.add(new File(StringCtrlUtils.changeString(fileName)));
+                        compress(sourceFileList, zipout, true);
+                        //清空重新累计发送
+                        zipEntryList.clear();
+                        generateExcelZipService.sendEmail(fileKitConfig.getFilePath() + pathname, "图片导出文件" + zipname, piChildrenBaseInfoVO.getToMail());
+                        zipFile.delete();
+                    }
+
                     zipout.close();
-                    generateExcelZipService.sendEmail(fileKitConfig.getFilePath() + pathname, "图片导出文件", piChildrenBaseInfoVO.getToMail());
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        }
+//        }
         return new ReturnEntity(CommonConstants.SUCCESS_CODE, msg, fileKitConfig.getFileBasePath() + "/file/download?path=" + URLEncoder.encode(pathname));
     }
 
+    /**
+     * 递归压缩方法
+     * @param sourceFile 源文件
+     * @param zos zip输出流
+     * @param name 压缩后的名称
+     * @param KeepDirStructure 是否保留原来的目录结构,
+     * 			true:保留目录结构;
+     *			false:所有文件跑到压缩包根目录下(注意：不保留目录结构可能会出现同名文件,会压缩失败)
+     * @throws Exception
+     */
+    private static void compress(File sourceFile, ZipOutputStream zos,
+                                 String name, boolean KeepDirStructure) throws Exception {
+        byte[] buf = new byte[BUFFER_SIZE];
+        if (sourceFile.isFile()) {
+            zos.putNextEntry(new ZipEntry(name));
+            int len;
+            FileInputStream in = new FileInputStream(sourceFile);
+            while ((len = in.read(buf)) != -1) {
+                zos.write(buf, 0, len);
+            }
+            // Complete the entry
+            zos.closeEntry();
+            in.close();
+        } else {
+            File[] listFiles = sourceFile.listFiles();
+            if (listFiles == null || listFiles.length == 0) {
+                if (KeepDirStructure) {
+                    zos.putNextEntry(new ZipEntry(name + "/"));
+                    zos.closeEntry();
+                }
 
+            } else {
+                for (File file : listFiles) {
+                    if (KeepDirStructure) {
+                        compress(file, zos, name + "/" + file.getName(),
+                                KeepDirStructure);
+                    } else {
+                        compress(file, zos, file.getName(), KeepDirStructure);
+                    }
+
+                }
+            }
+        }
+    }
+
+    private static void compress(List<File> sourceFileList,
+                                 ZipOutputStream zos, boolean KeepDirStructure) throws Exception {
+        byte[] buf = new byte[BUFFER_SIZE];
+        for (File sourceFile : sourceFileList) {
+            String name = sourceFile.getName();
+            if (sourceFile.isFile()) {
+                zos.putNextEntry(new ZipEntry(name));
+                int len;
+                FileInputStream in = new FileInputStream(sourceFile);
+                while ((len = in.read(buf)) != -1) {
+                    zos.write(buf, 0, len);
+                }
+                zos.closeEntry();
+                in.close();
+            } else {
+                File[] listFiles = sourceFile.listFiles();
+                if (listFiles == null || listFiles.length == 0) {
+                    if (KeepDirStructure) {
+                        zos.putNextEntry(new ZipEntry(name + "/"));
+                        zos.closeEntry();
+                    }
+
+                } else {
+                    for (File file : listFiles) {
+                        if (KeepDirStructure) {
+                            compress(file, zos, name + "/" + file.getName(),
+                                    KeepDirStructure);
+                        } else {
+                            compress(file, zos, file.getName(),
+                                    KeepDirStructure);
+                        }
+
+                    }
+                }
+            }
+        }
+    }
 
     private Map<String, Object> generateExcel(String fileName, PiChildrenBaseInfoVO childrenExcelVO, String userName, PiChildrenGuardianInfo fatherGuardian, PiChildrenGuardianInfo matherGuardian, PiChildrenGuardianInfo otherGuardian) {
         ByteArrayOutputStream bos = null;

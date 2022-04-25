@@ -57,13 +57,13 @@
         <property name="xaProperties">
             <props>
 
-                                 <prop key="url">jdbc:postgresql://localhost:5432/personel?currentSchema=public</prop>
-                                 <prop key="user">postgres</prop>
-                                 <prop key="password" >Dyy13664171388</prop>
+<!--                                 <prop key="url">jdbc:postgresql://localhost:5432/personel?currentSchema=public</prop>-->
+<!--                                 <prop key="user">postgres</prop>-->
+<!--                                 <prop key="password" >Dyy13664171388</prop>-->
 <!--                172.31.208.79-->
-<!--                <prop key="url">jdbc:postgresql://39.107.45.194:5432/postgres?currentSchema=public</prop>-->
-<!--                <prop key="user">postgres</prop>-->
-<!--                <prop key="password" >postgres</prop>-->
+                <prop key="url">jdbc:postgresql://39.102.237.156:5400/personnel?currentSchema=public</prop>
+                <prop key="user">piservice</prop>
+                <prop key="password" >FrPYLQ6UkPgv9A9K</prop>
             </props>
         </property>
     </bean>

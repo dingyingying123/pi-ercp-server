@@ -159,15 +159,20 @@
 
   <select id="queryPiChildrenBaseInfoList" resultMap="BaseResultMapVO">
     select coalesce ((select count(*) from pi_children_guardian_info g where i.child_id=g.child_id),0)+1 as guardian,i.* from pi_children_base_info i
+    left join sec_user s on i.creator = s.user_id
     <where>
       <if test="info.childAccountAddress != null and info.childAccountAddress != ''">
-        i.child_account_address like concat('%', #{info.childAccountAddress}, '%')
+          (i.child_account_address like concat('%', #{info.childAccountAddress}, '%') or
+          i.child_account_province like concat('%', #{info.childAccountAddress}, '%') or
+          i.child_account_city like concat('%', #{info.childAccountAddress}, '%') or
+          i.child_current_county like concat('%', #{info.childAccountAddress}, '%') or
+          i.child_account_town like concat('%', #{info.childAccountAddress}, '%'))
       </if>
       <if test="info.childCurrentAddress != null and info.childCurrentAddress != ''">
          and i.child_current_address like concat('%', #{info.childCurrentAddress}, '%')
       </if>
       <if test="info.childName != null and info.childName != ''">
-         and i.child_name like concat('%', #{info.childName}, '%')
+         and (i.child_name like concat('%', #{info.childName}, '%') or s.user_name like concat('%', #{info.childName}, '%'))
       </if>
       <if test="info.childIdNo != null and info.childIdNo != ''">
          and i.child_id_no like concat('%', #{info.childIdNo}, '%')
@@ -213,7 +218,11 @@
     select i.* from pi_children_base_info i
     <where>
       <if test="info.childAccountAddress != null and info.childAccountAddress != ''">
-        i.child_account_address like concat('%', #{info.childAccountAddress}, '%')
+        (i.child_account_address like concat('%', #{info.childAccountAddress}, '%') or
+        i.child_account_province like concat('%', #{info.childAccountAddress}, '%') or
+        i.child_account_city like concat('%', #{info.childAccountAddress}, '%') or
+        i.child_current_county like concat('%', #{info.childAccountAddress}, '%') or
+        i.child_account_town like concat('%', #{info.childAccountAddress}, '%'))
       </if>
       <if test="info.childCurrentAddress != null and info.childCurrentAddress != ''">
          and i.child_current_address like concat('%', #{info.childCurrentAddress}, '%')
@@ -579,10 +588,53 @@
     </select>
 
     <select id="queryFilesByFlags" resultMap="FileResultMap">
-        select f.*,b.child_name,b.child_id_no from sec_file_info f join pi_children_base_info b on f.file_flag=b.child_id
+        select f.*,i.child_name,i.child_id_no from sec_file_info f join pi_children_base_info i on f.file_flag=i.child_id
         <where> file_cat not in ('houseNo', '申请人签字')
             <if test="ids != null and ids.size > 0"> and file_flag in
                 <foreach collection="ids" item="id" separator="," open="(" close=")">#{id}</foreach>
+            </if>
+            <if test="info.childAccountAddress != null and info.childAccountAddress != ''">
+                and (i.child_account_address like concat('%', #{info.childAccountAddress}, '%') or
+                i.child_account_province like concat('%', #{info.childAccountAddress}, '%') or
+                i.child_account_city like concat('%', #{info.childAccountAddress}, '%') or
+                i.child_current_county like concat('%', #{info.childAccountAddress}, '%') or
+                i.child_account_town like concat('%', #{info.childAccountAddress}, '%'))
+            </if>
+            <if test="info.childCurrentAddress != null and info.childCurrentAddress != ''">
+                and i.child_current_address like concat('%', #{info.childCurrentAddress}, '%')
+            </if>
+            <if test="info.childName != null and info.childName != ''">
+                and i.child_name like concat('%', #{info.childName}, '%')
+            </if>
+            <if test="info.childIdNo != null and info.childIdNo != ''">
+                and i.child_id_no like concat('%', #{info.childIdNo}, '%')
+            </if>
+            <if test="info.childTelNo != null and info.childTelNo != ''">
+                and i.child_tel_no like concat('%', #{info.childTelNo}, '%')
+            </if>
+            <if test="info.childNationality != null and info.childNationality != ''">
+                and i.child_nationality like concat('%', #{info.childNationality}, '%')
+            </if>
+            <if test="info.childMale != null and info.childMale != ''">
+                and i.child_male like concat('%', #{info.childMale}, '%')
+            </if>
+            <if test="info.childHealthStatus != null and info.childHealthStatus != ''">
+                and i.child_health_status like concat('%', #{info.childHealthStatus}, '%')
+            </if>
+            <if test="info.childEscalationType != null and info.childEscalationType != ''">
+                and i.child_escalation_type like concat('%', #{info.childEscalationType}, '%')
+            </if>
+            <if test="info.childDisabilityType != null and info.childDisabilityType != ''">
+                and i.child_disability_type like concat('%', #{info.childDisabilityType}, '%')
+            </if>
+            <if test="info.childViolationGuardian != null and info.childViolationGuardian != ''">
+                and i.child_violation_guardian like concat('%', #{info.childViolationGuardian}, '%')
+            </if>
+            <if test="info.status != null and info.status != '' and info.status != '-1'">
+                and i.status = #{info.status}
+            </if>
+            <if test="info.creator != null and info.creator != ''">
+                and i.creator = #{info.creator}
             </if>
         </where>
         order by file_flag

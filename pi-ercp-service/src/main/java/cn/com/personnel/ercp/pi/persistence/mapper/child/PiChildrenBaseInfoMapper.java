@@ -32,5 +32,5 @@ public interface PiChildrenBaseInfoMapper extends BaseMapper<PiChildrenBaseInfo>
 
     List<PiChildrenBaseInfoVO> selectExcelByIds(@Param("info") PiChildrenBaseInfoVO piChildrenBaseInfo, @Param("ids") List<String> ids);
 
-    List<ChildrenFileInfoVO> queryFilesByFlags(@Param("ids") List<String> ids);
+    List<ChildrenFileInfoVO> queryFilesByFlags(@Param("info") PiChildrenBaseInfoVO piChildrenBaseInfoVO, @Param("ids") List<String> ids);
 }

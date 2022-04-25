@@ -1,6 +1,7 @@
 package cn.com.personnel.ercp.common.persistence.mapper;
 
 import cn.com.personnel.ercp.common.persistence.entity.FileInfo;
+import cn.com.personnel.ercp.pi.module.child.PiChildrenBaseInfoVO;
 import cn.com.personnel.springboot.framework.core.persistence.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 

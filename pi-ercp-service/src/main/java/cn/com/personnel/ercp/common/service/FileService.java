@@ -11,6 +11,7 @@ import cn.com.personnel.ercp.common.kit.FileKitConfig;
 import cn.com.personnel.ercp.common.persistence.entity.ReturnEntity;
 import cn.com.personnel.ercp.common.persistence.entity.FileInfo;
 import cn.com.personnel.ercp.common.persistence.mapper.FileInfoMapper;
+import cn.com.personnel.ercp.common.util.StringCtrlUtils;
 import cn.com.personnel.ercp.framework.exception.BusinessException;
 import cn.com.personnel.ercp.framework.kit.UUIDKit;
 import cn.com.personnel.springboot.framework.core.page.PagenationQueryParameter;
@@ -58,6 +59,9 @@ public class FileService extends BaseService implements IFileService {
             FileInfo fileInfo = new FileInfo();
             try {
                 String fileName =multipartFile.getOriginalFilename();
+                if(fileName.endsWith(".album")){
+                    fileName = fileName.substring(0, fileName.length() - 5) + "jpg";
+                }
                 String filePath = saveFileToLocal(fileName, multipartFile.getBytes());
                 String fileKey = UUIDKit.getUUID();
                 fileInfo.setFileKey(fileKey);
@@ -148,7 +152,7 @@ public class FileService extends BaseService implements IFileService {
 
     @Override
     public byte[] getFileContent(String filePath) {
-        return getLocalFileContent(filePath);
+        return getLocalFileContent(StringCtrlUtils.changeString(filePath));
     }
 
     /*

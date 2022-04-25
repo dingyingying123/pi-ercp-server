@@ -14,10 +14,14 @@ spring:
     name: fss-ui
   messages:
     basename: i18n/message
-
+  thymeleaf:
+    prefix: classpath:/templates/
+    cache: false
+    suffix: .ftl
   freemarker:
     allowRequestOverride: false
     allowSessionOverride: false
+    expose-spring-macro-helpers: true
     cache: false
     checkTemplateLocation: true
     contentType: text/html
@@ -85,17 +89,15 @@ open:
   url: http://10.12.7.200:7111
 
 token:
-  refreshTokenExpireTime: 1800
+  refreshTokenExpireTime: 18000000
   deviceCode: piservice
-
-
-sap:
-  mandt: 401
 
 file:
   upload: /usr/local/local/pi/file
-  basePath: http://localhost:8080
-
+  temp: /temp/
+  basePath: http://172.29.240.24:8088
+  mail: dingyingying_521@163.com
+  passw: UJMAMHEROJENFFWV
 den:
   #  serverUrl: http://pev.goldwind.com.cn:50000
   #  username: gw_eam

@@ -7,6 +7,7 @@ import cn.com.personnel.ercp.common.kit.FileKitConfig;
 import cn.com.personnel.ercp.common.kit.JdPushVo;
 import cn.com.personnel.ercp.common.persistence.entity.FileInfo;
 import cn.com.personnel.ercp.common.persistence.mapper.FileInfoMapper;
+import cn.com.personnel.ercp.common.util.StringCtrlUtils;
 import cn.com.personnel.ercp.pi.module.child.PiChildrenBaseInfoVO;
 import cn.com.personnel.ercp.pi.persistence.entity.child.PiChildrenGuardianInfo;
 import cn.com.personnel.springboot.framework.service.BaseService;
@@ -27,6 +28,7 @@ import javax.mail.internet.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.security.Security;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.zip.ZipEntry;
@@ -134,13 +136,26 @@ public class GenerateExcelZipService extends BaseService implements IGenerateExc
     @Async
     @Override
     public void sendEmail(String path, String subject, String toMail) throws Exception {
-        logger.info("============开始发送邮件，发送给：" + toMail);
+        logger.info("============开始发送邮件:" + path + "，发送给：" + toMail);
         /*
          * 1. 得到session
          */
+//        Properties props = new Properties();
+//        props.setProperty("mail.smtp.host", "smtp.163.com");
+//        props.setProperty("mail.smtp.auth", "true");
+
+        Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+        final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+        //设置邮件会话参数
         Properties props = new Properties();
+        //邮箱的发送服务器地址
         props.setProperty("mail.smtp.host", "smtp.163.com");
-        props.setProperty("mail.smtp.auth", "true");
+        props.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
+        props.setProperty("mail.smtp.socketFactory.fallback", "false");
+        //邮箱发送服务器端口,这里设置为465端口
+        props.setProperty("mail.smtp.port", "465");
+        props.setProperty("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.auth", "true");
 
         Authenticator auth = new Authenticator() {
             @Override
@@ -179,7 +194,7 @@ public class GenerateExcelZipService extends BaseService implements IGenerateExc
         // 发送邮件
         Transport.send(msg);
         file.delete();
-        logger.info("============结束发送邮件，发送给：" + toMail);
+        logger.info("============结束发送邮件:" + path + "，发送给：" + toMail);
     }
 
     private Map<String, Object> generateExcel(String fileName, PiChildrenBaseInfoVO childrenExcelVO, String userName, PiChildrenGuardianInfo fatherGuardian, PiChildrenGuardianInfo matherGuardian, PiChildrenGuardianInfo otherGuardian) {
@@ -414,7 +429,7 @@ public class GenerateExcelZipService extends BaseService implements IGenerateExc
                         ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
                         String realPath = fileKitConfig.getFilePath() + fileInfo.getFilePath();
 
-                        File file = new File(realPath);
+                        File file = new File(StringCtrlUtils.changeString(realPath));
                         if (file.exists()) {
                             bufferImg = ImageIO.read(file);
                             if (bufferImg != null) {
